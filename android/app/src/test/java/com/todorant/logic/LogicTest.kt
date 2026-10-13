@@ -1,8 +1,11 @@
 package com.todorant.logic
 
+import com.todorant.data.Ids
 import com.todorant.data.Todo
+import com.todorant.sync.serverUrl
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -67,5 +70,23 @@ class LogicTest {
         assertFalse(Todos.isTimeSorted(timed))
         while (!Todos.isTimeSorted(timed)) Todos.fixOneTodoTime(timed, setOf("z"))
         assertEquals(listOf("z", "x", "y"), timed.map { it.id })
+    }
+
+    @Test
+    fun serverUrls() {
+        assertEquals("https://todo.example.com", serverUrl(" todo.example.com/ "))
+        assertEquals("http://192.168.1.5:1337", serverUrl("http://192.168.1.5:1337"))
+        assertEquals("https://example.com/todorant", serverUrl("HTTPS://Example.com:443/todorant/"))
+        assertNull(serverUrl("ftp://example.com"))
+        assertNull(serverUrl("https://example.com/?a=1"))
+        assertNull(serverUrl("https://"))
+    }
+
+    @Test
+    fun idsHaveFreshRandomBytes() {
+        val (a, b) = Ids.new() to Ids.new()
+        assertTrue(Regex("[0-9a-f]{24}").matches(a))
+        // Bytes 4..8 are random for every id, not once per process
+        assertNotEquals(a.substring(8, 18), b.substring(8, 18))
     }
 }

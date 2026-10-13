@@ -9,11 +9,14 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -28,9 +31,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -90,11 +95,15 @@ fun LoginScreen(wall: Boolean) {
     val state = remember { LoginState() }
     val context = LocalContext.current
     var debugToken by remember { mutableStateOf("") }
+    // Self-hosted servers may have no OAuth apps: email + password comes first there
+    val custom = Rest.server != null
     Box(Modifier.fillMaxSize()) {
         StackScreen(t("pleaseLogin")) {
-            Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            // imePadding: the keyboard mustn't cover the server field at the bottom
+            Column(Modifier.fillMaxWidth().imePadding().verticalScroll(rememberScrollState()).padding(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (wall) Text(t("loginWall"), color = Colors.text, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp))
                 if (state.loading) Spinner()
+                if (custom) PasswordLogin(state)
                 PrimaryButton(t("loginGoogle"), color = Color(0xFFFF6347), enabled = !state.loading) {
                     state.login {
                         val option = GetGoogleIdOption.Builder()
@@ -110,15 +119,23 @@ fun LoginScreen(wall: Boolean) {
                     }
                 }
                 PrimaryButton(" Sign in with Apple", color = Color.Black, enabled = !state.loading) { state.appleOpen = true }
-                PrimaryButton(t("loginTelegram"), color = Color(0xFF1E90FF), enabled = !state.loading) { Nav.go(com.todorant.ui.Route.TELEGRAM) }
+                // The Telegram page signs in on todorant.com only
+                if (!custom) PrimaryButton(t("loginTelegram"), color = Color(0xFF1E90FF), enabled = !state.loading) { Nav.go(com.todorant.ui.Route.TELEGRAM) }
                 PrimaryButton(t("loginQR"), color = Color(0xFF483D8B), enabled = !state.loading) {
                     scanQr(context) { token -> state.login { Rest.loginToken(token) } }
                 }
+                if (!custom) PasswordLogin(state)
                 if (BuildConfig.DEBUG) {
                     SettingsField(debugToken, { debugToken = it }, "Enter token here")
                     PrimaryButton("Login with token", color = Color(0xFF483D8B), enabled = !state.loading) {
                         state.login { Rest.loginToken(debugToken.trim()) }
                     }
+                }
+                ServerSetting { address, open ->
+                    Text(
+                        "${t("server")}: $address", color = Colors.link, fontSize = 14.sp, textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().clickable(onClick = open).padding(8.dp),
+                    )
                 }
             }
         }
@@ -136,6 +153,22 @@ fun LoginScreen(wall: Boolean) {
             ) {
                 CircularProgressIndicator(color = Colors.primary)
                 Text(t("loadingData"), color = Color.White, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 12.dp))
+            }
+        }
+    }
+}
+
+/** Email + password: sign in, or create the account */
+@Composable
+private fun PasswordLogin(state: LoginState) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    SettingsField(email, { email = it }, t("email"), keyboardType = KeyboardType.Email)
+    SettingsField(password, { password = it }, t("password"), password = true)
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        for ((title, signup) in listOf("signIn" to false, "signUp" to true)) {
+            PrimaryButton(t(title), Modifier.weight(1f), enabled = !state.loading && email.isNotBlank() && password.isNotEmpty()) {
+                if (password.length < 8) Ui.error(t("passwordLength")) else state.login { Rest.loginPassword(email, password, signup) }
             }
         }
     }

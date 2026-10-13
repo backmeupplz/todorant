@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.todorant.BuildConfig
@@ -91,7 +92,11 @@ fun SettingsScreen() {
             TableItem(onClick = { Nav.go(Route.RULES) }, modifier = Modifier.onboardingTarget(Target.HOW_TO_USE)) { TableText(t("howToUse")) }
         }
         // Account
-        row { Divider(); AccountInfo() }
+        row {
+            Divider()
+            AccountInfo()
+            ServerSetting { address, open -> ValueRow(t("server"), address.ellipsize(30), open) }
+        }
         row { LoginLogoutButtons() }
         // Todos
         row { Divider(); SectionHeader(t("todos")); TodoSettings() }
@@ -178,12 +183,28 @@ private fun AccountInfo() {
     user.facebookId?.let { InfoRow(t("facebook"), it) }
     user.telegramId?.let { InfoRow(t("telegram"), it) }
     user.appleSubId?.let { InfoRow(t("apple"), it) }
+    user.passwordLogin?.let { InfoRow(t("email"), it) }
     TableItem(onClick = {
         scanQr(context) { uuid ->
-            loading = true
-            Ui.attempt({ loading = false }) { Rest.setQrToken(uuid) }
+            // The scanned page gets this account's token: a QR shown by someone else would hand it to them
+            Ui.confirm(t("addDevicesConfirm"), t("addDevices")) {
+                loading = true
+                Ui.attempt({ loading = false }) { Rest.setQrToken(uuid) }
+            }
         }
     }) { TableText(t("addDevices")) }
+}
+
+/** The server: [label] shows its address and opens an editor; empty means todorant's own */
+@Composable
+internal fun ServerSetting(label: @Composable (address: String, open: () -> Unit) -> Unit) {
+    var draft by remember { mutableStateOf<String?>(null) }
+    val value = draft ?: return label(Rest.base.substringAfter("://")) { draft = Rest.base }
+    TableItem {
+        SettingsField(value, { draft = it }, BuildConfig.API.substringAfter("://"), Modifier.weight(1f), keyboardType = KeyboardType.Uri)
+        MIcon(MaterialIcons.Filled.Close, Colors.border, modifier = Modifier.padding(horizontal = 8.dp)) { draft = null }
+        MIcon(MaterialIcons.Filled.Done, Colors.border, modifier = Modifier.padding(end = 8.dp)) { Account.changeServer(value) { draft = null } }
+    }
 }
 
 @Composable

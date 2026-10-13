@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Self-hosted servers on a LAN often have no TLS, so plain http is allowed; todorant's own hosts stay https-only -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">todorant.com</domain>
+    </domain-config>
+</network-security-config>

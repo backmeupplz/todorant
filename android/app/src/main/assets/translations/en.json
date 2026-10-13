@@ -496,5 +496,12 @@
     "text": "This is a repetitive task, do you want to break down it or complete it?",
     "complete": "Complete"
   },
-  "syncError": "An error occurred during data synchronization"
+  "syncError": "An error occurred during data synchronization",
+  "server": "Server",
+  "serverInvalid": "That doesn't look like a server address. It should look like https://todo.example.com",
+  "serverChange": "Your account and todos live on the current server, so changing it logs you out. Continue?",
+  "signIn": "Sign in",
+  "signUp": "Create account",
+  "passwordLength": "The password needs at least 8 characters",
+  "addDevicesConfirm": "Log in to your account on the device showing this QR code? Only continue if you opened it yourself on the Todorant website."
 }

@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.todorant.App
-import com.todorant.BuildConfig
 import com.todorant.data.Change
 import com.todorant.data.Db
 import com.todorant.data.DelegationUser
@@ -37,11 +36,12 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import org.json.JSONArray
 import org.json.JSONObject
-import java.net.URLEncoder
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
 private const val TAG = "Sync"
+/** Ops per message: the server takes up to 5000, a long offline queue goes out in parts */
+private const val MAX_OPS = 1000
 
 /**
  * v2 sync over one WebSocket (`/v2/ws`): local edits are field changes in the outbox, pushed as soon as
@@ -81,8 +81,9 @@ object Sync {
     fun connect() {
         val token = Session.user?.token ?: return
         if (socket != null) return
-        val url = BuildConfig.API.replaceFirst("http", "ws") + "/v2/ws?token=" + URLEncoder.encode(token, "UTF-8")
-        socket = Rest.http.newWebSocket(Request.Builder().url(url).build(), Listener())
+        // The token goes in a header: URLs end up in proxy logs
+        val request = Request.Builder().url(Rest.base.replaceFirst("http", "ws") + "/v2/ws").header("token", token).build()
+        socket = Rest.http.newWebSocket(request, Listener())
     }
 
     /** Connects right away (app resumed, network back), dropping a socket that never got going */
@@ -169,17 +170,21 @@ object Sync {
         }
     }
 
-    /** Sends the outbox (and pulls the delta when [pull]); returns the server's answer */
+    /** Sends the outbox, [MAX_OPS] at a time (and pulls the delta when [pull]); returns the server's answer */
     private fun send(pull: Boolean = false): CompletableDeferred<JSONObject>? {
         val ws = socket ?: return null
         if (!connected) return null
         val changes = Db.outbox().filter { c -> sent.values.none { batch -> c in batch } }
+            .groupBy { Triple(it.collection, it.id, it.at) }.values.take(MAX_OPS).flatten()
         if (changes.isEmpty() && !pull) return null
         val rid = requests.incrementAndGet()
         val message = JSONObject().put("t", "sync").put("rid", rid)
-        if (changes.isNotEmpty()) message.put("ops", ops(changes))
+        if (changes.isNotEmpty()) {
+            message.put("ops", ops(changes))
+            // The server needs the encryption password only to write todo texts to Google Calendar
+            if (Settings.googleCalendarCredentials != null) Session.encryptionKey?.let { message.put("key", it) }
+        }
         if (pull) message.put("since", cursor ?: 0)
-        Session.encryptionKey?.let { message.put("key", it) }
         sent[rid] = changes
         val deferred = CompletableDeferred<JSONObject>()
         waiting[rid] = deferred

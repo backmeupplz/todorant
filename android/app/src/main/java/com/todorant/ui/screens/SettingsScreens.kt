@@ -101,7 +101,7 @@ internal fun SettingsField(
     placeholder: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     password: Boolean = false,
-    number: Boolean = false,
+    keyboardType: KeyboardType = if (password) KeyboardType.Password else KeyboardType.Text,
     color: Color = Colors.text,
     textAlign: TextAlign = TextAlign.Start,
     singleLine: Boolean = true,
@@ -112,10 +112,7 @@ internal fun SettingsField(
         singleLine = singleLine,
         textStyle = TextStyle(color = color, fontSize = 18.sp, textAlign = textAlign),
         visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = when { password -> KeyboardType.Password; number -> KeyboardType.Number; else -> KeyboardType.Text },
-            autoCorrectEnabled = !password,
-        ),
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType, autoCorrectEnabled = keyboardType == KeyboardType.Text),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = Colors.primary, unfocusedIndicatorColor = Colors.border, cursorColor = Colors.primary,
@@ -353,7 +350,7 @@ fun AddEpicScreen(tagId: String) {
             TagTitle(tag, null)
             SettingsField(
                 goal, { goal = it.filter(Char::isDigit) }, t("epic.epicGoal"), Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                number = true, color = Color(0xFF008000), textAlign = TextAlign.Center,
+                keyboardType = KeyboardType.Number, color = Color(0xFF008000), textAlign = TextAlign.Center,
             )
         }
     }

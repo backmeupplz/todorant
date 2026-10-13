@@ -93,6 +93,8 @@ class User(val json: JSONObject) {
     val facebookId: String? get() = json.optString("facebookId").ifEmpty { null }
     val telegramId: String? get() = json.optString("telegramId").ifEmpty { null }
     val appleSubId: String? get() = json.optString("appleSubId").ifEmpty { null }
+    /** Email of an email + password account */
+    val passwordLogin: String? get() = json.optString("passwordLogin").ifEmpty { null }
     val delegateInviteToken: String? get() = json.optString("delegateInviteToken").ifEmpty { null }
     val updatedAt: Long? get() = json.optLong("updatedAt").takeIf { it > 0 }
 

@@ -96,7 +96,7 @@ fun TodoCard(todo: Todo, type: CardType, modifier: Modifier = Modifier, dragModi
         ) {
             Column(Modifier.fillMaxWidth().background(Colors.background).padding(vertical = 10.dp)) {
                 if (todo.frogFails > 0) Row(Modifier.padding(start = 16.dp, bottom = 6.dp)) {
-                    repeat(todo.frogFails) {
+                    repeat(minOf(todo.frogFails, 5)) {
                         Box(Modifier.padding(end = 4.dp).size(8.dp, 6.dp).background(Colors.primary, RoundedCornerShape(20.dp)))
                     }
                 }

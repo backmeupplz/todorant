@@ -1,8 +1,11 @@
 package com.todorant.sync
 
+import com.todorant.BuildConfig
 import com.todorant.data.User
+import com.todorant.data.optStringPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -11,9 +14,15 @@ import org.json.JSONObject
 import org.json.JSONTokener
 import java.util.concurrent.TimeUnit
 
-/** REST endpoints of backend.todorant.com used by the app (rest.ts) */
+/** A typed server address → its base URL (http or https, https when left out; no trailing slash), null when it isn't one */
+fun serverUrl(input: String): String? = input.trim().let { if ("://" in it) it else "https://$it" }.toHttpUrlOrNull()
+    ?.takeIf { it.query == null && it.fragment == null }?.toString()?.trimEnd('/')
+
+/** REST endpoints of the backend used by the app (rest.ts) */
 object Rest {
-    private val BASE = com.todorant.BuildConfig.API
+    /** A self-hosted server picked by the user, null for todorant's own */
+    var server by optStringPref("server")
+    val base get() = server ?: BuildConfig.API
     // Pings notice dead sync sockets (network switches) within seconds instead of minutes
     val http: OkHttpClient = OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).pingInterval(15, TimeUnit.SECONDS).build()
     private val json = "application/json".toMediaType()
@@ -22,14 +31,15 @@ object Rest {
 
     private suspend fun call(method: String, path: String, body: JSONObject? = null, token: String? = com.todorant.data.Session.user?.token): String =
         withContext(Dispatchers.IO) {
-            val request = Request.Builder().url("$BASE$path").apply {
+            val request = Request.Builder().url("$base$path").apply {
                 token?.let { header("token", it) }
                 method(method, body?.toString()?.toRequestBody(json))
             }.build()
             http.newCall(request).execute().use { response ->
                 val text = response.body?.string().orEmpty()
                 if (!response.isSuccessful) {
-                    val message = runCatching { JSONObject(text).optString("message") }.getOrNull()?.ifEmpty { null }
+                    // v1 answers {message}, v2 {error}
+                    val message = runCatching { JSONObject(text).run { optString("message").ifEmpty { optString("error") } } }.getOrNull()?.ifEmpty { null }
                     throw HttpError(message ?: "Request failed with status code ${response.code}")
                 }
                 text
@@ -49,6 +59,10 @@ object Rest {
     )
 
     suspend fun loginToken(token: String) = login("token", JSONObject().put("token", token))
+
+    /** Email + password: signs in, or creates the account with [signup] */
+    suspend fun loginPassword(email: String, password: String, signup: Boolean) =
+        login(if (signup) "signup" else "password", JSONObject().put("email", email.trim()).put("password", password))
 
     suspend fun setQrToken(uuid: String) = call("POST", "/login/qr_token", JSONObject().put("uuid", uuid))
 

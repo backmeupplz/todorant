@@ -16,14 +16,13 @@ import kotlin.reflect.KMutableProperty1
 /** Mongo ObjectIds made on the device: the server stores todos under the ids clients give them */
 object Ids {
     private val random = SecureRandom()
-    private val machine = ByteArray(5).also { random.nextBytes(it) }
     private val counter = AtomicInteger(random.nextInt())
 
+    /** Time, 5 fresh random bytes, counter: one id says nothing about the device's other ids */
     fun new(): String {
-        val bytes = ByteArray(12)
+        val bytes = ByteArray(12).also(random::nextBytes)
         val seconds = (System.currentTimeMillis() / 1000).toInt()
         for (i in 0..3) bytes[i] = (seconds shr (24 - 8 * i)).toByte()
-        machine.copyInto(bytes, 4)
         val count = counter.incrementAndGet()
         for (i in 0..2) bytes[9 + i] = (count shr (16 - 8 * i)).toByte()
         return bytes.joinToString("") { "%02x".format(it) }
