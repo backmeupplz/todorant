@@ -12,7 +12,7 @@ import { verifyTelegramPayload } from '@/helpers/verifyTelegramPayload'
 import axios from 'axios'
 import Facebook = require('facebook-node-sdk')
 import { QrLoginModel } from '@/models/QrLoginModel'
-import { createHmac } from 'crypto'
+import { createHash, createHmac } from 'crypto'
 import { v4 as uuid } from 'uuid'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -326,9 +326,14 @@ export default class LoginController {
   }
 
   @Get('/generate_uuid')
-  async generateQrUuid() {
+  async generateQrUuid(@Ctx() ctx: Context) {
     const qrUuid = uuid()
-    await new QrLoginModel({ uuid: qrUuid }).save()
+    // The QR code itself is visible to anyone near the screen: browsers that send ?hash=sha256(secret)
+    // bind the code to themselves, so only the secret's holder can collect the token
+    const hash = ctx.query.hash
+    const secretHash =
+      typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash) ? hash : undefined
+    await new QrLoginModel({ uuid: qrUuid, secretHash }).save()
     return { uuid: qrUuid }
   }
 
@@ -353,7 +358,17 @@ export default class LoginController {
       return ctx.throw(403)
     }
     const qrLogin = await QrLoginModel.findOne({ uuid: qrUuid })
-    return { token: qrLogin?.token }
+    if (!qrLogin?.token) return {}
+    if (qrLogin.secretHash) {
+      const secret = ctx.request.body.secret
+      const hash =
+        typeof secret === 'string' &&
+        createHash('sha256').update(secret).digest('hex')
+      if (hash !== qrLogin.secretHash) return {}
+      // One use: nobody can collect the token again after the browser did
+      await QrLoginModel.deleteOne({ uuid: qrUuid })
+    }
+    return { token: qrLogin.token }
   }
 }
 

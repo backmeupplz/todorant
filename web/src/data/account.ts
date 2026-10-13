@@ -45,5 +45,9 @@ export async function boot() {
   await load()
   if (session.value) return sync.start()
   const token = document.cookie.match(/(?:^|; )token=([^;]+)/)?.[1]
-  if (token && !localStorage.getItem('signedOut')) await login('token', { token: decodeURIComponent(token) }).then(start, () => {})
+  if (token && !localStorage.getItem('signedOut')) {
+    await login('token', { token: decodeURIComponent(token) }).then(start, () => {})
+    // Used once: a cookie any todorant.com subdomain can set shouldn't keep signing this site in
+    for (const domain of ['', '; domain=todorant.com', '; domain=.todorant.com']) document.cookie = `token=; Max-Age=0; path=/${domain}`
+  }
 }

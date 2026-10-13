@@ -23,7 +23,7 @@ export function Pages({ path }: { path: string }) {
   else if (path === '/mobile-login/telegram') body = <TelegramMobile />
   else if (path === '/mobile_login_success') body = <p class="page-center emoji">✅</p>
   else if (path === '/mobile_login_error') body = <p class="page-center emoji">❌</p>
-  else if (path === '/google_calendar_setup_web') body = <Task key={path} run={() => calendar(query.value.get('code'))} />
+  else if (path === '/google_calendar_setup_web') body = <Task key={path} run={() => calendar(query.value.get('code'), query.value.get('state'))} />
   else if (path === '/apple_firefox_error') body = <p class="page-center" dangerouslySetInnerHTML={{ __html: t('errors.appleFirefox') }} />
   else body = (
     <div class="page-center">
@@ -68,10 +68,15 @@ async function acceptInvite(token: string) {
   go('/superpower', true)
 }
 
-async function calendar(code: string | null) {
-  if (!session.value || !code) return go('/', true)
+/**
+ * Google's return from the calendar consent. The backend signed `state` into the consent URL it gave
+ * us; a code without it was started by someone else (a link that would connect their calendar to this
+ * account and receive its todos), so it's refused.
+ */
+async function calendar(code: string | null, state: string | null) {
+  if (!session.value || !code || !state) return go('/', true)
   try {
-    setSetting('googleCalendarCredentials', await call('POST', '/google/calendarAuthorize', { code, web: true }))
+    setSetting('googleCalendarCredentials', await call('POST', '/google/calendarAuthorize', { code, state, web: true }))
     toast(t('googleCalendarEnableSuccess'))
   } catch (e) {
     showError(e)
@@ -93,7 +98,10 @@ function TelegramMobile() {
         alert(t('loginMobile.telegram.notAllowedError'))
       } else if (r?.allowed) {
         clearInterval(timer)
-        location.href = `/mobile_login_success?data=${JSON.stringify(r.user)}`
+        // The apps read the user from the URL; only what they need goes there (not settings or calendar credentials)
+        const { _id, token, name, createdAt, updatedAt } = r.user as Record<string, unknown>
+        // Raw JSON like the old site: the React Native app reads it back with decodeURI
+        location.href = `/mobile_login_success?data=${JSON.stringify({ _id, token, name, createdAt, updatedAt })}`
       }
     }, 5000)
     return () => clearInterval(timer)

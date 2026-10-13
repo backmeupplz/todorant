@@ -36,7 +36,8 @@ export function start() {
 function connect() {
   const token = session.value?.token
   if (!token || ws) return
-  const socket = new WebSocket(`${API.replace(/^http/, 'ws')}/v2/ws?token=${encodeURIComponent(token)}`)
+  // The token rides as a subprotocol next to "todorant" (browsers can't set headers): URLs end up in logs
+  const socket = new WebSocket(`${API.replace(/^http/, 'ws')}/v2/ws`, ['todorant', token])
   ws = socket
   socket.onmessage = (e) => {
     if (ws === socket) handle(JSON.parse(e.data)).catch(console.error)

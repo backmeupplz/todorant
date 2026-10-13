@@ -18,6 +18,7 @@ import {
   verifyTelegramPayloadSpy,
 } from '@/__tests__/testUtils'
 import { app } from '@/app'
+import { createHash } from 'crypto'
 import { runMongo, stopMongo } from '@/models/index'
 import { telegramLoginRequests } from '@/controllers/login'
 import { v4 as uuid } from 'uuid'
@@ -339,5 +340,27 @@ describe('Login endpoint', () => {
       .post('/login/qr_check')
       .send({ uuid: qrUuid })
     expect(response.body).toStrictEqual({ token })
+  })
+
+  it('should hand a secret-bound QR token only to the secret holder, once', async () => {
+    const { token } = (await getOrCreateUser(completeUser)).user
+    const secret = 'browser-secret'
+    const hash = createHash('sha256').update(secret).digest('hex')
+    const { uuid: qrUuid } = (
+      await request(server).get(`/login/generate_uuid?hash=${hash}`)
+    ).body
+    await QrLoginModel.findOneAndUpdate({ uuid: qrUuid }, { token })
+    const check = (body: object) =>
+      request(server).post('/login/qr_check').send(body)
+    // Someone who only saw the code gets nothing
+    expect((await check({ uuid: qrUuid })).body).toStrictEqual({})
+    expect((await check({ uuid: qrUuid, secret: 'guess' })).body).toStrictEqual(
+      {}
+    )
+    expect((await check({ uuid: qrUuid, secret })).body).toStrictEqual({
+      token,
+    })
+    // …and nobody gets it again
+    expect((await check({ uuid: qrUuid, secret })).body).toStrictEqual({})
   })
 })

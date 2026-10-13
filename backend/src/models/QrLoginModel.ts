@@ -7,6 +7,10 @@ export class QrLogin {
 
   @prop({ required: true, unique: true, index: true })
   uuid: string
+
+  /** sha256 of a secret only the browser showing the code knows; /qr_check then requires the secret */
+  @prop()
+  secretHash?: string
 }
 
 export const QrLoginModel = getModelForClass(QrLogin, {

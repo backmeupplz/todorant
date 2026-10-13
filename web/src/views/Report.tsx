@@ -39,7 +39,8 @@ function Charts({ data, start, end }: { data: Meta; start?: string; end?: string
   const last = [end || dateString(new Date()), keys.at(-1)!].sort()[1]
   // At least two weeks unless a start date is picked, so a few days don't make a few huge bars
   const from = start ? parseTitle(start) : new Date(Math.min(+parseTitle(keys[0]), +addDays(parseTitle(last), -13)))
-  for (let d = from; dateString(d) <= last; d = addDays(d, 1)) days.push(dateString(d))
+  // At most ~3 years of bars: a todo dated in year 9999 (shared reports included) would otherwise hang the page
+  for (let d = from; dateString(d) <= last && days.length < 1100; d = addDays(d, 1)) days.push(dateString(d))
   return (
     <div class="charts">
       {([['report.tasksCompleted', done], ['report.frogsCompleted', frogs]] as const).map(([title, counts]) => (

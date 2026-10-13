@@ -89,7 +89,7 @@ export function TodoCard(p: { todo: Todo; type: CardType; drag?: JSX.HTMLAttribu
       onKeyDown={(e) => e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggle())}
       {...swipe}
     >
-      {todo.frogFails > 0 && <div class="bubbles">{Array.from({ length: todo.frogFails }, (_, i) => <i key={i} />)}</div>}
+      {todo.frogFails > 0 && <Bubbles n={todo.frogFails} />}
       {from && <div class="from">{t('delegate.from')}: {from}</div>}
       <div>
         {p.drag && todo.frogFails < 3 && <span class="handle" {...p.drag}><Icon name="drag_indicator" size={18} /></span>}
@@ -101,6 +101,9 @@ export function TodoCard(p: { todo: Todo; type: CardType; drag?: JSX.HTMLAttribu
     </div>
   )
 }
+
+/** One orange bubble per failed move (capped: the server allows up to 100) */
+const Bubbles = ({ n }: { n: number }) => <div class="bubbles">{Array.from({ length: Math.min(n, 5) }, (_, i) => <i key={i} />)}</div>
 
 const Meta = ({ todo }: { todo: Todo }) =>
   todo.encrypted || todo.skipped || todo.repetitive ? (
@@ -116,7 +119,7 @@ export function CurrentCard({ todo }: { todo: Todo }) {
   rev.value
   return (
     <div class={`current-card${overdue(todo, 'current') ? ' old' : ''}`} {...useSwipe(prefs.value.swipe, todo)}>
-      {todo.frogFails > 0 && <div class="bubbles">{Array.from({ length: todo.frogFails }, (_, i) => <i key={i} />)}</div>}
+      {todo.frogFails > 0 && <Bubbles n={todo.frogFails} />}
       <div class="line">
         <div class="body">
           <TodoText todo={todo} />

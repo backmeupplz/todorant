@@ -1,3 +1,8 @@
+// Never run inside someone else's frame (clickjacking); GitHub Pages can't send frame-ancestors
+if (top !== self) {
+  document.documentElement.style.display = 'none'
+  top!.location.href = location.href
+}
 import { render } from 'preact'
 import './styles.css'
 import { App } from './app'

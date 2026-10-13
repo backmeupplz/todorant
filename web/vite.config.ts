@@ -1,10 +1,26 @@
 import { defineConfig } from 'vite'
 import { copyFileSync, readdirSync, rmSync } from 'node:fs'
 
+// Content-Security-Policy for the built page (GitHub Pages can't send headers). Scripts only from here and
+// Telegram's login widget (which evals its callback); network only to the backend.
+const api = new URL(process.env.VITE_API ?? 'https://backend.todorant.com')
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' https://telegram.org 'unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  `connect-src 'self' ${api.origin} ${api.origin.replace(/^http/, 'ws')}`,
+  'frame-src https://oauth.telegram.org',
+  "form-action 'self'",
+  "base-uri 'none'",
+  "object-src 'none'",
+].join('; ')
+
 export default defineConfig({
   // Preact's JSX runtime, straight from Vite's transformer (no framework plugin needed)
   oxc: { jsx: { runtime: 'automatic', importSource: 'preact' } },
   plugins: [
+    { name: 'csp', apply: 'build', transformIndexHtml: (html) => html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${csp}" />`) },
     // GitHub Pages serves 404.html for unknown paths, so deep links boot the SPA
     {
       name: 'spa-404',

@@ -90,13 +90,26 @@ function hashArg(name: string) {
   return new RegExp(`${name}=([^&]+)`).exec(decodeURIComponent(location.hash))?.[1]
 }
 
-/** Google/Facebook come back with #access_token, Apple (via the backend) with #…id_token=…&user=…, Telegram redirect mode with ?hash= */
+// Each OAuth redirect carries a random state remembered by this tab; a return without it is someone else's
+// login handed to us through a link (login CSRF) and is ignored
+const STATE = 'oauth-state'
+function newState() {
+  const state = crypto.randomUUID()
+  sessionStorage.setItem(STATE, state)
+  return state
+}
+
+/** Google/Facebook come back with #access_token, Apple (via the backend) with #…id_token=…&user=… — all with our state */
 function finishRedirectLogin() {
   const p = path.value
   const accessToken = hashArg('access_token')
   const idToken = hashArg('id_token')
-  const telegram = query.value.has('hash') && !session.value ? Object.fromEntries(query.value) : null
   const done = () => go('/', true)
+  const expected = sessionStorage.getItem(STATE)
+  if (accessToken || idToken) {
+    sessionStorage.removeItem(STATE)
+    if (!expected || hashArg('state') !== expected) return done()
+  }
   if (accessToken && p === '/google_login_result') done(), signIn('google-firebase', { accessToken })
   else if (accessToken && p === '/facebook_login_result') done(), signIn('facebook', { accessToken })
   else if (idToken) {
@@ -106,8 +119,7 @@ function finishRedirectLogin() {
       parsed = user ? JSON.parse(user) : undefined
     } catch {}
     done(), signIn('apple-firebase', { credential: { oauthIdToken: idToken }, user: parsed })
-  } else if (telegram) done(), signIn('telegram', telegram)
-  else if (p !== '/') done()
+  } else if (p !== '/') done()
 }
 
 const uuid = () => crypto.randomUUID()
@@ -115,15 +127,15 @@ const redirect = (url: string) => (location.href = url)
 const PROVIDERS: { name: string; key: string; icon: string; go: () => void }[] = [
   {
     name: 'facebook', key: 'home.facebook', icon: '/img/facebook.svg',
-    go: () => redirect(`https://www.facebook.com/dialog/oauth?client_id=640750769753434&redirect_uri=${location.origin}/facebook_login_result&scope=email,public_profile&response_type=token&auth_type=rerequest`),
+    go: () => redirect(`https://www.facebook.com/dialog/oauth?client_id=640750769753434&redirect_uri=${location.origin}/facebook_login_result&scope=email,public_profile&response_type=token&auth_type=rerequest&state=${newState()}`),
   },
   {
     name: 'google', key: 'home.google', icon: '/img/google.svg',
-    go: () => redirect(`https://accounts.google.com/o/oauth2/v2/auth?client_id=989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com&redirect_uri=${location.origin}/google_login_result&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&prompt=select_account`),
+    go: () => redirect(`https://accounts.google.com/o/oauth2/v2/auth?client_id=989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com&redirect_uri=${location.origin}/google_login_result&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&prompt=select_account&state=${newState()}`),
   },
   {
     name: 'apple', key: 'home.apple', icon: '/img/apple.svg',
-    go: () => redirect(`https://appleid.apple.com/auth/authorize?response_type=code%20id_token&response_mode=form_post&client_id=com.todorant.web&redirect_uri=https://backend.todorant.com/login/apple_login_result&scope=email%20name&nonce=${uuid()}&state=${uuid()}`),
+    go: () => redirect(`https://appleid.apple.com/auth/authorize?response_type=code%20id_token&response_mode=form_post&client_id=com.todorant.web&redirect_uri=https://backend.todorant.com/login/apple_login_result&scope=email%20name&nonce=${uuid()}&state=${newState()}`),
   },
 ]
 
@@ -169,15 +181,20 @@ function QrLogin({ close, onToken }: { close: () => void; onToken: (token: strin
   const left = useSignal(TEN_MINUTES)
   useEffect(() => {
     let alive = true
-    const regenerate = () => {
+    // Only this tab knows the secret behind the code: someone who sees (or photographs) the QR can't collect the token
+    let secret = ''
+    const regenerate = async () => {
       left.value = TEN_MINUTES
-      call<{ uuid: string }>('GET', '/login/generate_uuid', undefined, '').then((r) => alive && (code.value = r.uuid), showError)
+      secret = [...crypto.getRandomValues(new Uint8Array(32))].map((b) => b.toString(16).padStart(2, '0')).join('')
+      const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(secret)))
+      const hash = [...digest].map((b) => b.toString(16).padStart(2, '0')).join('')
+      call<{ uuid: string }>('GET', `/login/generate_uuid?hash=${hash}`, undefined, '').then((r) => alive && (code.value = r.uuid), showError)
     }
     regenerate()
     const tick = setInterval(() => (left.value <= 1 ? regenerate() : left.value--), 1000)
     const poll = setInterval(async () => {
       if (!code.value) return
-      const r = await call<{ token?: string }>('POST', '/login/qr_check', { uuid: code.value }, '').catch(() => null)
+      const r = await call<{ token?: string }>('POST', '/login/qr_check', { uuid: code.value, secret }, '').catch(() => null)
       if (r?.token && alive) (alive = false), onToken(r.token)
     }, 5000)
     return () => {
