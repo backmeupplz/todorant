@@ -1,11 +1,15 @@
-name: Todorant Workflows
+name: Backend
 on:
   pull_request:
     types: [synchronize, opened]
+    paths: [backend/**]
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - uses: actions/checkout@v2
       - name: Install modules
