@@ -1,4 +1,4 @@
-import { useSignal } from '@preact/signals'
+import { useSignal } from '../lib/state'
 import { useEffect, useRef } from 'preact/hooks'
 import { Icon } from '../assets/icons'
 import { addHeroPoint, create, encryptionKey, people, prefs, session, settings, todos as allTodos, update, type Person, type Todo } from '../data/store'

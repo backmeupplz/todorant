@@ -1,4 +1,4 @@
-import { useSignal } from '@preact/signals'
+import { useSignal } from '../lib/state'
 import { call } from '../data/rest'
 import { people, rev, session, todos, update, type Person, type Todo } from '../data/store'
 import { sync } from '../data/sync'

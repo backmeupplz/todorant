@@ -1,12 +1,16 @@
 import { render } from 'preact'
-import { effect } from '@preact/signals'
+import './fonts.css'
 import './styles.css'
 import { App } from './app'
 import { boot } from './data/account'
 import { prefs } from './data/store'
 import { initLanguage } from './i18n'
+import { onRerender } from './lib/state'
 
-effect(() => void document.documentElement.classList.toggle('dark', prefs.value.dark))
+prefs.subscribe((p) => document.documentElement.classList.toggle('dark', p.dark))
 await initLanguage()
-render(<App />, document.getElementById('app')!)
+const root = document.getElementById('app')!
+const draw = () => render(<App />, root)
+onRerender(draw)
+draw()
 boot()

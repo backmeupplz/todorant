@@ -1,4 +1,4 @@
-import { signal } from '@preact/signals'
+import { signal } from '../lib/state'
 import * as idb from './idb'
 
 /** Synced fields per collection; must match backend/src/v2/schema.ts */

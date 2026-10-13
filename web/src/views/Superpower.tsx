@@ -1,5 +1,4 @@
-import { signal } from '@preact/signals'
-import { lazy, Suspense } from 'preact/compat'
+import { signal } from '../lib/state'
 import { useEffect } from 'preact/hooks'
 import { Icon } from '../assets/icons'
 import { logout } from '../data/account'
@@ -10,7 +9,7 @@ import { LANGUAGES, language, setLanguage, t, type Language } from '../i18n'
 import { todayTitle } from '../lib/time'
 import * as todos from '../logic/todos'
 import { addTodo } from '../ui/actions'
-import { confirm, dialogOpen, IconButton, Menu, showError, Spinner } from '../ui/kit'
+import { confirm, dialogOpen, IconButton, lazy, Menu, showError } from '../ui/kit'
 import { go, hash, query } from '../ui/router'
 import { setShowPlanning } from '../ui/TodoCard'
 import { Current } from './Current'
@@ -78,9 +77,7 @@ export function Superpower() {
           ))}
         </nav>
         <section class="panel">
-          <Suspense fallback={<Spinner />}>
-            {tab.value === 'current' ? <Current /> : tab.value === 'planning' ? <Planning /> : tab.value === 'report' ? <Report /> : <Delegation />}
-          </Suspense>
+          {tab.value === 'current' ? <Current /> : tab.value === 'planning' ? <Planning /> : tab.value === 'report' ? <Report /> : <Delegation />}
         </section>
       </main>
       <button class="fab" title={`${t('todo.create.title')} (a)`} aria-label={t('todo.create.title')} onClick={() => addTodo()}>

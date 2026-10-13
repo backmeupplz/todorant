@@ -1,4 +1,4 @@
-import { useSignal } from '@preact/signals'
+import { useSignal } from '../lib/state'
 import type { JSX } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 import { Icon } from '../assets/icons'

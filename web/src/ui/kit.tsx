@@ -1,6 +1,6 @@
-import { signal, useSignal } from '@preact/signals'
-import type { ComponentChildren, JSX } from 'preact'
-import { useEffect } from 'preact/hooks'
+import { signal, useSignal } from '../lib/state'
+import type { ComponentChildren, ComponentType, JSX } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 import { Icon, type IconName } from '../assets/icons'
 import { t } from '../i18n'
 import { prefs } from '../data/store'
@@ -154,6 +154,21 @@ export function Menu(p: { trigger: (toggle: () => void) => ComponentChildren; ch
 }
 
 export const Spinner = () => <span class="spinner" aria-label="Loading" />
+
+/** A component loaded on first render (code splitting); shows a spinner meanwhile */
+export function lazy<P>(load: () => Promise<ComponentType<P>>) {
+  let loaded: ComponentType<P> | undefined
+  let loading: Promise<unknown> | undefined
+  return (props: P & JSX.IntrinsicAttributes) => {
+    const [, setReady] = useState(false)
+    if (loaded) {
+      const C = loaded as ComponentType<any>
+      return <C {...props} />
+    }
+    ;(loading ??= load().then((c) => (loaded = c))).then(() => setReady(true))
+    return <div class="placeholder"><Spinner /></div>
+  }
+}
 
 // endregion
 

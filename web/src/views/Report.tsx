@@ -1,4 +1,4 @@
-import { useSignal } from '@preact/signals'
+import { useSignal } from '../lib/state'
 import { useEffect } from 'preact/hooks'
 import { call } from '../data/rest'
 import { rev, session, todos } from '../data/store'

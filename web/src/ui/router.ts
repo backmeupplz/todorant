@@ -1,4 +1,4 @@
-import { signal } from '@preact/signals'
+import { signal } from '../lib/state'
 
 /** The current location; history API routing (GitHub Pages serves 404.html = index.html for deep links) */
 export const path = signal(location.pathname)

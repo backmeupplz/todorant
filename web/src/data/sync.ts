@@ -1,4 +1,4 @@
-import { signal } from '@preact/signals'
+import { signal } from '../lib/state'
 import { decrypt, encrypt } from '../lib/crypto'
 import {
   acknowledge, applyRemote, applySingleton, cursor, encryptionKey, now, pending, session, setCursor, setOffset, setOnChange,

@@ -1,4 +1,4 @@
-import { signal } from '@preact/signals'
+import { signal } from '../lib/state'
 import en from './en.json'
 import { prefs, setPref } from '../data/store'
 

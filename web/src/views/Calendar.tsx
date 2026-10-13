@@ -1,4 +1,4 @@
-import { useSignal } from '@preact/signals'
+import { useSignal } from '../lib/state'
 import { settings, type Todo } from '../data/store'
 import { language, locale } from '../i18n'
 import { addDays, dateString, isOld, parseTitle, todayTitle } from '../lib/time'
