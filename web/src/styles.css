@@ -72,7 +72,7 @@ h1, h2, h3, p { margin: 0; }
 .grow { flex: 1; min-width: 0; }
 .wrap { flex-wrap: wrap; }
 .hidden { display: none !important; }
-.container { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+:where(.container) { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
 
 /* Shell: bottom tab bar on phones, top bar on desktop (sticky elements offset by --nav-offset) */
 .screen { min-height: 100dvh; padding-bottom: calc(var(--tabbar) + 88px + env(safe-area-inset-bottom)); }

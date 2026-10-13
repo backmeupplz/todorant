@@ -525,6 +525,7 @@
     "languageSelect": "Language",
     "level": "Level",
     "light": "Light",
+    "loginTelegram": "Login with Telegram",
     "logout": "Logout",
     "logoutText": "Would you like to logout?",
     "nameLabel": "Name",
@@ -550,6 +551,7 @@
       "removeCompletedFromCalendar": "Remove completed todos from Google Calendar",
       "showMoreByDefault": "Show more when adding todos by default"
     },
+    "signUp": "Create account",
     "soundEffects": "Sound effects",
     "startTimeOfDay": "Start of the day",
     "supportLabel": "Support",

@@ -1,5 +1,5 @@
 import { useSignal } from '../lib/state'
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect } from 'preact/hooks'
 import { signIn } from '../data/account'
 import { call } from '../data/rest'
 import { API } from '../data/sync'
@@ -140,28 +140,29 @@ const PROVIDERS: { name: string; key: string; icon: string; go: () => void }[] =
   },
 ]
 
-/** Self-hosted servers usually have no OAuth apps: email + password comes first there */
+/** Self-hosted servers: the OAuth apps only know todorant.com, so email + password and the QR code are the ways in */
 const customServer = () => API !== 'https://backend.todorant.com'
 
 function openSignIn() {
+  if (!customServer()) loadTelegram()
   open((close) => {
     const auth = (provider: string, body: unknown) => signIn(provider, body).then(() => session.value && close())
+    const buttons = [
+      ...(customServer() ? [] : [...PROVIDERS, { name: 'telegram', key: 'm.loginTelegram', icon: '/img/telegram.svg', go: () => telegramLogin((user) => auth('telegram', user)) }]),
+      { name: 'qr', key: 'home.mobile', icon: '/img/qr-code.svg', go: () => open((closeQr) => <QrLogin close={closeQr} onToken={(token) => (closeQr(), auth('token', { token }))} />, true) },
+    ]
     const email = <EmailSignIn auth={auth} />
     return (
       <div class="card signin">
-        {customServer() && email}
-        {PROVIDERS.map((p) => (
+        <h2 class="dialog-title">{t('home.signIn')}</h2>
+        {customServer() && <>{email}<hr /></>}
+        {buttons.map((p) => (
           <button key={p.name} type="button" class={`signin-btn signin-${p.name}`} onClick={p.go}>
-            <img src={p.icon} alt="" width={18} height={18} />
+            <img src={p.icon} alt="" width={20} height={20} />
             {t(p.key)}
           </button>
         ))}
-        <TelegramWidget onAuth={(user) => auth('telegram', user)} />
-        <button type="button" class="signin-btn signin-qr" onClick={() => open((closeQr) => <QrLogin close={closeQr} onToken={(token) => (closeQr(), auth('token', { token }))} />, true)}>
-          <img src="/img/qr-code.svg" alt="" width={18} height={18} />
-          {t('home.mobile')}
-        </button>
-        {!customServer() && email}
+        {!customServer() && <><hr />{email}</>}
       </div>
     )
   })
@@ -169,47 +170,36 @@ function openSignIn() {
 
 /** Email + password: sign in, or create an account (the server keeps these apart from OAuth accounts) */
 function EmailSignIn({ auth }: { auth: (provider: string, body: unknown) => Promise<unknown> }) {
-  const shown = useSignal(customServer())
-  const email = useSignal('')
-  const password = useSignal('')
   const busy = useSignal(false)
-  const submit = (provider: 'password' | 'signup') => async (e?: Event) => {
-    e?.preventDefault()
+  // The browser checks the fields (an email, 8+ characters) before either button submits
+  const submit = async (e: SubmitEvent) => {
+    e.preventDefault()
+    const form = new FormData(e.currentTarget as HTMLFormElement)
     busy.value = true
-    await auth(provider, { email: email.value, password: password.value })
+    await auth((e.submitter as HTMLButtonElement | null)?.value === 'signup' ? 'signup' : 'password', { email: form.get('email'), password: form.get('password') })
     busy.value = false
   }
-  if (!shown.value)
-    return (
-      <button type="button" class="btn btn-text signin-email-toggle" onClick={() => (shown.value = true)}>
-        {t('m.email')} / {t('encryption.password')}
-      </button>
-    )
-  const ok = /^\S+@\S+\.\S+$/.test(email.value.trim()) && password.value.length >= 8
   return (
-    <form class="signin-email" onSubmit={submit('password')}>
-      <input class="input" type="email" autocomplete="username" placeholder={t('m.email')} aria-label={t('m.email')} value={email.value} onInput={(e) => (email.value = e.currentTarget.value)} />
-      <input class="input" type="password" autocomplete="current-password" placeholder={t('encryption.password')} aria-label={t('encryption.password')} value={password.value} onInput={(e) => (password.value = e.currentTarget.value)} />
-      <div class="row">
-        <Button type="submit" class="grow" disabled={!ok || busy.value}>{t('home.signIn')}</Button>
-        <Button text disabled={!ok || busy.value} onClick={submit('signup')}>Create account</Button>
-      </div>
+    <form class="signin-email" onSubmit={(e) => submit(e as unknown as SubmitEvent)}>
+      <input class="input" name="email" type="email" required autocomplete="username" placeholder={t('m.email')} aria-label={t('m.email')} />
+      <input class="input" name="password" type="password" required minLength={8} autocomplete="current-password" placeholder={t('encryption.password')} aria-label={t('encryption.password')} />
+      <Button type="submit" class="btn-block" disabled={busy.value}>{t('home.signIn')}</Button>
+      <button type="submit" class="btn btn-text" value="signup" disabled={busy.value}>{t('m.signUp')}</button>
     </form>
   )
 }
 
-function TelegramWidget({ onAuth }: { onAuth: (user: object) => void }) {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    ;(window as any).onTelegramAuth = onAuth
-    const s = document.createElement('script')
-    s.async = true
-    s.src = 'https://telegram.org/js/telegram-widget.js?22'
-    Object.assign(s.dataset, { telegramLogin: 'todorant_bot', size: 'large', radius: '3', userpic: 'false', onauth: 'onTelegramAuth(user)' })
-    ref.current!.append(s)
-  }, [])
-  return <div ref={ref} class="signin-telegram" />
+// Telegram's login popup behind our own button (telegram-widget.js provides Telegram.Login.auth). The script loads
+// when the dialog opens: browsers only allow the popup straight from the click
+function loadTelegram() {
+  if (document.getElementById('telegram-login')) return
+  const s = document.createElement('script')
+  s.id = 'telegram-login'
+  s.src = 'https://telegram.org/js/telegram-widget.js?22'
+  document.head.append(s)
 }
+const telegramLogin = (onAuth: (user: object) => void) =>
+  (window as any).Telegram?.Login.auth({ bot_id: 774889217, request_access: 'write', lang: language.value }, (user: object | false) => user && onAuth(user))
 
 const TEN_MINUTES = 600
 

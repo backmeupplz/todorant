@@ -516,6 +516,7 @@
     "languageSelect": "Язык",
     "level": "Уровень",
     "light": "Светлая",
+    "loginTelegram": "Зайти через Телеграм",
     "logout": "Выйти",
     "logoutText": "Хотите выйти?",
     "nameLabel": "Имя",
@@ -541,6 +542,7 @@
       "removeCompletedFromCalendar": "Удалять задачи из Гугл Календаря после выполнения",
       "showMoreByDefault": "Сразу показывать расширенные настройки добавления задачи"
     },
+    "signUp": "Создать аккаунт",
     "soundEffects": "Звуковые эффекты",
     "startTimeOfDay": "Начало дня",
     "supportLabel": "Поддержка",
