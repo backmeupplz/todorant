@@ -1,0 +1,185 @@
+{
+  "encryption": {
+    "info": "Folosiți această secțiune cu atenție maximă! Criptarea nu va funcționa dacă nu veți introduce o parolă. După finalizare vor exista două tipuri de task-uri: criptate și necriptate. Toate task-urile noi vor fi criptate. Task-urile vechi pot fi criptate făcând clic pe butonul de mai jos. Dacă vă pierdeți parola, va fi imposibilă recuperarea task-urilor.",
+    "switch": "Criptarea task-ului",
+    "encryptAllButton": "Criptează tot",
+    "decryptAllButton": "Decriptează tot",
+    "confirm": "Sunteți sigur că doriți să criptați toate task-urile cu o parolă? Veți putea decripta datele cu aceeași parolă. Dacă veți pierde parola, nu veți reuși să decriptați datele!",
+    "disableConfirm": "Sunteți sigur că doriți să eliminați parola și să dezactivați criptarea? Această acțiune nu va decripta task-urile criptate.",
+    "errorDecrypting": "Parolă de decriptare incorectă"
+  },
+  "search": "Căutare",
+  "qr": {
+    "code": "Cod QR"
+  },
+  "breakdown": {
+    "request": "Se pare că amânați acest task prea des. Vă rugăm să îl împărțiți în task-uri mai mici, nu îl mai puteți amâna. Crede-mă, acest lucru te va ajuta să îndeplinești sarcina!",
+    "button": "Împarte"
+  },
+  "warning": "Atenție",
+  "hashtags": {
+    "title": "Hashtag-uri"
+  },
+  "supportAlert": {
+    "title": "Suport"
+  },
+  "loginMobile": {
+    "telegram": {
+      "idHint": "ID Telegram",
+      "loginButton": "Intrați",
+      "noCredentialsError": "Vă rugăm, indicați ID-ul Telegram",
+      "notAllowedError": "Cererea de logare a fost respinsă"
+    }
+  },
+  "noReport": {
+    "title": "Date insuficiente"
+  },
+  "report": {
+    "title": "Raport",
+    "tasksCompleted": "Task-uri finalizate",
+    "frogsCompleted": "Broaște finalizate",
+    "share": "Distribuiți prietenilor acest raport!",
+    "hashtag": "Hashtag",
+    "shareButton": "Distribuie",
+    "url": "Link permanent către acest raport",
+    "shareMessage": "Trageți o privire la raportul meu de productivitate în Todorant!",
+    "call": "Doriți să vă alăturați?",
+    "callButton": "Alătură-te lui Todorant",
+    "startDate": "Data de început",
+    "endDate": "Data de sfârșit"
+  },
+  "title": "Todorant",
+  "cookie": {
+    "button": "Am înțeles!",
+    "message": "🍪 Acest site web folosește cookies."
+  },
+  "home": {
+    "texts": {
+      "contact": [
+        "Au mai rămas întrebări? Scrieți-mi la",
+        ". Mulțumesc."
+      ]
+    },
+    "signIn": "Intrați",
+    "facebook": "Intrați cu Facebook",
+    "google": "Intrați cu Google",
+    "privacy": "Politica de confidențialitate",
+    "feedback": {
+      "title": "Ce zic utilizatorii?",
+      "reviews": [
+        {
+          "name": "Sergiu Romanov"
+        },
+        {
+          "name": "Dinislam Sad"
+        },
+        {
+          "name": "Aleksei Kaut"
+        },
+        {
+          "name": "Anton"
+        },
+        null,
+        null,
+        {
+          "name": "Vladimir Dubenco"
+        },
+        {
+          "name": "Maksim Alekseyevich",
+          "username": "MMAradiology"
+        },
+        {
+          "name": "Kiku Reise"
+        }
+      ]
+    }
+  },
+  "menu": {
+    "darkMode": {
+      "on": "Tema întunecată: pornită",
+      "off": "Tema întunecată: deact."
+    },
+    "logout": "Ieșiți"
+  },
+  "support": "Ceva nu e clar? Scrieți-mi la <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "errors": {
+    "login": {
+      "facebook": "Nu s-a reușit conectarea prin Facebook",
+      "google": "Nu s-a reușit conectarea prin Google",
+      "telegram": "Nu s-a reușit conectarea prin Telegram"
+    },
+    "internal": "Eroare internă de server",
+    "loadTodos": "Nu s-a reușit încărcarea task-urilor",
+    "todo": {
+      "textLenght": "Task-urile trebuie să conțină text"
+    },
+    "invalidForm": "Vă rugăm, completați câmpurile necesare",
+    "report": "Nu s-a reușit încărcarea raportului"
+  },
+  "close": "Închide",
+  "notFound": "Pagina nu a fost găsită",
+  "todo": {
+    "create": {
+      "title": "Adăugă task-uri",
+      "text": "Textul task-ului",
+      "placeholder": "Task-ul",
+      "frog": "Aceasta e o broască!",
+      "date": "Ziua exactă",
+      "month": "Sau luna"
+    }
+  },
+  "cancel": "Anulează",
+  "save": "Salvează",
+  "delete": "Șterge",
+  "current": "Curent",
+  "planning": "Planificare",
+  "howto": {
+    "bonus": {
+      "title": "Funcții bonus"
+    }
+  },
+  "skipped": "Omis",
+  "allDoneTitle": "Felicitări!",
+  "allDoneText": "🥳 Ați reușit! Toate task-urile pentru azi sunt finalizate, vă puteți odihni — fie un pic să dansați 💃",
+  "noTodosTitle": "Înainte!",
+  "noTodosText": "Pentru azi dvs. nu aveți task-uri. Doriți să lucrați — adăugați task-uri noi pentru azi fie luați task-uri din alte zile.",
+  "addTodoTime": "Timpul exact",
+  "completed": "Finalizat",
+  "planningText": "Aparent, trebuie să realizați o planificare! Vă rog, redistribuiți task-urile rămase de mai jos pentru a debloca secțiunea \"Curent\" și pentru a rămâne productiv. Succes!",
+  "earlyAdopterText": "👏👏 — bat din palme din picioare; sunteți nebuni, care au fost de acord să încerce instrumentul de productivitate personală Todorant printre primii. Putem spune că sunteți cei o mie de utilizatori de aur, pe baza recenziilor cărora a fost creat Todorant. Aveți tot dreptul să utilizați Tudurant cât doriți — nu vor exista niciodată restricții pentru acest cont, chiar ați meritat. Cu toate acestea, dacă observați că Todorant v-a schimbat dramatic viața spre bine, puteți achiziționa în continuare un abonament, spunând astfel un simplu, dar foarte important pentru mine: „Mulțumesc”. Nu veți pierde niciodată statutul de „Adoptator timpuriu 🦄” și vă puteți anula abonamentul oricând. Vă mulțumesc foarte mult pentru că continuați să utilizați Todorant — și voi continua să adaug funcții frumoase acestui instrument care ne face pe fiecare dintre noi mai buni. Mult noroc!",
+  "earlyAdopterTextBonus": "🤗 Uau! Aparent fie Todorant, fie eu v-am ajutat personal atât de mult încât, chiar având posibilitatea de a folosi Todorant gratuit, ați decis să mă susțineți. Sunt frapat și cu plăcere aș bea o cafea cu dvs. Scrieți-mi fie în telegram (@borodutch), fie prin e-mail — trebuie doar să faceți clic pe numele meu de mai jos. Mulțumesc mult! Este greu de imaginat cât de importantă este contribuția voastră pentru mine!",
+  "trialText": "💪 Bine ați venit la Tudurant! Din momentul înregistrării, aveți exact 30 de zile pentru a încerca sistemul și a vedea dacă vi se potrivește. După 30 de zile, veți avea în continuare acces la sarcinile existente, dar nu veți putea adăuga altele noi. Dacă doriți, puteți să vă abonați chiar înainte de sfârșitul perioadei de probă de 30 de zile. Sunt sigur că împreună cu Todorant veți putea atinge noi orizonturi în propria productivitate!",
+  "rules": [
+    "Îndată ce aveți o sarcină (primiți un e-mail, un apel, un mesaj sau pur și simplu vedeți ceva interesant care trebuie adăugat în lista dvs. de sarcini) — creați imediat o sarcină. Nu așteptați, veți uita de ea dacă nu o notați.",
+    "Sarcinile trebuie să fie întotdeauna un îndemn la acțiune și definite cât mai clar posibil. Dacă sarcina durează mai puțin de două minute, faceți-o imediat și creați-o în lista sarcinilor finalizate.",
+    "Când creați o sarcină, specificați data sau luna exactă. Nu puteți selecta luna curentă fără o anumită dată. Acest lucru se face pentru a ameliora stresul creierului. Dacă aveți încredere în sistem și adăugați tot ce aveți nevoie la datele potrivite, atunci veți finaliza sarcinile la momentul potrivit. O cantitate imensă de voință este irosită din cauza stresului constant, cum ar fi „lucrul pe care trebuie să-l fac, dar nu-mi amintesc exact ce este acel lucru”. Învățați să aveți încredere și să vă relaxați. \\n",
+    "Primul lucru pe care va trebui să îl faceți la începutul fiecărei luni este planificarea. Luați toate sarcinile pentru luna curentă și distribuiți-le pe zile. Acest lucru vă permite să filtrați sarcinile care nu mai sunt relevante și vă ajută să rămâneți liniștiți, conștientizând clar ce trebuie să faceți luna aceasta.",
+    "Primul lucru pe care îl veți realiza în fiecare dimineață este planificarea. Aruncați o privire la secțiunea „Planificare”. Puteți face totul? Împrăștiați sarcinile pe care nu le puteți face astăzi pentru alte zile. De asemenea, împrăștiați sarcinile neterminate din zilele anterioare.",
+    "Cu excepția cazurilor extreme, nu priviți niciodată secțiunea de planificare după terminarea procesului de planificare. Vă va fi mult mai ușor din punct de vedere psihologic să vă concentrați pe o singură sarcină la un moment dat, așa că priviți doar la secțiunea \"Curent\". Ai încredere în sistem, ține minte totul. Lucrați și relaxați-vă creierul.",
+    "În secțiunea \"Curent\", există întotdeauna cel mult o sarcină pe care ar trebui să vă concentrați — nimic altceva. Puteți avea mai multe sarcini pe zi, numărul sarcinilor și progresul sunt afișate pentru comfortul dumneavoastră. Nu puteți sări între sarcini — trebuie să lucrați într-un mod liniar, realizând câte o sarcină la un moment dat.",
+    "Broaștele — reprezintă un tip special de sarcină pe care nu doriți să o faceți. De obicei, acestea sunt sarcini pe care nu le faceți luni de zile sau chiar ani. Tudurant vă face să vă ocupați de broaște în primul rând în fiecare zi. Dimineața, rezervele voastre sunt suficient de mari pentru a face față și celor mai neplăcute sarcini. Iar după ce învingeți broasca, veți primi o doză suficientă de fericire pentru a străluci cu zâmbet toată ziua. Veți fi mândru de dvs. că în sfârșit reușiți să doborâți aceste \"broaște\".",
+    "Vi se permite să săriți peste sarcina curentă — dar faceți-o cât mai puțin posibil. Dacă nu puteți finaliza o sarcină și o redistribuiți de două ori, aceasta devine o broască.",
+    "Dacă sarcina curentă este prea grea, descompuneți-o într-o listă de sarcini mai mici. După ce ați împărțit o sarcină în subtask-uri, aceasta este marcată ca finalizată.",
+    "Adăugați cât mai multe informații importante la sarcini. Adăugați linkuri către e-mailuri (Gmail vă permite să faceți acest lucru), site-uri web, note (ca evernote), documente (cum ar fi dropbox), lăsați numere de telefon sau adăugați orice informații care ar putea fi importante pentru rezolvarea unei probleme. Todorant nu ar trebui să fie principalul depozit și catalogul datelor dvs., ci locul în care datele necesare pentru sarcini să fie stocate nemijlocit împreună cu acele sarcini.",
+    "Simțiți-vă liber să vă alăturați grupului nostru în Telegram pentru a vă împărtăși experiențele despre cum să fiți mai productivi — @todorant_feedback! Feedback-ul dvs. cu privire la activitatea serviciului — sugestii, urări și reclamații — este foarte binevenit.",
+    "Mutați activitățile din pagina \"Planificare\" pentru a le reordona. Dacă doriți să creați o sarcină pentru o anumită săptămână, trebuie doar să o adăugați pentru luni și să o redistribuiți-o luni dimineața, când realizați planificarea.",
+    "În Todorant nu există și nu vor exista niciodată sarcini repetitive automate — singurul lucru pe care ele îl induc — este crearea unei atmosfere de frică, acumularea de sarcini neîmplinite. Dacă trebuie să adăugați o sarcină repetitivă — introduceți-o manual de fiecare dată, creierul vă va mulțumi pentru o sarcină gândită.",
+    "În Todorant nu există un concept de „Proiecte”, întrucât s-a dovedit a fi demotivant, unele dosare pur și simplu nu se deschid niciodată. Proiectele „Fitness” și „Auto-dezvoltare” spun salut. Folosiți în schimb #hashtag-uri.",
+    "Broaștele se află mereu în vârful listei.",
+    "În Todorant nu există memento-uri de sarcină cu orele exacte. Cu toate acestea, puteți activa integrarea cu Google Calendar, astfel încât el să vă bombardeze cu notificări în loc de Todorant."
+  ],
+  "earlyAdopter": "Adoptator timpuriu 🦄",
+  "active": "Activă",
+  "inactive": "Inactivă",
+  "trial": "Probă",
+  "weekday1": "Luni",
+  "weekday2": "Marți",
+  "weekday3": "Miercuri",
+  "weekday4": "Joi",
+  "weekday5": "Vineri",
+  "weekday6": "Sâmbăta",
+  "weekday0": "Duminica",
+  "introTitle": "Bine ați venit!",
+  "introBack": "Înainte!",
+  "back": "Înapoi"
+}
