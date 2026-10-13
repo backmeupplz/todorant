@@ -393,7 +393,7 @@ function Encryption({ close }: { close: () => void }) {
       <Switch checked={on.value} onChange={(v) => (on.value = v)} label={t('encryption.switch')} />
       {on.value && (
         <form class="passwords" onSubmit={(e) => (e.preventDefault(), savable && save())}>
-          <div class="row">
+          <div class="row password-row">
             <div class="grow">{pw('encryption.password', password)}</div>
             <IconButton icon={show.value ? 'eye_off' : 'eye'} title={show.value ? 'Hide password' : 'Show password'} onClick={() => (show.value = !show.value)} />
           </div>

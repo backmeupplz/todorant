@@ -158,12 +158,17 @@ async function fixes(acks?: any[]) {
 /** Applies server data: documents, profile, settings, hero, delegation lists, cursor */
 async function apply(m: any) {
   const key = encryptionKey.value
-  for (const json of m.todos ?? []) {
-    // Deltas carry changed fields only, so a text edit may come without the encrypted flag
-    const encrypted = 'encrypted' in json ? json.encrypted : todos.get(json.id)?.encrypted
-    if (key && encrypted && typeof json.text === 'string') json.text = (await decrypt(json.text, key)) ?? json.text
-    applyRemote('todo', json)
-  }
+  const list: any[] = m.todos ?? []
+  // Decrypt the whole batch in parallel, then apply it in one go (a full pull can be thousands of todos)
+  if (key)
+    await Promise.all(
+      list.map(async (json) => {
+        // Deltas carry changed fields only, so a text edit may come without the encrypted flag
+        const encrypted = 'encrypted' in json ? json.encrypted : todos.get(json.id)?.encrypted
+        if (encrypted && typeof json.text === 'string') json.text = (await decrypt(json.text, key)) ?? json.text
+      }),
+    )
+  for (const json of list) applyRemote('todo', json)
   for (const json of m.tags ?? []) applyRemote('tag', json)
   if (m.user) {
     applySingleton('user', m.user)

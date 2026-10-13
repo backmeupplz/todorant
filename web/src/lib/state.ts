@@ -2,7 +2,7 @@ import { useMemo } from 'preact/hooks'
 
 /**
  * Minimal reactive values: reading `.value` is plain, writing it notifies subscribers and
- * re-renders the app (batched to once per microtask). The app is small enough that a full
+ * re-renders the app (batched to once per frame). The app is small enough that a full
  * re-render is cheaper than fine-grained tracking.
  */
 export class Signal<T> {
@@ -35,11 +35,14 @@ let renderApp = () => {}
 let scheduled = false
 /** The root registers how to re-render itself */
 export const onRerender = (f: () => void) => (renderApp = f)
+/** At most one render per frame however many values change (e.g. while thousands of todos sync in) */
 export function rerender() {
   if (scheduled) return
   scheduled = true
-  queueMicrotask(() => {
+  const run = () => {
     scheduled = false
     renderApp()
-  })
+  }
+  // Hidden tabs get no animation frames; render on a timer there so state still lands
+  document.hidden ? setTimeout(run, 50) : requestAnimationFrame(run)
 }
