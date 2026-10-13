@@ -43,7 +43,7 @@ jobs:
           yarn -s prettier --check src &
           yarn -s eslint --max-warnings 0 --ext ts src &
           yarn -s tsc --skipLibCheck --noEmit &
-          yarn -s jest --forceExit src/__tests__/v2.ts &
+          yarn -s jest --forceExit src/__tests__/v2.ts src/__tests__/appleAuthKey.ts &
           for job in $(jobs -p); do wait $job || exit 1; done
 
   # Easypanel builds the `deploy/backend` branch, so only backend changes deploy
