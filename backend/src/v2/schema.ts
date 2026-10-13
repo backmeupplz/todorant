@@ -56,21 +56,32 @@ const formats: { [field: string]: RegExp } = {
 }
 
 /** Keeps only known fields with the right types; null clears a field. Throws on anything else. */
-export function sanitize(collection: Collection, set: unknown): Record<string, unknown> {
+export function sanitize(
+  collection: Collection,
+  set: unknown
+): Record<string, unknown> {
   if (!set || typeof set !== 'object') throw new Error('Invalid fields')
   const known = fields[collection] as Record<string, Kind>
   const result: Record<string, unknown> = {}
   for (const [field, value] of Object.entries(set)) {
     const kind = known[field]
     if (!kind) continue
-    if (value !== null && typeof value !== kind) throw new Error(`Invalid ${field}`)
-    if (typeof value === 'string' && formats[field] && value && !formats[field].test(value)) {
+    if (value !== null && typeof value !== kind)
+      throw new Error(`Invalid ${field}`)
+    if (
+      typeof value === 'string' &&
+      formats[field] &&
+      value &&
+      !formats[field].test(value)
+    ) {
       throw new Error(`Invalid ${field}`)
     }
-    if (field === 'text' && typeof value === 'string' && value.length > 10000) throw new Error('Text is too long')
+    if (field === 'text' && typeof value === 'string' && value.length > 10000)
+      throw new Error('Text is too long')
     result[field] = value
   }
   return result
 }
 
-export const isObjectId = (id: unknown): id is string => typeof id === 'string' && /^[a-f0-9]{24}$/.test(id)
+export const isObjectId = (id: unknown): id is string =>
+  typeof id === 'string' && /^[a-f0-9]{24}$/.test(id)

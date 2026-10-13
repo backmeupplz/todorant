@@ -10,16 +10,19 @@ import 'module-alias/register'
 // Get the rest of dependencies
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import { app } from '@/app'
+import { attachWebSocket } from '@/v2/ws'
 import { bot } from '@/helpers/telegram'
+import { ensureIndexes } from '@/v2/indexes'
 import { runMongo } from '@/models/index'
 import { socketServer } from '@/sockets/io'
-import { attachWebSocket } from '@/v2/ws'
-import { ensureIndexes } from '@/v2/indexes'
 
 // Run mongo
 runMongo().then(() => {
   console.log('Mongo connected')
-  ensureIndexes().then(() => console.log('Indexes ready'), (err) => console.log('Index error', err))
+  ensureIndexes().then(
+    () => console.log('Indexes ready'),
+    (err) => console.log('Index error', err)
+  )
 })
 // Start rest (and v2 sync over WebSocket on the same port)
 const server = app.listen(1337).on('listening', () => {

@@ -4,7 +4,13 @@ import { authenticate, tokenOf } from '@/v2/auth'
 import { pull, push } from '@/v2/sync'
 import { register, send } from '@/v2/hub'
 
-type Message = { t: string; rid?: unknown; since?: number; ops?: []; key?: string }
+type Message = {
+  t: string
+  rid?: unknown
+  since?: number
+  ops?: []
+  key?: string
+}
 
 /**
  * One message type does everything: `{t: 'sync', rid, ops?, since?}` pushes ops (if any) and/or pulls
@@ -12,7 +18,11 @@ type Message = { t: string; rid?: unknown; since?: number; ops?: []; key?: strin
  * sends `{t: 'changes', …}` the moment another device writes, and `{t: 'pull'}` when a pull is needed.
  */
 export function attachWebSocket(server: Server) {
-  const wss = new WebSocket.Server({ noServer: true, perMessageDeflate: { threshold: 512 }, maxPayload: 16 * 1024 * 1024 })
+  const wss = new WebSocket.Server({
+    noServer: true,
+    perMessageDeflate: { threshold: 512 },
+    maxPayload: 16 * 1024 * 1024,
+  })
   server.on('upgrade', async (request, socket, head) => {
     if (!request.url?.startsWith('/v2/ws')) return
     const userId = await authenticate(tokenOf(request.headers, request.url))
@@ -39,11 +49,20 @@ export function attachWebSocket(server: Server) {
         }
         if (message.t !== 'sync') return
         try {
-          const acks = message.ops?.length ? await push(userId, message.ops, ws, message.key) : undefined
-          const delta = message.since !== undefined ? await pull(userId, message.since || undefined) : {}
+          const acks = message.ops?.length
+            ? await push(userId, message.ops, ws, message.key)
+            : undefined
+          const delta =
+            message.since !== undefined
+              ? await pull(userId, message.since || undefined)
+              : {}
           send(ws, { t: 'synced', rid: message.rid, acks, ...delta })
         } catch (error) {
-          send(ws, { t: 'error', rid: message.rid, message: (error as Error).message })
+          send(ws, {
+            t: 'error',
+            rid: message.rid,
+            message: (error as Error).message,
+          })
         }
       })
       // The server clock lets clients timestamp edits on the server's timeline

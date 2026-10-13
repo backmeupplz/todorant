@@ -1,9 +1,18 @@
 import { Collection, fields } from '@/v2/schema'
 
-const ms = (date: unknown) => (date instanceof Date ? date.getTime() : typeof date === 'number' ? date : undefined)
+const ms = (date: unknown) =>
+  date instanceof Date
+    ? date.getTime()
+    : typeof date === 'number'
+    ? date
+    : undefined
 
 /** Mongo document → compact wire object: id, synced fields, owner ids, ms timestamps; nulls dropped */
-export function wire(collection: Collection, doc: Record<string, any>, only?: string[]) {
+export function wire(
+  collection: Collection,
+  doc: Record<string, any>,
+  only?: string[]
+) {
   const out: Record<string, unknown> = { id: String(doc._id) }
   for (const field of only || Object.keys(fields[collection])) {
     if (doc[field] !== undefined && doc[field] !== null) out[field] = doc[field]

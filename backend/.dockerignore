@@ -1,0 +1,7 @@
+node_modules
+dist
+docs/site
+test
+src/__tests__
+.env
+.git

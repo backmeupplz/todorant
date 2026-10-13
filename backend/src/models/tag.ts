@@ -1,9 +1,15 @@
 import { Document } from 'mongoose'
-import { DocumentType, Ref, getModelForClass, plugin, prop } from '@typegoose/typegoose'
-import { v2Sync } from '@/v2/plugin'
+import {
+  DocumentType,
+  Ref,
+  getModelForClass,
+  plugin,
+  prop,
+} from '@typegoose/typegoose'
 import { User } from '@/models/user'
 import { WMDBTables, WMDBTag, fromSqlToObject } from '@/helpers/wmdb'
 import { omit } from 'lodash'
+import { v2Sync } from '@/v2/plugin'
 
 @plugin(v2Sync, { collection: 'tag' })
 export class Tag {

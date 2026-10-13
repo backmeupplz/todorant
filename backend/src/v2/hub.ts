@@ -23,11 +23,13 @@ export function publish(userId: unknown, message: unknown, except?: WebSocket) {
   if (!set) return
   const data = JSON.stringify(message)
   for (const socket of set) {
-    if (socket !== except && socket.readyState === WebSocket.OPEN) socket.send(data)
+    if (socket !== except && socket.readyState === WebSocket.OPEN)
+      socket.send(data)
   }
 }
 
 /** Something changed in a way we can't describe cheaply (v1 bulk writes): devices pull a delta */
 export const hint = (userId: unknown) => publish(userId, { t: 'pull' })
 
-export const connections = () => [...sockets.values()].reduce((sum, set) => sum + set.size, 0)
+export const connections = () =>
+  [...sockets.values()].reduce((sum, set) => sum + set.size, 0)

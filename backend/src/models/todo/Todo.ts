@@ -1,7 +1,7 @@
 import { Ref, plugin, prop } from '@typegoose/typegoose'
-import { v2Sync } from '@/v2/plugin'
 import { User } from '@/models/user/User'
 import { omit, pick } from 'lodash'
+import { v2Sync } from '@/v2/plugin'
 
 @plugin(v2Sync, { collection: 'todo' })
 export class Todo {
