@@ -1,28 +1,23 @@
-# [Todorant](https://todorant.com) backend code
+# Todorant backend
 
-## Installation and local launch
+The Koa and MongoDB API behind [todorant.com](https://todorant.com). It serves `/v2`, the REST endpoints and realtime WebSocket sync (`/v2/ws`) used by the current web and Android apps, alongside the original API that older clients still call. The API docs are served at `/docs/`.
 
-1. Clone this repo: `git clone https://github.com/backmeupplz/todorant-backend`
-2. Launch the [mongo database](https://www.mongodb.com/) locally
-3. Create `.env` with the environment variables listed below
-4. Add credentials to the `assets` folder
-5. Run `yarn install` in the root folder
-6. Run `yarn develop`
+## Local launch
 
-And you should be good to go! Feel free to fork and submit pull requests. Documentation is [also available](https://github.com/backmeupplz/todorant-backend/tree/master/docs) in this repo.
+You need Node 16 (see `.nvmrc`) and a MongoDB.
 
-## Environment variables
+1. `cp .env.sample .env` and set at least `MONGO` and `JWT`
+2. `yarn install --ignore-engines`
+3. `yarn develop` starts the API on port 1337 and rebuilds on every change
 
-| Name                                     | Description                              |
-| ---------------------------------------- | ---------------------------------------- |
-| `MONGO`                                  | URL of the mongo database                |
-| `JWT`                                    | secret for JWT                           |
-| `FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET` | Facebook login credentials               |
-| `TELEGRAM_LOGIN_TOKEN`                   | Telegram login bot                       |
-| `WIT_LANGUAGES`                          | A map of language names to Wit.ai tokens |
+Everything else is optional: each integration (Telegram bots, Google Calendar, Facebook sign-in, error reports) stays off until its variables are set, and the log says which ones are off. [`.env.example`](../.env.example) in the repository root describes every variable.
 
-Also, please, consider looking at `.env.sample`.
+## Tests
 
-## Continuous integration
+```sh
+TEST_MONGO=mongodb://localhost:27017 JWT=test yarn jest --forceExit
+```
 
-Any commit pushed to master gets deployed to [backend.todorant.com](https://backend.todorant.com) via [CI Ninja](https://github.com/backmeupplz/ci-ninja).
+## Deploys
+
+A push to `main` that touches `backend/` runs the checks in `.github/workflows/backend.yml`. When they pass, the workflow moves the `deploy/backend` branch to that commit, and Easypanel builds it into backend.todorant.com. To run your own server, see the [self-hosting guide](../docs/self-hosting.md).
