@@ -35,18 +35,13 @@ const webOauth2Client = new google.auth.OAuth2(
   `${BASE_URL}/google_calendar_setup_web`
 )
 
-export function getGoogleCalendarOAuthURL(web = false) {
-  return web
-    ? webOauth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: 'https://www.googleapis.com/auth/calendar',
-        prompt: 'consent select_account',
-      })
-    : oauth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: 'https://www.googleapis.com/auth/calendar',
-        prompt: 'consent select_account',
-      })
+export function getGoogleCalendarOAuthURL(web: boolean, state: string) {
+  return (web ? webOauth2Client : oauth2Client).generateAuthUrl({
+    access_type: 'offline',
+    scope: 'https://www.googleapis.com/auth/calendar',
+    prompt: 'consent select_account',
+    state,
+  })
 }
 
 export async function getGoogleCalendarToken(code: string, web = false) {

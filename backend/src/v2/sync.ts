@@ -5,8 +5,9 @@ import { ObjectId } from 'mongodb'
 import { TagModel } from '@/models/tag'
 import { TodoModel } from '@/models/todo'
 import { User, UserModel } from '@/models/user'
-import { isObjectId, sanitize } from '@/v2/schema'
+import { invalid, isObjectId, sanitize } from '@/v2/schema'
 import { publish } from '@/v2/hub'
+import { spend } from '@/v2/auth'
 import { wire } from '@/v2/wire'
 
 /**
@@ -92,7 +93,7 @@ export async function pull(userId: string, since?: number) {
   const changed = after ? { updatedAt: { $gt: after } } : { deleted: false }
   const projection = { __v: 0, _fts: 0, clientId: 0 }
   const user = await UserModel.collection.findOne({ _id: uid })
-  if (!user) throw new Error('User not found')
+  if (!user) throw invalid('User not found')
   const [todos, tags, hero, delegates] = await Promise.all([
     TodoModel.collection
       .find(
@@ -116,6 +117,8 @@ export async function pull(userId: string, since?: number) {
   if (hero && (!after || hero.updatedAt > after))
     result.hero = { points: hero.points, updatedAt: hero.updatedAt?.getTime() }
   if (delegates) result.delegation = delegates
+  // Big pulls are paid for afterwards (the budget allows a debt): they're what a flood costs most
+  spend(userId, (todos.length + tags.length) / 1000)
   return result
 }
 
@@ -205,9 +208,13 @@ async function applyDocs(
         }
         created.user = oid(delegate)
         created.delegator = user._id
-        created.delegateAccepted = set.delegateAccepted ?? false
+        // Only the delegate accepts
+        created.delegateAccepted = false
       } else if (collection === 'todo' && !created.monthAndYear) {
         acks.push({ id: op.id, e: 'monthAndYear is required' })
+        continue
+      } else if (collection === 'tag' && !created.tag) {
+        acks.push({ id: op.id, e: 'tag is required' })
         continue
       }
       created._fts = Object.fromEntries(Object.keys(set).map((f) => [f, at]))
@@ -218,21 +225,23 @@ async function applyDocs(
       continue
     }
     const mine = same(doc.user, uid) || same(doc.delegator, uid)
-    // Delegators can't change todos their delegate already accepted (same rule as v1)
-    const locked =
-      collection === 'todo' &&
-      same(doc.delegator, uid) &&
-      !same(doc.user, uid) &&
-      doc.delegateAccepted
     if (!mine) {
       acks.push({ id: op.id, e: 'Not found' })
       continue
     }
+    // A delegator edits a delegated todo only until it's accepted (v1's rule) and only while still
+    // delegating to that user; accepting is the delegate's call alone
+    const delegated = collection === 'todo' && !same(doc.user, uid)
+    const locked =
+      delegated &&
+      (doc.delegateAccepted ||
+        !user.delegates?.some((d: unknown) => same(d, doc.user)))
     const fts = doc._fts || {}
     const applied: Record<string, unknown> = {}
     const fix: Record<string, unknown> = {}
     for (const [field, value] of Object.entries(set)) {
-      if (!locked && (fts[field] || 0) <= at) applied[field] = value
+      const allowed = !locked && !(delegated && field === 'delegateAccepted')
+      if (allowed && (fts[field] || 0) <= at) applied[field] = value
       else fix[field] = doc[field] ?? null
     }
     if (Object.keys(applied).length) {
@@ -299,9 +308,17 @@ async function applySettings(
   const base = v1At > (meta._at || 0) ? v1At : 0
   const fix: Record<string, unknown> = {}
   let changed = false
+  let error: string | undefined
   for (const op of ops) {
     const at = Math.min(Number(op.at) || now, now)
-    for (const [field, value] of Object.entries(sanitize('settings', op.set))) {
+    let set: Record<string, unknown>
+    try {
+      set = sanitize('settings', op.set)
+    } catch (e) {
+      error = (e as Error).message
+      continue
+    }
+    for (const [field, value] of Object.entries(set)) {
       if (Math.max(meta[field] || 0, base) <= at) {
         settings[field] = value ?? undefined
         meta[field] = at
@@ -318,7 +335,12 @@ async function applySettings(
       { $set: { settings, settingsFts: meta, updatedAt: new Date(now) } }
     )
   }
-  return { c: 'settings', u: now, ...(Object.keys(fix).length ? { fix } : {}) }
+  return {
+    c: 'settings',
+    u: now,
+    ...(Object.keys(fix).length ? { fix } : {}),
+    ...(error ? { e: error } : {}),
+  }
 }
 
 /**
@@ -331,11 +353,12 @@ export async function push(
   origin?: WebSocket,
   key?: string
 ) {
-  if (!Array.isArray(ops)) throw new Error('Invalid ops')
-  if (ops.length > 5000) throw new Error('Too many ops')
+  if (!Array.isArray(ops)) throw invalid('Invalid ops')
+  if (ops.length > 5000) throw invalid('Too many ops')
+  spend(userId, ops.length / 100)
   const now = Date.now()
   const user = await UserModel.collection.findOne({ _id: oid(userId) })
-  if (!user) throw new Error('User not found')
+  if (!user) throw invalid('User not found')
   const of = (c: Op['c']) => ops.filter((o) => o && o.c === c)
   const acks: Ack[] = []
   const counterparts = new Set<string>()

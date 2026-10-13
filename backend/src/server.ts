@@ -16,6 +16,11 @@ import { ensureIndexes } from '@/v2/indexes'
 import { runMongo } from '@/models/index'
 import { socketServer } from '@/sockets/io'
 
+// Node 15+ exits on an unhandled rejection: one bad message to any async handler would take
+// everyone offline, so log it and keep serving
+process.on('unhandledRejection', (error) =>
+  console.error('Unhandled rejection', error)
+)
 // Run mongo
 runMongo().then(() => {
   console.log('Mongo connected')

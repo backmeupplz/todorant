@@ -31,5 +31,4 @@ export function publish(userId: unknown, message: unknown, except?: WebSocket) {
 /** Something changed in a way we can't describe cheaply (v1 bulk writes): devices pull a delta */
 export const hint = (userId: unknown) => publish(userId, { t: 'pull' })
 
-export const connections = () =>
-  [...sockets.values()].reduce((sum, set) => sum + set.size, 0)
+export const socketsOf = (userId: string) => sockets.get(userId)?.size || 0

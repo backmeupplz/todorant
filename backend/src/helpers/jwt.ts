@@ -13,9 +13,15 @@ export function sign<T extends Record<string, unknown>>(
 
 export function verify(token: string) {
   return new Promise((res, rej) => {
-    jwt.verify(token, process.env.JWT, undefined, (err, payload) => {
-      return err ? rej(err) : res(payload)
-    })
+    // What sign() makes; never 'none' (jsonwebtoken 8 allows it when the secret is missing)
+    jwt.verify(
+      token,
+      process.env.JWT,
+      { algorithms: ['HS256'] },
+      (err, payload) => {
+        return err ? rej(err) : res(payload)
+      }
+    )
   })
 }
 
@@ -42,10 +48,11 @@ export const getApplePublicKey = async (kid) => {
 
 export async function verifyAppleToken(idToken: string, clientId?: string) {
   const decoded = jwt.decode(idToken, { complete: true })
-  const { kid, alg } = (decoded as any).header
+  const { kid } = (decoded as any).header
   const applePublicKey = await getApplePublicKey(kid)
+  // Apple signs with RS256; trusting the token's own `alg` allows HS256 signed with the public key
   const jwtClaims = jwt.verify(idToken, applePublicKey as any, {
-    algorithms: [alg],
+    algorithms: ['RS256'],
   }) as any
   if (clientId && jwtClaims.aud !== clientId) {
     throw new Error(

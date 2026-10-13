@@ -6,7 +6,7 @@ import { Op, pull, push } from '@/v2/sync'
 import { TagModel } from '@/models/tag'
 import { TodoModel } from '@/models/todo'
 import { UserModel } from '@/models/user'
-import { authenticate, tokenOf } from '@/v2/auth'
+import { authenticate, spend, tokenOf } from '@/v2/auth'
 import { hint } from '@/v2/hub'
 import { isObjectId } from '@/v2/schema'
 import { wire } from '@/v2/wire'
@@ -19,20 +19,26 @@ v2.use(async (ctx, next) => {
   try {
     await next()
   } catch (error) {
-    const status = (error as { status?: number }).status || 500
-    ctx.status = status
-    ctx.body = {
-      error: status < 500 ? (error as Error).message : 'Internal Server Error',
+    // v1 handlers behind /v2/auth throw Boom errors: their status is in `output`
+    const { status, output } = error as {
+      status?: number
+      output?: { statusCode?: number }
     }
-    if (status >= 500) console.error(error)
+    const code = status || output?.statusCode || 500
+    ctx.status = code
+    ctx.body = {
+      error: code < 500 ? (error as Error).message : 'Internal Server Error',
+    }
+    if (code >= 500) console.error(error)
   }
 })
 
 const uid = (ctx: Context) => new ObjectId(ctx.state.uid as string)
 
 async function auth(ctx: Context, next: Next) {
-  const id = await authenticate(tokenOf(ctx.headers, ctx.url))
+  const id = await authenticate(tokenOf(ctx.headers))
   if (!id) ctx.throw(401, 'Unauthorized')
+  if (!spend(id, 1)) ctx.throw(429, 'Too many requests')
   ctx.state.uid = id
   await next()
 }
@@ -43,6 +49,7 @@ const ops = (ctx: Context, list: Op[]) =>
 /** Writes through sync; responds with the ack (409 when a field lost to a newer write, 400 on errors) */
 async function write(ctx: Context, op: Op) {
   const [ack] = await ops(ctx, [op])
+  if (!ack) ctx.throw(400, 'Invalid fields')
   if (ack.e) ctx.throw(ack.e === 'Not found' ? 404 : 400, ack.e)
   ctx.body = ack
 }
@@ -62,6 +69,8 @@ v2.post('/sync', auth, async (ctx) => {
     ops: list,
     key,
   } = ctx.request.body as { since?: number; ops?: Op[]; key?: string }
+  if (since !== undefined && !Number.isFinite(since))
+    ctx.throw(400, 'Invalid since')
   const acks = list?.length
     ? await push(ctx.state.uid, list, undefined, key)
     : undefined
@@ -115,6 +124,8 @@ v2.get('/todos', auth, async (ctx) => {
     String(ctx.query.q || ''),
     ...String(ctx.query.hash || '').split(','),
   ].filter(Boolean)
+  if (search.length > 20 || search.some((s) => s.length > 100))
+    ctx.throw(400, 'Search is too long')
   if (search.length)
     filter.$and = search.map((s) => ({
       text: { $regex: escape(s), $options: 'i' },
@@ -135,7 +146,7 @@ v2.post('/todos', auth, async (ctx) => {
   const body = ctx.request.body as Record<string, any>
   const list = (Array.isArray(body) ? body : [body]).map((t) => ({
     c: 'todo' as const,
-    id: isObjectId(t.id) ? t.id : new ObjectId().toHexString(),
+    id: isObjectId(t?.id) ? t.id : new ObjectId().toHexString(),
     at: Date.now(),
     set: t,
   }))
@@ -186,7 +197,8 @@ v2.patch('/me', auth, (ctx) =>
   write(ctx, { c: 'user', at: Date.now(), set: ctx.request.body as never })
 )
 
-// Delegation commands — writes that touch two users, so they aren't ops
+// Delegation commands — writes that touch two users, so they aren't ops. Only actual changes notify
+// the other user's devices: anyone can name anyone's id here.
 async function touched(...users: unknown[]) {
   const now = new Date()
   await UserModel.collection.updateMany(
@@ -214,31 +226,31 @@ v2.post('/delegation/accept', auth, async (ctx) => {
     ))
   if (!delegator || String(delegator._id) === ctx.state.uid)
     ctx.throw(404, 'Invalid invite')
-  await UserModel.collection.updateOne(
+  const { modifiedCount } = await UserModel.collection.updateOne(
     { _id: delegator._id },
     { $addToSet: { delegates: uid(ctx) } }
   )
-  await touched(delegator._id, uid(ctx))
+  if (modifiedCount) await touched(delegator._id, uid(ctx))
   ctx.body = { id: String(delegator._id), name: delegator.name }
 })
 v2.delete('/delegation/delegates/:id', auth, async (ctx) => {
   if (!isObjectId(ctx.params.id)) ctx.throw(400, 'Invalid id')
   const other = new ObjectId(ctx.params.id)
-  await UserModel.collection.updateOne(
+  const { modifiedCount } = await UserModel.collection.updateOne(
     { _id: uid(ctx) },
     { $pull: { delegates: other } }
   )
-  await touched(uid(ctx), other)
+  if (modifiedCount) await touched(uid(ctx), other)
   ctx.status = 204
 })
 v2.delete('/delegation/delegators/:id', auth, async (ctx) => {
   if (!isObjectId(ctx.params.id)) ctx.throw(400, 'Invalid id')
   const other = new ObjectId(ctx.params.id)
-  await UserModel.collection.updateOne(
+  const { modifiedCount } = await UserModel.collection.updateOne(
     { _id: other },
     { $pull: { delegates: uid(ctx) } }
   )
-  await touched(uid(ctx), other)
+  if (modifiedCount) await touched(uid(ctx), other)
   ctx.status = 204
 })
 v2.post('/delegation/token', auth, async (ctx) => {

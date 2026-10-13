@@ -68,13 +68,15 @@ describe('Login endpoint', () => {
     verifyTelegramPayloadSpy.mockImplementation((data) => {
       return data
     })
-    const response = await request(server).post('/login/telegram').send({
-      id: 12345,
-      hash: 'string',
-      auth_date: '2022-02-02',
-      first_name: 'Default',
-      last_name: 'Name',
-    })
+    const response = await request(server)
+      .post('/login/telegram')
+      .send({
+        id: 12345,
+        hash: 'string',
+        auth_date: String(Math.floor(Date.now() / 1000)),
+        first_name: 'Default',
+        last_name: 'Name',
+      })
     const { created, user } = await getOrCreateUser({
       name: 'Default Name',
       telegramId: '12345',
@@ -90,6 +92,8 @@ describe('Login endpoint', () => {
       .reply(200, {
         name: 'Default Name',
         email: 'defaultname@gmail.com',
+        email_verified: 'true',
+        aud: '989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com',
       })
     const response = await request(server)
       .post('/login/google')
@@ -105,6 +109,10 @@ describe('Login endpoint', () => {
 
   it('should return user for valid /google-firebase request', async () => {
     axiosMock
+      .onGet('https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=test')
+      .reply(200, {
+        aud: '989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com',
+      })
       .onGet(`https://www.googleapis.com/oauth2/v3/userinfo`, {
         headers: {
           Authorization: `Bearer test`,
@@ -113,6 +121,7 @@ describe('Login endpoint', () => {
       .reply(200, {
         name: 'Default Name',
         email: 'defaultname@gmail.com',
+        email_verified: true,
       })
     const response = await request(server)
       .post('/login/google-firebase')

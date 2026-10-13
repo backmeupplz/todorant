@@ -12,6 +12,7 @@ import { verifyTelegramPayload } from '@/helpers/verifyTelegramPayload'
 import axios from 'axios'
 import Facebook = require('facebook-node-sdk')
 import { QrLoginModel } from '@/models/QrLoginModel'
+import { createHmac } from 'crypto'
 import { v4 as uuid } from 'uuid'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -41,8 +42,11 @@ export default class LoginController {
   @Post('/telegram')
   async telegram(@Ctx() ctx: Context) {
     const data = ctx.request.body
-    // verify the data
-    if (!verifyTelegramPayload(data)) {
+    // verify the data, and that it's fresh: a signed payload is a password that never expires
+    if (
+      !verifyTelegramPayload(data) ||
+      !(Date.now() / 1000 - Number(data.auth_date) < 24 * 60 * 60)
+    ) {
       return ctx.throw(403)
     }
 
@@ -59,9 +63,14 @@ export default class LoginController {
 
     const userData: any = (
       await axios(
-        `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${accessToken}`
+        `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${encodeURIComponent(
+          accessToken
+        )}`
       )
     ).data
+    if (!ownGoogleToken(userData.aud, userData.email_verified)) {
+      return ctx.throw(403)
+    }
 
     const { user } = await getOrCreateUser({
       name: userData.name,
@@ -74,6 +83,13 @@ export default class LoginController {
   @Post('/google-firebase')
   async googleFirebase(@Ctx() ctx: Context) {
     const accessToken = ctx.request.body.accessToken
+    const tokenInfo: any = (
+      await axios(
+        `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${encodeURIComponent(
+          accessToken
+        )}`
+      )
+    ).data
 
     const userData: any = (
       await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
@@ -82,6 +98,9 @@ export default class LoginController {
         },
       })
     ).data
+    if (!ownGoogleToken(tokenInfo.aud, userData.email_verified)) {
+      return ctx.throw(403)
+    }
 
     const { user } = await getOrCreateUser({
       name: userData.name,
@@ -296,10 +315,12 @@ export default class LoginController {
 
   @Post('/apple_login_result')
   async appleLoginResult(@Ctx() ctx: Context) {
-    const { id_token, user } = ctx.request.body
+    const { id_token, user, state } = ctx.request.body
     const userArg = user ? `&user=${JSON.stringify(user)}` : ''
+    // Apple echoes the state the web sent: the web checks it's the one it made (login CSRF)
+    const stateArg = state ? `&state=${encodeURIComponent(state)}` : ''
     ctx.redirect(
-      `https://todorant.com/#/apple_login_result#?id_token=${id_token}${userArg}`
+      `https://todorant.com/#/apple_login_result#?id_token=${id_token}${userArg}${stateArg}`
     )
     return 'Success!'
   }
@@ -316,7 +337,8 @@ export default class LoginController {
   async setQrToken(@Ctx() ctx: Context) {
     const qrUuid = ctx.request.body.uuid
     const token = ctx.headers.token
-    if (!qrUuid || !token) {
+    // A string, not a query operator that matches someone else's code
+    if (typeof qrUuid !== 'string' || !token) {
       return ctx.throw(403)
     }
     await QrLoginModel.findOneAndUpdate({ uuid: qrUuid }, { token })
@@ -326,11 +348,12 @@ export default class LoginController {
   @Post('/qr_check')
   async checkQrLogin(@Ctx() ctx: Context) {
     const qrUuid = ctx.request.body.uuid
-    if (!qrUuid) {
+    // A string: `{"$ne": null}` would hand out the token of whoever scanned a code last
+    if (typeof qrUuid !== 'string') {
       return ctx.throw(403)
     }
-    const token = (await QrLoginModel.findOne({ uuid: qrUuid })).token
-    return { token }
+    const qrLogin = await QrLoginModel.findOne({ uuid: qrUuid })
+    return { token: qrLogin?.token }
   }
 }
 
@@ -346,6 +369,15 @@ bot.action(/ltr~.+/, async (ctx) => {
     false
 })
 
+/**
+ * Google tokens must be issued to one of Todorant's own OAuth clients (its Google Cloud project): any
+ * other app's token for the same person would log in as them. Unverified emails don't count either.
+ */
+const ownGoogleToken = (audience: unknown, emailVerified: unknown) =>
+  /^989382323327-[\w-]+\.apps\.googleusercontent\.com$/.test(
+    String(audience)
+  ) && String(emailVerified) === 'true'
+
 function getFBUser(accessToken: string) {
   return new Promise((res, rej) => {
     const fb = new Facebook({
@@ -353,7 +385,12 @@ function getFBUser(accessToken: string) {
       secret: process.env.FACEBOOK_APP_SECRET,
     })
     fb.setAccessToken(accessToken)
-    fb.api('/me?fields=name,email,id', (err, user) => {
+    // Facebook only accepts the proof for tokens issued to this app: a token another app got for
+    // the same person (it has their email) can't log in as them
+    const proof = createHmac('sha256', process.env.FACEBOOK_APP_SECRET || '')
+      .update(String(accessToken))
+      .digest('hex')
+    fb.api(`/me?fields=name,email,id&appsecret_proof=${proof}`, (err, user) => {
       return err ? rej(err) : res(user)
     })
   })
