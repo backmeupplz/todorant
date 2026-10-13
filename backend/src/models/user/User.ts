@@ -35,6 +35,11 @@ export class User {
   anonymousToken?: string
   @prop({ index: true, lowercase: true })
   appleSubId?: string
+  /** Email of an email+password account (kept apart from `email`, which OAuth sign-ins match on) */
+  @prop({ index: true, unique: true, sparse: true, lowercase: true })
+  passwordLogin?: string
+  @prop()
+  passwordHash?: string
   @prop({ required: true, index: true })
   name: string
   @prop({
@@ -71,6 +76,7 @@ export class User {
       'delegates',
       'googleCalendarResourceId',
       'settingsFts',
+      'passwordHash',
     ]
     if (!withExtra) {
       stripFields.push('token')

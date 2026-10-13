@@ -923,4 +923,56 @@ describe('v2 sync and API', () => {
         .send({ code: 'a-code', web: true, state: forged })
         .expect(403)
   })
+  it('signs up and in with email + password, apart from OAuth accounts', async () => {
+    const post = (path: string, body: object) =>
+      request(server).post(`/v2/auth/${path}`).send(body)
+    // An OAuth account with this email exists: a password account must not take it over
+    const oauth = await user('owner@example.com')
+    const created = await post('signup', {
+      email: ' Owner@Example.com ',
+      password: 'correct horse',
+      name: 'Pw',
+    }).expect(200)
+    expect(created.body._id).not.toBe(oauth._id)
+    expect(created.body.passwordLogin).toBe('owner@example.com')
+    expect(created.body.email).toBeUndefined()
+    expect(created.body.passwordHash).toBeUndefined()
+    await post('signup', {
+      email: 'owner@example.com',
+      password: 'another one',
+    }).expect(409)
+    await post('signup', { email: 'nope', password: 'correct horse' }).expect(
+      400
+    )
+    await post('signup', { email: 'x@example.com', password: 'short' }).expect(
+      400
+    )
+    // Signing in returns the same account and a working token
+    const signedIn = await post('password', {
+      email: 'owner@example.com',
+      password: 'correct horse',
+    }).expect(200)
+    expect(signedIn.body._id).toBe(created.body._id)
+    expect(
+      (await sync(signedIn.body.token, { since: 0 })).user.passwordLogin
+    ).toBe('owner@example.com')
+    await post('password', {
+      email: 'owner@example.com',
+      password: 'wrong horse',
+    }).expect(401)
+    await post('password', {
+      email: 'nobody@example.com',
+      password: 'correct horse',
+    }).expect(401)
+    // Guessing is limited
+    for (let i = 0; i < 10; i++)
+      await post('password', {
+        email: 'owner@example.com',
+        password: `wrong guess ${i}`,
+      })
+    await post('password', {
+      email: 'owner@example.com',
+      password: 'correct horse',
+    }).expect(429)
+  })
 })

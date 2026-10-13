@@ -9,6 +9,7 @@ import { UserModel } from '@/models/user'
 import { authenticate, spend, tokenOf } from '@/v2/auth'
 import { hint } from '@/v2/hub'
 import { isObjectId } from '@/v2/schema'
+import { passwordRoutes } from '@/v2/password'
 import { wire } from '@/v2/wire'
 
 /** /v2: lean JSON over the same data and write path as sync; old endpoints stay untouched */
@@ -53,6 +54,9 @@ async function write(ctx: Context, op: Op) {
   if (ack.e) ctx.throw(ack.e === 'Not found' ? 404 : 400, ack.e)
   ctx.body = ack
 }
+
+// Email + password accounts (before the alias below, which would send them to v1)
+passwordRoutes(v2)
 
 // Login lives in the v1 controllers (OAuth flows); /v2/auth/* is the same handlers under v2
 v2.post('/auth/:provider', (ctx, next) => {

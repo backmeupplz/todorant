@@ -42,6 +42,7 @@ function profile(user: UserDoc | Record<string, any>) {
     facebookId,
     telegramId,
     appleSubId,
+    passwordLogin,
     delegateInviteToken,
     settings = {},
   } = user as Record<string, any>
@@ -52,6 +53,7 @@ function profile(user: UserDoc | Record<string, any>) {
     facebookId,
     telegramId,
     appleSubId,
+    passwordLogin,
     delegateInviteToken,
     settings: { ...settings, updatedAt: settings.updatedAt?.getTime?.() },
     updatedAt: (user.updatedAt as Date)?.getTime(),

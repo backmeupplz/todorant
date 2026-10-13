@@ -48,6 +48,10 @@ export async function getUserFromToken(token: string) {
     user = await UserModel.findOne({
       anonymousToken: `${payload.anonymousToken}`,
     })
+  } else if (payload.passwordLogin) {
+    user = await UserModel.findOne({
+      passwordLogin: `${payload.passwordLogin}`,
+    })
   }
   return user
 }
