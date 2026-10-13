@@ -1,16 +1,46 @@
-.planning-alert { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; margin: 8px 0; border-radius: 12px; background: rgba(51, 102, 255, 0.1); color: var(--blue); }
-.planning-alert svg { flex: none; }
-.planning-toolbar { min-height: 52px; }
-.planning-search { flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.planning-suggestions { display: flex; flex-wrap: wrap; }
-.planning-suggestions:empty { display: none; }
-.planning-tags { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-.planning-tags .chip > span, .spread-row .chip > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 160px; }
-.planning-section .section-header { max-width: 100%; }
-.section-toggle { background: none; border: 0; padding: 0; color: inherit; cursor: pointer; text-align: left; overflow: hidden; text-overflow: ellipsis; }
-.planning .todo .handle { touch-action: none; }
-.planning .todo .handle:focus-visible { outline: 2px solid var(--blue); border-radius: 4px; }
-.planning.dragging { user-select: none; cursor: grabbing; }
-.spread-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0; }
-.spread-row .chip.muted { padding-right: 10px; }
+/* Top bar like the app's planning header: search, Planning/Completed, view actions */
+.planning > .topbar .icon-btn { min-width: 40px; min-height: 40px; padding: 8px; align-items: center; justify-content: center; color: var(--muted); }
+.planning > .topbar .icon-btn[aria-pressed='true'] { color: var(--orange); }
+.planning > .topbar.editing > .segmented { opacity: 0.45; pointer-events: none; }
+.planning-search { flex: 1; min-width: 0; position: relative; display: flex; align-items: center; margin-left: 8px; color: var(--muted); }
+.planning-search svg { position: absolute; left: 10px; pointer-events: none; }
+.planning-search input {
+  flex: 1; min-width: 0; height: 36px; padding: 0 10px 0 32px; border: 0; border-radius: 10px;
+  background: var(--segment); color: var(--text); font-size: 16px; outline: none; -webkit-appearance: none; appearance: none;
+}
+.planning-search input:focus-visible { box-shadow: 0 0 0 2px var(--blue); }
+
+/* Tag suggestions and the hashtag filter: a line of chips that scrolls sideways on phones */
+.planning-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 4px 16px 8px; }
+.planning-chips:empty { display: none; }
+.planning-chips .chip { min-height: 32px; padding-right: 10px; position: relative; }
+.planning-chips .chip:has(svg) { padding-right: 6px; }
+.planning-chips .chip::after, .spread-row button.chip::after { content: ''; position: absolute; inset: -4px 0; }
+.planning-chips .icon-btn { color: var(--muted); padding: 8px; }
+@media (max-width: 640px) {
+  .planning-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .planning-chips > * { flex: none; }
+}
+
+/* Spreading: "Spreading [tasks] between [dates]" */
+.spread-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 16px; font-size: 14px; color: var(--muted); }
+.spread-row .chip { min-height: 32px; position: relative; }
+.spread-row .chip.muted { padding-right: 10px; color: var(--muted); }
+.planning-chips .chip > span, .spread-row .chip > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+.planning-chips .chip svg, .spread-row .chip svg { color: var(--muted); }
+
+/* Day pills: the label collapses the day; both buttons get 40px touch areas without growing the pill */
+.day-label { position: relative; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; }
+.planning .day .icon-btn { position: relative; }
+.day-label::before, .planning .day .icon-btn::before { content: ''; position: absolute; inset: -8px; }
+/* Above the rows, so the enlarged touch areas aren't covered by the first row */
+.planning .day { margin-bottom: 4px; position: relative; z-index: 1; }
+
+/* Rows sit in [data-todo] wrappers (drag targets), so the dividers are drawn here */
+.planning [data-todo] > .todo-row { border-bottom: 1px solid var(--divider); }
+.planning [data-todo]:last-child > .todo-row { border-bottom: 0; }
+.planning .handle { position: relative; display: inline-block; line-height: 0; -webkit-user-select: none; user-select: none; }
+.planning .handle::before { content: ''; position: absolute; inset: -11px -8px -11px -16px; }
+.planning .handle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+.planning.dragging { -webkit-user-select: none; user-select: none; cursor: grabbing; }
 .planning-more { height: 1px; }

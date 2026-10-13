@@ -20,8 +20,18 @@ function display(raw: string) {
   }
 }
 
-/** Splits text into plain text, links and #hashtags */
+/** Splits text into plain text, links and #hashtags (cached: rows re-render often, texts rarely change) */
+const parsed = new Map<string, Part[]>()
 export function linkify(text: string): Part[] {
+  let parts = parsed.get(text)
+  if (!parts) {
+    if (parsed.size > 5000) parsed.clear()
+    parsed.set(text, (parts = parse(text)))
+  }
+  return parts
+}
+
+function parse(text: string): Part[] {
   const parts: Part[] = []
   let end = 0
   for (const m of text.matchAll(pattern)) {

@@ -1,4 +1,4 @@
-import { addHeroPoint, create, people, session, settings, tags, todos, update, type Tag, type Todo } from '../data/store'
+import { addHeroPoint, create, people, rev, session, settings, tags, todos, update, type Tag, type Todo } from '../data/store'
 import { dateString, dayOf, isOld, minutes, monthOf, today, todayTitle } from '../lib/time'
 import { hashtags } from '../lib/text'
 
@@ -8,7 +8,26 @@ export const unreadable = (t: Pick<Todo, 'encrypted' | 'text'>) => t.encrypted &
 /** "YYYY-MM-DD" or "YYYY-MM" */
 export const titleOf = (t: Pick<Todo, 'monthAndYear' | 'date'>) => (t.date ? `${t.monthAndYear}-${t.date}` : t.monthAndYear ?? '')
 const me = () => session.value?.id
-const live = () => [...todos.values()].filter((t) => !t.deleted)
+/**
+ * Queries recompute only when the data (rev) or the day changes, not on every render — typing in a form
+ * re-renders the app but doesn't re-filter thousands of todos. Callers must not mutate the arrays.
+ */
+let stamp = ''
+const memo = new Map<string, unknown>()
+function cached<A extends unknown[], R>(name: string, fn: (...args: A) => R): (...args: A) => R {
+  return (...args) => {
+    const now = `${rev.value}|${todayTitle()}`
+    if (now !== stamp) {
+      memo.clear()
+      stamp = now
+    }
+    const key = name + JSON.stringify(args)
+    if (!memo.has(key)) memo.set(key, fn(...args))
+    return memo.get(key) as R
+  }
+}
+
+const live = cached('live', () => [...todos.values()].filter((t) => !t.deleted))
 /** Todos from delegators we're no longer connected to stay hidden */
 const knownDelegator = (t: Todo) => !t.delegator || t.delegator === me() || people.value.delegators.some((p) => p.id === t.delegator)
 const byOrder = (a: Todo, b: Todo) => a.order - b.order
@@ -19,15 +38,17 @@ const onDay = (t: Todo, title: string) => t.monthAndYear === title.slice(0, 7) &
 export const isMine = (t: Todo) =>
   !t.deleted && t.delegateAccepted !== false && knownDelegator(t) && (!t.delegator ? true : t.delegateAccepted === true && t.delegator !== me())
 
-export const forDay = (title: string, completed: boolean) =>
-  live().filter((t) => isMine(t) && t.completed === completed && onDay(t, title)).sort(frogFirst)
+export const forDay = cached('forDay', (title: string, completed: boolean) =>
+  live().filter((t) => isMine(t) && t.completed === completed && onDay(t, title)).sort(frogFirst),
+)
 
 /** Everything on a day, for ordering */
-export const allForDay = (title: string, completed?: boolean) =>
-  live().filter((t) => t.delegateAccepted !== false && onDay(t, title) && (completed === undefined || t.completed === completed)).sort(byOrder)
+export const allForDay = cached('allForDay', (title: string, completed?: boolean) =>
+  live().filter((t) => t.delegateAccepted !== false && onDay(t, title) && (completed === undefined || t.completed === completed)).sort(byOrder),
+)
 
 /** Planning / completed lists grouped by day or month, overdue first */
-export function planning(completed: boolean, query = '', hash: string[] = []) {
+export const planning = cached('planning', (completed: boolean, query: string = '', hash: string[] = []) => {
   const q = query.toLowerCase()
   const list = live().filter(
     (t) =>
@@ -40,16 +61,17 @@ export function planning(completed: boolean, query = '', hash: string[] = []) {
   const titles = [...groups.keys()].sort()
   if (completed) titles.reverse()
   return titles.map((title) => ({ title, todos: groups.get(title)!.sort(frogFirst) }))
-}
+})
 
 /** Delegated by me or to me (unaccepted, or completed ones) */
-export const delegated = (byMe: boolean, completed = false) =>
+export const delegated = cached('delegated', (byMe: boolean, completed = false) =>
   live()
     .filter((t) => t.delegator && t.completed === completed && (byMe ? t.delegator === me() : t.user === me() && (completed || t.delegateAccepted !== true)))
-    .sort((a, b) => titleOf(a).localeCompare(titleOf(b)) || frogFirst(a, b))
+    .sort((a, b) => titleOf(a).localeCompare(titleOf(b)) || frogFirst(a, b)),
+)
 
 /** Uncompleted todos before today, which make planning required */
-export const overdueCount = () => live().filter((t) => isMine(t) && !t.completed && isOld(t.monthAndYear, t.date)).length
+export const overdueCount = cached('overdue', () => live().filter((t) => isMine(t) && !t.completed && isOld(t.monthAndYear, t.date)).length)
 
 export const isSkippable = (t: Todo) => !t.frog && !t.time && allForDay(titleOf(t), t.completed).length > 1
 
@@ -149,12 +171,14 @@ function fixOneTime(list: Todo[], yieldIds: string[]) {
 
 // region Tags
 
-export const liveTags = () =>
+export const liveTags = cached('tags', () =>
   [...tags.values()]
     .filter((t) => !t.deleted)
-    .sort((a, b) => Number(b.epic) - Number(a.epic) || a.epicOrder - b.epicOrder || b.numberOfUses - a.numberOfUses || a.tag.localeCompare(b.tag))
+    .sort((a, b) => Number(b.epic) - Number(a.epic) || a.epicOrder - b.epicOrder || b.numberOfUses - a.numberOfUses || a.tag.localeCompare(b.tag)),
+)
 export const epics = () => liveTags().filter((t) => t.epic)
-export const tagColor = (name: string) => liveTags().find((t) => t.tag === name)?.color || undefined
+const colors = cached('colors', () => new Map(liveTags().map((t) => [t.tag, t.color || undefined])))
+export const tagColor = (name: string) => colors().get(name)
 
 /** Tags suggested while typing */
 export function suggestions(text: string, showMore: boolean): Tag[] {

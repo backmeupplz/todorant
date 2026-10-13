@@ -2,7 +2,7 @@ import { useSignal } from '../lib/state'
 import { useEffect, useRef } from 'preact/hooks'
 import { signIn } from '../data/account'
 import { call } from '../data/rest'
-import { prefs, session, setPref } from '../data/store'
+import { isDark, prefs, session, setPref } from '../data/store'
 import { language, LANGUAGES, setLanguage, t, tRaw, type Language } from '../i18n'
 import { qr } from '../lib/qr'
 import { DialogCard, Button, Spinner, open, showError } from '../ui/kit'
@@ -59,7 +59,7 @@ export function Landing() {
           <div class="shot" aria-hidden="true">
             <i class="shot-blue" />
             <i class="shot-yellow" />
-            <img src={`/img/screenshots/${lang}${prefs.value.dark ? '-dark' : ''}.webp`} alt="" width={300} height={649} />
+            <img src={`/img/screenshots/${lang}${isDark() ? '-dark' : ''}.webp`} alt="" width={300} height={649} />
           </div>
         </section>
       </main>
@@ -75,8 +75,8 @@ export function Landing() {
           <select aria-label="Language" title="Language" value={language.value} onChange={(e) => setLanguage(e.currentTarget.value as Language)}>
             {Object.entries(LANGUAGES).map(([code, name]) => <option key={code} value={code}>{name}</option>)}
           </select>
-          <button type="button" class="landing-dark" aria-pressed={prefs.value.dark} onClick={() => setPref('dark', !prefs.value.dark)}>
-            {t(`menu.darkMode.${prefs.value.dark ? 'on' : 'off'}`)}
+          <button type="button" class="landing-dark" aria-pressed={isDark()} onClick={() => setPref('colorMode', isDark() ? 'light' : 'dark')}>
+            {t(`menu.darkMode.${isDark() ? 'on' : 'off'}`)}
           </button>
         </nav>
       </footer>

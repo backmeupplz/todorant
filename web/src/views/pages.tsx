@@ -4,12 +4,13 @@ import { call } from '../data/rest'
 import { session, setSetting } from '../data/store'
 import { t } from '../i18n'
 import { Spinner, alert, confirm, lazy, showError, toast } from '../ui/kit'
+import { ChartsSkeleton } from '../ui/skeletons'
 import { go, query } from '../ui/router'
 import { link } from './Landing'
 import { Privacy, Terms } from './static'
 import './pages.css'
 
-const PublicReport = lazy(() => import('./Report').then((m) => m.PublicReport))
+const PublicReport = lazy(() => import('./Report').then((m) => m.PublicReport), ChartsSkeleton)
 
 /** Everything that isn't the landing or the app: static pages, invite/report links, login and OAuth callbacks */
 export function Pages({ path }: { path: string }) {

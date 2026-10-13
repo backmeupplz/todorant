@@ -1,4 +1,4 @@
-import { update, type Todo } from '../data/store'
+import { prefs, update, type Todo } from '../data/store'
 import { t } from '../i18n'
 import { ellipsize } from '../lib/text'
 import * as todos from '../logic/todos'
@@ -26,7 +26,8 @@ export const requestBreakdown = (todo: Todo) =>
   ))
 
 export async function deleteTodo(todo: Todo) {
-  if (await confirm(t('deleteHeadline', { name: ellipsize(todo.text, 50) }), t('delete'), true)) update('todo', todo.id, { deleted: true })
+  if (!prefs.value.askBeforeDelete || (await confirm(t('deleteHeadline', { name: ellipsize(todo.text, 50) }), t('delete'), true)))
+    update('todo', todo.id, { deleted: true })
 }
 
 /** Completes with sound, frog reminder and confetti; repetitive todos offer a breakdown instead */

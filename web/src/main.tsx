@@ -1,15 +1,21 @@
 import { render } from 'preact'
-import './fonts.css'
 import './styles.css'
 import { App } from './app'
 import { boot } from './data/account'
-import { prefs } from './data/store'
+import { isDark, onSystemTheme, prefs, session } from './data/store'
 import { initLanguage } from './i18n'
 import { onRerender } from './lib/state'
+import { appRoute } from './ui/router'
+import { TAB_SKELETONS } from './ui/skeletons'
 
-prefs.subscribe((p) => document.documentElement.classList.toggle('dark', p.dark))
-await initLanguage()
+const theme = () => document.documentElement.classList.toggle('dark', isDark())
+prefs.subscribe(theme)
+onSystemTheme(theme)
 const root = document.getElementById('app')!
+// Signed-in users see the screen's skeleton while the language loads
+const tab = appRoute()?.tab
+if (session.value && tab) render(TAB_SKELETONS[tab](), root)
+await initLanguage()
 const draw = () => render(<App />, root)
 onRerender(draw)
 draw()

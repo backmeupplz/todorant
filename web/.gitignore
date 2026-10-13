@@ -1,2 +1,5 @@
 node_modules
 dist
+# local QA helpers (test account session, phone-size frame, skeleton gallery)
+public/qa-*
+src/qa-*

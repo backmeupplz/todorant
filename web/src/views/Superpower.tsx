@@ -1,40 +1,46 @@
-import { signal } from '../lib/state'
 import { useEffect } from 'preact/hooks'
 import { Icon } from '../assets/icons'
-import { logout } from '../data/account'
+import { TabIcon } from '../assets/tabs'
 import { call } from '../data/rest'
-import { prefs, rev, session, setPref, setSetting } from '../data/store'
+import { prefs, ready, rev, setPref } from '../data/store'
 import { connected } from '../data/sync'
-import { LANGUAGES, language, setLanguage, t, type Language } from '../i18n'
+import { t } from '../i18n'
 import { todayTitle } from '../lib/time'
 import * as todos from '../logic/todos'
-import { addTodo } from '../ui/actions'
-import { confirm, dialogOpen, IconButton, lazy, Menu, showError } from '../ui/kit'
-import { go, hash, query } from '../ui/router'
-import { setShowPlanning } from '../ui/TodoCard'
+import { addTodo, breakdownTodo, completeTodo } from '../ui/actions'
+import { confirm, dialogOpen, lazy, showError } from '../ui/kit'
+import { DelegationSkeleton, PlanningSkeleton, SettingsSkeleton, TAB_SKELETONS } from '../ui/skeletons'
+import { appRoute, go, query, type TabName } from '../ui/router'
 import { Current } from './Current'
-import { openApps, openHashtags, openHero, openQr, openRules, openSettings, openSupport, openWelcome } from './dialogs'
 
-const Planning = lazy(() => import('./Planning').then((m) => m.Planning))
-const Report = lazy(() => import('./Report').then((m) => m.Report))
-const Delegation = lazy(() => import('./Delegation').then((m) => m.Delegation))
+const Planning = lazy(() => import('./Planning').then((m) => m.Planning), PlanningSkeleton)
+const Delegation = lazy(() => import('./Delegation').then((m) => m.Delegation), DelegationSkeleton)
+const Settings = lazy(() => import('./Settings').then((m) => m.Settings), SettingsSkeleton)
 
-type Tab = 'current' | 'planning' | 'report' | 'delegation'
-const TABS: Tab[] = ['current', 'planning', 'report', 'delegation']
-const tab = signal<Tab>(hash.value ? 'planning' : ((sessionStorage.getItem('tab') as Tab) ?? 'current'))
-const select = (next: Tab) => {
-  tab.value = next
-  sessionStorage.setItem('tab', next)
+const LABELS: Record<TabName, () => string> = {
+  current: () => t('current'),
+  planning: () => t('planning'),
+  delegation: () => t('delegate.title'),
+  settings: () => t('settings.title'),
 }
-setShowPlanning(() => select('planning'))
 
+/** The signed-in app: a tab per screen like the mobile apps; Current hides while overdue todos need planning */
 export function Superpower() {
   rev.value
+  const route = appRoute() ?? { tab: 'current' as TabName }
+  // Until the first data arrives (a fresh device), show skeletons and don't hide/redirect tabs
+  const mustPlan = ready.value && todos.overdueCount() > 0
+  const tabs: TabName[] = mustPlan ? ['planning', 'delegation', 'settings'] : ['current', 'planning', 'delegation', 'settings']
+  const tab = tabs.includes(route.tab) ? route.tab : tabs[0]
+  useEffect(() => {
+    if (ready.value && (route.tab !== tab || location.pathname === '/superpower')) go(`/${tab}`, true)
+  }, [route.tab, tab, ready.value])
+
   useEffect(() => {
     // Chrome extension: ?extension=<text> opens the add dialog prefilled
     const text = query.value.get('extension')
     if (text) {
-      go('/superpower', true)
+      go(location.pathname, true)
       addTodo(undefined, text)
     }
     // Invite links opened while signed out
@@ -45,92 +51,75 @@ export function Superpower() {
     }
     if (!prefs.value.rulesShown) {
       setPref('rulesShown', true)
-      openWelcome()
+      import('./Settings').then((m) => m.openWelcome())
     }
     const onKey = (e: KeyboardEvent) => {
       if (!prefs.value.hotkeys || dialogOpen() || e.ctrlKey || e.metaKey || e.altKey) return
       if ((e.target as Element).closest('input, textarea, select, [contenteditable]')) return
-      if (e.key === 'c') select('current')
-      else if (e.key === 'p') select('planning')
+      if (e.key === 'c') go('/current')
+      else if (e.key === 'p') go('/planning')
       else if (e.key === 'a') (e.preventDefault(), addTodo())
-      else if (tab.value === 'current' && (e.key === 'd' || e.key === 'b')) {
+      else if (appRoute()?.tab === 'current' && (e.key === 'd' || e.key === 'b')) {
         const todo = todos.forDay(todayTitle(), false)[0]
-        if (todo) import('../ui/actions').then((a) => (e.key === 'd' ? a.completeTodo(todo) : a.breakdownTodo(todo)))
+        if (todo) (e.key === 'd' ? completeTodo : breakdownTodo)(todo)
       }
     }
     addEventListener('keydown', onKey)
-    return () => removeEventListener('keydown', onKey)
+    // Offline on a fresh device: stop waiting and show the (empty) screens
+    const giveUp = setTimeout(() => (ready.value = true), 8000)
+    // Fetch the other screens and the add form while idle, so opening them is instant
+    const prefetch = () => [import('./Planning'), import('./Delegation'), import('./Settings'), import('./TodoForm')]
+    const idle = 'requestIdleCallback' in window ? requestIdleCallback(prefetch) : setTimeout(prefetch, 1500)
+    return () => {
+      removeEventListener('keydown', onKey)
+      clearTimeout(giveUp)
+      'cancelIdleCallback' in window ? cancelIdleCallback(idle as number) : clearTimeout(idle)
+    }
   }, [])
-  const delegatedToMe = todos.delegated(false).length
-  const overdue = todos.overdueCount()
+
+  const inbox = todos.delegated(false).length
   return (
     <>
-      <Navbar />
-      <main class="container">
-        <nav class="tabs" role="tablist">
-          {TABS.map((name) => (
-            <button key={name} role="tab" aria-selected={tab.value === name} class={`tab${tab.value === name ? ' active' : ''}`} onClick={() => select(name)}>
-              {name === 'report' ? t('report.title') : name === 'delegation' ? t('delegate.title') : t(name)}
-              {name === 'delegation' && delegatedToMe > 0 && <sup> {delegatedToMe}</sup>}
-              {name === 'planning' && overdue > 0 && <sup> {overdue}</sup>}
-            </button>
-          ))}
-        </nav>
-        <section class="panel">
-          {tab.value === 'current' ? <Current /> : tab.value === 'planning' ? <Planning /> : tab.value === 'report' ? <Report /> : <Delegation />}
-        </section>
+      <nav class="tabbar" aria-label="Todorant">
+        <img class="logo" src="/img/logo-small.svg" alt="Todorant" width={118} height={24} />
+        {tabs.map((name) => (
+          <a
+            key={name}
+            href={`/${name}`}
+            class={tab === name ? 'active' : undefined}
+            aria-current={tab === name ? 'page' : undefined}
+            onClick={(e) => (e.preventDefault(), go(`/${name}`))}
+          >
+            <TabIcon tab={name} size={22} />
+            <span>{LABELS[name]()}</span>
+            {name === 'delegation' && inbox > 0 && <span class="badge">{inbox}</span>}
+          </a>
+        ))}
+        <button type="button" class="icon-btn nav-info" title={t('howto.title')} aria-label={t('howto.title')} onClick={() => go('/settings/rules')}>
+          <Icon name="info" size={24} />
+        </button>
+      </nav>
+      <main class="screen">
+        <div key={`${tab}/${route.page ?? ''}/${ready.value}`} class="screen-in">
+        {!ready.value && tab !== 'settings' ? (
+          TAB_SKELETONS[tab]()
+        ) : tab === 'current' ? (
+          <Current />
+        ) : tab === 'planning' ? (
+          <Planning />
+        ) : tab === 'delegation' ? (
+          <Delegation />
+        ) : (
+          <Settings page={route.page} />
+        )}
+        </div>
       </main>
-      <button class="fab" title={`${t('todo.create.title')} (a)`} aria-label={t('todo.create.title')} onClick={() => addTodo()}>
-        <Icon name="add_plain" size={24} />
-      </button>
+      {tab !== 'settings' && (
+        <button class="fab" title={`${t('todo.create.title')} (a)`} aria-label={t('todo.create.title')} onClick={() => addTodo()}>
+          <Icon name="add_plain" size={26} />
+        </button>
+      )}
+      {!connected.value && <div class="offline-pill" role="status">Offline — changes sync when you're back</div>}
     </>
   )
 }
-
-function Navbar() {
-  return (
-    <header class="navbar">
-      <div class="container">
-        <a href="/superpower" onClick={(e) => (e.preventDefault(), go('/superpower'))} class="grow">
-          <img class="logo" src="/img/logo-small.svg" alt="Todorant" width={118} height={24} />
-        </a>
-        {!connected.value && <span class="offline" title="Offline — changes sync when you're back online" />}
-        <Menu trigger={(toggle) => <IconButton icon="language" title="Language" onClick={toggle} />}>
-          {(close) =>
-            Object.entries(LANGUAGES).map(([code, name]) => (
-              <button key={code} role="menuitem" aria-current={language.value === code} onClick={() => {
-                setLanguage(code as Language)
-                setSetting('language', code)
-                close()
-              }}>
-                {name}
-              </button>
-            ))
-          }
-        </Menu>
-        <IconButton icon="info" title={t('howto.title')} onClick={openRules} />
-        <Menu trigger={(toggle) => <IconButton icon="menu" title={t('settings.title')} onClick={toggle} />}>
-          {(close) => {
-            const item = (icon: Parameters<typeof Icon>[0]['name'], label: string, action: () => void) => (
-              <button role="menuitem" onClick={() => (close(), action())}><Icon name={icon} size={20} />{label}</button>
-            )
-            return (
-              <>
-                {item('dark_mode', t(prefs.value.dark ? 'menu.darkMode.on' : 'menu.darkMode.off'), () => setPref('dark', !prefs.value.dark))}
-                {item('star', t('heroProfileTitle'), openHero)}
-                {item('settings', t('settings.title'), openSettings)}
-                {item('filter', t('hashtags.title'), openHashtags)}
-                {item('qr_code', t('qr.code'), openQr)}
-                {item('apps', t('apps'), openApps)}
-                {item('help', t('supportAlert.title'), openSupport)}
-                {item('logout', t('menu.logout'), logout)}
-              </>
-            )
-          }}
-        </Menu>
-      </div>
-    </header>
-  )
-}
-
-export { session }

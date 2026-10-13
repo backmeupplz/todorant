@@ -7,7 +7,11 @@ function open() {
   return (db ??= new Promise((resolve, reject) => {
     const req = indexedDB.open('todorant', 1)
     req.onupgradeneeded = () => STORES.forEach((s) => req.result.createObjectStore(s))
-    req.onsuccess = () => resolve(req.result)
+    req.onsuccess = () => {
+      // Let another tab delete or upgrade the database instead of blocking it forever
+      req.result.onversionchange = () => (req.result.close(), (db = undefined))
+      resolve(req.result)
+    }
     req.onerror = () => reject(req.error)
   }))
 }

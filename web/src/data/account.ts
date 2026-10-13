@@ -1,4 +1,4 @@
-import { encryptionKey, load, reset, session, type Profile } from './store'
+import { encryptionKey, load, pending, reset, session, type Profile } from './store'
 import { login } from './rest'
 import * as sync from './sync'
 import { go } from '../ui/router'
@@ -23,10 +23,12 @@ export async function start(profile: Profile) {
   localStorage.removeItem('signedOut')
   closeDialogs()
   sync.start()
-  go('/superpower', true)
+  go('/current', true)
 }
 
 export async function logout() {
+  // Edits not pushed yet would be lost with the local data; give them a few seconds to reach the server
+  if (pending().length) await Promise.race([sync.sync(), new Promise((r) => setTimeout(r, 5000))])
   // The old site's shared login cookie would sign us right back in
   for (const domain of ['', '; domain=todorant.com', '; domain=.todorant.com']) document.cookie = `token=; Max-Age=0; path=/${domain}`
   localStorage.setItem('signedOut', '1')

@@ -1,0 +1,30 @@
+/* Inline pickers that open under a form row */
+.picker-row .table-row { padding: 0 8px 0 0; }
+.picker-toggle { flex: 1; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 8px 8px 16px; border: 0; background: none; color: var(--text); font: inherit; text-align: left; }
+.picker-toggle .value { color: var(--muted); }
+.picker-toggle .value.set { color: var(--text); }
+.picker-row.open .picker-toggle .value { color: var(--orange); }
+.picker-panel { padding: 0 12px 10px; animation: rise 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.picker-head { display: flex; align-items: center; justify-content: space-between; font: 600 15px var(--font); padding: 0 0 4px; }
+.picker-grid { display: grid; gap: 4px; }
+.picker-grid button {
+  border: 0; background: none; color: var(--text); font: 500 15px var(--rounded); border-radius: 10px; min-height: 38px; padding: 0;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+.picker-grid button:hover:not(:disabled) { background: var(--hover); }
+.picker-grid button:active:not(:disabled) { transform: scale(0.94); }
+.picker-grid button:disabled { color: var(--muted); opacity: 0.45; cursor: default; }
+.picker-grid button[aria-pressed='true'] { background: var(--orange); color: #fff; }
+.picker-grid button.today:not([aria-pressed='true']) { color: var(--orange); font-weight: 700; }
+.picker-grid.days { grid-template-columns: repeat(7, 1fr); }
+.picker-grid.days { gap: 2px; }
+.picker-grid.days button { border-radius: 50%; aspect-ratio: 1; min-height: 0; max-height: 36px; justify-self: center; width: 100%; max-width: 36px; }
+.picker-grid .weekday { text-align: center; font-size: 12px; color: var(--muted); padding: 2px 0 4px; text-transform: uppercase; }
+.picker-grid.months { grid-template-columns: repeat(4, 1fr); }
+.picker-grid.hours { grid-template-columns: repeat(6, 1fr); }
+.picker-grid.minutes { grid-template-columns: repeat(6, 1fr); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--divider); }
+.picker-caption { display: none; }
+.picker-list { display: flex; flex-direction: column; gap: 2px; }
+.picker-list button { border: 0; background: none; color: var(--text); font: inherit; text-align: left; padding: 10px 12px; border-radius: 10px; }
+.picker-list button:hover { background: var(--hover); }
+.picker-list button[aria-pressed='true'] { background: var(--pill); color: var(--orange); font-weight: 600; }

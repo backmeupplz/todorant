@@ -1,7 +1,7 @@
 import { signal } from '../lib/state'
 import { decrypt, encrypt } from '../lib/crypto'
 import {
-  acknowledge, applyRemote, applySingleton, cursor, encryptionKey, now, pending, session, setCursor, setOffset, setOnChange,
+  acknowledge, applyRemote, applySingleton, cursor, encryptionKey, now, pending, ready, session, setCursor, setOffset, setOnChange,
   setPeople, todos, type Change,
 } from './store'
 
@@ -90,6 +90,7 @@ async function handle(m: any) {
       sent.delete(m.rid)
       await fixes(m.acks)
       await apply(m)
+      ready.value = true
       waiting.get(m.rid)?.(true)
       waiting.delete(m.rid)
       syncing.value = waiting.size > 0
@@ -140,9 +141,13 @@ async function ops(changes: Change[]) {
   const key = encryptionKey.value
   for (const op of groups.values()) {
     const text = op.set.text
-    if (op.c !== 'todo' || !key || typeof text !== 'string' || !text) continue
+    if (op.c !== 'todo' || typeof text !== 'string' || !text) continue
     const encrypted = 'encrypted' in op.set ? op.set.encrypted : todos.get(op.id!)?.encrypted
-    if (encrypted) op.set.text = await encrypt(text, key)
+    if (!encrypted) continue
+    // An encrypted todo's text never leaves in plain text: without the key (encryption was switched off with the
+    // edit still queued) the text change is held back rather than sent readable
+    if (key) op.set.text = await encrypt(text, key)
+    else if (!text.startsWith('U2FsdGVkX1')) delete op.set.text
   }
   return [...groups.values()]
 }

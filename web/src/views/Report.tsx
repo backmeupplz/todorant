@@ -1,14 +1,12 @@
-import { useSignal } from '../lib/state'
 import { useEffect } from 'preact/hooks'
 import { call } from '../data/rest'
 import { rev, session, todos } from '../data/store'
 import { locale, t } from '../i18n'
+import { useSignal } from '../lib/state'
 import { addDays, dateString, parseTitle } from '../lib/time'
 import { isMine } from '../logic/todos'
-import { Button, IconButton, showError, Spinner, toast } from '../ui/kit'
+import { Button, Caption, Field, IconButton, Placeholder, showError, SkeletonBlock, Spinner, toast } from '../ui/kit'
 import { go } from '../ui/router'
-import { Placeholder } from './Current'
-import { Input } from './dialogs'
 import './Report.css'
 
 type Counts = Record<string, number>
@@ -39,14 +37,16 @@ function Charts({ data, start, end }: { data: Meta; start?: string; end?: string
   if (!keys.length) return <Placeholder emoji="😳" title={t('noReport.title')} text={t('noReport.text')} />
   const days: string[] = []
   const last = [end || dateString(new Date()), keys.at(-1)!].sort()[1]
-  for (let d = parseTitle(start || keys[0]); dateString(d) <= last; d = addDays(d, 1)) days.push(dateString(d))
+  // At least two weeks unless a start date is picked, so a few days don't make a few huge bars
+  const from = start ? parseTitle(start) : new Date(Math.min(+parseTitle(keys[0]), +addDays(parseTitle(last), -13)))
+  for (let d = from; dateString(d) <= last; d = addDays(d, 1)) days.push(dateString(d))
   return (
-    <div class="report-grid">
+    <div class="charts">
       {([['report.tasksCompleted', done], ['report.frogsCompleted', frogs]] as const).map(([title, counts]) => (
-        <div key={title}>
-          <h3>{t(title)}: {sum(counts)}</h3>
+        <section key={title}>
+          <Caption>{t(title)}: <b class="chart-total">{sum(counts)}</b></Caption>
           <Bars title={t(title)} days={days} counts={counts} />
-        </div>
+        </section>
       ))}
     </div>
   )
@@ -80,11 +80,11 @@ const SHARE: [name: string, url: (link: string, text: string) => string][] = [
   ['Email', (u, m) => `mailto:?subject=${enc(m)}&body=${enc(u)}`],
 ]
 
-/** The stats tab, computed from local data */
+/** The stats page, computed from local data; sharing makes a public copy on the server */
 export function Report() {
   rev.value
   const hash = useSignal('')
-  const more = useSignal(false)
+  const dates = useSignal(false)
   const start = useSignal('')
   const end = useSignal('')
   const link = useSignal('')
@@ -97,7 +97,7 @@ export function Report() {
   async function share() {
     busy.value = true
     try {
-      const { uuid } = await call<{ uuid: string }>('GET', `/report/share?hash=${enc(tag)}&startDate=${start.value}&endDate=${end.value}`)
+      const { uuid } = await call<{ uuid: string }>('GET', `/report/share?hash=${enc(tag)}&startDate=${enc(start.value)}&endDate=${enc(end.value)}`)
       link.value = `https://todorant.com/report/${uuid}`
     } catch (e) {
       showError(e)
@@ -109,27 +109,36 @@ export function Report() {
   return (
     <div class="report">
       <div class="report-filters">
-        <Input class="grow" label={t('report.hashtag')} type="search" placeholder="#" value={hash.value} onInput={input(hash)} />
-        <IconButton icon={more.value ? 'expand_less' : 'more_horiz'} title={`${t('report.startDate')} / ${t('report.endDate')}`} onClick={() => (more.value = !more.value)} />
+        <Field class="grow" type="search" aria-label={t('report.hashtag')} placeholder={`#${t('report.hashtag')}`} value={hash.value} onInput={input(hash)} />
+        <IconButton
+          icon="calendar"
+          title={`${t('report.startDate')} / ${t('report.endDate')}`}
+          color={dates.value || start.value || end.value ? 'var(--orange)' : undefined}
+          onClick={() => (dates.value = !dates.value)}
+        />
       </div>
-      {more.value && (
-        <div class="report-filters">
-          <Input class="grow" label={t('report.startDate')} type="date" value={start.value} max={end.value || undefined} onInput={input(start)} />
-          <Input class="grow" label={t('report.endDate')} type="date" value={end.value} min={start.value || undefined} onInput={input(end)} />
+      {dates.value && (
+        <div class="report-filters dates">
+          <Field class="grow" label={t('report.startDate')} type="date" value={start.value} max={end.value || undefined} onInput={input(start)} />
+          <Field class="grow" label={t('report.endDate')} type="date" value={end.value} min={start.value || undefined} onInput={input(end)} />
         </div>
       )}
       <Charts data={data} start={start.value} end={end.value} />
       {!!Object.keys(data.completedTodosMap!).length && (
-        <section class="report-cta">
-          <h2>{t('report.share')}</h2>
+        <section>
+          <Caption>{t('report.share')}</Caption>
           {!link.value ? (
-            <Button disabled={busy.value} onClick={share}>{busy.value ? <Spinner /> : t('report.shareButton')}</Button>
+            <div class="page-content">
+              <Button class="btn-block" disabled={busy.value} onClick={share}>{busy.value ? <Spinner /> : t('report.shareButton')}</Button>
+            </div>
           ) : (
             <>
-              <p>{t('report.url')}: <a href={link.value} target="_blank" rel="noopener noreferrer">{link.value}</a></p>
-              <div class="row wrap report-links">
-                <IconButton icon="content_copy" title="Copy" onClick={() => navigator.clipboard.writeText(link.value).then(() => toast(t('success')), showError)} />
+              <div class="table-row">
+                <a class="label report-link" href={link.value} target="_blank" rel="noopener noreferrer" title={t('report.url')}>{link.value}</a>
+                <IconButton icon="content_copy" title={t('report.url')} onClick={() => navigator.clipboard.writeText(link.value).then(() => toast(t('success')), showError)} />
                 {'share' in navigator && <IconButton icon="share" title={t('report.shareButton')} onClick={() => navigator.share({ url: link.value, text: message }).catch(() => {})} />}
+              </div>
+              <div class="report-links">
                 {SHARE.map(([name, url]) => (
                   <a key={name} class="btn btn-text btn-small" href={url(link.value, message)} target="_blank" rel="noopener noreferrer">{name}</a>
                 ))}
@@ -151,15 +160,15 @@ export function PublicReport({ uuid }: { uuid: string }) {
     call<Public>('GET', `/report/public/${enc(uuid)}`, undefined, '').then((r) => (report.value = r), () => (report.value = 'error'))
   }, [uuid])
   const r = report.value
-  if (!r) return <div class="placeholder"><Spinner /></div>
+  if (!r) return <div class="charts">{[0, 1].map((i) => <figure key={i} class="chart"><SkeletonBlock width="100%" height={170} /></figure>)}</div>
   if (r === 'error') return <Placeholder emoji="😳" title={t('errors.report')} />
   return (
-    <div class="panel report">
+    <div class="report">
       {r.user && <h1 class="report-title">{r.user}, {t('report.title').toLowerCase()}{r.hash ? ` #${r.hash}` : ''}</h1>}
       <Charts data={r.meta ?? {}} />
       <section class="report-cta">
         <h2>{t('report.call')}</h2>
-        <Button color="gradient" onClick={() => go(session.value ? '/superpower' : '/')}>{t('report.callButton')}</Button>
+        <Button color="gradient" onClick={() => go(session.value ? '/current' : '/')}>{t('report.callButton')}</Button>
       </section>
     </div>
   )

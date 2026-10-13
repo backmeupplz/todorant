@@ -1,18 +1,17 @@
-import { useSignal } from '../lib/state'
 import type { JSX } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 import { Icon } from '../assets/icons'
 import { prefs, rev, settings, update, type Todo } from '../data/store'
-import { sync, syncing } from '../data/sync'
 import { t } from '../i18n'
+import { useSignal } from '../lib/state'
 import { ellipsize } from '../lib/text'
-import { isOld, parseTitle } from '../lib/time'
-import { allForDay, fixOrder, overdueCount, planning, suggestions, titleOf } from '../logic/todos'
-import { addTodo, breakdownTodo, completeTodo, editTodo } from '../ui/actions'
-import { dialogOpen, IconButton, Switch } from '../ui/kit'
+import { isOld } from '../lib/time'
+import { allForDay, fixOrder, overdueCount, planning, suggestions, tagColor, titleOf } from '../logic/todos'
+import { addTodo, breakdownTodo, completeTodo } from '../ui/actions'
+import { dialogOpen, IconButton, InfoButton, Placeholder, Segmented } from '../ui/kit'
 import { hashTags, setHashTags } from '../ui/router'
 import { TodoCard } from '../ui/TodoCard'
-import { Calendar, canMove, isPast, pointerDrag, type Mode, type Section } from './Calendar'
+import { Calendar, canMove, dayLabel, isPast, pointerDrag, type Mode, type Section } from './Calendar'
 import './Planning.css'
 
 const PAGE = 20
@@ -58,6 +57,7 @@ function apply(list: Section[], before: Map<string, string>) {
   fixOrder(touched)
 }
 
+/** The planning tab like the app's: Planning/Completed in the top bar, day sections, calendar, rearranging and spreading */
 export function Planning() {
   rev.value
   const completed = useSignal(false)
@@ -98,6 +98,7 @@ export function Planning() {
   const toggleSearch = () => {
     searching.value = !searching.value
     input.value = query.value = ''
+    calendar.value = false
   }
 
   /** Moves a todo in the draft to `index` (among the other todos) of a day, creating the day when needed */
@@ -142,13 +143,13 @@ export function Planning() {
         (el, ev) => {
           const title = el?.closest<HTMLElement>('[data-section]')?.dataset.section
           if (!el || !title || !canMove(todo, title)) return
-          const card = el.closest<HTMLElement>('[data-todo]')
-          if (card?.dataset.todo === todo.id) return
+          const row = el.closest<HTMLElement>('[data-todo]')
+          if (row?.dataset.todo === todo.id) return
           const others = draft.value.find((s) => s.title === title)!.todos.filter((t) => t.id !== todo.id)
-          let index = el.closest('.section-header') ? 0 : others.length
-          if (card) {
-            const r = card.getBoundingClientRect()
-            index = others.findIndex((t) => t.id === card.dataset.todo) + (ev.clientY > r.top + r.height / 2 ? 1 : 0)
+          let index = el.closest('.day') ? 0 : others.length
+          if (row) {
+            const r = row.getBoundingClientRect()
+            index = others.findIndex((t) => t.id === row.dataset.todo) + (ev.clientY > r.top + r.height / 2 ? 1 : 0)
           }
           place(todo.id, title, index)
         },
@@ -167,6 +168,10 @@ export function Planning() {
     return () => clearTimeout(id)
   }, [input.value])
 
+  useEffect(() => {
+    if (searching.value) searchRef.current?.focus()
+  }, [searching.value])
+
   // More todos as the end of the list scrolls into view; re-observing after each render re-checks it
   useEffect(() => {
     if (!sentinel.current) return
@@ -180,8 +185,9 @@ export function Planning() {
     const onKey = (e: KeyboardEvent) => {
       if (dialogOpen()) return
       if (e.key === 'Escape' && mode.value) return stop()
+      if (e.key === 'Escape' && searching.value) return toggleSearch()
       if (!prefs.value.hotkeys) return
-      if (e.ctrlKey && e.shiftKey && e.code === 'KeyF') return e.preventDefault(), toggleSearch()
+      if (e.ctrlKey && e.shiftKey && e.code === 'KeyF') return e.preventDefault(), !mode.value && toggleSearch()
       if (e.ctrlKey || e.metaKey || e.altKey || (e.target as Element).closest?.('input, textarea, select, [contenteditable]')) return
       const todo = first.current
       if (todo && e.key === 'd') completeTodo(todo)
@@ -207,81 +213,109 @@ export function Planning() {
   const inDraft = m === 'spread' ? new Map(draft.value.flatMap((s) => s.todos.map((x) => [x.id, x] as const))) : undefined
   let left = limit.value
   const total = sections.reduce((n, s) => n + (collapsed.value.has(s.title) ? 1 : Math.max(1, s.todos.length)), 0)
+  const filtering = !!query.value || tags.length > 0
 
   return (
     <div class={`planning${dragging.value ? ' dragging' : ''}`}>
-      {!completed.value && overdueCount() > 0 && (
-        <div class="planning-alert" role="note">
-          <Icon name="info" />
-          <span>{t('planningText')}</span>
-        </div>
-      )}
-      <div class="toolbar planning-toolbar">
-        {!calendar.value && !searching.value && !tags.length && (
-          <Switch
-            checked={completed.value}
-            disabled={!!m}
-            label={t('todo.list.completed')}
-            onChange={(v) => ((completed.value = v), (limit.value = PAGE))}
-          />
-        )}
-        {searching.value && (
-          <div class="planning-search">
-            <input
-              ref={searchRef}
-              autofocus
-              type="search"
-              class="input"
-              placeholder={t('search')}
-              aria-label={t('search')}
-              value={input.value}
-              onInput={(e) => (input.value = e.currentTarget.value)}
-            />
-            <div class="planning-suggestions">
-              {suggestions(input.value, false).map((tag) => (
-                <button type="button" key={tag.id} class="btn btn-text btn-small" style={{ color: tag.color || 'var(--link)' }} onClick={() => pickTag(tag.tag)}>
-                  #{tag.tag}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        {tags.length > 0 && (
-          <div class="planning-tags">
-            <IconButton icon="close" size={20} title="Clear tag filter" onClick={() => setHashTags([])} />
-            {tags.map((tag) => (
-              <span key={tag} class="chip">
-                <span>#{tag}</span>
-                <IconButton icon="close" size={16} title={`Remove #${tag}`} onClick={() => setHashTags(tags.filter((x) => x !== tag))} />
-              </span>
-            ))}
-          </div>
-        )}
-        {!searching.value && !tags.length && <span class="grow" />}
-        {!m && !completed.value && !searching.value && (
-          <IconButton icon="calendar" title="Calendar" onClick={() => ((calendar.value = !calendar.value), (limit.value = PAGE))} />
-        )}
-        {calendar.value && !m && <IconButton icon="call_split" title={t('spread.hint')} onClick={() => start('spread')} />}
-        {!m && !completed.value && <IconButton icon="rearrange" title="Rearrange" onClick={() => start('rearrange')} />}
-        {m && (
+      {/* TopBar's markup, with the search button in the left slot (TopBar only puts a back button there) */}
+      <header class={`topbar${m ? ' editing' : ''}`}>
+        {searching.value ? (
           <>
-            <IconButton icon="close" title={`${t('cancel')} (Esc)`} onClick={stop} />
-            <IconButton icon="check" title={t('save')} color="var(--green)" onClick={done} />
+            <label class="planning-search">
+              <Icon name="search" size={16} />
+              <input
+                ref={searchRef}
+                type="search"
+                enterKeyHint="search"
+                placeholder={`${t('m.search')}...`}
+                aria-label={t('m.search')}
+                value={input.value}
+                onInput={(e) => (input.value = e.currentTarget.value)}
+              />
+            </label>
+            <button type="button" class="btn btn-text" onClick={toggleSearch}>{t('m.cancel')}</button>
+          </>
+        ) : (
+          <>
+            {/* The same controls in list and calendar mode, so nothing shifts when switching */}
+            <div class="side">{!m && <IconButton icon="search" size={22} title={`${t('m.search')} (Ctrl+Shift+F)`} onClick={toggleSearch} />}</div>
+            <Segmented
+              label={t('m.planning')}
+              options={[t('m.planning'), t('m.completed')]}
+              selected={completed.value ? 1 : 0}
+              onSelect={(i) => !m && ((completed.value = i === 1), i === 1 && (calendar.value = false), (limit.value = PAGE))}
+            />
+            <div class="side">
+              {m ? (
+                <>
+                  <IconButton icon="close" title={`${t('cancel')} (Esc)`} onClick={stop} />
+                  <IconButton icon="check" title={t('save')} color="var(--green)" onClick={done} />
+                </>
+              ) : completed.value ? (
+                <InfoButton text="m.infoPlanning" />
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    class="icon-btn"
+                    title="Calendar"
+                    aria-label="Calendar"
+                    aria-pressed={calendar.value}
+                    onClick={() => ((calendar.value = !calendar.value), (limit.value = PAGE))}
+                  >
+                    <Icon name="calendar" />
+                  </button>
+                  <IconButton icon="rearrange" title="Rearrange" onClick={() => start('rearrange')} />
+                </>
+              )}
+            </div>
           </>
         )}
-        {!m && !completed.value && !calendar.value && <IconButton icon="search" title={`${t('search')} (Ctrl+Shift+F)`} onClick={toggleSearch} />}
-        <IconButton icon="refresh" title={t('refresh')} disabled={syncing.value} onClick={() => sync()} />
-      </div>
+      </header>
+
+      {searching.value && (
+        <div class="planning-chips">
+          {suggestions(input.value, false).map((tag) => (
+            <button type="button" key={tag.id} class="chip" style={{ color: tag.color || 'var(--link)' }} onClick={() => pickTag(tag.tag)}>
+              #{tag.tag}
+            </button>
+          ))}
+        </div>
+      )}
+      {tags.length > 0 && (
+        <div class="planning-chips">
+          {tags.length > 1 && <IconButton icon="close" size={20} title="Clear tag filter" onClick={() => setHashTags([])} />}
+          {tags.map((tag) => (
+            <button
+              type="button"
+              key={tag}
+              class="chip"
+              style={{ color: tagColor(tag) || 'var(--link)' }}
+              title={`Remove #${tag}`}
+              aria-label={`Remove #${tag}`}
+              onClick={() => setHashTags(tags.filter((x) => x !== tag))}
+            >
+              <span>#{tag}</span>
+              <Icon name="close" size={16} />
+            </button>
+          ))}
+        </div>
+      )}
+      {!completed.value && overdueCount() > 0 && (
+        <div class="banner" role="note">
+          {t('planningText')}
+        </div>
+      )}
 
       {inDraft && (
         <div class="spread-row">
           <span>{t('spread.spreading')}</span>
           {picked.value.length ? (
             picked.value.map((id) => (
-              <span key={id} class="chip">
+              <button type="button" key={id} class="chip" title="Remove task" aria-label={`Remove ${inDraft.get(id)?.text ?? ''}`} onClick={() => (picked.value = picked.value.filter((x) => x !== id))}>
                 <span>{ellipsize(inDraft.get(id)?.text ?? '', 15)}</span>
-                <IconButton icon="close" size={16} title="Remove task" onClick={() => (picked.value = picked.value.filter((x) => x !== id))} />
-              </span>
+                <Icon name="close" size={16} />
+              </button>
             ))
           ) : (
             <span class="chip muted">{t('spread.chooseTasks')}</span>
@@ -289,10 +323,10 @@ export function Planning() {
           <span>{t('spread.between')}</span>
           {dates.value.length ? (
             dates.value.map((d) => (
-              <span key={d} class="chip">
+              <button type="button" key={d} class="chip" title={`Remove ${d}`} aria-label={`Remove ${d}`} onClick={() => (dates.value = dates.value.filter((x) => x !== d))}>
                 <span>{d}</span>
-                <IconButton icon="close" size={16} title={`Remove ${d}`} onClick={() => (dates.value = dates.value.filter((x) => x !== d))} />
-              </span>
+                <Icon name="close" size={16} />
+              </button>
             ))
           ) : (
             <span class="chip muted">{t('spread.chooseDates')}</span>
@@ -306,10 +340,13 @@ export function Planning() {
           mode={m}
           picked={picked.value}
           dates={dates.value}
-          onChip={(todo) => (m !== 'spread' ? editTodo(todo) : !picked.value.includes(todo.id) && (picked.value = [...picked.value, todo.id]))}
-          onDay={(title) => !dates.value.includes(title) && (dates.value = [...dates.value, title])}
+          onPick={(todo) => !picked.value.includes(todo.id) && (picked.value = [...picked.value, todo.id])}
+          onDate={(title) => (dates.value = dates.value.includes(title) ? dates.value.filter((x) => x !== title) : [...dates.value, title])}
           onMove={(todo, title) => place(todo.id, title)}
+          onSpread={m ? undefined : () => start('spread')}
         />
+      ) : !sections.length ? (
+        filtering ? <Placeholder emoji="🔍" /> : <Placeholder emoji="👀" title={t('m.noTodosExistTitle')} text={t('m.noTodosExistText')} />
       ) : (
         sections.map((s) => {
           if (left <= 0) return null
@@ -318,13 +355,12 @@ export function Planning() {
           left -= Math.max(1, shown.length)
           return (
             <section key={s.title} data-section={s.title} class="planning-section">
-              <div class="section-header">
-                <button type="button" class="section-toggle" aria-expanded={open} onClick={() => toggle(s.title)}>
-                  {s.title}
-                  {s.title.length > 7 && ` ${t(`weekday${parseTitle(s.title).getDay()}`)}`}
-                  {!open && ` (${s.todos.length})`}
+              <div class="day">
+                <button type="button" class="day-label" aria-expanded={open} onClick={() => toggle(s.title)}>
+                  {dayLabel(s.title)}
+                  {!open && <span class="day-count">{s.todos.length}</span>}
                 </button>
-                {s.title.length > 7 && !m && <IconButton icon="add_plain" size={20} title={t('todo.create.title')} onClick={() => addTodo(s.title)} />}
+                {!m && !isPast(s.title) && <IconButton icon="add" size={20} title={t('todo.create.title')} onClick={() => addTodo(s.title)} />}
               </div>
               {shown.map((todo) => (
                 <div key={todo.id} data-todo={todo.id}>

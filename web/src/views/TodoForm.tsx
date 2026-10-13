@@ -2,12 +2,13 @@ import { useSignal } from '../lib/state'
 import { useEffect, useRef } from 'preact/hooks'
 import { Icon } from '../assets/icons'
 import { addHeroPoint, create, encryptionKey, people, prefs, session, settings, todos as allTodos, update, type Person, type Todo } from '../data/store'
-import { t } from '../i18n'
+import { locale, t } from '../i18n'
 import { dateString, isOld, monthOf, today } from '../lib/time'
 import { hashtags } from '../lib/text'
 import * as todos from '../logic/todos'
-import { Button, confetti, DialogCard, IconButton, open, playComplete, Switch, toast } from '../ui/kit'
+import { Button, confetti, IconButton, InfoButton, open, playComplete, Sheet, Switch, toast } from '../ui/kit'
 import { TodoCard } from '../ui/TodoCard'
+import { DayPicker, MonthPicker, PickerRow, TimePicker } from '../ui/pickers'
 import { requestBreakdown } from '../ui/actions'
 import './TodoForm.css'
 
@@ -24,6 +25,8 @@ type Slot = {
   repetitive: boolean
   delegate?: Person
   more: boolean
+  /** Folded into a one-line summary (forms with several todos) */
+  collapsed?: boolean
   edited?: Todo
 }
 
@@ -38,7 +41,7 @@ const dayFields = (title: string) => ({ monthAndYear: title.slice(0, 7), date: t
 const valid = (s: Slot) => !!s.text.trim() && s.text.length <= 1500 && (!!s.monthAndYear || !!s.delegate)
 
 export function openForm(p: { mode: Mode; todo?: Todo; title?: string; text?: string; accepting?: boolean }) {
-  open((close) => <TodoForm {...p} close={close} />, true)
+  open((close) => <TodoForm {...p} close={close} />, true, true)
 }
 
 function TodoForm({ mode, todo, title, text, accepting, close }: { mode: Mode; todo?: Todo; title?: string; text?: string; accepting?: boolean; close: () => void }) {
@@ -52,7 +55,12 @@ function TodoForm({ mode, todo, title, text, accepting, close }: { mode: Mode; t
   }
   const slots = useSignal<Slot[]>([first()])
   const set = (key: number, patch: Partial<Slot>) => (slots.value = slots.value.map((s) => (s.key === key ? { ...s, ...patch } : s)))
-  const add = () => (slots.value = [...slots.value, slot(mode === 'breakdown' && settings.value.duplicateTagInBreakdown && todo ? { text: hashtags(todo.text).map((h) => `#${h} `).join('') } : {})])
+  // A new todo opens below the others, which fold into one-line summaries
+  const add = () =>
+    (slots.value = [
+      ...slots.value.map((s) => ({ ...s, collapsed: true })),
+      slot(mode === 'breakdown' && settings.value.duplicateTagInBreakdown && todo ? { text: hashtags(todo.text).map((h) => `#${h} `).join('') } : {}),
+    ])
   const ok = slots.value.every(valid)
 
   function save() {
@@ -110,17 +118,21 @@ function TodoForm({ mode, todo, title, text, accepting, close }: { mode: Mode; t
     close()
   }
 
-  const heading = mode === 'edit' ? t('todo.edit.title') : mode === 'breakdown' ? t('breakdown.button') : t('todo.create.title')
+  const heading = mode === 'edit' ? t('m.editTodo') : mode === 'breakdown' ? t('m.breakdownTodo') : t('m.addTodo')
+  const label = mode === 'edit' ? t('m.saveTodo') : slots.value.length > 1 ? t('m.addTodoPlural') : t('m.addTodoSingular')
   return (
-    <DialogCard
-      wide
+    <Sheet
       title={heading}
-      actions={
+      onClose={close}
+      actions={<InfoButton text={mode === 'edit' ? 'm.infoEdit' : mode === 'breakdown' ? 'm.infoBreakdown' : 'm.infoAdd'} />}
+      footer={
         <>
-          {mode !== 'edit' && <IconButton icon="add_plain" title={t('todo.create.title')} onClick={add} />}
-          <span class="grow" />
-          <Button text onClick={close}>{t('cancel')}</Button>
-          <Button onClick={() => void save()} disabled={!ok}>{t('save')}</Button>
+          <Button onClick={() => void save()} disabled={!ok}>{label}</Button>
+          {mode !== 'edit' && (
+            <button type="button" class="btn btn-primary add-slot" title={`${t('m.addTodo')} (ctrl+shift+a)`} aria-label={t('m.addTodo')} onClick={add}>
+              <Icon name="add_plain" size={22} />
+            </button>
+          )}
         </>
       }
     >
@@ -142,8 +154,18 @@ function TodoForm({ mode, todo, title, text, accepting, close }: { mode: Mode; t
           onAdd={add}
         />
       ))}
-    </DialogCard>
+    </Sheet>
   )
+}
+
+const monthName = (month: string) => {
+  const [y, m] = month.split('-').map(Number)
+  return new Date(y, m - 1, 1).toLocaleDateString(locale(), { month: 'long', year: 'numeric' })
+}
+/** "Tue, Oct 13" (with the year when it isn't this year) */
+const dayName = (day: string) => {
+  const [y, m, d] = day.split('-').map(Number)
+  return new Date(y, m - 1, d).toLocaleDateString(locale(), { weekday: 'short', month: 'short', day: 'numeric', ...(y !== new Date().getFullYear() ? { year: 'numeric' } : {}) })
 }
 
 function SlotForm(p: { slot: Slot; index: number; count: number; editing: boolean; onChange: (patch: Partial<Slot>) => void; onRemove: () => void; onSave: () => void; onAdd: () => void }) {
@@ -177,17 +199,27 @@ function SlotForm(p: { slot: Slot; index: number; count: number; editing: boolea
   // Without the right password the text can't be shown or changed, only the rest of the todo
   const locked = !!s.edited && todos.unreadable(s.edited)
   const delegates = people.value.delegates
+  const picker = useSignal<'day' | 'month' | 'time' | 'delegate' | null>(null)
+  const toggle = (which: 'day' | 'month' | 'time' | 'delegate') => (picker.value = picker.value === which ? null : which)
+  const when = s.date && s.monthAndYear ? dayName(`${s.monthAndYear}-${s.date}`) : s.monthAndYear ? monthName(s.monthAndYear) : ''
+  const header = p.count > 1 && (
+    <div class="slot-head">
+      <button type="button" class="slot-summary" aria-expanded={!s.collapsed} onClick={() => p.onChange({ collapsed: !s.collapsed })}>
+        <Icon name={s.collapsed ? 'expand_more' : 'expand_less'} size={20} />
+        <b>#{p.index + 1}</b>
+        {s.collapsed && <span class={valid(s) ? 'summary' : 'summary invalid'}>{(locked ? t('encryption.encryptedTodo') : s.text.trim()) || t('todo.create.text')}</span>}
+        {s.collapsed && when && <span class="when">{when}</span>}
+      </button>
+      <IconButton icon="close" title={t('delete')} onClick={p.onRemove} />
+    </div>
+  )
+  if (s.collapsed) return <section class="slot collapsed">{header}</section>
   return (
     <section class="slot">
-      {p.count > 1 && (
-        <div class="row">
-          <b class="grow">#{p.index + 1}</b>
-          <IconButton icon="close" title={t('delete')} onClick={p.onRemove} />
-        </div>
-      )}
+      {header}
       <textarea
         ref={ref}
-        class={`input${s.text.length > 1500 ? ' invalid' : ''}`}
+        class={`slot-text${s.text.length > 1500 ? ' invalid' : ''}`}
         rows={2}
         placeholder={locked ? t('encryption.errorDecrypting') : t('todo.create.text')}
         aria-label={t('todo.create.text')}
@@ -199,7 +231,7 @@ function SlotForm(p: { slot: Slot; index: number; count: number; editing: boolea
         onBlur={() => (ctrl.value = false)}
       />
       {suggestions.length > 0 && (
-        <div class="row wrap tags">
+        <div class="tags">
           {suggestions.map((tag, i) => (
             <button key={tag.id} type="button" class="chip" style={{ color: tag.color || 'var(--link)' }} onClick={() => insertTag(tag.tag)}>
               {ctrl.value && <b>{i + 1}</b>}#{tag.tag}
@@ -207,47 +239,43 @@ function SlotForm(p: { slot: Slot; index: number; count: number; editing: boolea
           ))}
         </div>
       )}
-      <div class="row wrap">
-        <label class="field grow">
-          <span>{t('todo.create.date')}</span>
-          <input type="date" min={min} value={s.date && s.monthAndYear ? `${s.monthAndYear}-${s.date}` : ''} onInput={(e) => {
-            const v = e.currentTarget.value
-            p.onChange(v ? dayFields(v) : { date: null })
-          }} />
-        </label>
-        <label class="field grow">
-          <span>{t('todo.create.month')}</span>
-          <input type="month" min={min.slice(0, 7)} value={!s.date ? s.monthAndYear ?? '' : ''} onInput={(e) => p.onChange({ monthAndYear: e.currentTarget.value || null, date: null })} />
-        </label>
-      </div>
-      <div class="row wrap switches">
-        <Switch label={t('todo.create.frog')} checked={s.frog} onChange={(frog) => p.onChange({ frog })} />
-        <Switch label={t('completed')} checked={s.completed} onChange={(completed) => p.onChange({ completed })} />
-      </div>
+      <PickerRow label={t('m.addTodoDay')} value={s.date && s.monthAndYear ? dayName(`${s.monthAndYear}-${s.date}`) : ''} open={picker.value === 'day'}
+        onToggle={() => toggle('day')} onClear={() => p.onChange({ date: null })}>
+        <DayPicker value={s.date && s.monthAndYear ? `${s.monthAndYear}-${s.date}` : null} min={min} onPick={(day) => (p.onChange(dayFields(day)), (picker.value = null))} />
+      </PickerRow>
+      <PickerRow label={t('m.addTodoMonth')} value={!s.date && s.monthAndYear ? monthName(s.monthAndYear) : ''} open={picker.value === 'month'}
+        onToggle={() => toggle('month')} onClear={() => p.onChange({ monthAndYear: null, date: null })}>
+        <MonthPicker value={!s.date ? s.monthAndYear : null} min={min.slice(0, 7)} onPick={(month) => (p.onChange({ monthAndYear: month, date: null }), (picker.value = null))} />
+      </PickerRow>
+      <Switch row label={t('todo.create.frog')} checked={s.frog} onChange={(frog) => p.onChange({ frog })} />
+      <Switch row label={t('completed')} checked={s.completed} onChange={(completed) => p.onChange({ completed })} />
       {s.more ? (
-        <div class="more">
-          <label class="field">
-            <span>{t('addTodoTime')}</span>
-            <input type="time" value={s.time ?? ''} onInput={(e) => {
-              const time = e.currentTarget.value || null
-              p.onChange(time && !s.date ? { time, ...dayFields(dateString(today())) } : { time })
+        <>
+          <PickerRow label={t('m.addTodoTime')} value={s.time} open={picker.value === 'time'} onToggle={() => toggle('time')} onClear={() => p.onChange({ time: null })}>
+            <TimePicker value={s.time} onPick={(time) => {
+              const minutePicked = s.time !== null && s.time !== undefined && time.slice(0, 2) === s.time.slice(0, 2)
+              p.onChange(!s.date ? { time, ...dayFields(dateString(today())) } : { time })
+              if (minutePicked) picker.value = null
             }} />
-          </label>
-          {!p.editing && <Switch label={t('todo.create.goFirst')} checked={s.goFirst} onChange={(goFirst) => p.onChange({ goFirst })} />}
-          <Switch label={t('breakdownMessage.title')} checked={s.repetitive} onChange={(repetitive) => p.onChange({ repetitive })} />
+          </PickerRow>
+          {!p.editing && <Switch row label={t('m.addTodoOnTop')} checked={s.goFirst} onChange={(goFirst) => p.onChange({ goFirst })} />}
+          <Switch row label={t('breakdownMessage.title')} checked={s.repetitive} onChange={(repetitive) => p.onChange({ repetitive })} />
           {!p.editing && delegates.length > 0 && (
-            <label class="field">
-              <span>{t('delegate.title')}</span>
-              <select class="input" value={s.delegate?.id ?? ''} onChange={(e) => p.onChange({ delegate: delegates.find((d) => d.id === e.currentTarget.value) })}>
-                <option value="">—</option>
-                {delegates.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
-              </select>
-            </label>
+            <PickerRow label={t('delegate.title')} value={s.delegate?.name} open={picker.value === 'delegate'} onToggle={() => toggle('delegate')} onClear={() => p.onChange({ delegate: undefined })}>
+              <div class="picker-list">
+                {delegates.map((d) => (
+                  <button key={d.id} type="button" aria-pressed={s.delegate?.id === d.id} onClick={() => (p.onChange({ delegate: d }), (picker.value = null))}>
+                    {d.name}
+                  </button>
+                ))}
+              </div>
+            </PickerRow>
           )}
-        </div>
+        </>
       ) : (
-        <button type="button" class="btn btn-text more-btn" onClick={() => p.onChange({ more: true })}>
-          <Icon name="more_horiz" size={20} />
+        <button type="button" class="table-row more-row" onClick={() => p.onChange({ more: true })}>
+          <span class="label">{t('m.addTodoMore')}</span>
+          <Icon name="chevron_right" size={20} />
         </button>
       )}
     </section>

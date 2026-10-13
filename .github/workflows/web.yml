@@ -31,6 +31,8 @@ jobs:
       - if: steps.modules.outputs.cache-hit != 'true'
         run: npm ci
       - run: npx tsc -p .
+      # Shown at the bottom of Settings
+      - run: echo "VITE_VERSION=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
       - run: npm run build
       - if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3

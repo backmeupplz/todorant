@@ -1,10 +1,32 @@
-.slot { display: flex; flex-direction: column; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--card-border); }
+/* The add/edit form, laid out like the app's Add todo screen */
+.dialog.sheet .sheet-body { padding: 0 0 8px; }
+.slot { padding: 6px 0 10px; border-bottom: 1px solid var(--divider); }
 .slot:last-child { border-bottom: 0; }
-.slot textarea { resize: vertical; min-height: 64px; }
-.slot .tags { gap: 6px; }
-.slot .tags .chip { cursor: pointer; padding: 2px 10px; }
-.slot .switches { gap: 4px 24px; }
-.slot .switches .switch { flex: 1 1 200px; }
-.slot .more { display: flex; flex-direction: column; gap: 8px; }
-.slot .more-btn { align-self: flex-start; padding: 0 8px; min-height: 28px; }
-.breakdown-original .todo { margin: 0; }
+.slot-head { display: flex; align-items: center; gap: 4px; padding: 2px 8px 0 8px; }
+.slot-summary {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 8px; border: 0; border-radius: 10px;
+  background: none; color: var(--muted); font: inherit; text-align: left;
+}
+.slot-summary:hover { background: var(--hover); }
+.slot-summary b { color: var(--muted); font-weight: 600; }
+.slot-summary .summary { flex: 1; min-width: 0; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slot-summary .summary.invalid { color: var(--muted); }
+.slot-summary .when { flex: none; font-size: 14px; }
+.slot.collapsed { padding: 2px 0; }
+.slot-text {
+  display: block; width: 100%; min-height: 64px; resize: vertical; border: 0; outline: none; background: none; color: var(--text);
+  padding: 10px 16px; font: 400 17px/1.35 var(--font);
+}
+.slot-text::placeholder { color: var(--muted); }
+.slot-text.invalid { color: var(--red); }
+.slot .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 8px; }
+.slot .tags .chip { padding: 4px 10px; cursor: pointer; }
+.form-row select {
+  border: 0; background: none; color: var(--text); font: inherit; text-align: right; padding: 4px 0; min-width: 0; max-width: 60%; outline: none;
+}
+.form-row select { appearance: none; -webkit-appearance: none; color: var(--muted); cursor: pointer; }
+.form-row input:focus-visible, .form-row select:focus-visible { outline: 2px solid var(--blue); border-radius: 6px; }
+.more-row { color: var(--orange); }
+.sheet-footer .add-slot { flex: none; width: 48px; padding: 0; display: grid; place-items: center; }
+.breakdown-original { margin: 8px 16px 4px; border-radius: 12px; background: var(--hover); }
+.breakdown-original .todo-row { border: 0; }

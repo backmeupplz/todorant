@@ -24,3 +24,18 @@ export function setHashTags(tags: string[]) {
   history.replaceState(null, '', location.pathname + location.search + (tags.length ? '#' + tags.map((x) => '#' + x).join(',') : ''))
   read()
 }
+
+export type TabName = 'current' | 'planning' | 'delegation' | 'settings'
+/** App screens: /current, /planning, /delegation, /settings[/page]; /superpower is the old site's address for Current */
+export function appRoute(p = path.value): { tab: TabName; page?: string } | null {
+  if (p === '/superpower' || p === '/current') return { tab: 'current' }
+  const m = p.match(/^\/(planning|delegation|settings)(?:\/([\w-]+))?\/?$/)
+  return m ? { tab: m[1] as TabName, page: m[2] } : null
+}
+
+/** Opens Planning filtered by a hashtag (added to the current filter when already there) */
+export function filterByTag(name: string) {
+  const tags = path.value === '/planning' ? hashTags() : []
+  if (!tags.includes(name)) tags.push(name)
+  go('/planning#' + tags.map((x) => '#' + x).join(','))
+}

@@ -1,12 +1,12 @@
-import { rev, update } from '../data/store'
+import { rev } from '../data/store'
 import { t } from '../i18n'
 import { todayTitle } from '../lib/time'
 import * as todos from '../logic/todos'
-import { IconButton, Button } from '../ui/kit'
-import { TodoCard, showPlanning } from '../ui/TodoCard'
-import { setHashTags } from '../ui/router'
-import { sync } from '../data/sync'
+import { HeroButton, IconButton, LargeTitle, Placeholder } from '../ui/kit'
+import { CurrentCard } from '../ui/TodoCard'
+import { filterByTag } from '../ui/router'
 
+/** One task at a time: today's progress, epics and the todo to do now */
 export function Current() {
   rev.value
   const title = todayTitle()
@@ -15,12 +15,13 @@ export function Current() {
   const done = total - incomplete.length
   const todo = incomplete[0]
   return (
-    <div>
+    <>
+      <LargeTitle title={t('current')} info="m.infoCurrent">
+        <HeroButton />
+      </LargeTitle>
       {todos.epics().map((e) => (
         <div key={e.id} class="epic">
-          <button class="epic-name" style={{ color: e.color || 'var(--orange)' }} onClick={() => (setHashTags([e.tag]), showPlanning())}>
-            #{e.tag}
-          </button>
+          <button class="epic-name" style={{ color: e.color || 'var(--orange)' }} onClick={() => filterByTag(e.tag)}>#{e.tag}</button>
           <span>{e.epicPoints}</span>
           <div class="epic-bar"><i style={{ width: `${Math.min(100, (e.epicPoints / (e.epicGoal || 1)) * 100)}%`, background: e.color || 'var(--orange)' }} /></div>
           <span>{e.epicGoal}</span>
@@ -28,32 +29,23 @@ export function Current() {
         </div>
       ))}
       {total > 0 && (
-        <div class="progress">
-          <b>{done}</b>
-          <div class="bar">
-            {total <= 15 ? Array.from({ length: total }, (_, i) => <i key={i} class={i < done ? 'on' : ''} />) : <i class="on" style={{ flex: 'none', width: `${(done / total) * 100}%` }} />}
-          </div>
-          <b>{total}</b>
-          <IconButton icon="refresh" title={t('refresh')} onClick={() => sync()} />
+        <div class="progress" aria-label={`${done} / ${total}`}>
+          <span>{done}</span>
+          {total <= 15 ? (
+            <div class="bar">{Array.from({ length: total }, (_, i) => <i key={i} class={i < done ? 'on' : ''} />)}</div>
+          ) : (
+            <div class="bar linear"><i class="on" style={{ width: `${(done / total) * 100}%` }} /></div>
+          )}
+          <span>{total}</span>
         </div>
       )}
       {todo ? (
-        <TodoCard todo={todo} type="current" />
+        <CurrentCard key={todo.id} todo={todo} />
       ) : total === 0 ? (
         <Placeholder emoji="🐝" title={t('noTodosTitle')} text={t('noTodosText')} />
       ) : (
         <Placeholder emoji="🎉" title={t('allDoneTitle')} text={t('allDoneText')} />
       )}
-    </div>
+    </>
   )
 }
-
-export const Placeholder = (p: { emoji: string; title: string; text?: string }) => (
-  <div class="placeholder">
-    <div class="emoji">{p.emoji}</div>
-    <h3>{p.title}</h3>
-    {p.text && <p class="muted">{p.text}</p>}
-  </div>
-)
-
-export { update, Button }

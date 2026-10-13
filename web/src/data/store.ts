@@ -72,7 +72,8 @@ function local<T>(key: string, fallback: T) {
   let initial = fallback
   try {
     const raw = localStorage.getItem(key)
-    if (raw != null) initial = JSON.parse(raw)
+    // Objects keep defaults for keys added since they were saved
+    if (raw != null) initial = fallback && typeof fallback === 'object' ? { ...fallback, ...JSON.parse(raw) } : JSON.parse(raw)
   } catch {}
   const s = signal<T>(initial)
   s.subscribe((v) => {
@@ -86,8 +87,10 @@ function local<T>(key: string, fallback: T) {
 export const session = local<Profile | null>('session', null)
 export const encryptionKey = local<string | null>('password', null)
 export const prefs = local('prefs', {
-  dark: matchMedia?.('(prefers-color-scheme: dark)').matches ?? true,
+  colorMode: 'auto' as 'auto' | 'dark' | 'light',
   sound: true,
+  gamification: true,
+  askBeforeDelete: true,
   hotkeys: true,
   swipe: false,
   newLineOnReturn: false,
@@ -97,6 +100,11 @@ export const prefs = local('prefs', {
 })
 export const setPref = <K extends keyof typeof prefs.value>(key: K, value: (typeof prefs.value)[K]) =>
   (prefs.value = { ...prefs.value, [key]: value })
+
+const systemDark = matchMedia('(prefers-color-scheme: dark)')
+/** Dark theme on, from the color mode setting (auto follows the system) */
+export const isDark = () => (prefs.value.colorMode === 'auto' ? systemDark.matches : prefs.value.colorMode === 'dark')
+export const onSystemTheme = (f: () => void) => systemDark.addEventListener('change', f)
 
 // endregion
 
@@ -112,6 +120,8 @@ export let cursor: number | null = null
 /** Bumped on every data change; views read it to recompute */
 export const rev = signal(0)
 export const loaded = signal(false)
+/** There's something to show: data was stored here before, or the first pull arrived */
+export const ready = signal(false)
 
 /** Server clock minus local clock */
 export let offset = 0
@@ -152,10 +162,12 @@ export async function load() {
     people.value = state.people ?? people.value
   }
   loaded.value = true
+  if (cursor !== null) ready.value = true
   rev.value++
 }
 
 export async function reset() {
+  ready.value = false
   todos.clear()
   tags.clear()
   outbox.clear()
