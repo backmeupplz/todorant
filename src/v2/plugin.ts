@@ -15,11 +15,16 @@ export function v2Sync(schema: mongoose.Schema, { collection }: { collection: 't
   schema.pre('save', function (this: mongoose.Document & { _fts?: Record<string, number> }) {
     const now = Date.now()
     const fts = { ...(this._fts || {}) }
-    for (const field of synced) if (this.isNew || this.isModified(field)) fts[field] = now
+    const changed = synced.filter((field) => this.isNew || this.isModified(field))
+    for (const field of changed) fts[field] = now
     this.set('_fts', fts)
+    // Devices that already have the document only need what changed
+    this.$locals.v2Changed = this.isNew ? undefined : changed
   })
   schema.post('save', function (doc: mongoose.Document & Record<string, any>) {
-    const message = { t: 'changes', [collection + 's']: [wire(collection, doc.toObject())] }
+    const changed = doc.$locals.v2Changed as string[] | undefined
+    if (changed && !changed.length) return
+    const message = { t: 'changes', [collection + 's']: [wire(collection, doc.toObject(), changed)] }
     publish(doc.user, message)
     if (collection === 'todo' && doc.delegator) publish(doc.delegator, message)
   })
