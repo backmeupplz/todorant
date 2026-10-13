@@ -166,11 +166,10 @@ private val dateTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
 @Composable
 fun RulesScreen() {
-    val rules = remember(Settings.language) { runCatching { JSONArray(t("rules")) }.getOrNull() }
     StackScreen(t("howTo"), actions = { InfoButton("infoRules") }) {
         LazyColumn(Modifier.fillMaxSize()) {
-            items((0 until (rules?.length() ?: 0)).toList()) { i ->
-                Text("${i + 1}. ${rules!!.getString(i)}", color = Colors.text, modifier = Modifier.padding(12.dp))
+            items((0..16).toList()) { i ->
+                Text("${i + 1}. ${t("rules.$i")}", color = Colors.text, modifier = Modifier.padding(12.dp))
             }
         }
     }

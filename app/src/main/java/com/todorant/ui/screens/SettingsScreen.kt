@@ -77,7 +77,7 @@ fun SettingsScreen() {
     }
     val user = Session.user
     // ponytail: the title is tagged instead of the info button, LargeTitleScreen has no info modifier
-    LargeTitleScreen(t("settings"), "infoSettings", state = SettingsList.state, titleModifier = Modifier.onboardingTarget(Target.INFO_BUTTON)) {
+    LargeTitleScreen(t("settings"), "infoSettings", state = SettingsList.state, infoModifier = Modifier.onboardingTarget(Target.INFO_BUTTON)) {
         // The large title takes item 0
         var index = 1
         fun row(target: String? = null, content: @Composable () -> Unit) {

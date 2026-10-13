@@ -3,6 +3,7 @@ package com.todorant
 import android.content.Context
 import android.content.res.Resources
 import com.todorant.data.Settings
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Locale
 
@@ -24,6 +25,8 @@ object I18n {
             val full = if (prefix.isEmpty()) key else "$prefix.$key"
             when (val v = obj.get(key)) {
                 is JSONObject -> flatten(full, v, out)
+                // i18n-js reads "rules.0" from arrays
+                is JSONArray -> for (i in 0 until v.length()) out["$full.$i"] = v.get(i).toString()
                 else -> out[full] = v.toString()
             }
         }

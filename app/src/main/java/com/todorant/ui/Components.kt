@@ -241,6 +241,7 @@ fun LargeTitleScreen(
     state: LazyListState = rememberLazyListState(),
     bottomPadding: Dp = 0.dp,
     titleModifier: Modifier = Modifier,
+    infoModifier: Modifier = Modifier,
     content: LazyListScope.() -> Unit,
 ) {
     val scrolled by remember { derivedStateOf { state.firstVisibleItemIndex > 0 || state.firstVisibleItemScrollOffset > 40 } }
@@ -261,7 +262,7 @@ fun LargeTitleScreen(
                         title, color = Colors.text, fontFamily = Fonts.displayBold, fontSize = 34.sp, lineHeight = 41.sp,
                         modifier = titleModifier.padding(start = 16.dp)
                     )
-                    InfoButton(infoTitle, Modifier.padding(start = 12.dp))
+                    InfoButton(infoTitle, infoModifier.padding(start = 12.dp))
                     Spacer(Modifier.weight(1f))
                     if (showsHeroButton && Settings.gamificationOn) HeroButton()
                 }
