@@ -6,6 +6,8 @@ module.exports = {
     ...(process.env.TEST_MONGO ? { '^mongodb-memory-server$': '<rootDir>/test/localMongoServer.js' } : {}),
   },
   preset: 'ts-jest',
+  // Type checking is tsc's job in CI; ts-jest only transpiles
+  globals: { 'ts-jest': { isolatedModules: true } },
   testEnvironment: 'node',
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
   testPathIgnorePatterns: ['testUtils'],

@@ -38,10 +38,13 @@ jobs:
           key: backend-modules-${{ runner.os }}-${{ hashFiles('backend/yarn.lock', 'backend/.nvmrc') }}
       - if: steps.modules.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn prettier --check src
-      - run: yarn eslint --max-warnings 0 --ext ts src
-      - run: yarn tsc --skipLibCheck --noEmit
-      - run: yarn jest --forceExit src/__tests__/v2.ts
+      # Independent checks run in parallel; any failure fails the step
+      - run: |
+          yarn -s prettier --check src &
+          yarn -s eslint --max-warnings 0 --ext ts src &
+          yarn -s tsc --skipLibCheck --noEmit &
+          yarn -s jest --forceExit src/__tests__/v2.ts &
+          for job in $(jobs -p); do wait $job || exit 1; done
 
   # Easypanel builds the `deploy/backend` branch, so only backend changes deploy
   deploy:
