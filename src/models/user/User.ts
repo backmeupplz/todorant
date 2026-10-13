@@ -70,6 +70,7 @@ export class User {
       'todos',
       'delegates',
       'googleCalendarResourceId',
+      'settingsFts',
     ]
     if (!withExtra) {
       stripFields.push('token')

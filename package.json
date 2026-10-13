@@ -35,6 +35,7 @@
     "@types/node": "^14.14.0",
     "@types/socket.io": "^2.1.11",
     "@types/temp": "^0.8.34",
+    "@types/ws": "7.4.7",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "axios-mock-adapter": "^1.19.0",
@@ -97,7 +98,8 @@
     "telegraf-i18n": "^6.6.0",
     "temp": "^0.9.1",
     "ts-jest": "^26.4.3",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "ws": "7.5.10"
   },
   "_moduleAliases": {
     "@": "dist"

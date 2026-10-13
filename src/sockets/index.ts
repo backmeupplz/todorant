@@ -12,6 +12,7 @@ import {
   convertModelToRawSql,
 } from '@/helpers/wmdb'
 import { getGoogleCalendarApi, updateTodos } from '@/helpers/googleCalendar'
+import { hint } from '@/v2/hub'
 import { io } from '@/sockets/io'
 import { omit } from 'lodash'
 import { report } from '@/helpers/report'
@@ -355,7 +356,14 @@ io.on('connection', (socket) => {
   )
 })
 
+/** v1 clients pull, v2 devices get a pull hint */
 export function requestSync(userId: string) {
+  requestLegacySync(userId)
+  hint(userId)
+}
+
+/** Only the v1 (socket.io) clients */
+export function requestLegacySync(userId: string) {
   io.to(userId).emit('todos_sync_request')
   io.to(userId).emit('tags_sync_request')
   io.to(userId).emit('settings_sync_request')

@@ -21,6 +21,7 @@ import * as cors from '@koa/cors'
 import * as logger from 'koa-logger'
 import { bootstrapControllers } from 'koa-ts-controllers'
 import { handleMongoErrors } from '@/middlewares/handleMongoErrors'
+import { v2 } from '@/v2/http'
 
 export const app = new Koa()
 ;(async () => {
@@ -38,6 +39,8 @@ export const app = new Koa()
     // Run app
     app.use(cors({ origin: '*' }))
     app.use(bodyParser({ jsonLimit: '100mb' }))
+    app.use(v2.routes())
+    app.use(v2.allowedMethods())
     app.use(router.routes())
     app.use(router.allowedMethods())
     app.use(mount('/docs', serve('./docs/site')))

@@ -1,9 +1,11 @@
 import { Document } from 'mongoose'
-import { DocumentType, Ref, getModelForClass, prop } from '@typegoose/typegoose'
+import { DocumentType, Ref, getModelForClass, plugin, prop } from '@typegoose/typegoose'
+import { v2Sync } from '@/v2/plugin'
 import { User } from '@/models/user'
 import { WMDBTables, WMDBTag, fromSqlToObject } from '@/helpers/wmdb'
 import { omit } from 'lodash'
 
+@plugin(v2Sync, { collection: 'tag' })
 export class Tag {
   @prop({ required: true, ref: User })
   user: Ref<User>
@@ -46,7 +48,7 @@ export class Tag {
   clientId?: string
 
   stripped() {
-    const stripFields = ['__v', 'user']
+    const stripFields = ['__v', 'user', '_fts']
     return omit(
       { ...this._doc, ...{ _tempSyncId: this._tempSyncId } },
       stripFields

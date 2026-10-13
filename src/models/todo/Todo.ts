@@ -1,7 +1,9 @@
-import { Ref, prop } from '@typegoose/typegoose'
+import { Ref, plugin, prop } from '@typegoose/typegoose'
+import { v2Sync } from '@/v2/plugin'
 import { User } from '@/models/user/User'
 import { omit, pick } from 'lodash'
 
+@plugin(v2Sync, { collection: 'todo' })
 export class Todo {
   @prop({ required: true, ref: User, index: true })
   user: Ref<User>
@@ -91,7 +93,7 @@ export class Todo {
   delegateAccepted?: boolean
 
   stripped() {
-    const stripFields = ['__v']
+    const stripFields = ['__v', '_fts']
     const user = pick(this.user, ['name', '_id'])
     pick(this.delegator, ['name', '_id'])
     let delegator = pick(this.delegator, ['name', '_id'])
