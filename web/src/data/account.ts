@@ -20,12 +20,16 @@ export async function start(profile: Profile) {
     await reset()
   }
   session.value = profile
+  localStorage.removeItem('signedOut')
   closeDialogs()
   sync.start()
   go('/superpower', true)
 }
 
 export async function logout() {
+  // The old site's shared login cookie would sign us right back in
+  for (const domain of ['', '; domain=todorant.com', '; domain=.todorant.com']) document.cookie = `token=; Max-Age=0; path=/${domain}`
+  localStorage.setItem('signedOut', '1')
   sync.disconnect()
   session.value = null
   encryptionKey.value = null
@@ -39,5 +43,5 @@ export async function boot() {
   await load()
   if (session.value) return sync.start()
   const token = document.cookie.match(/(?:^|; )token=([^;]+)/)?.[1]
-  if (token) await login('token', { token: decodeURIComponent(token) }).then(start, () => {})
+  if (token && !localStorage.getItem('signedOut')) await login('token', { token: decodeURIComponent(token) }).then(start, () => {})
 }
