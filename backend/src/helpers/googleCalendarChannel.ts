@@ -10,7 +10,11 @@ const BACKEND_URL = process.env.BACKEND_URL
 const oneHour = 3600000
 
 export let googleSyncTimeout: NodeJS.Timeout
-if (process.env.ENVIRONMENT !== 'staging') {
+if (!process.env.GOOGLE_CALENDAR_CLIENT_ID) {
+  console.log(
+    'Google Calendar disabled: set GOOGLE_CALENDAR_CLIENT_ID and GOOGLE_CALENDAR_SECRET'
+  )
+} else if (process.env.ENVIRONMENT !== 'staging') {
   googleSync()
   googleSyncTimeout = setInterval(googleSync, oneHour)
 }

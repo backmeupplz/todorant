@@ -6,10 +6,15 @@ export const errorSenderBot = new Telegraf(
   process.env.TELEGRAM_ERROR_SENDER_TOKEN
 )
 ;(() => {
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV === 'test') return
+  if (process.env.TELEGRAM_ERROR_SENDER_TOKEN) {
     errorSenderBot.launch().then(() => {
       console.log('error sender bot launched')
     })
+  } else {
+    console.log(
+      'Telegram error reports disabled (errors go to the log): set TELEGRAM_ERROR_SENDER_TOKEN and CHAT_ID'
+    )
   }
 })()
 
@@ -40,8 +45,10 @@ export async function report(err: Error, extra?: string) {
         return
       }
     }
-    if (process.env.CHAT_ID && process.env.TELEGRAM_LOGIN_TOKEN) {
+    if (process.env.CHAT_ID && process.env.TELEGRAM_ERROR_SENDER_TOKEN) {
       await errorSenderBot.telegram.sendMessage(process.env.CHAT_ID, text)
+    } else {
+      console.error(text)
     }
   } catch (error) {
     console.error(err)

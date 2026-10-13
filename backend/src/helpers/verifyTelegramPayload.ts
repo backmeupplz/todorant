@@ -11,6 +11,8 @@ export interface TelegramLoginPayload {
 }
 
 export function verifyTelegramPayload(payload: TelegramLoginPayload) {
+  // Without a bot token the key would be sha256('') and anyone could sign payloads
+  if (!process.env.TELEGRAM_LOGIN_TOKEN) return false
   const secret = crypto
     .createHash('sha256')
     .update(process.env.TELEGRAM_LOGIN_TOKEN)

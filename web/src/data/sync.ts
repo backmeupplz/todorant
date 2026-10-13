@@ -5,7 +5,8 @@ import {
   setPeople, todos, type Change,
 } from './store'
 
-export const API = import.meta.env.VITE_API ?? 'https://backend.todorant.com'
+// Self-hosted: the Docker image sets window.TODORANT_API in /config.js at start
+export const API = (window as any).TODORANT_API ?? import.meta.env.VITE_API ?? 'https://backend.todorant.com'
 
 /**
  * v2 sync over one WebSocket: local edits are queued field changes pushed right away; the server

@@ -1,0 +1,68 @@
+# Self-hosting images: ghcr.io/<owner>/todorant-backend and todorant-web for amd64 and arm64.
+# main pushes `latest` (only the images whose folder changed), v* tags push both under the tag's name.
+name: Docker
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+    paths: [backend/**, web/**, .github/workflows/docker.yml]
+  workflow_dispatch:
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      # Tags and manual runs build both
+      images: ${{ steps.filter.outputs.changes || '["backend","web"]' }}
+    steps:
+      - if: github.ref_type == 'branch' && github.event_name == 'push'
+        uses: actions/checkout@v4
+      - id: filter
+        if: github.ref_type == 'branch' && github.event_name == 'push'
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend: [backend/**, .github/workflows/docker.yml]
+            web: [web/**, .github/workflows/docker.yml]
+
+  image:
+    needs: changes
+    if: needs.changes.outputs.images != '[]'
+    strategy:
+      matrix:
+        image: ${{ fromJSON(needs.changes.outputs.images) }}
+    # A newer run of the same image builds a newer commit, so the older one can stop
+    concurrency:
+      group: docker-${{ matrix.image }}-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/todorant-${{ matrix.image }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=tag
+            type=sha
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.image }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image }}

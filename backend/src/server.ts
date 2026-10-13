@@ -16,6 +16,13 @@ import { ensureIndexes } from '@/v2/indexes'
 import { runMongo } from '@/models/index'
 import { socketServer } from '@/sockets/io'
 
+// Only these are required; every integration (Telegram, Google Calendar, …) is off when unset
+for (const name of ['MONGO', 'JWT']) {
+  if (!process.env[name]) {
+    console.error(`${name} is required (see .env.example)`)
+    process.exit(1)
+  }
+}
 // Node 15+ exits on an unhandled rejection: one bad message to any async handler would take
 // everyone offline, so log it and keep serving
 process.on('unhandledRejection', (error) =>
@@ -39,9 +46,13 @@ socketServer.listen(3000).on('listening', () => {
   console.log('Sockets are listening on 3000')
 })
 // Start telegram bot
-bot.launch().then(() => {
-  console.log('@todorant_bot launched')
-})
+if (process.env.TELEGRAM_LOGIN_TOKEN) {
+  bot.launch().then(() => {
+    console.log('@todorant_bot launched')
+  })
+} else {
+  console.log('Telegram bot disabled: set TELEGRAM_LOGIN_TOKEN')
+}
 
 // Shutdown gracefully
 GracefulShutdown(app, {

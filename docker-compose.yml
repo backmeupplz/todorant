@@ -1,0 +1,33 @@
+# Your own Todorant: the web app on :8080, the API on :1337, MongoDB in a volume. See docs/self-hosting.md
+#   cp .env.example .env   # then set JWT
+#   docker compose up -d
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo:/data/db
+
+  backend:
+    image: ghcr.io/backmeupplz/todorant-backend:latest
+    build: backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MONGO: ${MONGO:-mongodb://mongo:27017/todorant}
+    ports:
+      - 1337:1337
+    depends_on:
+      - mongo
+
+  web:
+    image: ghcr.io/backmeupplz/todorant-web:latest
+    build: web
+    restart: unless-stopped
+    environment:
+      TODORANT_API: ${TODORANT_API:-http://localhost:1337}
+    ports:
+      - 8080:80
+
+volumes:
+  mongo:
