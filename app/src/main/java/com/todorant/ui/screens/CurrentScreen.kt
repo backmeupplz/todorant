@@ -149,7 +149,8 @@ private fun EpicProgress(epic: Tag, modifier: Modifier) {
                 color?.let(::hex) ?: Colors.primary, Colors.progressBarBackground,
             )
         }
-        if (points != goal) EpicText("$goal", color)
+        // Raw comparison like RN: an epic without a goal shows the goal, not the complete button
+        if (epic.epicPoints != epic.epicGoal) EpicText("$goal", color)
         else Box(Modifier.padding(end = 8.dp)) {
             IconBtn("done_outline_28--check", color?.let(::hex) ?: Colors.destruct) { Tags.completeEpic(epic) }
         }

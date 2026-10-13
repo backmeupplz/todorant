@@ -455,7 +455,8 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
     }
     StackScreen(
         title,
-        onBack = { onBackPress() },
+        // Only the add screen's header back asks about unsaved changes in RN; hardware back always does
+        onBack = { if (mode == AddMode.add) onBackPress() else Nav.back() },
         actions = {
             if (!isEdit) {
                 val enabled = mode == AddMode.breakdown || !Onboarding.active
@@ -682,8 +683,8 @@ private fun TodoForm(vm: TodoVM, delete: (() -> Unit)?, showCross: Boolean) {
                 // The RN app set the time to "now" even when the picker was cancelled
                 TimePickerDialog(context, { _, h, m ->
                     vm.time = LocalTime.of(h, m).hhmm()
-                    if (vm.monthAndYear == null) vm.setDatePickerValue(todayWithStartOfDay())
-                }, initial.hour, initial.minute, true).show()
+                    if (vm.monthAndYear == null) vm.setDatePickerValue(LocalDate.now())
+                }, initial.hour, initial.minute, android.text.format.DateFormat.is24HourFormat(context)).show()
             }
             if (Session.user != null && vm.editedTodo == null) {
                 val delegates = dbState(initial = emptyList<DelegationUser>()) { Db.delegates().filter { it.serverId != me && it.serverId != null } }
@@ -753,8 +754,11 @@ private fun TextRow(vm: TodoVM, showCross: Boolean) {
             BasicTextField(
                 vm.value,
                 onValueChange = {
-                    if (it.text.length > 1500) return@BasicTextField
-                    vm.value = it
+                    // maxLength={1500}: cut, don't reject (a long paste still goes in)
+                    vm.value = if (it.text.length <= 1500) it else it.copy(
+                        text = it.text.take(1500),
+                        selection = androidx.compose.ui.text.TextRange(minOf(it.selection.start, 1500), minOf(it.selection.end, 1500)),
+                    )
                     if (tutorial) Onboarding.textInTodo = it.text
                 },
                 enabled = !locked,

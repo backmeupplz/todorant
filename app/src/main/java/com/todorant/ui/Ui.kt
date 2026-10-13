@@ -37,6 +37,8 @@ class DialogSpec(
     val message: String?,
     val buttons: List<Pair<String, () -> Unit>>,
     val destructive: Set<Int> = emptySet(),
+    /** RN's Android alerts can't be dismissed without a button; action sheets can */
+    val cancelable: Boolean = false,
 )
 
 /** Alerts, action sheets and toasts — Alert.alert / ActionSheet / Toast from the RN app */
@@ -64,7 +66,7 @@ object Ui {
     fun actionSheet(title: String?, options: List<String>, destructive: Set<Int> = emptySet(), onPick: (Int) -> Unit) = show(
         DialogSpec(
             title?.ifEmpty { null }, null,
-            options.mapIndexed { i, o -> o to { onPick(i) } } + (t("cancel") to {}), destructive
+            options.mapIndexed { i, o -> o to { onPick(i) } } + (t("cancel") to {}), destructive, cancelable = true
         )
     )
 
@@ -101,7 +103,7 @@ fun DialogHost() {
     val spec = Ui.dialogs.firstOrNull() ?: return
     fun close(action: () -> Unit) { Ui.dialogs.remove(spec); action() }
     AlertDialog(
-        onDismissRequest = { Ui.dialogs.remove(spec) },
+        onDismissRequest = { if (spec.cancelable) Ui.dialogs.remove(spec) },
         containerColor = Colors.cardBackground,
         title = spec.title?.let { { Text(it, color = Colors.text) } },
         text = spec.message?.let { { Text(it, color = Colors.text, modifier = Modifier.verticalScroll(rememberScrollState())) } },
@@ -189,8 +191,14 @@ object Effects {
     var dayCompleteKey by mutableIntStateOf(0)
 
     /** Shows confetti one time in five, or always with [force] */
+    private var confettiStarted = 0L
+
     fun confetti(force: Boolean = false) {
         if (!force && Random.nextInt(5) != 0) return
+        // Ignored while the previous burst is still falling, like RN
+        val now = System.currentTimeMillis()
+        if (!force && now - confettiStarted < 2000) return
+        confettiStarted = now
         App.scope.launch(Dispatchers.Main) { confettiKey++ }
     }
 

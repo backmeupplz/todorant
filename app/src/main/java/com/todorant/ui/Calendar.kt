@@ -14,6 +14,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,8 +46,10 @@ fun MonthCalendar(
     modifier: Modifier = Modifier,
     selected: LocalDate? = null,
     minDate: LocalDate? = null,
+    onMonthChange: (YearMonth) -> Unit = {},
 ) {
     var month by remember(initialMonth) { mutableStateOf(initialMonth) }
+    LaunchedEffect(month) { onMonthChange(month) }
     val locale = I18n.locale()
     // firstDayOfWeekSafe: 0 = Sunday
     val firstDay = if (Settings.firstDayOfWeekSafe == 0) DayOfWeek.SUNDAY else DayOfWeek.of(Settings.firstDayOfWeekSafe)

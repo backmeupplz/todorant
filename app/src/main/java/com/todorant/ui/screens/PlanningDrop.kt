@@ -44,7 +44,7 @@ fun planningDrop(
             if ((!fromBottomToTop && next is String) || next == null) average = toTodo.order + 1
             if (near != null && toTodo.frog && nearTodo?.frog != true && before.getOrNull(to - 1) !is String) average = toTodo.order + 1
         }
-        val todo = moved.copy(order = average)
+        val todo = moved.copy(order = average).also { it.base = moved.base }
         if (sectionFrom == sectionTo) return PlanningDrop(listOf(todo))
         // Moved to another day
         val title = after[sectionTo] as? String ?: return PlanningDrop(emptyList())
@@ -71,7 +71,7 @@ fun planningDrop(
         if (item is String) { section = item; order = 0; continue }
         val todo = item as Todo
         if (section != null && section in changed) {
-            val copy = todo.copy(order = order.toDouble())
+            val copy = todo.copy(order = order.toDouble()).also { it.base = todo.base }
             if (todo.title != section) copy.redate(section)
             if (copy != todo) updates.add(copy)
         }

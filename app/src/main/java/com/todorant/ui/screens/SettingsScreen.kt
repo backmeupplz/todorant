@@ -39,6 +39,7 @@ import com.todorant.logic.parseTime
 import com.todorant.sync.Rest
 import com.todorant.sync.Sync
 import com.todorant.t
+import com.todorant.widget.Widget
 import com.todorant.ui.CheckOrCross
 import com.todorant.ui.Colors
 import com.todorant.ui.Divider
@@ -336,6 +337,6 @@ private fun GeneralSwitches() {
     TextAndSwitch("soundEffects", Settings.soundOn) { Settings.soundOn = it }
     if (!Settings.soundOn) TextAndSwitch("endOfDaySoundOn", Settings.endOfDaySoundOn) { Settings.endOfDaySoundOn = it }
     TextAndSwitch("gamification", Settings.gamificationOn) { Settings.gamificationOn = it }
-    TextAndSwitch("badgeIconCurrentCount", Settings.badgeIconCurrentCount) { Settings.badgeIconCurrentCount = it }
+    TextAndSwitch("badgeIconCurrentCount", Settings.badgeIconCurrentCount) { Settings.badgeIconCurrentCount = it; Widget.refresh() }
     TextAndSwitch("settingsActions.swipeActions", Settings.swipeActions) { Settings.swipeActions = it }
 }

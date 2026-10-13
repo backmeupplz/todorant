@@ -217,7 +217,8 @@ fun TelegramLoginScreen() {
         if (!handled && url.contains("mobile_login_success")) {
             handled = true
             view.stopLoading()
-            val data = Uri.parse(url).getQueryParameter("data")
+            // decodeURI of everything after "data=": getQueryParameter would turn '+' into spaces and stop at '&'
+            val data = url.substringAfter("mobile_login_success?data=", "").takeIf { it.isNotEmpty() }?.let { Uri.decode(it) }
             if (data == null) {
                 Nav.back()
                 Ui.error(t("error"))

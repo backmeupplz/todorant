@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.credentials:credentials-play-services-auth:1.6.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.2.1")
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+    // Launcher badge counts, same library react-native-push-notification used
+    implementation("me.leolin:ShortcutBadger:1.1.22@aar")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.json:json:20250517")
 }

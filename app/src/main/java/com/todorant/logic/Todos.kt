@@ -21,43 +21,50 @@ object Todos {
     private val me get() = Session.user?.id ?: ""
 
     private fun dateWhere(title: String) =
-        if (title.length == 10) "date = '${title.substring(8, 10)}'" else "(date = '' OR date IS NULL)"
+        if (title.length == 10) "date = ?" else "(date = '' OR date IS NULL)"
+
+    /** Bound arguments for [dateWhere] */
+    private fun dateArgs(title: String) = if (title.length == 10) arrayOf(title.substring(8, 10)) else emptyArray()
+
+    /** Todos from delegators we're no longer connected to stay hidden (the RN app deleted them locally on pull) */
+    private const val KNOWN_DELEGATOR = "(delegator_id IS NULL OR delegator_id = ? OR delegator_id IN " +
+        "(SELECT server_id FROM users WHERE is_delegator = 1 AND is_deleted = 0))"
 
     /** Own todos and accepted todos delegated to me for a day (getTodos) */
     fun forDay(title: String, completed: Boolean): List<Todo> = Db.todos(
         "${Db.UNDELETED} AND is_delegate_accepted IS NOT 0 AND is_completed = ? AND month_and_year = ? AND ${dateWhere(title)} AND " +
-            "((is_delegate_accepted IS NOT 1 AND delegator_id IS NULL) OR (is_delegate_accepted = 1 AND delegator_id IS NOT ?))",
-        arrayOf(if (completed) "1" else "0", title.take(7), me), "is_frog DESC, \"order\" ASC"
+            "((is_delegate_accepted IS NOT 1 AND delegator_id IS NULL) OR (is_delegate_accepted = 1 AND delegator_id IS NOT ?)) AND $KNOWN_DELEGATOR",
+        arrayOf(if (completed) "1" else "0", title.take(7)) + dateArgs(title) + arrayOf(me, me), "is_frog DESC, \"order\" ASC"
     )
 
     /** todosForDate: everything on a day, used for ordering */
     fun allForDay(title: String, completed: Boolean? = null): List<Todo> = Db.todos(
         "${Db.UNDELETED} AND is_delegate_accepted IS NOT 0 AND month_and_year = ? AND ${dateWhere(title)}" +
             (completed?.let { " AND is_completed = ${if (it) 1 else 0}" } ?: ""),
-        arrayOf(title.take(7)), "\"order\" ASC"
+        arrayOf(title.take(7)) + dateArgs(title), "\"order\" ASC"
     )
 
     /** Uncompleted todos before today — makes planning required */
     fun oldCount(): Int = Db.count(
         "todos", "${Db.UNDELETED} AND is_completed = 0 AND exact_date_at < ? AND (user_id IS NULL OR user_id = ?) AND " +
-            "(delegator_id IS NULL OR is_delegate_accepted = 1)",
-        arrayOf((exactDate(todayTitle()) ?: 0).toString(), me)
+            "(delegator_id IS NULL OR is_delegate_accepted = 1) AND $KNOWN_DELEGATOR",
+        arrayOf((exactDate(todayTitle()) ?: 0).toString(), me, me)
     )
 
     private const val PLANNING_WHERE = "${Db.UNDELETED} AND is_completed = ? AND (user_id IS NULL OR user_id = ?) AND " +
-        "(delegator_id IS NULL OR is_delegate_accepted = 1)"
+        "(delegator_id IS NULL OR is_delegate_accepted = 1) AND $KNOWN_DELEGATOR"
 
     /** Planning/completed lists, optionally filtered by a search string */
     fun planning(completed: Boolean, search: String?, limit: Int): List<Todo> {
         val like = search?.takeIf { it.isNotEmpty() }?.let { "%${sanitizeLike(it)}%" }
         return Db.todos(
             PLANNING_WHERE + if (like != null) " AND text LIKE ?" else "",
-            listOfNotNull(if (completed) "1" else "0", me, like).toTypedArray(),
+            listOfNotNull(if (completed) "1" else "0", me, me, like).toTypedArray(),
             "exact_date_at ${if (completed) "DESC" else "ASC"}, is_frog DESC, \"order\" ASC", limit
         )
     }
 
-    fun planningCount(completed: Boolean) = Db.count("todos", PLANNING_WHERE, arrayOf(if (completed) "1" else "0", me))
+    fun planningCount(completed: Boolean) = Db.count("todos", PLANNING_WHERE, arrayOf(if (completed) "1" else "0", me, me))
 
     /** getDelegationTodos */
     fun delegated(byMe: Boolean, completed: Boolean = false): List<Todo> = Db.todos(
@@ -219,13 +226,13 @@ object Todos {
         return todos.sortedWith(compareBy<Todo>({ group(it) }, { it.order })).toMutableList()
     }
 
-    internal fun minutes(time: String) = time.split(":").let { it[0].toInt() * 60 + it[1].toInt() }
+    /** null for malformed times (parseInt gave NaN in RN, which never compared as smaller) */
+    internal fun minutes(time: String) = time.split(":").let { p -> p.getOrNull(0)?.toIntOrNull()?.let { h -> p.getOrNull(1)?.toIntOrNull()?.let { h * 60 + it } } }
 
     internal fun isTimeSorted(todos: List<Todo>): Boolean {
         var last: Int? = null
         for (t in todos) {
-            val time = t.time?.takeIf { it.isNotEmpty() } ?: continue
-            val m = minutes(time)
+            val m = t.time?.let(::minutes) ?: continue
             if (last != null && m < last) return false
             last = m
         }
@@ -236,8 +243,7 @@ object Todos {
         var time: Int? = null
         var prevIndex: Int? = null
         for ((i, todo) in todos.withIndex()) {
-            val t = todo.time?.takeIf { it.isNotEmpty() } ?: continue
-            val m = minutes(t)
+            val m = todo.time?.let(::minutes) ?: continue
             if (time != null && prevIndex != null && m < time) {
                 if (todo.key in yieldIds) {
                     // Current should be moved

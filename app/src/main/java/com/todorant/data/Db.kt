@@ -44,6 +44,9 @@ data class Todo(
     val title get() = "${monthAndYear ?: ""}${if (!date.isNullOrEmpty()) "-$date" else ""}"
     /** Server id if synced, else client id — used to identify todos across updates */
     val key get() = serverId ?: id
+
+    /** Values as loaded from the database; local saves apply only the fields changed since */
+    var base: Todo? = null
 }
 
 data class Tag(
@@ -61,7 +64,9 @@ data class Tag(
     var epicPoints: Int? = null,
     var epicOrder: Int? = null,
     var status: String = Status.CREATED,
-)
+) {
+    var base: Tag? = null
+}
 
 /** A delegate or a delegator. `pending` = local change that has to be pushed. */
 data class DelegationUser(
@@ -151,13 +156,44 @@ object Db {
         todos("id = ? OR server_id = ?", arrayOf(it, it)).firstOrNull()
     }
 
+    private val todoFields = listOf(
+        Todo::text, Todo::completed, Todo::frog, Todo::frogFails, Todo::skipped, Todo::order, Todo::monthAndYear,
+        Todo::deleted, Todo::encrypted, Todo::date, Todo::time, Todo::repetitive, Todo::delegateAccepted,
+        Todo::userId, Todo::delegatorId, Todo::exactDate,
+    )
+    private val tagFields = listOf(
+        Tag::deleted, Tag::tag, Tag::color, Tag::numberOfUses, Tag::epic, Tag::epicGoal, Tag::epicCompleted,
+        Tag::epicPoints, Tag::epicOrder,
+    )
+
+    /**
+     * Like WatermelonDB's record.update: applies only the fields [mine] changed since it was loaded onto the
+     * current row, so a sync that landed in between (server id, remote edits) isn't overwritten.
+     */
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> merge(current: T, base: T, mine: T, fields: List<kotlin.reflect.KMutableProperty1<T, *>>): T {
+        for (f in fields as List<kotlin.reflect.KMutableProperty1<T, Any?>>) {
+            if (f.get(mine) != f.get(base)) f.set(current, f.get(mine))
+        }
+        return current
+    }
+
     /** Local change: bumps updated_at and marks the todo for pushing. Call inside [write]. */
     fun SQLiteDatabase.saveTodo(todo: Todo, local: Boolean = true) {
+        var row = todo
         if (local) {
-            todo.updatedAt = System.currentTimeMillis()
-            if (todo.status == Status.SYNCED) todo.status = Status.UPDATED
+            val base = todo.base
+            val current = if (base != null) todos("id = ?", arrayOf(todo.id)).firstOrNull() else null
+            if (base != null && current != null) row = merge(current, base, todo, todoFields)
+            row.updatedAt = System.currentTimeMillis()
+            if (row.status == Status.SYNCED) row.status = Status.UPDATED
         }
-        insertWithOnConflict("todos", null, todo.values(), SQLiteDatabase.CONFLICT_REPLACE)
+        insertWithOnConflict("todos", null, row.values(), SQLiteDatabase.CONFLICT_REPLACE)
+        if (row !== todo) {
+            todo.serverId = row.serverId; todo.status = row.status; todo.updatedAt = row.updatedAt
+            todoFields.forEach { @Suppress("UNCHECKED_CAST") (it as kotlin.reflect.KMutableProperty1<Todo, Any?>).set(todo, it.get(row)) }
+        }
+        todo.base = todo.copy()
     }
 
     fun saveTodos(todos: Collection<Todo>) {
@@ -187,7 +223,7 @@ object Db {
         deleted = bool("is_deleted") == true, encrypted = bool("is_encrypted") == true, date = str("date"), time = str("time"),
         repetitive = bool("is_repetitive") == true, delegateAccepted = bool("is_delegate_accepted"),
         userId = str("user_id"), delegatorId = str("delegator_id"), exactDate = long("exact_date_at"), status = str("_status") ?: Status.SYNCED,
-    )
+    ).also { it.base = it.copy() }
 
     // endregion
 
@@ -213,11 +249,20 @@ object Db {
     }
 
     fun SQLiteDatabase.saveTag(tag: Tag, local: Boolean = true) {
+        var row = tag
         if (local) {
-            tag.updatedAt = System.currentTimeMillis()
-            if (tag.status == Status.SYNCED) tag.status = Status.UPDATED
+            val base = tag.base
+            val current = if (base != null) tags("id = ?", arrayOf(tag.id)).firstOrNull() else null
+            if (base != null && current != null) row = merge(current, base, tag, tagFields)
+            row.updatedAt = System.currentTimeMillis()
+            if (row.status == Status.SYNCED) row.status = Status.UPDATED
         }
-        insertWithOnConflict("tags", null, tag.values(), SQLiteDatabase.CONFLICT_REPLACE)
+        insertWithOnConflict("tags", null, row.values(), SQLiteDatabase.CONFLICT_REPLACE)
+        if (row !== tag) {
+            tag.serverId = row.serverId; tag.status = row.status; tag.updatedAt = row.updatedAt
+            tagFields.forEach { @Suppress("UNCHECKED_CAST") (it as kotlin.reflect.KMutableProperty1<Tag, Any?>).set(tag, it.get(row)) }
+        }
+        tag.base = tag.copy()
     }
 
     fun updateTag(tag: Tag, change: (Tag) -> Unit) {
@@ -238,7 +283,7 @@ object Db {
         numberOfUses = long("number_of_uses")?.toInt() ?: 0, epic = bool("is_epic"), epicGoal = long("epic_goal")?.toInt(),
         epicCompleted = bool("is_epic_completed"), epicPoints = long("epic_points")?.toInt(),
         epicOrder = long("epic_order")?.toInt(), status = str("_status") ?: Status.SYNCED,
-    )
+    ).also { it.base = it.copy() }
 
     // endregion
 

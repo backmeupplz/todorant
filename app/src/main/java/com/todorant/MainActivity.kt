@@ -100,6 +100,7 @@ import com.todorant.ui.screens.SocketsScreen
 import com.todorant.ui.screens.TagsScreen
 import com.todorant.ui.screens.TelegramLoginScreen
 import com.todorant.ui.screens.WebPageScreen
+import com.todorant.ui.screens.rememberTodayTitle
 import java.time.LocalDate
 
 class MainActivity : ComponentActivity() {
@@ -107,7 +108,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pendingIntent = intent
+        // Recreated activities and launches from Recents carry the old intent; handling it again would e.g. add a todo twice
+        if (savedInstanceState == null && intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY == 0) pendingIntent = intent
         setContent {
             Settings.systemDark = isSystemInDarkTheme()
             LaunchedEffect(Settings.isDark) {
@@ -144,8 +146,10 @@ private fun Root(intent: Intent?, onIntentHandled: () -> Unit) {
     val nav = rememberNavController()
     Nav.controller = nav
     val tagColors = dbState(initial = emptyMap()) { Tags.colorMap() }
-    val planningRequired = dbState(Session.user, initial = false) { Todos.oldCount() > 0 } && !Onboarding.active
-    val delegatedToMe = dbState(Session.user, initial = 0) { Todos.delegated(byMe = false).size }
+    val today = rememberTodayTitle()
+    val userId = Session.user?.id
+    val planningRequired = dbState(userId, today, initial = false) { Todos.oldCount() > 0 } && !Onboarding.active
+    val delegatedToMe = dbState(userId, initial = 0) { Todos.delegated(byMe = false).size }
     val route = nav.currentBackStackEntryAsState().value?.destination?.route
     val onlySettings = Session.loggingOut || Session.isInitialSync
     val tabs = when {

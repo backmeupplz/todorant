@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -94,7 +95,8 @@ fun PlanningScreen() {
     val search = AppState.searchQuery.ifEmpty { AppState.hash.joinToString(" ") }
     var limit by remember(completed) { mutableIntStateOf(PAGE) }
     val todos = dbState(completed, search, limit, Session.user?.id, initial = null as List<Todo>?) { Todos.planning(completed, search, limit) }
-    val planningRequired = dbState(Session.user?.id, initial = false) { Todos.oldCount() > 0 } && !Onboarding.active
+    var calendarMonth by rememberSaveable { mutableStateOf(YearMonth.now()) }
+    val planningRequired = dbState(Session.user?.id, rememberTodayTitle(), initial = false) { Todos.oldCount() > 0 } && !Onboarding.active
     val items = remember(todos) { flatten(todos ?: emptyList()) }
     // Local copy so items move while dragging; the database version comes back after the drop
     var list by remember { mutableStateOf(items) }
@@ -146,7 +148,8 @@ fun PlanningScreen() {
                 Text(t("planningText"), color = Color.White, modifier = Modifier.fillMaxWidth().background(Color(0xFF1E90FF)).padding(12.dp))
             }
             if (AppState.calendarEnabled) {
-                MonthCalendar(YearMonth.now(), onDayClick = { Nav.go(Route.add(date = it.dateString())) })
+                // Keeps the shown month while the calendar is toggled, like RN's currentMonth/currentYear
+                MonthCalendar(calendarMonth, onDayClick = { Nav.go(Route.add(date = it.dateString())) }, onMonthChange = { calendarMonth = it })
             }
             if (todos != null && list.isEmpty()) {
                 Placeholder("👀", t("noTodosExistTitle"), t("noTodosExistText"))

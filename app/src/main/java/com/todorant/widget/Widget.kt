@@ -54,7 +54,11 @@ object Widget {
         val context = App.context
         val manager = AppWidgetManager.getInstance(context)
         val ids = manager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
-        if (ids.isNotEmpty()) App.scope.launch(Dispatchers.IO) { update(context, manager, ids) }
+        // refreshWidgetAndBadgeAndWatch in the RN app
+        App.scope.launch(Dispatchers.IO) {
+            com.todorant.Reminders.updateBadge()
+            if (ids.isNotEmpty()) update(context, manager, ids)
+        }
     }
 
     internal fun update(context: Context, manager: AppWidgetManager, ids: IntArray) {

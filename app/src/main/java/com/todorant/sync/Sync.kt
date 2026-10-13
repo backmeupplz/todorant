@@ -1,5 +1,7 @@
 package com.todorant.sync
 
+import android.net.ConnectivityManager
+import android.net.Network
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -32,7 +34,8 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -71,6 +74,7 @@ private class SyncManager(
     val onCompleted: (() -> Unit)? = null,
 ) {
     private val pendingSyncs = ConcurrentHashMap<String, CompletableDeferred<Unit>>()
+    private val received = ConcurrentHashMap<String, CompletableDeferred<Unit>>()
     private val pendingPushes = ConcurrentHashMap<String, CompletableDeferred<Any>>()
     private val coalescer = Coalescer()
 
@@ -79,6 +83,7 @@ private class SyncManager(
         socket.on(name) { args ->
             val syncId = args.getOrNull(1) as? String ?: return@on
             val objects = args.getOrNull(0) ?: JSONObject.NULL
+            received.remove(syncId)?.complete(Unit)
             App.scope.launch(Dispatchers.IO) {
                 try {
                     onObjects(objects) { pushBack(it, syncId) }
@@ -103,6 +108,11 @@ private class SyncManager(
         }
     }
 
+    /** The socket dropped: nothing pending will be answered */
+    fun failAll(error: Exception) {
+        listOf(pendingSyncs, received, pendingPushes).forEach { map -> map.values.forEach { it.completeExceptionally(error) }; map.clear() }
+    }
+
     private suspend fun pushBack(objects: Any, syncId: String): Any {
         val deferred = CompletableDeferred<Any>()
         pendingPushes[syncId] = deferred
@@ -115,9 +125,17 @@ private class SyncManager(
         Sync.busy {
             val syncId = UUID.randomUUID().toString()
             val deferred = CompletableDeferred<Unit>()
+            val gotObjects = CompletableDeferred<Unit>()
             pendingSyncs[syncId] = deferred
+            received[syncId] = gotObjects
             Sync.socket.emit("sync_$name", lastSyncDate()?.let(::millisToIso) ?: JSONObject.NULL, syncId)
-            try { withTimeout(90_000) { deferred.await() } } finally { pendingSyncs.remove(syncId) }
+            try {
+                withTimeout(30_000) { gotObjects.await() }
+                withTimeout(120_000) { deferred.await() }
+            } finally {
+                pendingSyncs.remove(syncId)
+                received.remove(syncId)
+            }
         }
     }
 }
@@ -149,9 +167,14 @@ object Sync {
     private val delegation = SyncManager("delegate", { Delegation.updatedAt }, ::onDelegation) {
         Delegation.updatedAt = System.currentTimeMillis()
     }
+    private val managers = listOf(settings, user, hero, delegation)
 
     fun start() {
-        listOf(settings, user, hero, delegation).forEach { it.listen(socket) }
+        managers.forEach { it.listen(socket) }
+        // NetInfo listener in the RN app: reconnect as soon as the network is back
+        App.context.getSystemService(ConnectivityManager::class.java)?.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) = reconnect()
+        })
         socket.on(Socket.EVENT_CONNECT) {
             Log.i(TAG, "connected")
             connected = true
@@ -161,7 +184,14 @@ object Sync {
                 if (token != null) runCatching { authorize(); sync(Kind.All) }.onFailure { Log.w(TAG, "sync on connect", it) }
             }
         }
-        socket.on(Socket.EVENT_DISCONNECT) { connected = false; authorized = false }
+        socket.on(Socket.EVENT_DISCONNECT) {
+            connected = false
+            authorized = false
+            val error = IllegalStateException("Socket sync: not connected to sockets")
+            managers.forEach { it.failAll(error) }
+            wmdbResponse?.completeExceptionally(error)
+            wmdbPushed?.completeExceptionally(error)
+        }
         socket.on(Socket.EVENT_CONNECT_ERROR) { args -> connectionError = (args.firstOrNull() as? Exception)?.message ?: args.firstOrNull()?.toString() }
         socket.on("authorized") {
             Log.i(TAG, "authorized")
@@ -185,7 +215,7 @@ object Sync {
         socket.connect()
     }
 
-    /** Reconnects right away when the network comes back */
+    /** Reconnects right away (app resumed, network back) */
     fun reconnect() { if (!socket.connected()) socket.connect() }
 
     suspend fun <T> busy(block: suspend () -> T): T {
@@ -247,13 +277,14 @@ object Sync {
     suspend fun sync(kind: Kind = Kind.All) {
         withContext(Dispatchers.IO) {
             when (kind) {
-                Kind.All -> coroutineScope {
-                    launch { settings.sync() }
-                    launch { user.sync() }
-                    launch { hero.sync() }
+                // One kind failing (e.g. a REST hiccup during the user sync) doesn't stop the others
+                Kind.All -> supervisorScope {
+                    val others = listOf(settings, user, hero).map { m -> launch { runCatching { m.sync() }.onFailure { Log.w(TAG, "sync ${m.name}", it) } } }
                     // Delegation users have to be known before todos are pulled
-                    delegation.sync()
+                    val delegationError = runCatching { delegation.sync() }.exceptionOrNull()
                     wmdbSync()
+                    others.joinAll()
+                    delegationError?.let { throw it }
                 }
                 Kind.Todo, Kind.Tag -> wmdbSync()
                 Kind.Settings -> settings.sync()
@@ -311,8 +342,9 @@ object Sync {
         }
         val user = Session.user ?: return
         if (user.delegateInviteToken == null && user.token.isNotEmpty()) {
-            val token = Rest.resetDelegateToken(user.token)
-            Session.user?.let { Session.setUser(it.with { put("delegateInviteToken", token) }) }
+            runCatching { Rest.resetDelegateToken(user.token) }
+                .onSuccess { token -> Session.user?.let { Session.setUser(it.with { put("delegateInviteToken", token) }) } }
+                .onFailure { Log.w(TAG, "resetDelegateToken", it) }
         }
     }
 
@@ -363,19 +395,24 @@ object Sync {
         Db.write { saveUser(user) }
     }
 
-    /** Removes a delegate/delegator and hides the todos shared with them (local only, like a server-side unlink) */
+    /** removeDelegation: deletes the todos shared with that user (pushed like any local change) and the user */
     private fun removeDelegation(user: DelegationUser) {
         val column = if (user.isDelegator) "delegator_id" else "user_id"
         Db.write {
             user.serverId?.let { id ->
-                execSQL("UPDATE todos SET is_deleted = 1, is_delegate_accepted = 1 WHERE $column = ?", arrayOf(id))
+                for (todo in Db.todos("$column = ?", arrayOf(id))) {
+                    todo.deleted = true
+                    todo.delegateAccepted = true
+                    if (user.isDelegator) todo.delegatorId = null
+                    saveTodo(todo)
+                }
             }
             delete("users", "id = ?", arrayOf(user.id))
         }
     }
 
     private suspend fun onDelegation(objects: Any, pushBack: suspend (Any) -> Any) {
-        if (Session.user?.id == null) return
+        if (Session.user?.id == null) throw IllegalStateException("Delegation sync: no user")
         val server = objects as? JSONObject ?: JSONObject()
         val delegators = server.optJSONArray("delegators") ?: JSONArray()
         val delegates = server.optJSONArray("delegates") ?: JSONArray()
@@ -407,8 +444,8 @@ object Sync {
             }
         }
         pending.filter { !it.isDelegator && it.deleted }.forEach(::removeDelegation)
-        // Anything else that was pending is now known by the server
-        Db.write { execSQL("UPDATE users SET pending = 0") }
+        // Pushed rows are known by the server now, unless they changed while pushing
+        Db.write { pending.forEach { execSQL("UPDATE users SET pending = 0 WHERE id = ? AND updated_at = ?", arrayOf<Any>(it.id, it.updatedAt)) } }
     }
 
     // endregion
@@ -448,6 +485,7 @@ object Sync {
     private fun JSONObject.optBoolOrNull(key: String) = if (isNull(key)) null else optBoolean(key)
 
     private fun applyRemote(changes: JSONObject) {
+        if (token == null) return
         val key = Session.encryptionKey
         val todos = changes.optJSONObject("todos")?.optJSONArray("updated") ?: JSONArray()
         val tags = changes.optJSONObject("tags")?.optJSONArray("updated") ?: JSONArray()

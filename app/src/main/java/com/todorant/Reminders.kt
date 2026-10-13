@@ -1,6 +1,9 @@
 package com.todorant
 
 import android.Manifest
+import com.todorant.logic.Todos
+import com.todorant.logic.todayTitle
+import me.leolin.shortcutbadger.ShortcutBadger
 import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationChannel
@@ -49,8 +52,13 @@ object Reminders {
     fun permissionNeeded() = Build.VERSION.SDK_INT >= 33 &&
         App.context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
 
-    // ponytail: no-op — Android launchers only badge apps that post notifications; add a silent "N todos left" notification if anyone misses it
-    fun updateBadge() {}
+    /** Today's uncompleted count on the launcher icon (launchers ShortcutBadger supports: Samsung, Xiaomi, Huawei, Nova…) */
+    fun updateBadge() {
+        runCatching {
+            if (Settings.badgeIconCurrentCount) ShortcutBadger.applyCount(App.context, Todos.forDay(todayTitle(), false).size)
+            else ShortcutBadger.removeCount(App.context)
+        }
+    }
 
     internal fun notify(context: Context) {
         val manager = context.getSystemService(NotificationManager::class.java)
