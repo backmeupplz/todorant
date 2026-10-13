@@ -112,7 +112,8 @@ describe('Login endpoint', () => {
     axiosMock
       .onGet('https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=test')
       .reply(200, {
-        aud: '989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com',
+        // The old web app's client, from Todorant's other Google project
+        aud: '599005831909-krrl1m3k011n7qdrkv1voio9cgdv7a0t.apps.googleusercontent.com',
       })
       .onGet(`https://www.googleapis.com/oauth2/v3/userinfo`, {
         headers: {

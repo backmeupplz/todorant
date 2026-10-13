@@ -385,11 +385,12 @@ bot.action(/ltr~.+/, async (ctx) => {
 })
 
 /**
- * Google tokens must be issued to one of Todorant's own OAuth clients (its Google Cloud project): any
- * other app's token for the same person would log in as them. Unverified emails don't count either.
+ * Google tokens must be issued to one of Todorant's own OAuth clients (its Google Cloud projects: the
+ * apps' and the old web's): any other app's token for the same person would log in as them.
+ * Unverified emails don't count either.
  */
 const ownGoogleToken = (audience: unknown, emailVerified: unknown) =>
-  /^989382323327-[\w-]+\.apps\.googleusercontent\.com$/.test(
+  /^(989382323327|599005831909)-[\w-]+\.apps\.googleusercontent\.com$/.test(
     String(audience)
   ) && String(emailVerified) === 'true'
 
