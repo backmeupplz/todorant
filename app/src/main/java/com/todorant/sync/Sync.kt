@@ -153,16 +153,18 @@ object Sync {
     fun start() {
         listOf(settings, user, hero, delegation).forEach { it.listen(socket) }
         socket.on(Socket.EVENT_CONNECT) {
+            Log.i(TAG, "connected")
             connected = true
             connectionError = null
             synchronized(connectedSignal) { connectedSignal.forEach { it.complete(Unit) }; connectedSignal.clear() }
             App.scope.launch(Dispatchers.IO) {
-                runCatching { authorize(); sync(Kind.All) }.onFailure { Log.w(TAG, "sync on connect", it) }
+                if (token != null) runCatching { authorize(); sync(Kind.All) }.onFailure { Log.w(TAG, "sync on connect", it) }
             }
         }
         socket.on(Socket.EVENT_DISCONNECT) { connected = false; authorized = false }
         socket.on(Socket.EVENT_CONNECT_ERROR) { args -> connectionError = (args.firstOrNull() as? Exception)?.message ?: args.firstOrNull()?.toString() }
         socket.on("authorized") {
+            Log.i(TAG, "authorized")
             authorized = true
             pendingAuthorization?.complete(Unit)
             pendingAuthorization = null
@@ -232,6 +234,7 @@ object Sync {
 
     /** Fire-and-forget sync (requestSync in the RN app) */
     fun request(kind: Kind = Kind.All) {
+        if (token == null) return
         App.scope.launch(Dispatchers.IO) { runCatching { sync(kind) }.onFailure { Log.w(TAG, "sync $kind", it) } }
     }
 
