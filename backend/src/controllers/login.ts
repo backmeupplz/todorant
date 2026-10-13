@@ -3,6 +3,7 @@ import { Context } from 'koa'
 import { Controller, Ctx, Flow, Get, Post } from 'koa-ts-controllers'
 import { DocumentType } from '@typegoose/typegoose'
 import { User, UserModel, getOrCreateUser } from '@/models/user'
+import { appleAuthKey } from '@/helpers/appleAuthKey'
 import { authenticate, getUserFromToken } from '@/middlewares/authenticate'
 import { bot } from '@/helpers/telegram'
 import { decode } from 'jsonwebtoken'
@@ -121,18 +122,20 @@ export default class LoginController {
 
   @Post('/apple')
   async apple(@Ctx() ctx: Context) {
+    const key = appleAuthKey()
     const appleAuth = new AppleAuth(
       {
         client_id:
           ctx.request.body.client && ctx.request.body.client === 'ios'
             ? 'com.todorant.app'
             : 'com.todorant.web',
-        team_id: 'ACWP4F58HZ',
-        key_id: 'M3N8Y594JS',
+        team_id: key.teamId,
+        key_id: key.keyId,
         redirect_uri: 'https://todorant.com/apple_login_result',
         scope: 'name email',
       },
-      `${__dirname}/../../assets/AppleAuth.p8`
+      key.privateKey,
+      key.method
     )
 
     const response = await appleAuth.accessToken(ctx.request.body.code)
