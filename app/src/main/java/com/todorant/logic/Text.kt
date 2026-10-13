@@ -48,11 +48,16 @@ fun exactDate(title: String): Long? = parseTitle(title)?.atStartOfDay()?.toEpoch
  * isTodoOld() from the RN app. The RN version compared day numbers as "day - 1",
  * which broke on the first day of a month; this compares real dates instead.
  */
-fun isTodoOld(monthAndYear: String?, date: String?, now: LocalDateTime = LocalDateTime.now()): Boolean {
+fun isTodoOld(
+    monthAndYear: String?,
+    date: String?,
+    now: LocalDateTime = LocalDateTime.now(),
+    startTimeOfDay: String = Settings.startTimeOfDaySafe,
+): Boolean {
     val currentMonth = now.toLocalDate().monthAndYear()
     if (!date.isNullOrEmpty()) {
         val day = parseTitle("$monthAndYear-$date") ?: return false
-        return day < todayWithStartOfDay(now)
+        return day < todayWithStartOfDay(now, startTimeOfDay)
     }
     return monthAndYear != null && monthAndYear <= currentMonth
 }

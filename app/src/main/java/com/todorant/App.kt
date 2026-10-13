@@ -5,6 +5,7 @@ import android.content.Context
 import com.todorant.data.Db
 import com.todorant.data.Prefs
 import com.todorant.data.Session
+import com.todorant.logic.Migration
 import com.todorant.sync.Sync
 import com.todorant.ui.Sounds
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,7 @@ class App : Application() {
         Session.init()
         Sounds.init(this)
         Sync.start()
+        Migration.run(this)
     }
 
     companion object {
