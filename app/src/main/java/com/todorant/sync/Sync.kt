@@ -233,7 +233,9 @@ object Sync {
             val list = message.optJSONArray(name) ?: return
             for (i in 0 until list.length()) {
                 val json = list.getJSONObject(i)
-                if (entity === TodoEntity && key != null && json.optBoolean("encrypted") && json.has("text")) {
+                // Deltas carry changed fields only, so a text edit may come without the encrypted flag
+                fun encrypted() = if (json.has("encrypted")) json.optBoolean("encrypted") else Db.todo(json.getString("id"))?.encrypted == true
+                if (entity === TodoEntity && key != null && json.has("text") && encrypted()) {
                     Crypto.decrypt(json.getString("text"), key)?.let { json.put("text", it) }
                 }
                 Db.applyRemote(entity, json)
