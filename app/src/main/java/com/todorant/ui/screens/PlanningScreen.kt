@@ -69,6 +69,7 @@ import com.todorant.ui.Route
 import com.todorant.ui.TIcon
 import com.todorant.ui.Target
 import com.todorant.ui.TodoCard
+import com.todorant.ui.SegmentedControl
 import com.todorant.ui.TodoHeader
 import com.todorant.ui.Ui
 import com.todorant.ui.dbState
@@ -243,20 +244,8 @@ private fun PlanningSearchField() {
     )
 }
 
-/** Android-styled SegmentedControl: planning / completed */
+/** Planning / completed switch */
 @Composable
-private fun PlanningSegment(completed: Boolean) {
-    Row(
-        Modifier.fillMaxWidth().onboardingTarget(Target.PLANNING_SEGMENT).clip(RoundedCornerShape(8.dp)).background(Colors.segmentBackground).padding(2.dp)
-    ) {
-        for ((section, label) in listOf(TodoSection.planning to t("planning"), TodoSection.completed to t("completed"))) {
-            val selected = (section == TodoSection.completed) == completed
-            Text(
-                label, fontFamily = Fonts.roundedRegular, fontSize = 14.sp, textAlign = TextAlign.Center, maxLines = 1,
-                color = if (selected) Color.White else Colors.text,
-                modifier = Modifier.weight(1f).clip(RoundedCornerShape(6.dp)).background(if (selected) Colors.segmentTint else Color.Transparent)
-                    .clickable { AppState.todoSection = section }.padding(vertical = 6.dp),
-            )
-        }
-    }
-}
+private fun PlanningSegment(completed: Boolean) = SegmentedControl(
+    listOf(t("planning"), t("completed")), if (completed) 1 else 0, Modifier.onboardingTarget(Target.PLANNING_SEGMENT),
+) { AppState.todoSection = if (it == 1) TodoSection.completed else TodoSection.planning }

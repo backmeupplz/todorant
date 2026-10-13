@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
@@ -425,7 +426,7 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
         if (isValid) buttons.add(s("saveTasks") to { scope.launch { saveTodo() }; Unit })
         buttons.add(s("dissmissTasks") to { Nav.back(); Unit })
         buttons.add(s(if (isValid) "changeTasks" else "fixTasks") to {})
-        Ui.dialogs.add(DialogSpec(title, null, buttons, destructive = setOf(if (isValid) 1 else 0)))
+        Ui.dialogs.add(DialogSpec(title, null, buttons, destructive = setOf(if (isValid) 1 else 0), cancelable = true, sheet = true))
     }
 
     BackHandler { onBackPress() }
@@ -508,7 +509,7 @@ private fun SaveRow(isEdit: Boolean, plural: Boolean, enabled: Boolean, shake: I
     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp).height(48.dp)) {
         @OptIn(ExperimentalFoundationApi::class)
         Box(
-            Modifier.weight(1f).shake(shake).onboardingTarget(Target.SAVE_BUTTON).clip(RoundedCornerShape(10.dp))
+            Modifier.weight(1f).fillMaxHeight().shake(shake).onboardingTarget(Target.SAVE_BUTTON).clip(RoundedCornerShape(10.dp))
                 .background(if (enabled) Colors.primary else Color.Gray)
                 .combinedClickable(
                     enabled = saveAllowed,

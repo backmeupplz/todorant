@@ -328,8 +328,8 @@ fun TodoHeader(item: String, date: Boolean = false, hidePlus: Boolean = false, p
 
 /** Big emoji + title + text placeholders */
 @Composable
-fun Placeholder(emoji: String, title: String?, text: String, topMargin: Dp = 12.dp) {
-    Column(Modifier.fillMaxWidth().padding(12.dp).padding(top = topMargin - 12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+fun Placeholder(emoji: String, title: String?, text: String, topMargin: Dp = 12.dp, margin: Dp = 12.dp) {
+    Column(Modifier.fillMaxWidth().padding(start = margin, end = margin, bottom = margin, top = topMargin), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(emoji, fontSize = 32.sp, modifier = Modifier.padding(horizontal = 24.dp).padding(bottom = 12.dp))
         if (title != null) Text(
             title, color = Colors.text.copy(alpha = 0.9f), fontSize = 28.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center,
@@ -350,3 +350,18 @@ fun PrimaryButton(text: String, modifier: Modifier = Modifier, color: Color = Co
 }
 
 fun Modifier.ifTrue(condition: Boolean, block: Modifier.() -> Modifier) = if (condition) block() else this
+
+/** SegmentedControl styled like RN's on Android (planning header, delegation header) */
+@Composable
+fun SegmentedControl(options: List<String>, selected: Int, modifier: Modifier = Modifier, onSelect: (Int) -> Unit) {
+    Row(modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).background(Colors.segmentBackground).padding(2.dp)) {
+        options.forEachIndexed { i, label ->
+            Text(
+                label, fontFamily = Fonts.roundedRegular, fontSize = 14.sp, textAlign = TextAlign.Center, maxLines = 1,
+                overflow = TextOverflow.Ellipsis, color = if (i == selected) Color.White else Colors.text,
+                modifier = Modifier.weight(1f).clip(RoundedCornerShape(6.dp)).background(if (i == selected) Colors.segmentTint else Color.Transparent)
+                    .clickable { onSelect(i) }.padding(vertical = 6.dp, horizontal = 2.dp),
+            )
+        }
+    }
+}

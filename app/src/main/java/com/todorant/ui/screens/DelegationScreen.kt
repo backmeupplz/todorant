@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +34,7 @@ import com.todorant.ui.Fonts
 import com.todorant.ui.InfoButton
 import com.todorant.ui.Placeholder
 import com.todorant.ui.TodoCard
+import com.todorant.ui.SegmentedControl
 import com.todorant.ui.TodoHeader
 import com.todorant.ui.dbState
 
@@ -46,19 +44,8 @@ fun DelegationScreen() {
     Column(Modifier.fillMaxSize().background(Colors.background)) {
         Box(Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.statusBars).height(56.dp), contentAlignment = Alignment.Center) {
             val sections = listOf(DelegateSection.ToMe to "delegate.ToMe", DelegateSection.ByMe to "delegate.ByMe", DelegateSection.Completed to "completed")
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth(0.7f)) {
-                sections.forEachIndexed { i, (section, title) ->
-                    SegmentedButton(
-                        AppState.delegateSection == section, { AppState.delegateSection = section },
-                        SegmentedButtonDefaults.itemShape(i, sections.size),
-                        colors = SegmentedButtonDefaults.colors(
-                            activeContainerColor = Colors.segmentTint, activeContentColor = Color.White,
-                            inactiveContainerColor = Colors.segmentBackground, inactiveContentColor = Colors.text,
-                            activeBorderColor = Colors.segmentTint, inactiveBorderColor = Colors.segmentTint,
-                        ),
-                        icon = {},
-                    ) { Text(t(title), fontFamily = Fonts.roundedRegular, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-                }
+            SegmentedControl(sections.map { t(it.second) }, sections.indexOfFirst { it.first == AppState.delegateSection }, Modifier.fillMaxWidth(0.7f)) {
+                AppState.delegateSection = sections[it].first
             }
             InfoButton("delegate.info", Modifier.align(Alignment.CenterEnd))
         }
@@ -70,7 +57,7 @@ fun DelegationScreen() {
 @Composable
 private fun DelegationList(section: DelegateSection) {
     val byMe = section != DelegateSection.ToMe
-    val groups = dbState(section, Session.user, initial = emptyList<Pair<String, List<Todo>>>()) {
+    val groups = dbState(section, Session.user?.id, initial = emptyList<Pair<String, List<Todo>>>()) {
         // Counterpart: the delegate for todos I delegated, the delegator for todos delegated to me
         val names = (if (byMe) Db.delegates() else Db.delegators()).mapNotNull { u -> u.serverId?.let { it to (u.name ?: "") } }.toMap()
         Todos.delegated(byMe, section == DelegateSection.Completed)

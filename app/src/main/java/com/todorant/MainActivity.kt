@@ -158,7 +158,8 @@ private fun Root(intent: Intent?, onIntentHandled: () -> Unit) {
         else -> Route.tabs
     }
     LaunchedEffect(route, tabs) {
-        if (route in Route.tabs && route !in tabs) Nav.go(tabs.first())
+        // Checked when it runs: a link opened at launch may already have pushed a screen above the hidden tab
+        if (route in Route.tabs && route !in tabs) Nav.go(tabs.first()) { Nav.currentRoute() == route }
     }
     LaunchedEffect(intent, route) {
         if (intent != null && route != null) {
@@ -248,6 +249,14 @@ private fun handleIntent(intent: Intent) {
             if (text.isNotEmpty()) Nav.go(Route.add(text = text))
         }
         intent.getBooleanExtra("widget", false) -> Nav.go(Route.add())
+        // QA: adb shell am start -n com.todorant.debug/com.todorant.MainActivity --es route tags
+        BuildConfig.DEBUG && intent.getStringExtra("route") != null -> Nav.go(intent.getStringExtra("route")!!)
+        // QA: --es reminder 09:30 schedules it and posts the notification right away
+        BuildConfig.DEBUG && intent.getStringExtra("reminder") != null -> {
+            Settings.planningReminderTime = intent.getStringExtra("reminder")
+            Reminders.restore()
+            Reminders.notify(App.context)
+        }
         intent.action == Intent.ACTION_VIEW -> intent.data?.let(::handleUrl)
     }
 }

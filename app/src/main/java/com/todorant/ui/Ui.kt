@@ -11,6 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -39,6 +46,8 @@ class DialogSpec(
     val destructive: Set<Int> = emptySet(),
     /** RN's Android alerts can't be dismissed without a button; action sheets can */
     val cancelable: Boolean = false,
+    /** native-base ActionSheet: a bottom sheet with a list of options */
+    val sheet: Boolean = false,
 )
 
 /** Alerts, action sheets and toasts — Alert.alert / ActionSheet / Toast from the RN app */
@@ -66,7 +75,7 @@ object Ui {
     fun actionSheet(title: String?, options: List<String>, destructive: Set<Int> = emptySet(), onPick: (Int) -> Unit) = show(
         DialogSpec(
             title?.ifEmpty { null }, null,
-            options.mapIndexed { i, o -> o to { onPick(i) } } + (t("cancel") to {}), destructive, cancelable = true
+            options.mapIndexed { i, o -> o to { onPick(i) } } + (t("cancel") to {}), destructive, cancelable = true, sheet = true
         )
     )
 
@@ -98,10 +107,28 @@ object Ui {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogHost() {
     val spec = Ui.dialogs.firstOrNull() ?: return
     fun close(action: () -> Unit) { Ui.dialogs.remove(spec); action() }
+    if (spec.sheet) {
+        ModalBottomSheet(
+            onDismissRequest = { Ui.dialogs.remove(spec) }, containerColor = Colors.cardBackground,
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        ) {
+            Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(bottom = 8.dp)) {
+                spec.title?.let { Text(it, color = Colors.placeholder, fontSize = 14.sp, modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)) }
+                spec.buttons.forEachIndexed { i, (label, action) ->
+                    Text(
+                        label, color = if (i in spec.destructive) Colors.destruct else Colors.text, fontSize = 17.sp,
+                        modifier = Modifier.fillMaxWidth().clickable { close(action) }.padding(horizontal = 24.dp, vertical = 14.dp),
+                    )
+                }
+            }
+        }
+        return
+    }
     AlertDialog(
         onDismissRequest = { if (spec.cancelable) Ui.dialogs.remove(spec) },
         containerColor = Colors.cardBackground,
@@ -169,9 +196,14 @@ object Route {
 object Nav {
     var controller: NavHostController? = null
 
-    fun go(route: String) = App.scope.launch(Dispatchers.Main) {
+    /** [onlyIf] is evaluated right before navigating */
+    fun go(route: String, onlyIf: () -> Boolean = { true }) = App.scope.launch(Dispatchers.Main) {
         val c = controller ?: return@launch
+        if (!onlyIf()) return@launch
         if (route in Route.tabs) {
+            // Pushed screens (add, settings pages…) sit above the tabs like RN's root stack: close them first,
+            // otherwise they'd be saved into the tab's state and come back with it
+            while (c.currentBackStackEntry?.destination?.route !in Route.tabs && c.previousBackStackEntry != null) c.popBackStack()
             c.navigate(route) {
                 popUpTo(c.graph.startDestinationId) { saveState = true }
                 launchSingleTop = true

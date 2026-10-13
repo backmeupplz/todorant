@@ -105,7 +105,7 @@ fun CurrentScreen() {
             uncompleted.firstOrNull()?.let { todo ->
                 item("current") { TodoCard(todo, CardType.current) }
             }
-            if (total > 0 && uncompleted.isEmpty()) item("allDone") { Placeholder("🎉", t("allDoneTitle"), t("allDoneText"), topMargin = 0.dp) }
+            if (total > 0 && uncompleted.isEmpty()) item("allDone") { Placeholder("🎉", t("allDoneTitle"), t("allDoneText"), topMargin = 0.dp, margin = 0.dp) }
             if (total == 0) item("noTodos") { Placeholder("🐝", t("noTodosTitle"), t("noTodosText"), topMargin = 32.dp) }
         }
         PlusButton(

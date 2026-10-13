@@ -23,12 +23,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons as MaterialIcons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -151,10 +150,25 @@ internal fun HsvPicker(color: Color, onChange: (Color) -> Unit, modifier: Modifi
                     .size(20.dp).border(2.dp, Color.White, CircleShape)
             )
         }
-        Slider(
-            hue, { hue = it; emit(it, hsv[1].coerceAtLeast(0.05f), hsv[2].coerceAtLeast(0.05f)) }, valueRange = 0f..359f,
-            colors = SliderDefaults.colors(thumbColor = Color(android.graphics.Color.HSVToColor(floatArrayOf(hue, 1f, 1f))), activeTrackColor = Colors.border, inactiveTrackColor = Colors.border),
-        )
+        // Hue bar: a rainbow with a ring at the current hue
+        BoxWithConstraints(Modifier.fillMaxWidth().padding(top = 16.dp).height(28.dp)) {
+            val w = constraints.maxWidth.toFloat()
+            fun pickHue(x: Float) {
+                hue = (x / w).coerceIn(0f, 1f) * 359f
+                emit(hue, hsv[1].coerceAtLeast(0.05f), hsv[2].coerceAtLeast(0.05f))
+            }
+            Box(
+                Modifier.fillMaxSize().clip(RoundedCornerShape(14.dp))
+                    .background(Brush.horizontalGradient((0..6).map { Color(android.graphics.Color.HSVToColor(floatArrayOf(it * 60f % 360f, 1f, 1f))) }))
+                    .pointerInput(Unit) { detectTapGestures { pickHue(it.x) } }
+                    .pointerInput(Unit) { detectDragGestures { change, _ -> pickHue(change.position.x) } }
+            )
+            Box(
+                Modifier.offset(with(LocalDensity.current) { (hue / 359f * w).toDp() - 14.dp }).size(28.dp)
+                    .border(3.dp, Color.White, CircleShape).padding(3.dp)
+                    .background(Color(android.graphics.Color.HSVToColor(floatArrayOf(hue, 1f, 1f))), CircleShape)
+            )
+        }
     }
 }
 
