@@ -23,7 +23,6 @@ import com.todorant.R
 import com.todorant.data.Db
 import com.todorant.data.Session
 import com.todorant.data.Todo
-import com.todorant.logic.Tags
 import com.todorant.logic.Todos
 import com.todorant.logic.todayTitle
 import com.todorant.sync.Sync

@@ -3,13 +3,9 @@ package com.todorant.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -31,11 +27,12 @@ import com.todorant.ui.TodoCard
 import com.todorant.ui.SegmentedControl
 import com.todorant.ui.TodoHeader
 import com.todorant.ui.dbState
+import com.todorant.ui.headerBar
 
 @Composable
 fun DelegationScreen() {
     Column(Modifier.fillMaxSize().background(Colors.background)) {
-        Box(Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.statusBars).height(56.dp), contentAlignment = Alignment.Center) {
+        Box(Modifier.headerBar(), contentAlignment = Alignment.Center) {
             val sections = listOf(DelegateSection.ToMe to "delegate.ToMe", DelegateSection.ByMe to "delegate.ByMe", DelegateSection.Completed to "completed")
             SegmentedControl(sections.map { t(it.second) }, sections.indexOfFirst { it.first == AppState.delegateSection }, Modifier.fillMaxWidth(0.7f)) {
                 AppState.delegateSection = sections[it].first

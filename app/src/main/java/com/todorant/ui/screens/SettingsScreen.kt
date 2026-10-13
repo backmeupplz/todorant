@@ -2,8 +2,6 @@ package com.todorant.ui.screens
 
 import android.Manifest
 import android.app.TimePickerDialog
-import android.content.pm.PackageManager
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -26,7 +24,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import com.todorant.BuildConfig
 import com.todorant.I18n
 import com.todorant.Reminders
@@ -54,6 +51,7 @@ import com.todorant.ui.SectionHeader
 import com.todorant.ui.Spinner
 import com.todorant.ui.TableItem
 import com.todorant.ui.TableText
+import com.todorant.ui.ValueRow
 import com.todorant.ui.Target
 import com.todorant.ui.TextAndSwitch
 import com.todorant.ui.TutorialStep
@@ -140,7 +138,6 @@ fun SettingsScreen() {
 private fun InfoRow(title: String, value: String) {
     TableItem(onClick = {
         Ui.copy(value)
-        Ui.toast("\"$value\" ${t("copied")}")
     }) {
         TableText(title)
         TableText(value.ellipsize(30), Modifier.padding(start = 8.dp))
@@ -216,7 +213,6 @@ private fun TimePickerRow(title: String, value: String, pickerValue: LocalTime, 
 
 @Composable
 private fun TodoSettings() {
-    val context = LocalContext.current
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
     TextAndSwitch("defaultToToday", Settings.showTodayOnAddTodo == true) { Settings.showTodayOnAddTodo = it }
     TextAndSwitch("newTodosGoOnTop", Settings.newTodosGoFirst == true) { Settings.newTodosGoFirst = it }
@@ -226,13 +222,8 @@ private fun TodoSettings() {
     TextAndSwitch("settingsObject.duplicateTagInBreakdown", Settings.duplicateTagInBreakdown == true) { Settings.duplicateTagInBreakdown = it }
     TextAndSwitch("settingsObject.showMoreByDefault", Settings.showMoreByDefault == true) { Settings.showMoreByDefault = it }
     TextAndSwitch("settingsObject.removeCompletedFromCalendar", Settings.removeCompletedFromCalendar == true) { Settings.removeCompletedFromCalendar = it }
-    TableItem(onClick = {
-        Ui.actionSheet(null, (0..6).map { t("weekday$it") }) {
-            Settings.firstDayOfWeek = it
-        }
-    }) {
-        TableText(t("firstDayOfWeek"), Modifier.weight(1f))
-        TableText(t("weekday${Settings.firstDayOfWeekSafe}"))
+    ValueRow(t("firstDayOfWeek"), t("weekday${Settings.firstDayOfWeekSafe}")) {
+        Ui.actionSheet(null, (0..6).map { t("weekday$it") }) { Settings.firstDayOfWeek = it }
     }
     TimePickerRow(
         "startTimeOfDay", Settings.startTimeOfDaySafe, parseTime(Settings.startTimeOfDaySafe) ?: LocalTime.MIDNIGHT,
@@ -246,7 +237,7 @@ private fun TodoSettings() {
         showClear = Settings.planningReminderTime != null,
         onClear = { Settings.planningReminderTime = null; Reminders.stop() },
     ) {
-        if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        if (Reminders.permissionNeeded()) {
             notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
         Settings.planningReminderTime = it
@@ -259,7 +250,6 @@ private fun TodoSettings() {
 private fun DelegationSettings() {
     TableItem(onClick = {
         Ui.copy(Session.delegateInviteLink)
-        Ui.toast("\"${Session.delegateInviteLink}\" ${t("copied")}")
     }) {
         Column(Modifier.weight(1f).padding(end = 10.dp)) {
             TableText(t("delegate.link"))
@@ -296,9 +286,8 @@ private fun LanguageAndColorMode() {
         TableText(if (Settings.languageSelect == "auto") t("languageAuto") else languageNames[Settings.language ?: "en"] ?: "English")
     }
     val modes = listOf(ColorMode.auto to "languageAuto", ColorMode.dark to "dark", ColorMode.light to "light")
-    TableItem(onClick = { Ui.actionSheet(null, modes.map { t(it.second) }) { Settings.colorMode = modes[it].first } }) {
-        TableText(t("colorMode"), Modifier.weight(1f))
-        TableText(t(modes.first { it.first == Settings.colorMode }.second))
+    ValueRow(t("colorMode"), t(modes.first { it.first == Settings.colorMode }.second)) {
+        Ui.actionSheet(null, modes.map { t(it.second) }) { Settings.colorMode = modes[it].first }
     }
 }
 

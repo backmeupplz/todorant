@@ -17,7 +17,6 @@ import com.todorant.t
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /** Same order as the RN TutorialStep enum: nextStep() without an argument goes to the following one */
 enum class TutorialStep {
@@ -130,6 +129,12 @@ object Onboarding {
         nextStep(TutorialStep.Start)
     }
 
+    /** A centered "not allowed" message with one button */
+    private fun gotIt(action: () -> Unit) = Step(
+        center = true, notShowClose = true, notShowContinue = true, dontSave = true,
+        buttons = listOf(OnboardingButton(preferred = true, notAllowed = true, action = action)),
+    )
+
     /** AllStages from the RN OnboardingStore */
     private fun stage(s: TutorialStep): Step? = when (s) {
         TutorialStep.Start -> Step(
@@ -152,7 +157,7 @@ object Onboarding {
         TutorialStep.SelectCompleted -> Step(target = Target.COMPLETED_ROW, divider = 16f, dontSave = true)
         TutorialStep.ShowMore -> Step(target = Target.SHOW_MORE_ROW, divider = 16f, dontSave = true)
         TutorialStep.AddAnotherTask -> Step(target = Target.ADD_BUTTON, dontSave = true)
-        TutorialStep.AddTodoComplete -> Step(
+        TutorialStep.AddTodoComplete, TutorialStep.BreakdownTodoAction -> Step(
             target = Target.SAVE_BUTTON, notShowContinue = true, divider = 16f, dontSave = true, borderRadius = 10f, heightMultiplier = 6f,
             buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) { saveTodo() }),
         )
@@ -168,14 +173,7 @@ object Onboarding {
             }),
         )
         TutorialStep.BreakdownTodo -> Step(target = Target.BREAKDOWN_TODO, divider = 16f, dontSave = true)
-        TutorialStep.BreakdownTodoAction -> Step(
-            target = Target.SAVE_BUTTON, dontSave = true, notShowContinue = true, divider = 16f, borderRadius = 10f, heightMultiplier = 6f,
-            buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) { saveTodo() }),
-        )
-        TutorialStep.BreakdownLessThanTwo -> Step(
-            buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) { nextStep(previousStep) }),
-            notShowContinue = true, notShowClose = true, center = true, dontSave = true, customContinueText = true,
-        )
+        TutorialStep.BreakdownLessThanTwo -> gotIt { nextStep(previousStep) }
         TutorialStep.BreakdownVanish -> Step(center = true)
         TutorialStep.PlanningExplain -> Step(screen = Route.PLANNING, center = true, target = Target.TAB_PLANNING, divider = 0.5f)
         TutorialStep.PlanningExplain2 -> Step(center = true)
@@ -202,26 +200,15 @@ object Onboarding {
                 Effects.confetti(true)
             }),
         )
-        TutorialStep.BreakdownCompletedTodo -> Step(
-            center = true, notShowClose = true, notShowContinue = true, dontSave = true,
-            buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) {
-                nextStep(if (previousStep == TutorialStep.SelectCompleted) TutorialStep.ShowMore else previousStep)
-            }),
-        )
-        TutorialStep.SelectDateNotAllowed -> Step(
-            center = true, notShowClose = true, notShowContinue = true, dontSave = true,
-            buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) { nextStep(TutorialStep.SelectFrog) }),
-        )
+        TutorialStep.BreakdownCompletedTodo -> gotIt { nextStep(if (previousStep == TutorialStep.SelectCompleted) TutorialStep.ShowMore else previousStep) }
+        TutorialStep.SelectDateNotAllowed -> gotIt { nextStep(TutorialStep.SelectFrog) }
         TutorialStep.AddTextContinueButton -> Step(
             target = Target.TEXT_ROW, divider = 16f, borderRadius = 16f, dontSave = true, notShowMessage = true, notShowContinue = true,
             buttons = listOf(OnboardingButton("continue", preferred = true) {
                 nextStep(if (textInTodo.isNullOrEmpty()) TutorialStep.AddTextContinueTooFast else TutorialStep.SelectDate)
             }),
         )
-        TutorialStep.AddTextContinueTooFast -> Step(
-            center = true, notShowClose = true, notShowContinue = true, dontSave = true,
-            buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) { nextStep(TutorialStep.AddTextContinueButton) }),
-        )
+        TutorialStep.AddTextContinueTooFast -> gotIt { nextStep(TutorialStep.AddTextContinueButton) }
         TutorialStep.Finished -> null
     }
 

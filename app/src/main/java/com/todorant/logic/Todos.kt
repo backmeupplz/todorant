@@ -135,6 +135,12 @@ object Todos {
         Db.updateTodo(todo) { it.completed = false }
     }
 
+    /** A todo moved too often has to be broken down instead */
+    fun requestBreakdown(todo: Todo, before: () -> Unit = {}) = Ui.alert(
+        t("error"), t("breakdownRequest"),
+        listOf(t("cancel") to {}, t("breakdownButton") to { before(); Nav.go(Route.breakdown(todo.id)) })
+    )
+
     fun breakdownOrComplete(todo: Todo) {
         if (todo.repetitive) {
             Ui.alert(

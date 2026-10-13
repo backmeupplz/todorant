@@ -78,6 +78,7 @@ import com.todorant.ui.Spinner
 import com.todorant.ui.StackScreen
 import com.todorant.ui.TableItem
 import com.todorant.ui.TableText
+import com.todorant.ui.ValueRow
 import com.todorant.ui.TodorantSwitch
 import com.todorant.ui.Ui
 import com.todorant.ui.io
@@ -194,7 +195,6 @@ fun SocketsScreen() {
     StackScreen(t("socketsInfo"), actions = { InfoButton("infoSockets") }) {
         Spacer(Modifier.height(16.dp))
         TableItem { TableText(t("connected")); CheckOrCross(Sync.connected) }
-        TableItem { TableText(t("authorized")); CheckOrCross(Sync.connected) }
         Sync.connectionError?.let { error ->
             TableItem { TableText(t("socketError")); TableText(error, Modifier.padding(start = 8.dp)) }
         }
@@ -217,13 +217,13 @@ fun DataScreen() {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(top = 16.dp)) {
             SectionHeader(t("count"))
             for ((title, value) in listOf("todoCount", "tagsCount", "delegate.delegators", "delegate.delegates").zip(counts)) {
-                TableItem { TableText(t(title), Modifier.weight(1f)); TableText("$value") }
+                ValueRow(t(title), "$value")
             }
             Divider()
             SectionHeader(t("sync"))
-            TableItem { TableText(t("settingsLastSync"), Modifier.weight(1f)); TableText(date(Settings.updatedAt)) }
-            TableItem { TableText(t("accountLastSync"), Modifier.weight(1f)); TableText(date(Session.user?.updatedAt)) }
-            TableItem { TableText(t("gamification"), Modifier.weight(1f)); TableText(date(Hero.updatedAt)) }
+            ValueRow(t("settingsLastSync"), date(Settings.updatedAt))
+            ValueRow(t("accountLastSync"), date(Session.user?.updatedAt))
+            ValueRow(t("gamification"), date(Hero.updatedAt))
             Divider()
             TableItem(onClick = { Ui.attempt { Sync.sync() } }) {
                 TableText(t("syncData"))
@@ -479,8 +479,8 @@ fun SecurityScreen() {
             }
             Divider()
             SectionHeader(t("count"))
-            TableItem { TableText(t("encryptedTodos")); TableText("$encryptedCount") }
-            TableItem { TableText(t("unencryptedTodos")); TableText("$unencryptedCount") }
+            ValueRow(t("encryptedTodos"), "$encryptedCount")
+            ValueRow(t("unencryptedTodos"), "$unencryptedCount")
             Divider()
             SectionHeader(t("general"))
             if (loading) Spinner()

@@ -104,7 +104,6 @@ import com.todorant.ui.MIcon
 import com.todorant.ui.MonthCalendar
 import com.todorant.ui.Nav
 import com.todorant.ui.Onboarding
-import com.todorant.ui.Route
 import com.todorant.ui.Sounds
 import com.todorant.ui.StackScreen
 import com.todorant.ui.TIcon
@@ -119,7 +118,6 @@ import com.todorant.ui.hex
 import com.todorant.ui.ifTrue
 import com.todorant.ui.onboardingTarget
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import java.time.LocalDate
@@ -337,10 +335,7 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                 if (edited.frogFails > 2 && (edited.monthAndYear != newMonth || edited.date != vm.date)) {
                     // The RN app left the screen stuck in "saving" here
                     saving = false
-                    Ui.alert(
-                        t("error"), t("breakdownRequest"),
-                        listOf(t("cancel") to {}, t("breakdownButton") to { Nav.back(); Nav.go(Route.breakdown(edited.id)) })
-                    )
+                    Todos.requestBreakdown(edited) { Nav.back() }
                     return
                 }
                 val failed = isTodoOld(edited.monthAndYear, edited.date) && (edited.date != vm.date || edited.monthAndYear != vm.monthAndYear) && !edited.completed
@@ -502,8 +497,7 @@ private fun SaveRow(isEdit: Boolean, plural: Boolean, enabled: Boolean, shake: I
                 .combinedClickable(
                     enabled = saveAllowed,
                     onLongClick = {
-                        Ui.copy(editedTodo?.let { TodoEntity.toJson(it).toString() } ?: "undefined")
-                        Ui.toast(t("copied"))
+                        Ui.copy(editedTodo?.let { TodoEntity.toJson(it).toString() } ?: "undefined", t("copied"))
                     },
                     onClick = onSave,
                 ),
@@ -605,6 +599,8 @@ private fun TodoForm(vm: TodoVM, delete: (() -> Unit)?, showCross: Boolean) {
     val step = Onboarding.step
     val me = Session.user?.id
     val pickingAllowed = !tutorial || step == TutorialStep.BreakdownTodoAction || step == TutorialStep.SelectDate
+    /** The tutorial explains dates first instead of opening a picker */
+    fun dateBlocked() = (tutorial && step == TutorialStep.SelectDate).also { if (it) Onboarding.nextStep(TutorialStep.SelectDateNotAllowed) }
     val showMoreBlock = (Settings.showMoreByDefault == true && !tutorial) || vm.showMore
     Column(Modifier.padding(horizontal = 16.dp, vertical = verticalSpacing)) {
         TextRow(vm, showCross)
@@ -615,10 +611,7 @@ private fun TodoForm(vm: TodoVM, delete: (() -> Unit)?, showCross: Boolean) {
                 if (vm.datePickerValue != null && !vm.date.isNullOrEmpty()) Colors.text else Colors.placeholder,
                 Modifier.shake(if (vm.monthAndYear == null) vm.shake else 0), enabled = pickingAllowed,
             ) {
-                if (tutorial && step == TutorialStep.SelectDate) {
-                    Onboarding.nextStep(TutorialStep.SelectDateNotAllowed)
-                    return@FormRow
-                }
+                if (dateBlocked()) return@FormRow
                 vm.showDatePicker = !vm.showDatePicker
                 if (vm.date.isNullOrEmpty()) {
                     vm.monthAndYear = null
@@ -641,10 +634,7 @@ private fun TodoForm(vm: TodoVM, delete: (() -> Unit)?, showCross: Boolean) {
                 if (monthSet) Colors.text else Colors.placeholder,
                 Modifier.shake(if (vm.monthAndYear == null) vm.shake else 0), enabled = pickingAllowed,
             ) {
-                if (tutorial && step == TutorialStep.SelectDate) {
-                    Onboarding.nextStep(TutorialStep.SelectDateNotAllowed)
-                    return@FormRow
-                }
+                if (dateBlocked()) return@FormRow
                 vm.showMonthAndYearPicker = !vm.showMonthAndYearPicker
                 if (!vm.date.isNullOrEmpty()) {
                     vm.monthAndYear = null

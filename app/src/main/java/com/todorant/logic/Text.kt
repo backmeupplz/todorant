@@ -108,10 +108,11 @@ object Crypto {
 // region Linkify (linkify.ts)
 
 sealed class TextPart {
-    data class Plain(val value: String) : TextPart()
-    data class Link(val url: String, val value: String) : TextPart()
+    abstract val value: String
+    data class Plain(override val value: String) : TextPart()
+    data class Link(val url: String, override val value: String) : TextPart()
     /** value includes the leading '#' */
-    data class Hash(val value: String) : TextPart()
+    data class Hash(override val value: String) : TextPart()
 }
 
 private const val HASH_CHARS = "\\u0400-\\u04FFa-zA-Z_0-9"

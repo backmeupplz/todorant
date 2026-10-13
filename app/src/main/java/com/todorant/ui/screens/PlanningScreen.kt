@@ -6,14 +6,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -68,8 +64,8 @@ import com.todorant.ui.Target
 import com.todorant.ui.TodoCard
 import com.todorant.ui.SegmentedControl
 import com.todorant.ui.TodoHeader
-import com.todorant.ui.Ui
 import com.todorant.ui.dbState
+import com.todorant.ui.headerBar
 import com.todorant.ui.onboardingTarget
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -130,12 +126,7 @@ fun PlanningScreen() {
         dragging = false
         if (result.updates.isEmpty()) list = items
         Db.saveTodos(result.updates)
-        result.breakdown?.let { todo ->
-            Ui.alert(
-                t("error"), t("breakdownRequest"),
-                listOf(t("cancel") to {}, t("breakdownButton") to { Nav.go(Route.breakdown(todo.id)) })
-            )
-        }
+        result.breakdown?.let { Todos.requestBreakdown(it) }
     }
 
     Box(Modifier.fillMaxSize().background(Colors.background)) {
@@ -182,7 +173,7 @@ fun PlanningScreen() {
 private fun PlanningHeader(completed: Boolean) {
     val locked = Onboarding.active
     Row(
-        Modifier.fillMaxWidth().background(Colors.background).windowInsetsPadding(WindowInsets.statusBars).height(56.dp),
+        Modifier.background(Colors.background).headerBar(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.width(56.dp), contentAlignment = Alignment.Center) {

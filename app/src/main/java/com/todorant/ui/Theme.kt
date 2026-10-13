@@ -69,7 +69,6 @@ object Fonts {
     val roundedBold = FontFamily(Font(R.font.sf_pro_rounded_bold))
     val roundedRegular = FontFamily(Font(R.font.sf_pro_rounded_regular))
     val textRegular = FontFamily(Font(R.font.sf_pro_text_regular))
-    val textMedium = FontFamily(Font(R.font.sf_pro_text_medium))
     val icons = FontFamily(Font(R.font.icomoon))
 }
 

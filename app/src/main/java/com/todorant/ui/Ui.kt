@@ -105,9 +105,10 @@ object Ui {
         App.context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url)).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 
-    fun copy(text: String) {
+    fun copy(text: String, toast: String = "\"$text\" ${t("copied")}") {
         val clipboard = App.context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
         clipboard.setPrimaryClip(android.content.ClipData.newPlainText("text", text))
+        toast(toast)
     }
 
     fun paste(): String {
@@ -144,19 +145,17 @@ fun DialogHost() {
         title = spec.title?.let { { Text(it, color = Colors.text) } },
         text = spec.message?.let { { Text(it, color = Colors.text, modifier = Modifier.verticalScroll(rememberScrollState())) } },
         confirmButton = {
-            if (spec.buttons.size <= 2) {
+            val buttons = @Composable {
                 spec.buttons.forEachIndexed { i, (label, action) ->
                     TextButton(onClick = { close(action) }) {
                         Text(label, color = if (i in spec.destructive) Colors.destruct else Colors.primary)
                     }
                 }
-            } else {
+            }
+            if (spec.buttons.size <= 2) buttons()
+            else {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(0.dp)) {
-                    spec.buttons.forEachIndexed { i, (label, action) ->
-                        TextButton(onClick = { close(action) }) {
-                            Text(label, color = if (i in spec.destructive) Colors.destruct else Colors.primary)
-                        }
-                    }
+                    buttons()
                 }
             }
         },

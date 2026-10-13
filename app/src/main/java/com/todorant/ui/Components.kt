@@ -2,10 +2,8 @@ package com.todorant.ui
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -126,17 +124,15 @@ fun SectionHeader(title: String) {
     Text(title, fontFamily = Fonts.textRegular, fontSize = 13.sp, color = Colors.border, modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 6.dp))
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TableItem(
     onClick: (() -> Unit)? = null,
-    onLongClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
         modifier.fillMaxWidth()
-            .let { if (onClick != null) it.combinedClickable(onLongClick = onLongClick, onClick = onClick) else it }
+            .let { if (onClick != null) it.clickable(onClick = onClick) else it }
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .heightIn(min = 28.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -144,6 +140,13 @@ fun TableItem(
         Row(Modifier.weight(1f), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, content = content)
         if (onClick != null) TIcon("chevron_right_outline_28", 24.dp, Colors.border)
     }
+}
+
+/** Title on the left, value on the right */
+@Composable
+fun ValueRow(title: String, value: String, onClick: (() -> Unit)? = null) = TableItem(onClick) {
+    TableText(title, Modifier.weight(1f))
+    TableText(value)
 }
 
 @Composable
@@ -237,7 +240,6 @@ fun LargeTitleScreen(
     showsHeroButton: Boolean = false,
     state: LazyListState = rememberLazyListState(),
     bottomPadding: Dp = 0.dp,
-    titleModifier: Modifier = Modifier,
     infoModifier: Modifier = Modifier,
     content: LazyListScope.() -> Unit,
 ) {
@@ -257,7 +259,7 @@ fun LargeTitleScreen(
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         title, color = Colors.text, fontFamily = Fonts.displayBold, fontSize = 34.sp, lineHeight = 41.sp,
-                        modifier = titleModifier.padding(start = 16.dp)
+                        modifier = Modifier.padding(start = 16.dp)
                     )
                     InfoButton(infoTitle, infoModifier.padding(start = 12.dp))
                     Spacer(Modifier.weight(1f))
@@ -269,10 +271,14 @@ fun LargeTitleScreen(
     }
 }
 
+/** A full-width 56 dp bar below the status bar */
+@Composable
+fun Modifier.headerBar() = fillMaxWidth().windowInsetsPadding(WindowInsets.statusBars).height(56.dp)
+
 /** Stack screen header with a back arrow, like the react-navigation stack headers */
 @Composable
 fun TopBar(title: String, onBack: (() -> Unit)? = { Nav.back() }, actions: @Composable RowScope.() -> Unit = {}) {
-    Box(Modifier.fillMaxWidth().background(Colors.background).windowInsetsPadding(WindowInsets.statusBars).height(56.dp)) {
+    Box(Modifier.background(Colors.background).headerBar()) {
         if (onBack != null) MIcon(
             MaterialIcons.AutoMirrored.Filled.ArrowBack, Colors.text.copy(alpha = 0.5f),
             modifier = Modifier.align(Alignment.CenterStart).padding(start = 12.dp), onClick = onBack
@@ -308,7 +314,7 @@ fun BoxScope.PlusButton(modifier: Modifier = Modifier, enabled: Boolean = true, 
 
 /** Day/month or user section header (TodoHeader) */
 @Composable
-fun TodoHeader(item: String, date: Boolean = false, hidePlus: Boolean = false, plusEnabled: Boolean = true, labelModifier: Modifier = Modifier, onPlus: () -> Unit = { Nav.go(Route.add(date = item)) }) {
+fun TodoHeader(item: String, date: Boolean = false, hidePlus: Boolean = false, plusEnabled: Boolean = true, labelModifier: Modifier = Modifier) {
     val label = if (date && item.length == 10) {
         val weekday = parseTitle(item)?.dayOfWeek?.getDisplayName(DateTextStyle.FULL, com.todorant.I18n.locale()) ?: ""
         "$item, ${capitalizeSentence(weekday)}"
@@ -319,7 +325,7 @@ fun TodoHeader(item: String, date: Boolean = false, hidePlus: Boolean = false, p
             modifier = labelModifier.background(Color(0x0FFF641A), RoundedCornerShape(topEnd = 6.dp, bottomEnd = 6.dp))
                 .padding(start = 16.dp, end = 12.dp, top = 4.dp, bottom = 4.dp)
         )
-        if (!hidePlus) IconBtn("add_outline_28", Colors.primary, size = 20.dp, disabled = !plusEnabled, onClick = onPlus)
+        if (!hidePlus) IconBtn("add_outline_28", Colors.primary, size = 20.dp, disabled = !plusEnabled) { Nav.go(Route.add(date = item)) }
     }
 }
 

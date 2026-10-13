@@ -2,9 +2,8 @@ package com.todorant.ui
 
 import android.os.VibrationEffect
 import android.os.Vibrator
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -70,17 +69,10 @@ fun TodoCard(todo: Todo, type: CardType, modifier: Modifier = Modifier, dragModi
     val threshold = with(LocalDensity.current) { 100.dp.toPx() }
     val state = rememberSwipeToDismissBoxState(positionalThreshold = { threshold })
     LaunchedEffect(state.currentValue) {
-        when (state.currentValue) {
-            SwipeToDismissBoxValue.StartToEnd -> {
-                state.snapTo(SwipeToDismissBoxValue.Settled)
-                Todos.breakdownOrComplete(todo)
-            }
-            SwipeToDismissBoxValue.EndToStart -> {
-                state.snapTo(SwipeToDismissBoxValue.Settled)
-                Todos.delete(todo)
-            }
-            else -> {}
-        }
+        val value = state.currentValue
+        if (value == SwipeToDismissBoxValue.Settled) return@LaunchedEffect
+        state.snapTo(SwipeToDismissBoxValue.Settled)
+        if (value == SwipeToDismissBoxValue.StartToEnd) Todos.breakdownOrComplete(todo) else Todos.delete(todo)
     }
     LaunchedEffect(state.targetValue) {
         if (state.targetValue != SwipeToDismissBoxValue.Settled) {
@@ -129,16 +121,12 @@ private fun TodoCardBody(todo: Todo, type: CardType, dragModifier: Modifier, tog
         if (!delegatorName.isNullOrEmpty() && type != CardType.delegation) {
             Text(
                 "${t("delegate.from")}: $delegatorName" + if (todo.delegateAccepted == false) " ${todo.title}" else "",
-                style = regularText, modifier = Modifier.combinedClickableCompat(onClick = toggle)
+                style = regularText, modifier = Modifier.clickable(onClick = toggle)
             )
         }
         TodoCardText(todo, isOld, type, dragModifier, toggle)
     }
 }
-
-@OptIn(ExperimentalFoundationApi::class)
-private fun Modifier.combinedClickableCompat(onClick: () -> Unit, onLongClick: (() -> Unit)? = null) =
-    combinedClickable(onLongClick = onLongClick, onClick = onClick)
 
 @Composable
 private fun TodoCardText(todo: Todo, isOld: Boolean, type: CardType, dragModifier: Modifier, toggle: () -> Unit) {
@@ -152,14 +140,10 @@ private fun TodoCardText(todo: Todo, isOld: Boolean, type: CardType, dragModifie
         parts.forEachIndexed { i, p ->
             when (p) {
                 is TextPart.Plain -> withStyle(SpanStyle(color = Colors.text)) { append(p.value) }
-                is TextPart.Link -> {
+                is TextPart.Link, is TextPart.Hash -> {
+                    val color = (p as? TextPart.Hash)?.let { tagColors[it.value.substring(1)]?.let(::hex) } ?: Colors.link
                     pushStringAnnotation("part", "$i")
-                    withStyle(SpanStyle(color = Colors.link)) { append(p.value) }
-                    pop()
-                }
-                is TextPart.Hash -> {
-                    pushStringAnnotation("part", "$i")
-                    withStyle(SpanStyle(color = tagColors[p.value.substring(1)]?.let(::hex) ?: Colors.link)) { append(p.value) }
+                    withStyle(SpanStyle(color = color)) { append(p.value) }
                     pop()
                 }
             }
@@ -181,7 +165,6 @@ private fun TodoCardText(todo: Todo, isOld: Boolean, type: CardType, dragModifie
             }
             else -> if (type == CardType.breakdown || type == CardType.delegation) {
                 Ui.copy(todo.text)
-                Ui.toast("\"${todo.text}\" ${t("copied")}")
             } else toggle()
         }
     }
@@ -234,7 +217,7 @@ private fun DelegateCardActions(todo: Todo) {
         if (AppState.delegateSection == DelegateSection.ToMe) {
             Text(
                 t("accept"), style = regularText.copy(color = Colors.success),
-                modifier = Modifier.combinedClickableCompat(onClick = { Ui.launch { Todos.accept(todo) } })
+                modifier = Modifier.clickable { Ui.launch { Todos.accept(todo) } }
             )
         }
     }
