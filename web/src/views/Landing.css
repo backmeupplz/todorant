@@ -1,0 +1,79 @@
+.landing { min-height: 100vh; display: flex; flex-direction: column; }
+.landing main { flex: 1; width: 100%; }
+.landing-top { width: 100%; padding-top: 20px; padding-bottom: 20px; }
+.landing-logo { display: block; height: 30px; width: auto; }
+:root.dark .landing-logo { filter: invert(1) hue-rotate(180deg); }
+
+/* Hero */
+.hero {
+  background: var(--landing); color: #fff; border-radius: 20px; padding: 48px;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px 48px; align-items: center;
+}
+.hero h1 { font-size: 40px; line-height: 1.2; font-weight: 800; letter-spacing: -0.5px; }
+.hero-features { list-style: none; margin: 0; padding: 20px 24px; background: rgba(255, 255, 255, 0.14); border-radius: 16px; display: grid; gap: 12px; }
+.hero-features li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.4; }
+.hero-features li::before {
+  content: ''; position: absolute; left: 0; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff;
+  -webkit-mask: radial-gradient(circle, transparent 0 3px, #000 3.5px); mask: radial-gradient(circle, transparent 0 3px, #000 3.5px);
+}
+.hero-cta { display: flex; align-items: center; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+.hero-signin {
+  background: rgba(255, 255, 255, 0.2); color: #fff; border: 0; border-radius: 10px; height: 47px; padding: 0 40px;
+  font-size: 18px; font-weight: 700; cursor: pointer; transition: background 0.15s;
+}
+.hero-signin:hover { background: rgba(255, 255, 255, 0.3); }
+.hero-cta a { display: block; line-height: 0; border-radius: 12px; }
+.hero-cta img { width: 54px; height: 47px; }
+.hero :focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Difference */
+.difference { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: center; margin-top: 56px; }
+.difference h2 { font-size: 36px; line-height: 1.2; font-weight: 700; margin-bottom: 16px; }
+.difference p { font-size: 17px; line-height: 1.5; font-weight: 400; margin: 0 0 12px; }
+.shot { position: relative; height: 425px; overflow: hidden; display: flex; justify-content: center; }
+.shot i { position: absolute; top: 20px; width: 260px; height: 560px; border-radius: 56px; }
+.shot-blue { background: var(--blue); transform: rotate(10deg); }
+.shot-yellow { background: #ffd166; transform: rotate(-10deg); }
+.shot img { position: relative; top: 20px; width: 260px; height: auto; border-radius: 8px; box-shadow: 0 5px 40px rgba(0, 0, 0, 0.1); align-self: flex-start; }
+
+/* Footer */
+.landing-footer {
+  width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px;
+  margin-top: 48px; padding-top: 24px; padding-bottom: 32px; font-size: 14px; color: var(--muted);
+}
+.landing-footer p { margin: 0; max-width: 520px; }
+.landing-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.landing-footer a { color: var(--muted); }
+.landing-footer select, .landing-dark {
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); padding: 6px 10px; font-size: 14px; cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .hero { grid-template-columns: 1fr; padding: 28px 20px; }
+  .hero h1 { font-size: 28px; }
+  .hero-features { padding: 16px; }
+  .difference { grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
+  .difference h2 { font-size: 28px; }
+  .difference p { font-size: 16px; }
+}
+@media (max-width: 400px) {
+  .hero-signin { flex: 1 0 100%; }
+  .hero-cta { justify-content: center; }
+}
+
+/* Sign in dialog */
+.dialog:has(.signin) { max-width: 320px; }
+.signin { display: flex; flex-direction: column; gap: 12px; padding: 25px; }
+.signin-btn {
+  height: 44px; border: 0; border-radius: 3px; display: flex; align-items: center; justify-content: center; gap: 13px;
+  font-size: 14px; font-weight: 500; cursor: pointer; color: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.signin-btn:hover { filter: brightness(1.06); }
+.signin-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.signin-facebook { background: #647daf; }
+.signin-google { background: #fff; color: rgba(0, 0, 0, 0.54); }
+.signin-apple { background: #000; }
+.signin-qr { background: #5c9bff; }
+.signin-telegram { display: flex; justify-content: center; min-height: 40px; }
+.qr { display: flex; flex-direction: column; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.qr-code { background: #fff; border-radius: 12px; width: 240px; max-width: 100%; height: auto; }

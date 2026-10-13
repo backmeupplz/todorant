@@ -2,7 +2,7 @@ import { encryptionKey, load, reset, session, type Profile } from './store'
 import { login } from './rest'
 import * as sync from './sync'
 import { go } from '../ui/router'
-import { showError } from '../ui/kit'
+import { closeDialogs, showError } from '../ui/kit'
 
 /** Signs in (switching accounts clears this browser's data) and starts syncing */
 export async function signIn(provider: string, body: unknown) {
@@ -20,6 +20,7 @@ export async function start(profile: Profile) {
     await reset()
   }
   session.value = profile
+  closeDialogs()
   sync.start()
   go('/superpower', true)
 }

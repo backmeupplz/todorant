@@ -11,6 +11,20 @@ export const addTodo = (title?: string, text?: string) => form().then((m) => m.o
 export const editTodo = (todo: Todo, accepting = false) => form().then((m) => m.openForm({ mode: 'edit', todo, accepting }))
 export const breakdownTodo = (todo: Todo) => form().then((m) => m.openForm({ mode: 'breakdown', todo }))
 
+/** A todo moved too often has to be broken down instead */
+export const requestBreakdown = (todo: Todo) =>
+  open((close) => (
+    <DialogCard
+      title={t('breakdown.request')}
+      actions={
+        <>
+          <Button text onClick={close}>{t('cancel')}</Button>
+          <Button autofocus onClick={() => (close(), breakdownTodo(todo))}>{t('breakdown.button')}</Button>
+        </>
+      }
+    />
+  ))
+
 export async function deleteTodo(todo: Todo) {
   if (await confirm(t('deleteHeadline', { name: ellipsize(todo.text, 50) }), t('delete'), true)) update('todo', todo.id, { deleted: true })
 }

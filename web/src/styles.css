@@ -138,3 +138,9 @@ h1, h2, h3 { margin: 0; }
 .progress .bar i { flex: 1; border-radius: 3px; background: var(--border); }
 .progress .bar i.on { background: var(--orange); }
 .toolbar { position: sticky; top: 56px; z-index: 4; background: var(--surface); padding: 8px 0; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.epic { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.epic-name { background: none; border: 0; padding: 0; cursor: pointer; font-weight: 600; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.epic-bar { flex: 1; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.epic-bar i { display: block; height: 100%; border-radius: 3px; }
+.offline { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); margin-right: 8px; }
+.menu > button[aria-current='true'] { color: var(--orange); }

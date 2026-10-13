@@ -179,8 +179,8 @@ export function setCursor(value: number | null) {
 const key = (c: Change) => `${c.c}|${c.id}|${c.field}`
 
 /** Queues a field edit; a newer edit of the same field replaces the older one */
-export function enqueue(c: string, id: string, field: string, value: unknown) {
-  const change = { c, id, field, value: value ?? null, at: now() }
+export function enqueue(c: string, id: string, field: string, value: unknown, at = now()) {
+  const change = { c, id, field, value: value ?? null, at }
   outbox.set(key(change), change)
   persistMeta()
   onChange()
@@ -212,14 +212,16 @@ export function objectId() {
 
 /** Creates a document; every field that's set goes to the server */
 export function create<C extends keyof Doc>(c: C, doc: Omit<Doc[C], 'id'> & { id?: string }): Doc[C] {
-  const created = { ...doc, id: doc.id ?? objectId(), createdAt: now(), updatedAt: now() } as unknown as Doc[C]
+  const at = now()
+  const created = { ...doc, id: doc.id ?? objectId(), createdAt: at, updatedAt: at } as unknown as Doc[C]
   ;(COLLECTIONS[c] as Map<string, Doc[C]>).set(created.id, created)
   persist(c, created.id, created)
   for (const f of FIELDS[c]) {
     const v = (created as any)[f]
-    if (v !== undefined && v !== null) enqueue(c, created.id, f, v)
+    if (v !== undefined && v !== null) enqueue(c, created.id, f, v, at)
   }
-  if (c === 'todo') for (const f of ['user', 'delegator'] as const) if ((created as Todo)[f]) enqueue(c, created.id, f, (created as Todo)[f])
+  // Delegation is set on creation only, in the same op as the rest
+  if (c === 'todo') for (const f of ['user', 'delegator'] as const) if ((created as Todo)[f]) enqueue(c, created.id, f, (created as Todo)[f], at)
   return created
 }
 
@@ -227,17 +229,18 @@ export function create<C extends keyof Doc>(c: C, doc: Omit<Doc[C], 'id'> & { id
 export function update<C extends keyof Doc>(c: C, id: string, patch: Partial<Doc[C]>) {
   const doc = (COLLECTIONS[c] as Map<string, Doc[C]>).get(id)
   if (!doc) return
-  const next = { ...doc, updatedAt: now() } as any
+  const at = now()
+  const next = { ...doc, updatedAt: at } as any
   let changed = false
   for (const [f, v] of Object.entries(patch)) {
     if (v === next[f] || !(FIELDS[c] as readonly string[]).includes(f)) continue
     next[f] = v
-    enqueue(c, id, f, v)
+    enqueue(c, id, f, v, at)
     changed = true
   }
   if (!changed) return
   // A todo switching encryption sends its text again, (de)crypted accordingly
-  if (c === 'todo' && 'encrypted' in patch && !('text' in patch)) enqueue(c, id, 'text', next.text)
+  if (c === 'todo' && 'encrypted' in patch && !('text' in patch)) enqueue(c, id, 'text', next.text, at)
   ;(COLLECTIONS[c] as Map<string, Doc[C]>).set(id, next)
   persist(c, id, next)
 }

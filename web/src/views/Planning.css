@@ -1,0 +1,16 @@
+.planning-alert { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; margin: 8px 0; border-radius: 12px; background: rgba(51, 102, 255, 0.1); color: var(--blue); }
+.planning-alert svg { flex: none; }
+.planning-toolbar { min-height: 52px; }
+.planning-search { flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.planning-suggestions { display: flex; flex-wrap: wrap; }
+.planning-suggestions:empty { display: none; }
+.planning-tags { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.planning-tags .chip > span, .spread-row .chip > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 160px; }
+.planning-section .section-header { max-width: 100%; }
+.section-toggle { background: none; border: 0; padding: 0; color: inherit; cursor: pointer; text-align: left; overflow: hidden; text-overflow: ellipsis; }
+.planning .todo .handle { touch-action: none; }
+.planning .todo .handle:focus-visible { outline: 2px solid var(--blue); border-radius: 4px; }
+.planning.dragging { user-select: none; cursor: grabbing; }
+.spread-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0; }
+.spread-row .chip.muted { padding-right: 10px; }
+.planning-more { height: 1px; }

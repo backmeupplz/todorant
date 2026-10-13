@@ -19,6 +19,7 @@ export function open(render: DialogSpec['render'], persistent = false) {
   return close
 }
 export const dialogOpen = () => dialogs.value.length > 0
+export const closeDialogs = () => (dialogs.value = [])
 
 export function Dialogs() {
   useEffect(() => {
@@ -100,7 +101,7 @@ export function Snackbar() {
 
 // region Controls
 
-type ButtonProps = JSX.HTMLAttributes<HTMLButtonElement> & { color?: 'primary' | 'danger' | 'success' | 'gradient'; text?: boolean; small?: boolean }
+type ButtonProps = JSX.HTMLAttributes<HTMLButtonElement> & { disabled?: boolean; autofocus?: boolean; color?: 'primary' | 'danger' | 'success' | 'gradient'; text?: boolean; small?: boolean }
 export function Button({ color = 'primary', text, small, class: cls, ...rest }: ButtonProps) {
   return <button type="button" class={`btn ${text ? 'btn-text' : `btn-${color}`}${small ? ' btn-small' : ''} ${cls ?? ''}`} {...rest} />
 }
@@ -123,7 +124,7 @@ export function Switch(p: { checked: boolean; onChange: (v: boolean) => void; la
   )
 }
 
-export function Field(p: JSX.HTMLAttributes<HTMLInputElement> & { label?: string; error?: boolean }) {
+export function Field(p: JSX.InputHTMLAttributes<HTMLInputElement> & { label?: string; error?: boolean }) {
   const { label, error, class: cls, ...rest } = p
   return (
     <label class={`field ${error ? 'invalid' : ''} ${cls ?? ''}`}>
