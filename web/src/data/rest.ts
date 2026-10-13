@@ -26,6 +26,6 @@ export async function login(provider: string, body: unknown): Promise<Profile> {
   const user = await call('POST', `/v2/auth/${provider}`, body, '')
   // Only the profile is kept in this browser: settings arrive via sync, and the login response also
   // carries things (calendar credentials) that shouldn't sit in localStorage
-  const { token, name, email, facebookId, telegramId, appleSubId, delegateInviteToken } = user
-  return { id: user._id ?? user.id, token, name, email, facebookId, telegramId, appleSubId, delegateInviteToken }
+  const { token, name, email, facebookId, telegramId, appleSubId, passwordLogin, delegateInviteToken } = user
+  return { id: user._id ?? user.id, token, name, email, facebookId, telegramId, appleSubId, passwordLogin, delegateInviteToken }
 }

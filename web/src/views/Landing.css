@@ -77,3 +77,7 @@
 .signin-telegram { display: flex; justify-content: center; min-height: 40px; }
 .qr { display: flex; flex-direction: column; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
 .qr-code { background: #fff; border-radius: 12px; width: 240px; max-width: 100%; height: auto; }
+
+.signin-email { display: flex; flex-direction: column; gap: 8px; }
+.signin-email .btn { min-height: 40px; }
+.signin-email-toggle { align-self: center; font-size: 14px; }

@@ -60,6 +60,8 @@ export type Profile = {
   facebookId?: string
   telegramId?: string
   appleSubId?: string
+  /** Address of an email + password account */
+  passwordLogin?: string
   delegateInviteToken?: string
 }
 export type Person = { id: string; name: string }
@@ -284,7 +286,7 @@ export function applySingleton(c: 'settings' | 'hero' | 'user', json: any) {
     if (take('points')) hero.value = json.points
   } else if (session.value) {
     const profile = { ...session.value }
-    for (const f of ['name', 'email', 'facebookId', 'telegramId', 'appleSubId', 'delegateInviteToken'] as const) {
+    for (const f of ['name', 'email', 'facebookId', 'telegramId', 'appleSubId', 'passwordLogin', 'delegateInviteToken'] as const) {
       if (f in json && !(f === 'name' && skip.has('name'))) (profile as any)[f] = json[f] ?? undefined
     }
     session.value = profile

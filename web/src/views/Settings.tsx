@@ -91,7 +91,7 @@ function List() {
   const synced = (key: Flag, label: string) => <Switch row checked={!!s[key]} onChange={(v) => setSetting(key, v)} label={label} />
   const local = (key: LocalFlag, label: string) => <Switch row checked={p[key]} onChange={(v) => setPref(key, v)} label={label} />
   const ids: [string, string | undefined][] = user
-    ? [[t('m.email'), user.email], [t('m.facebook'), user.facebookId], [t('m.telegram'), user.telegramId], [t('m.apple'), user.appleSubId]]
+    ? [[t('m.email'), user.email ?? user.passwordLogin], [t('m.facebook'), user.facebookId], [t('m.telegram'), user.telegramId], [t('m.apple'), user.appleSubId]]
     : []
   return (
     <div class="settings">

@@ -2,6 +2,7 @@ import { useSignal } from '../lib/state'
 import { useEffect, useRef } from 'preact/hooks'
 import { signIn } from '../data/account'
 import { call } from '../data/rest'
+import { API } from '../data/sync'
 import { isDark, prefs, session, setPref } from '../data/store'
 import { language, LANGUAGES, setLanguage, t, tRaw, type Language } from '../i18n'
 import { qr } from '../lib/qr'
@@ -139,11 +140,16 @@ const PROVIDERS: { name: string; key: string; icon: string; go: () => void }[] =
   },
 ]
 
+/** Self-hosted servers usually have no OAuth apps: email + password comes first there */
+const customServer = () => API !== 'https://backend.todorant.com'
+
 function openSignIn() {
   open((close) => {
     const auth = (provider: string, body: unknown) => signIn(provider, body).then(() => session.value && close())
+    const email = <EmailSignIn auth={auth} />
     return (
       <div class="card signin">
+        {customServer() && email}
         {PROVIDERS.map((p) => (
           <button key={p.name} type="button" class={`signin-btn signin-${p.name}`} onClick={p.go}>
             <img src={p.icon} alt="" width={18} height={18} />
@@ -155,9 +161,41 @@ function openSignIn() {
           <img src="/img/qr-code.svg" alt="" width={18} height={18} />
           {t('home.mobile')}
         </button>
+        {!customServer() && email}
       </div>
     )
   })
+}
+
+/** Email + password: sign in, or create an account (the server keeps these apart from OAuth accounts) */
+function EmailSignIn({ auth }: { auth: (provider: string, body: unknown) => Promise<unknown> }) {
+  const shown = useSignal(customServer())
+  const email = useSignal('')
+  const password = useSignal('')
+  const busy = useSignal(false)
+  const submit = (provider: 'password' | 'signup') => async (e?: Event) => {
+    e?.preventDefault()
+    busy.value = true
+    await auth(provider, { email: email.value, password: password.value })
+    busy.value = false
+  }
+  if (!shown.value)
+    return (
+      <button type="button" class="btn btn-text signin-email-toggle" onClick={() => (shown.value = true)}>
+        {t('m.email')} / {t('encryption.password')}
+      </button>
+    )
+  const ok = /^\S+@\S+\.\S+$/.test(email.value.trim()) && password.value.length >= 8
+  return (
+    <form class="signin-email" onSubmit={submit('password')}>
+      <input class="input" type="email" autocomplete="username" placeholder={t('m.email')} aria-label={t('m.email')} value={email.value} onInput={(e) => (email.value = e.currentTarget.value)} />
+      <input class="input" type="password" autocomplete="current-password" placeholder={t('encryption.password')} aria-label={t('encryption.password')} value={password.value} onInput={(e) => (password.value = e.currentTarget.value)} />
+      <div class="row">
+        <Button type="submit" class="grow" disabled={!ok || busy.value}>{t('home.signIn')}</Button>
+        <Button text disabled={!ok || busy.value} onClick={submit('signup')}>Create account</Button>
+      </div>
+    </form>
+  )
 }
 
 function TelegramWidget({ onAuth }: { onAuth: (user: object) => void }) {
