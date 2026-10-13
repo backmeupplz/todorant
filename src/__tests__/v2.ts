@@ -126,6 +126,9 @@ describe('v2 sync and API', () => {
     })
     expect(acks.map((x: any) => x.e)).toEqual(['Invalid id', 'monthAndYear is required', 'Invalid text', 'Invalid monthAndYear'])
     await request(server).post('/v2/sync').send({ since: 0 }).expect(401)
+    // v2 aliases of the v1 logins
+    const login = await request(server).post('/v2/auth/token').send({ token: a.token }).expect(200)
+    expect(login.body._id).toBe(a._id)
   })
 
   it('delegates todos to delegates only and locks them for the delegator once accepted', async () => {

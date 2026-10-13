@@ -47,6 +47,8 @@ async function write(ctx: Context, op: Op) {
 // Login lives in the v1 controllers (OAuth flows); /v2/auth/* is the same handlers under v2
 v2.post('/auth/:provider', (ctx, next) => {
   ctx.path = `/login/${ctx.params.provider}`
+  // koa-router routes by ctx.routerPath before ctx.path; let the v1 router match the rewritten path
+  ctx.routerPath = undefined
   return next()
 })
 

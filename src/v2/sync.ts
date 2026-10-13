@@ -101,7 +101,7 @@ async function applyDocs(collection: 'todo' | 'tag', user: Record<string, any>, 
     if (!doc) {
       // Create with the client's id: no client/server id mapping anywhere
       const created: Record<string, any> = { _id: oid(op.id), ...defaults[collection], ...set, user: user._id, createdAt: date, updatedAt: date }
-      if (collection === 'todo' && op.set.delegator !== undefined) {
+      if (collection === 'todo' && op.set.delegator) {
         const delegate = String(op.set.user)
         if (!same(op.set.delegator, uid) || !user.delegates?.some((d: unknown) => same(d, delegate))) {
           acks.push({ id: op.id, e: 'Invalid delegation' }); continue
