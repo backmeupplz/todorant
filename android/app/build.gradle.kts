@@ -39,6 +39,8 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.findByName("upload")
+            // `-Pqa` makes a release build inspectable with run-as for device QA
+            isDebuggable = project.hasProperty("qa")
         }
     }
 }
