@@ -215,9 +215,8 @@ private fun RateModal() {
                                 comment.isBlank() -> error = true
                                 else -> {
                                     close()
-                                    val token = Session.user?.token
-                                    if (!token.isNullOrEmpty()) Ui.launch {
-                                        runCatching { Rest.sendFeedback(JSONObject().put("rating", rating).put("review", comment), token) }
+                                    if (Session.user != null) Ui.launch {
+                                        runCatching { Rest.sendFeedback(JSONObject().put("rating", rating).put("review", comment)) }
                                     }
                                 }
                             }

@@ -71,6 +71,8 @@ import androidx.compose.ui.unit.sp
 import com.todorant.BuildConfig
 import com.todorant.I18n
 import com.todorant.data.Db
+import com.todorant.data.Hero
+import com.todorant.data.TodoEntity
 import com.todorant.data.Ids
 import com.todorant.data.DelegationUser
 import com.todorant.data.Session
@@ -81,7 +83,6 @@ import com.todorant.logic.Todos
 import com.todorant.logic.capitalizeSentence
 import com.todorant.logic.dateString
 import com.todorant.logic.day
-import com.todorant.logic.exactDate
 import com.todorant.logic.hashtags
 import com.todorant.logic.hhmm
 import com.todorant.logic.isToday
@@ -90,7 +91,6 @@ import com.todorant.logic.monthAndYear
 import com.todorant.logic.parseTime
 import com.todorant.logic.parseTitle
 import com.todorant.logic.todayWithStartOfDay
-import com.todorant.sync.Sync
 import com.todorant.t
 import com.todorant.ui.CardType
 import com.todorant.ui.Colors
@@ -130,10 +130,9 @@ import kotlin.math.roundToInt
 
 enum class AddMode { add, edit, breakdown }
 
-/** Lets the tutorial overlay's buttons save the todos or add another form while this screen is shown */
+/** Lets the tutorial overlay's buttons save the todos while this screen is shown */
 object AddTodoActions {
     var save: () -> Unit = {}
-    var addAnother: () -> Unit = {}
 }
 
 private const val FONT_SIZE = 18
@@ -311,7 +310,6 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
         val titles = ArrayList<String>()
         val onTop = ArrayList<Todo>()
         val toBottom = ArrayList<Todo>()
-        val involved = ArrayList<Todo>()
         val completedAtCreation = ArrayList<String>()
         val toSave = ArrayList<Todo>()
         val currentMonth = LocalDate.now().monthAndYear()
@@ -324,7 +322,6 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                     monthAndYear = vm.monthAndYear ?: currentMonth, date = vm.date, time = vm.time, repetitive = vm.repetitive,
                     encrypted = Session.encryptionKey != null && vm.delegate == null,
                 )
-                todo.exactDate = exactDate(todo.title)
                 if (todo.completed) completedAtCreation.add(todo.text)
                 val delegate = vm.delegate
                 if (delegate?.id != null && me != null) {
@@ -332,7 +329,6 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                     todo.delegatorId = me
                 }
                 toSave.add(todo)
-                involved.add(todo)
                 titles.add(todo.title)
                 if (vm.addOnTop) onTop.add(todo) else toBottom.add(todo)
             } else {
@@ -349,7 +345,7 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                 }
                 val failed = isTodoOld(edited.monthAndYear, edited.date) && (edited.date != vm.date || edited.monthAndYear != vm.monthAndYear) && !edited.completed
                 if (vm.completed && !edited.completed) completedAtCreation.add(vm.text)
-                // Fresh copy so a server id that arrived while editing isn't lost
+                // Fresh copy so fields synced while editing aren't overwritten
                 val todo = Db.todo(edited.id) ?: edited
                 todo.text = vm.text
                 todo.completed = vm.completed
@@ -358,14 +354,12 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                 todo.date = vm.date
                 todo.time = vm.time
                 todo.repetitive = vm.repetitive
-                todo.exactDate = exactDate(todo.title)
                 if (failed && !todo.date.isNullOrEmpty()) {
                     todo.frogFails++
                     if (todo.frogFails > 1) todo.frog = true
                 }
                 todo.delegateAccepted = vm.delegateAccepted
                 toSave.add(todo)
-                involved.add(todo)
                 titles.add(oldTitle)
                 titles.add(todo.title)
             }
@@ -373,15 +367,12 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
         Db.saveTodos(toSave)
         completedAtCreation.forEach {
             Tags.incrementEpicPoints(it)
-            Todos.incrementHeroPoints()
+            Hero.points++
         }
         if (breakdownTodo != null) {
-            Tags.incrementEpicPoints(breakdownTodo.text)
-            Todos.incrementHeroPoints()
             val original = Db.todo(breakdownTodo.id) ?: breakdownTodo
-            Db.updateTodo(original) { it.completed = true }
+            Todos.markCompleted(original)
             titles.add(original.title)
-            Session.numberOfTodosCompleted++
             Effects.confetti()
         }
         val hasCompleted = breakdownTodo != null || vms.any { it.editedTodo?.completed == true || it.completed }
@@ -391,7 +382,7 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
         }
         Nav.back()
         Tags.addTags(vms.map { it.text })
-        Todos.fixOrder(titles, onTop, toBottom, involved)
+        Todos.fixOrder(titles, onTop, toBottom, toSave)
         if (breakdownTodo != null && !dayCompletedInitially) Todos.checkDayCompletion()
         if (Onboarding.active) Onboarding.nextStep()
         focusManager.clearFocus()
@@ -431,10 +422,8 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
     BackHandler { onBackPress() }
     DisposableEffect(Unit) {
         AddTodoActions.save = { trySave() }
-        AddTodoActions.addAnother = { addTodo() }
         onDispose {
             AddTodoActions.save = {}
-            AddTodoActions.addAnother = {}
         }
     }
 
@@ -513,7 +502,7 @@ private fun SaveRow(isEdit: Boolean, plural: Boolean, enabled: Boolean, shake: I
                 .combinedClickable(
                     enabled = saveAllowed,
                     onLongClick = {
-                        Ui.copy(editedTodo?.toJson()?.toString() ?: "undefined")
+                        Ui.copy(editedTodo?.let { TodoEntity.toJson(it).toString() } ?: "undefined")
                         Ui.toast(t("copied"))
                     },
                     onClick = onSave,
@@ -534,14 +523,6 @@ private fun SaveRow(isEdit: Boolean, plural: Boolean, enabled: Boolean, shake: I
             ) { TIcon("add_outline_28", 20.dp, Color.White) }
         }
     }
-}
-
-private fun Todo.toJson() = JSONObject().apply {
-    put("_id", id); put("text", text); put("completed", completed); put("frog", frog)
-    put("frogFails", frogFails); put("skipped", skipped); put("order", order); put("monthAndYear", monthAndYear)
-    put("deleted", deleted); put("encrypted", encrypted); put("date", date); put("time", time); put("repetitive", repetitive)
-    put("delegateAccepted", delegateAccepted); put("user", userId); put("delegator", delegatorId)
-    put("createdAt", createdAt); put("updatedAt", updatedAt)
 }
 
 /** Horizontal shake (react-native-animatable's shake) whenever [trigger] grows */

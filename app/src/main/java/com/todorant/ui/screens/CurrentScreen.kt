@@ -29,7 +29,6 @@ import com.todorant.data.Tag
 import com.todorant.logic.Tags
 import com.todorant.logic.Todos
 import com.todorant.logic.todayTitle
-import com.todorant.sync.Sync
 import com.todorant.t
 import com.todorant.ui.CardType
 import com.todorant.ui.Colors

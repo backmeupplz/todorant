@@ -76,7 +76,7 @@ private class LoginState {
                 Account.login(user)
                 Nav.back()
             } catch (e: Exception) {
-                Ui.error(errorText ?: e.message ?: e.toString())
+                if (errorText != null) Ui.error(errorText) else Ui.error(e)
             } finally {
                 syncLoading = false
                 loading = false
@@ -224,15 +224,9 @@ fun TelegramLoginScreen() {
                 Ui.error(t("error"))
                 return@WebPageScreen
             }
-            Ui.launch {
-                // Leave Telegram and the login screen; data loads in the background
-                Nav.back(); Nav.back()
-                try {
-                    Account.login(User(JSONObject(data)))
-                } catch (e: Exception) {
-                    Ui.error(e.message ?: e.toString())
-                }
-            }
+            // Leave Telegram and the login screen; data loads in the background
+            Nav.back(); Nav.back()
+            Ui.attempt { Account.login(User(JSONObject(data))) }
         }
     })
 }

@@ -182,10 +182,7 @@ object Widget {
         if (todo != null) when (action) {
             ACTION_DONE -> {
                 // Todos.complete without sounds, dialogs and confetti: no activity to show them in
-                Todos.incrementHeroPoints()
-                Tags.incrementEpicPoints(todo.text)
-                Db.updateTodo(todo) { it.completed = true }
-                Session.numberOfTodosCompleted++
+                Todos.markCompleted(todo)
             }
             ACTION_DELETE -> {
                 Db.updateTodo(todo) { it.deleted = true }

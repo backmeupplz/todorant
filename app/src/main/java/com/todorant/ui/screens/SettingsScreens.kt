@@ -59,6 +59,7 @@ import com.todorant.data.Settings
 import com.todorant.data.Tag
 import com.todorant.data.Todo
 import com.todorant.logic.Crypto
+import com.todorant.logic.ellipsize
 import com.todorant.logic.Todos
 import com.todorant.sync.Rest
 import com.todorant.sync.Sync
@@ -79,6 +80,7 @@ import com.todorant.ui.TableItem
 import com.todorant.ui.TableText
 import com.todorant.ui.TodorantSwitch
 import com.todorant.ui.Ui
+import com.todorant.ui.io
 import com.todorant.ui.dbState
 import com.todorant.ui.hex
 import com.todorant.ui.regularText
@@ -223,13 +225,13 @@ fun DataScreen() {
             TableItem { TableText(t("accountLastSync"), Modifier.weight(1f)); TableText(date(Session.user?.updatedAt)) }
             TableItem { TableText(t("gamification"), Modifier.weight(1f)); TableText(date(Hero.updatedAt)) }
             Divider()
-            TableItem(onClick = { Ui.launch { runCatching { Sync.sync() }.onFailure { Ui.error(it.message ?: "$it") } } }) {
+            TableItem(onClick = { Ui.attempt { Sync.sync() } }) {
                 TableText(t("syncData"))
             }
-            TableItem(onClick = { Ui.launch { runCatching { Sync.hardSync() }.onFailure { Ui.error(it.message ?: "$it") } } }) {
+            TableItem(onClick = { Ui.attempt { Sync.hardSync() } }) {
                 TableText(t("syncDataHard"))
             }
-            TableItem(onClick = { Ui.launch { kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Todos.recalculateExactDates() } } }) {
+            TableItem(onClick = { Ui.launch { io { Todos.recalculateExactDates() } } }) {
                 TableText(t("syncExactDates"))
             }
             TableItem(onClick = { sendDataToServer() }) { TableText(t("sendDataToServer")) }
@@ -237,19 +239,13 @@ fun DataScreen() {
     }
 }
 
-private fun sendDataToServer() {
-    val token = Session.user?.token ?: return
-    Ui.launch {
-        val (todos, tags) = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Db.todos() to Db.tags() }
-        try {
-            Rest.sendData(JSONObject().put("todos", JSONArray(todos.map(::export))).put("tags", JSONArray(tags.map(TagEntity::toJson))), token)
-        } catch (e: Exception) {
-            Ui.error(e.message ?: "$e")
-        }
-        // Re-push everything
-        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Db.pushAgain(TodoEntity); Db.pushAgain(TagEntity) }
-        Ui.toast("👍")
-    }
+private fun sendDataToServer() = Ui.launch {
+    val (todos, tags) = io { Db.todos() to Db.tags() }
+    runCatching { Rest.sendData(JSONObject().put("todos", JSONArray(todos.map(::export))).put("tags", JSONArray(tags.map(TagEntity::toJson)))) }
+        .onFailure(Ui::error)
+    // Re-push everything
+    io { Db.pushAgain(TodoEntity); Db.pushAgain(TagEntity) }
+    Ui.toast("👍")
 }
 
 @Composable
@@ -278,7 +274,7 @@ fun TagsScreen() {
                         }
                         IconBtn("edit_outline_28") { Nav.go(Route.changeText(tag.id)) }
                         IconBtn("delete_outline_28-iOS", Colors.destruct) {
-                            Ui.confirm("${t("deleteTodo")} \"#${tag.tag.short()}\"?", t("delete")) {
+                            Ui.confirm("${t("deleteTodo")} \"#${tag.tag.ellipsize(50)}\"?", t("delete")) {
                                 Db.updateTag(tag) { it.deleted = true }
                             }
                         }
@@ -290,9 +286,8 @@ fun TagsScreen() {
     }
 }
 
-private fun String.short() = if (length > 50) "${take(50)}..." else this
 
-private fun unEpic(tag: Tag) = Ui.confirm("${t("unEpicConfirm")} \"#${tag.tag.short()}\"?", t("unEpic")) {
+private fun unEpic(tag: Tag) = Ui.confirm("${t("unEpicConfirm")} \"#${tag.tag.ellipsize(50)}\"?", t("unEpic")) {
     Db.updateTag(tag) { it.epicCompleted = false; it.epicGoal = 0; it.epicOrder = 0; it.epicPoints = 0; it.epic = false }
 }
 
@@ -301,25 +296,6 @@ private fun TagTitle(tag: Tag?, color: Color?, big: Boolean = false) = Text(
     "#${tag?.tag ?: ""}", color = color ?: tag?.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link,
     fontSize = if (big) 32.sp else 17.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(0.8f),
 )
-
-@Composable
-fun ColorPickerScreen(tagId: String) {
-    val tag = dbState(tagId, initial = null as Tag?) { Db.tag(tagId) }
-    var color by remember { mutableStateOf<Color?>(null) }
-    val current = color ?: tag?.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link
-    StackScreen(t("changeColor"), actions = {
-        DoneAction {
-            tag?.let { Db.updateTag(it) { t -> t.color = current.toHex() } }
-            Nav.back()
-        }
-    }) {
-        Column(Modifier.fillMaxSize().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            TagTitle(tag, current, big = true)
-            Spacer(Modifier.height(20.dp))
-            HsvPicker(current, { color = it })
-        }
-    }
-}
 
 @Composable
 fun ChangeTextScreen(tagId: String) {
@@ -389,17 +365,8 @@ private object CalendarAuth {
     var loading by mutableStateOf(false)
 
     fun authorize(code: String) {
-        val token = Session.user?.token ?: return
         loading = true
-        Ui.launch {
-            try {
-                Settings.googleCalendarCredentials = Rest.calendarAuthorize(code, token).toString()
-            } catch (e: Exception) {
-                Ui.error(e.message ?: "$e")
-            } finally {
-                loading = false
-            }
-        }
+        Ui.attempt({ loading = false }) { Settings.googleCalendarCredentials = Rest.calendarAuthorize(code).toString() }
     }
 }
 
@@ -416,7 +383,6 @@ fun IntegrationsScreen() {
 }
 
 private fun googleCalendarTapped() {
-    val token = Session.user?.token ?: return
     if (Settings.googleCalendarCredentials != null) {
         Ui.actionSheet(null, listOf(t("disconnect")), destructive = setOf(0)) {
             Settings.googleCalendarCredentials = null
@@ -424,15 +390,9 @@ private fun googleCalendarTapped() {
         return
     }
     CalendarAuth.loading = true
-    Ui.launch {
-        try {
-            CalendarAuth.url = Rest.calendarAuthenticationURL(token)
-            Nav.go(Route.GOOGLE_CALENDAR)
-        } catch (e: Exception) {
-            Ui.error(e.message ?: "$e")
-        } finally {
-            CalendarAuth.loading = false
-        }
+    Ui.attempt({ CalendarAuth.loading = false }) {
+        CalendarAuth.url = Rest.calendarAuthenticationURL()
+        Nav.go(Route.GOOGLE_CALENDAR)
     }
 }
 
@@ -466,9 +426,7 @@ fun SecurityScreen() {
 
     fun work(block: () -> Unit) {
         loading = true
-        Ui.launch {
-            try { kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { block() } } catch (e: Exception) { Ui.error(e.message ?: "$e") } finally { loading = false }
-        }
+        Ui.attempt({ loading = false }) { io(block) }
     }
     /** Marks all own todos as (un)encrypted; they get pushed (encrypted) on sync */
     fun changeEncrypted(encrypted: Boolean) = work {
@@ -506,7 +464,7 @@ fun SecurityScreen() {
                     PrimaryButton(t("save"), Modifier.padding(16.dp)) {
                         Ui.confirm(t("encryptionConfirm"), t("save")) {
                             Ui.launch {
-                                val sample = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Db.todos(ownWhere, arrayOf("1"), limit = 1).firstOrNull() }
+                                val sample = io { Db.todos(ownWhere, arrayOf("1"), limit = 1).firstOrNull() }
                                 if (sample != null && Crypto.decrypt(sample.text, password) == null) {
                                     Ui.error(t("passwordError"))
                                     return@launch
@@ -549,7 +507,7 @@ fun DelegationUsersScreen(delegators: Boolean) {
                 TableText(user.name ?: "", Modifier.weight(1f))
                 IconBtn("delete_outline_28-iOS", Colors.destruct) {
                     Ui.confirm(t("delegate.deleteDelegatorConfirmation"), t("delete"), user.name) {
-                        Ui.launch { runCatching { Todos.removeDelegation(user) }.onFailure { Ui.error(it.message ?: "$it") } }
+                        Ui.attempt { Todos.removeDelegation(user) }
                     }
                 }
             }

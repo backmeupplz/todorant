@@ -14,6 +14,8 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
+fun String.ellipsize(max: Int) = if (length > max) "${take(max)}..." else this
+
 // region Time (time.ts)
 
 private val dayFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")

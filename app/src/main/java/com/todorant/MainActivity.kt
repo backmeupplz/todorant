@@ -81,7 +81,6 @@ import com.todorant.ui.screens.AddEpicScreen
 import com.todorant.ui.screens.AddMode
 import com.todorant.ui.screens.AddTodoScreen
 import com.todorant.ui.screens.ChangeTextScreen
-import com.todorant.ui.screens.ColorPickerScreen
 import com.todorant.ui.screens.CurrentScreen
 import com.todorant.ui.screens.DataScreen
 import com.todorant.ui.screens.DelegationScreen
@@ -192,7 +191,6 @@ private fun Root(intent: Intent?, onIntentHandled: () -> Unit) {
                     composable(Route.SOCKETS) { SocketsScreen() }
                     composable(Route.DATA) { DataScreen() }
                     composable(Route.TAGS) { TagsScreen() }
-                    composable(Route.COLOR_PICKER) { ColorPickerScreen(it.arguments?.getString("id")!!) }
                     composable(Route.ADD_EPIC) { AddEpicScreen(it.arguments?.getString("id")!!) }
                     composable(Route.CHANGE_TEXT) { ChangeTextScreen(it.arguments?.getString("id")!!) }
                     composable(Route.INTEGRATIONS) { IntegrationsScreen() }
@@ -251,7 +249,7 @@ private fun handleIntent(intent: Intent) {
         BuildConfig.DEBUG && intent.getStringExtra("route") != null -> Nav.go(intent.getStringExtra("route")!!)
         // QA: --es login <token> logs in without typing it
         BuildConfig.DEBUG && intent.getStringExtra("login") != null -> Ui.launch {
-            runCatching { Account.login(Rest.loginToken(intent.getStringExtra("login")!!)) }.onFailure { Ui.error(it.message ?: "$it") }
+            runCatching { Account.login(Rest.loginToken(intent.getStringExtra("login")!!)) }.onFailure(Ui::error)
         }
         // QA: --es reminder 09:30 schedules it and posts the notification right away
         BuildConfig.DEBUG && intent.getStringExtra("reminder") != null -> {

@@ -206,6 +206,8 @@ object TagEntity : Entity<Tag>("tags", "tag", ::Tag) {
 /** A pending local change of one field, waiting to be pushed */
 data class Change(val collection: String, val id: String, val field: String, val value: Any?, val at: Long)
 
+inline fun <T> Cursor.rows(read: (Cursor) -> T): List<T> = use { c -> ArrayList<T>(c.count).also { while (c.moveToNext()) it.add(read(c)) } }
+
 object Db {
     private lateinit var helper: SQLiteOpenHelper
     val db: SQLiteDatabase get() = helper.writableDatabase
@@ -251,9 +253,7 @@ object Db {
         db.rawQuery("SELECT COUNT(*) FROM $table WHERE $where", args).use { it.moveToFirst(); it.getInt(0) }
 
     fun <T : Doc> query(entity: Entity<T>, where: String = "1", args: Array<String> = emptyArray(), orderBy: String? = null, limit: Int? = null): List<T> =
-        db.query(entity.table, entity.columns, where, args, null, null, orderBy, limit?.toString()).use { c ->
-            ArrayList<T>(c.count).also { list -> while (c.moveToNext()) list.add(entity.read(c)) }
-        }
+        db.query(entity.table, entity.columns, where, args, null, null, orderBy, limit?.toString()).rows(entity::read)
 
     fun <T : Doc> get(entity: Entity<T>, id: String?): T? = id?.let { query(entity, "id = ?", arrayOf(it)).firstOrNull() }
 
@@ -276,8 +276,7 @@ object Db {
                 if (entity === TodoEntity && changed.any { it.name == "encrypted" }) TodoEntity.synced.first { it.name == "text" }.let { if (it !in changed) changed.add(it) }
                 val row = current ?: entity.copy(doc)
                 for (field in changed) field.set(row, field.get(doc))
-                entity.prepare(row)
-                insertWithOnConflict(entity.table, null, entity.values(row), SQLiteDatabase.CONFLICT_REPLACE)
+                writeLocal(entity, row)
                 for (field in changed) enqueue(Change(entity.collection, doc.id, field.name, field.get(row), at))
                 entity.fields.forEach { it.set(doc, it.get(row)) }
                 doc.base = entity.copy(row)
@@ -313,8 +312,7 @@ object Db {
         for (field in entity.fields) {
             if (field.name != "id" && json.has(field.name) && field.name !in pending) entity.assign(doc, field, field.fromJson(json))
         }
-        entity.prepare(doc)
-        db.insertWithOnConflict(entity.table, null, entity.values(doc), SQLiteDatabase.CONFLICT_REPLACE)
+        writeLocal(entity, doc)
     }
 
     // region Outbox
@@ -330,16 +328,11 @@ object Db {
         }, SQLiteDatabase.CONFLICT_REPLACE)
     }
 
-    fun outbox(): List<Change> = db.rawQuery("SELECT c, id, field, value, at FROM outbox ORDER BY at", null).use { c ->
-        ArrayList<Change>(c.count).also { list ->
-            while (c.moveToNext()) list.add(Change(c.getString(0), c.getString(1), c.getString(2), decode(c.getString(3)), c.getLong(4)))
-        }
-    }
+    fun outbox(): List<Change> = db.rawQuery("SELECT c, id, field, value, at FROM outbox ORDER BY at", null)
+        .rows { Change(it.getString(0), it.getString(1), it.getString(2), decode(it.getString(3)), it.getLong(4)) }
 
     fun pendingFields(collection: String, id: String): Set<String> =
-        db.rawQuery("SELECT field FROM outbox WHERE c = ? AND id = ?", arrayOf(collection, id)).use { c ->
-            HashSet<String>().also { while (c.moveToNext()) it.add(c.getString(0)) }
-        }
+        db.rawQuery("SELECT field FROM outbox WHERE c = ? AND id = ?", arrayOf(collection, id)).rows { it.getString(0) }.toSet()
 
     /** The server has these changes (or rejected them for good); newer edits of the same fields stay queued */
     fun acknowledge(sent: Collection<Change>) = db.apply {
@@ -370,9 +363,8 @@ object Db {
     fun updateTag(tag: Tag, change: (Tag) -> Unit) = edit(TagEntity, tag, change)
 
     fun users(isDelegator: Boolean): List<DelegationUser> =
-        db.rawQuery("SELECT id, name FROM users WHERE isDelegator = ? ORDER BY name COLLATE NOCASE", arrayOf(if (isDelegator) "1" else "0")).use { c ->
-            ArrayList<DelegationUser>().also { while (c.moveToNext()) it.add(DelegationUser(c.getString(0), c.getString(1), isDelegator)) }
-        }
+        db.rawQuery("SELECT id, name FROM users WHERE isDelegator = ? ORDER BY name COLLATE NOCASE", arrayOf(if (isDelegator) "1" else "0"))
+            .rows { DelegationUser(it.getString(0), it.getString(1), isDelegator) }
 
     fun delegates() = users(false)
     fun delegators() = users(true)

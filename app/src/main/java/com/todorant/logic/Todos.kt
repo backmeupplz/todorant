@@ -63,7 +63,6 @@ object Todos {
         )
     }
 
-    fun planningCount(completed: Boolean) = Db.count("todos", PLANNING_WHERE, arrayOf(if (completed) "1" else "0", me, me))
 
     /** getDelegationTodos */
     fun delegated(byMe: Boolean, completed: Boolean = false): List<Todo> = Db.todos(
@@ -111,7 +110,6 @@ object Todos {
             it.order = lastOrder + 1
             it.date = today.day()
             it.monthAndYear = today.monthAndYear()
-            it.exactDate = exactDate(it.title)
         }
     }
 
@@ -120,8 +118,7 @@ object Todos {
             Db.updateTodo(todo) { it.deleted = true }
         }
         if (Settings.askBeforeDelete) {
-            val text = if (todo.text.length > 50) "${todo.text.take(50)}..." else todo.text
-            Ui.confirm("${t("deleteTodo")} \"$text\"?", t("delete")) { doDelete() }
+            Ui.confirm("${t("deleteTodo")} \"${todo.text.ellipsize(50)}\"?", t("delete")) { doDelete() }
         } else doDelete()
     }
 
@@ -156,15 +153,18 @@ object Todos {
             if (forDay(todayTitle(), false).any { it.frog }) Ui.message(t("frogsAlert.title"), t("frogsAlert.text"))
             Sounds.taskComplete()
         }
-        incrementHeroPoints()
-        Tags.incrementEpicPoints(todo.text)
-        Db.updateTodo(todo) { it.completed = true }
-        Session.numberOfTodosCompleted++
+        markCompleted(todo)
         Effects.confetti()
         checkDayCompletion()
     }
 
-    fun incrementHeroPoints() { Hero.points++ }
+    /** Completion bookkeeping without sounds or dialogs (also used by breakdowns and the widget) */
+    fun markCompleted(todo: Todo) {
+        Hero.points++
+        Tags.incrementEpicPoints(todo.text)
+        Db.updateTodo(todo) { it.completed = true }
+        Session.numberOfTodosCompleted++
+    }
 
     // endregion
 

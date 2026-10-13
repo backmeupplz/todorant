@@ -162,7 +162,7 @@ object Onboarding {
             target = Target.BREAKDOWN_BUTTON, notShowContinue = true, divider = 8f, heightMultiplier = 6f,
             buttons = listOf(OnboardingButton(preferred = true, notAllowed = true) {
                 App.scope.launch {
-                    val todo = withContext(Dispatchers.IO) { Todos.forDay(todayTitle(), false).firstOrNull() }
+                    val todo = io { Todos.forDay(todayTitle(), false).firstOrNull() }
                     todo?.let { Nav.go(Route.breakdown(it.id)) }
                 }
             }),

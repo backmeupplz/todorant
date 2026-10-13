@@ -42,7 +42,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,11 +52,9 @@ import com.todorant.data.Todo
 import com.todorant.data.TodoSection
 import com.todorant.logic.Todos
 import com.todorant.logic.dateString
-import com.todorant.sync.Sync
 import com.todorant.t
 import com.todorant.ui.CardType
 import com.todorant.ui.Colors
-import com.todorant.ui.Fonts
 import com.todorant.ui.InfoButton
 import com.todorant.ui.MIcon
 import com.todorant.ui.MonthCalendar

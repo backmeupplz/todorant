@@ -36,6 +36,7 @@ import com.todorant.t
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 /** One alert or action sheet. Buttons run after the dialog closes. */
@@ -50,6 +51,8 @@ class DialogSpec(
     val sheet: Boolean = false,
 )
 
+suspend fun <T> io(block: () -> T) = withContext(Dispatchers.IO) { block() }
+
 /** Alerts, action sheets and toasts — Alert.alert / ActionSheet / Toast from the RN app */
 object Ui {
     val dialogs = mutableStateListOf<DialogSpec>()
@@ -62,6 +65,12 @@ object Ui {
         show(DialogSpec(title, message, buttons))
 
     fun message(title: String, message: String, ok: () -> Unit = {}) = alert(title, message, listOf(t("ok") to ok))
+
+    fun error(e: Throwable) = error(e.message ?: "$e")
+
+    /** Launches [block] on the main thread; a failure shows up as an error alert */
+    fun attempt(finally: () -> Unit = {}, block: suspend CoroutineScope.() -> Unit) =
+        launch { try { block() } catch (e: Exception) { error(e) } finally { finally() } }
 
     fun error(error: String, confirmText: String? = null, confirm: (() -> Unit)? = null) = alert(
         t("error"), error,
@@ -174,7 +183,6 @@ object Route {
     const val SOCKETS = "sockets"
     const val DATA = "data"
     const val TAGS = "tags"
-    const val COLOR_PICKER = "colorPicker/{id}"
     const val ADD_EPIC = "addEpic/{id}"
     const val CHANGE_TEXT = "changeText/{id}"
     const val INTEGRATIONS = "integrations"
@@ -188,7 +196,6 @@ object Route {
     fun edit(id: String) = "edit/$id"
     fun breakdown(id: String) = "breakdown/$id"
     fun login(wall: Boolean = false) = "login?wall=$wall"
-    fun colorPicker(id: String) = "colorPicker/$id"
     fun addEpic(id: String) = "addEpic/$id"
     fun changeText(id: String) = "changeText/$id"
 }

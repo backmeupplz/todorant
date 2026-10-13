@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.core.content.edit
 import com.todorant.data.Db
+import com.todorant.data.rows
 import com.todorant.data.Ids
 import com.todorant.data.Invites
 import com.todorant.data.TagEntity
@@ -16,7 +17,6 @@ import com.todorant.data.ColorMode
 import com.todorant.data.Hero
 import com.todorant.data.Settings
 import com.todorant.data.User
-import com.todorant.data.isoToMillis
 import org.json.JSONObject
 import java.io.File
 import com.todorant.data.Tag
@@ -124,20 +124,14 @@ object Migration {
         val old = SQLiteDatabase.openDatabase(file.path, null, SQLiteDatabase.OPEN_READONLY)
         return old.use { db ->
             val anyTodos = db.rawQuery("SELECT COUNT(*) FROM todos", null).use { it.moveToFirst(); it.getInt(0) } > 0
-            val serverIds = HashMap<String, String>()
-            db.rawQuery("SELECT id, server_id FROM users", null).use { c ->
-                while (c.moveToNext()) c.getString(1)?.let { serverIds[c.getString(0)] = it }
-            }
-            val todos = db.rawQuery("SELECT * FROM todos WHERE _status != 'synced'", null).use { c ->
-                generateSequence { if (c.moveToNext()) c.oldTodo(serverIds) else null }.toList()
-            }
-            val tags = db.rawQuery("SELECT * FROM tags WHERE _status != 'synced'", null).use { c ->
-                generateSequence { if (c.moveToNext()) c.oldTag() else null }.toList()
-            }
+            val serverIds = db.rawQuery("SELECT id, server_id FROM users WHERE server_id IS NOT NULL", null)
+                .rows { it.getString(0) to it.getString(1) }.toMap()
+            val todos = db.rawQuery("SELECT * FROM todos WHERE _status != 'synced'", null).rows { it.oldTodo(serverIds) }
+            val tags = db.rawQuery("SELECT * FROM tags WHERE _status != 'synced'", null).rows { it.oldTag() }
             // Invites accepted offline that never reached the server
             val invites = db.rawQuery(
                 "SELECT delegate_invite_token FROM users WHERE server_id IS NULL AND is_delegator = 1 AND delegate_invite_token IS NOT NULL", null
-            ).use { c -> generateSequence { if (c.moveToNext()) c.getString(0) else null }.toList() }
+            ).rows { it.getString(0) }
             // New to this app: every field gets queued for the server
             Db.save(TodoEntity, todos)
             Db.save(TagEntity, tags)

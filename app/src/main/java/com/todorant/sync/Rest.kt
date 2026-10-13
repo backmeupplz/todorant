@@ -20,7 +20,7 @@ object Rest {
 
     class HttpError(message: String) : Exception(message)
 
-    private suspend fun call(method: String, path: String, body: JSONObject? = null, token: String? = null): String =
+    private suspend fun call(method: String, path: String, body: JSONObject? = null, token: String? = com.todorant.data.Session.user?.token): String =
         withContext(Dispatchers.IO) {
             val request = Request.Builder().url("$BASE$path").apply {
                 token?.let { header("token", it) }
@@ -39,7 +39,7 @@ object Rest {
     /** Bodies that are plain strings may come JSON-quoted */
     private fun unquote(text: String) = runCatching { JSONTokener(text).nextValue() as? String }.getOrNull() ?: text
 
-    private suspend fun login(provider: String, body: JSONObject) = User(JSONObject(call("POST", "/v2/auth/$provider", body)))
+    private suspend fun login(provider: String, body: JSONObject) = User(JSONObject(call("POST", "/v2/auth/$provider", body, token = null)))
 
     suspend fun loginGoogle(idToken: String) = login("google", JSONObject().put("accessToken", idToken))
 
@@ -50,23 +50,21 @@ object Rest {
 
     suspend fun loginToken(token: String) = login("token", JSONObject().put("token", token))
 
-    suspend fun setQrToken(uuid: String, token: String) = call("POST", "/login/qr_token", JSONObject().put("uuid", uuid), token)
+    suspend fun setQrToken(uuid: String) = call("POST", "/login/qr_token", JSONObject().put("uuid", uuid))
 
-    suspend fun sendFeedback(state: JSONObject, token: String) = call("POST", "/feedback", JSONObject().put("state", state), token)
+    suspend fun sendFeedback(state: JSONObject) = call("POST", "/feedback", JSONObject().put("state", state))
 
-    suspend fun sendData(data: JSONObject, token: String) = call("POST", "/data", JSONObject().put("data", data), token)
+    suspend fun sendData(data: JSONObject) = call("POST", "/data", JSONObject().put("data", data))
 
-    suspend fun calendarAuthenticationURL(token: String) = unquote(call("GET", "/google/calendarAuthenticationURL", token = token))
+    suspend fun calendarAuthenticationURL() = unquote(call("GET", "/google/calendarAuthenticationURL"))
 
-    suspend fun calendarAuthorize(code: String, token: String) =
-        JSONObject(call("POST", "/google/calendarAuthorize", JSONObject().put("code", code), token))
+    suspend fun calendarAuthorize(code: String) =
+        JSONObject(call("POST", "/google/calendarAuthorize", JSONObject().put("code", code)))
 
-    private val token get() = com.todorant.data.Session.user?.token
+    suspend fun resetDelegateToken() = JSONObject(call("POST", "/v2/delegation/token", JSONObject())).getString("token")
 
-    suspend fun resetDelegateToken() = JSONObject(call("POST", "/v2/delegation/token", JSONObject(), token)).getString("token")
-
-    suspend fun acceptInvite(invite: String) = call("POST", "/v2/delegation/accept", JSONObject().put("token", invite), token)
+    suspend fun acceptInvite(invite: String) = call("POST", "/v2/delegation/accept", JSONObject().put("token", invite))
 
     suspend fun removeDelegation(userId: String, isDelegator: Boolean) =
-        call("DELETE", "/v2/delegation/${if (isDelegator) "delegators" else "delegates"}/$userId", token = token)
+        call("DELETE", "/v2/delegation/${if (isDelegator) "delegators" else "delegates"}/$userId")
 }

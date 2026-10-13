@@ -12,15 +12,10 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.todorant.data.AppState
 import com.todorant.data.Db
 import com.todorant.data.DelegateSection
@@ -30,7 +25,6 @@ import com.todorant.logic.Todos
 import com.todorant.t
 import com.todorant.ui.CardType
 import com.todorant.ui.Colors
-import com.todorant.ui.Fonts
 import com.todorant.ui.InfoButton
 import com.todorant.ui.Placeholder
 import com.todorant.ui.TodoCard
@@ -38,7 +32,6 @@ import com.todorant.ui.SegmentedControl
 import com.todorant.ui.TodoHeader
 import com.todorant.ui.dbState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DelegationScreen() {
     Column(Modifier.fillMaxSize().background(Colors.background)) {

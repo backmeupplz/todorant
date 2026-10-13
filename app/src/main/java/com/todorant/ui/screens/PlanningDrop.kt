@@ -1,7 +1,6 @@
 package com.todorant.ui.screens
 
 import com.todorant.data.Todo
-import com.todorant.logic.exactDate
 import com.todorant.logic.isTodoOld
 
 /** What a drop in the planning list changes: todos to save, or a todo that failed too often and needs a breakdown */
@@ -83,5 +82,4 @@ fun planningDrop(
 private fun Todo.redate(title: String) {
     monthAndYear = title.take(7)
     date = if (title.length == 10) title.substring(8, 10) else null
-    exactDate = exactDate(title)
 }

@@ -308,7 +308,7 @@ object Sync {
         App.scope.launch(Dispatchers.IO) {
             runCatching { Rest.acceptInvite(token) }
                 .onSuccess { Invites.remove(token) }
-                .onFailure { e -> if (e is Rest.HttpError) { Invites.remove(token); Ui.error(e.message ?: "$e") } }
+                .onFailure { e -> if (e is Rest.HttpError) { Invites.remove(token); Ui.error(e) } }
         }
     }
 }

@@ -34,6 +34,7 @@ import com.todorant.data.ColorMode
 import com.todorant.data.Session
 import com.todorant.data.Settings
 import com.todorant.logic.Account
+import com.todorant.logic.ellipsize
 import com.todorant.logic.hhmm
 import com.todorant.logic.parseTime
 import com.todorant.sync.Rest
@@ -74,7 +75,7 @@ object SettingsList {
 @Composable
 fun SettingsScreen() {
     LaunchedEffect(Unit) {
-        if (Sync.connected) runCatching { Sync.sync() }.onFailure { Ui.error(it.message ?: "$it") }
+        if (Sync.connected) runCatching { Sync.sync() }.onFailure(Ui::error)
     }
     val user = Session.user
     // ponytail: the title is tagged instead of the info button, LargeTitleScreen has no info modifier
@@ -142,7 +143,7 @@ private fun InfoRow(title: String, value: String) {
         Ui.toast("\"$value\" ${t("copied")}")
     }) {
         TableText(title)
-        TableText(if (value.length <= 30) value else "${value.take(30)}...", Modifier.padding(start = 8.dp))
+        TableText(value.ellipsize(30), Modifier.padding(start = 8.dp))
     }
 }
 
@@ -183,9 +184,7 @@ private fun AccountInfo() {
     TableItem(onClick = {
         scanQr(context) { uuid ->
             loading = true
-            Ui.launch {
-                try { Rest.setQrToken(uuid, user.token) } catch (e: Exception) { Ui.error(e.message ?: "$e") } finally { loading = false }
-            }
+            Ui.attempt({ loading = false }) { Rest.setQrToken(uuid) }
         }
     }) { TableText(t("addDevices")) }
 }
@@ -268,14 +267,9 @@ private fun DelegationSettings() {
         }
         MIcon(MaterialIcons.Filled.Refresh, Colors.border, modifier = Modifier.padding(start = 10.dp)) {
             Ui.actionSheet(t("delegate.resetConfirmation"), listOf(t("delegate.resetLink"))) {
-                val token = Session.user?.token ?: return@actionSheet
-                Ui.launch {
-                    try {
-                        val inviteToken = Rest.resetDelegateToken()
-                        Session.user?.let { u -> Session.setUser(u.with { put("delegateInviteToken", inviteToken) }) }
-                    } catch (e: Exception) {
-                        Ui.error(e.message ?: "$e")
-                    }
+                Ui.attempt {
+                    val inviteToken = Rest.resetDelegateToken()
+                    Session.user?.let { u -> Session.setUser(u.with { put("delegateInviteToken", inviteToken) }) }
                 }
             }
         }
