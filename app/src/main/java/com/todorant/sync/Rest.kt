@@ -13,8 +13,9 @@ import java.util.concurrent.TimeUnit
 
 /** REST endpoints of backend.todorant.com used by the app (rest.ts) */
 object Rest {
-    const val BASE = "https://backend.todorant.com"
-    val http: OkHttpClient = OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).build()
+    private val BASE = com.todorant.BuildConfig.API
+    // Pings notice dead sync sockets (network switches) within seconds instead of minutes
+    val http: OkHttpClient = OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).pingInterval(15, TimeUnit.SECONDS).build()
     private val json = "application/json".toMediaType()
 
     class HttpError(message: String) : Exception(message)
@@ -38,16 +39,16 @@ object Rest {
     /** Bodies that are plain strings may come JSON-quoted */
     private fun unquote(text: String) = runCatching { JSONTokener(text).nextValue() as? String }.getOrNull() ?: text
 
-    private suspend fun login(path: String, body: JSONObject) = User(JSONObject(call("POST", path, body)))
+    private suspend fun login(provider: String, body: JSONObject) = User(JSONObject(call("POST", "/v2/auth/$provider", body)))
 
-    suspend fun loginGoogle(idToken: String) = login("/login/google", JSONObject().put("accessToken", idToken))
+    suspend fun loginGoogle(idToken: String) = login("google", JSONObject().put("accessToken", idToken))
 
     suspend fun loginAppleAndroid(idToken: String, name: String?) = login(
-        "/login/apple-firebase",
+        "apple-firebase",
         JSONObject().put("client", "android").put("credential", JSONObject().put("oauthIdToken", idToken)).put("name", name)
     )
 
-    suspend fun loginToken(token: String) = login("/login/token", JSONObject().put("token", token))
+    suspend fun loginToken(token: String) = login("token", JSONObject().put("token", token))
 
     suspend fun setQrToken(uuid: String, token: String) = call("POST", "/login/qr_token", JSONObject().put("uuid", uuid), token)
 
@@ -60,7 +61,12 @@ object Rest {
     suspend fun calendarAuthorize(code: String, token: String) =
         JSONObject(call("POST", "/google/calendarAuthorize", JSONObject().put("code", code), token))
 
-    suspend fun setUserName(name: String, token: String) = call("POST", "/settings/username", JSONObject().put("name", name), token)
+    private val token get() = com.todorant.data.Session.user?.token
 
-    suspend fun resetDelegateToken(token: String) = unquote(call("POST", "/delegate/generateToken", JSONObject(), token))
+    suspend fun resetDelegateToken() = JSONObject(call("POST", "/v2/delegation/token", JSONObject(), token)).getString("token")
+
+    suspend fun acceptInvite(invite: String) = call("POST", "/v2/delegation/accept", JSONObject().put("token", invite), token)
+
+    suspend fun removeDelegation(userId: String, isDelegator: Boolean) =
+        call("DELETE", "/v2/delegation/${if (isDelegator) "delegators" else "delegates"}/$userId", token = token)
 }

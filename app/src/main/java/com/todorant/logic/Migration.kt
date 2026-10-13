@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.core.content.edit
 import com.todorant.data.Db
-import com.todorant.data.Db.saveTag
-import com.todorant.data.Db.saveTodo
-import com.todorant.data.Db.saveUser
-import com.todorant.data.DelegationUser
+import com.todorant.data.Ids
+import com.todorant.data.Invites
+import com.todorant.data.TagEntity
+import com.todorant.data.TodoEntity
 import com.todorant.data.Prefs
 import com.todorant.data.Session
 import com.todorant.data.ColorMode
@@ -19,7 +19,6 @@ import com.todorant.data.User
 import com.todorant.data.isoToMillis
 import org.json.JSONObject
 import java.io.File
-import com.todorant.data.Status
 import com.todorant.data.Tag
 import com.todorant.data.Todo
 import com.todorant.sync.Rest
@@ -66,7 +65,8 @@ object Migration {
             b("swipeActions")?.let { Settings.swipeActions = it }
             s.optString("colorMode").takeIf { it.isNotEmpty() }?.let { m -> runCatching { Settings.colorMode = ColorMode.valueOf(m) } }
             s.optString("planningReminderTime").takeIf { it.isNotEmpty() }?.let { Settings.planningReminderTime = it }
-            if (s.has("updatedAt") && !s.isNull("updatedAt")) Settings.fromJson(s)
+            // Local values until the server's arrive (not queued: the server stays the source of truth)
+            Settings.applyServer(s)
         }
         stores["SessionStore"]?.let { s ->
             s.optString("encryptionKey").takeIf { it.isNotEmpty() }?.let { Session.encryptionKey = it }
@@ -75,7 +75,7 @@ object Migration {
         }
         stores["HeroStore"]?.let { h ->
             Hero.points = h.optInt("points", Hero.points)
-            Hero.updatedAt = isoToMillis(h.opt("updatedAt"))
+            // Queued: the server keeps the highest score, so this can't lower it
         }
         stores["languageSelect"]?.optString("value")?.takeIf { it.isNotEmpty() }?.let { Settings.languageSelect = it }
     }
@@ -138,11 +138,10 @@ object Migration {
             val invites = db.rawQuery(
                 "SELECT delegate_invite_token FROM users WHERE server_id IS NULL AND is_delegator = 1 AND delegate_invite_token IS NOT NULL", null
             ).use { c -> generateSequence { if (c.moveToNext()) c.getString(0) else null }.toList() }
-            Db.write {
-                todos.forEach { saveTodo(it, local = false) }
-                tags.forEach { saveTag(it, local = false) }
-                invites.forEach { saveUser(DelegationUser(isDelegator = true, delegateInviteToken = it, pending = true)) }
-            }
+            // New to this app: every field gets queued for the server
+            Db.save(TodoEntity, todos)
+            Db.save(TagEntity, tags)
+            invites.forEach(Invites::add)
             Log.i(TAG, "imported ${todos.size} todos, ${tags.size} tags")
             todos.size + tags.size + if (anyTodos) 1 else 0
         }
@@ -151,11 +150,11 @@ object Migration {
     private fun Cursor.str(col: String): String? = getColumnIndex(col).takeIf { it >= 0 && !isNull(it) }?.let { getString(it) }
     private fun Cursor.num(col: String): Double? = getColumnIndex(col).takeIf { it >= 0 && !isNull(it) }?.let { getDouble(it) }
     private fun Cursor.flag(col: String): Boolean? = num(col)?.let { it != 0.0 }
-    private fun Cursor.status() = if (str("_status") == "created") Status.CREATED else Status.UPDATED
+    /** Server id when there is one, otherwise a fresh ObjectId (WatermelonDB ids aren't valid server ids) */
+    private fun Cursor.id() = str("server_id") ?: Ids.new()
 
     private fun Cursor.oldTodo(serverIds: Map<String, String>) = Todo(
-        id = str("id")!!, serverId = str("server_id"), createdAt = num("created_at")?.toLong() ?: 0,
-        updatedAt = num("updated_at")?.toLong() ?: 0, text = str("text") ?: "", completed = flag("is_completed") == true,
+        id = id(), createdAt = num("created_at")?.toLong() ?: 0, text = str("text") ?: "", completed = flag("is_completed") == true,
         frog = flag("is_frog") == true, frogFails = num("frog_fails")?.toInt() ?: 0, skipped = flag("is_skipped") == true,
         order = num("order") ?: 0.0, monthAndYear = str("month_and_year"), deleted = flag("is_deleted") == true,
         encrypted = flag("is_encrypted") == true, date = str("date"), time = str("time"), repetitive = flag("is_repetitive") == true,
@@ -163,14 +162,12 @@ object Migration {
         // WatermelonDB referenced local user rows; this app references server ids
         userId = str("delegator_id")?.let { str("user_id")?.let(serverIds::get) },
         delegatorId = str("delegator_id")?.let(serverIds::get),
-        status = status(),
-    ).also { it.exactDate = exactDate(it.title) }
+    )
 
     private fun Cursor.oldTag() = Tag(
-        id = str("id")!!, serverId = str("server_id"), createdAt = num("created_at")?.toLong() ?: 0,
-        updatedAt = num("updated_at")?.toLong() ?: 0, deleted = flag("is_deleted") == true, tag = str("tag") ?: "",
-        color = str("color"), numberOfUses = num("number_of_uses")?.toInt() ?: 0, epic = flag("is_epic"),
-        epicGoal = num("epic_goal")?.toInt(), epicCompleted = flag("is_epic_completed"), epicPoints = num("epic_points")?.toInt(),
-        epicOrder = num("epic_order")?.toInt(), status = status(),
+        id = id(), createdAt = num("created_at")?.toLong() ?: 0, deleted = flag("is_deleted") == true, tag = str("tag") ?: "",
+        color = str("color"), numberOfUses = num("number_of_uses")?.toInt() ?: 0, epic = flag("is_epic") == true,
+        epicGoal = num("epic_goal")?.toInt() ?: 0, epicCompleted = flag("is_epic_completed") == true,
+        epicPoints = num("epic_points")?.toInt() ?: 0, epicOrder = num("epic_order")?.toInt() ?: 0,
     )
 }

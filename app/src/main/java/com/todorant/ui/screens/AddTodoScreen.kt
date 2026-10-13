@@ -71,7 +71,7 @@ import androidx.compose.ui.unit.sp
 import com.todorant.BuildConfig
 import com.todorant.I18n
 import com.todorant.data.Db
-import com.todorant.data.Db.saveTodo
+import com.todorant.data.Ids
 import com.todorant.data.DelegationUser
 import com.todorant.data.Session
 import com.todorant.data.Settings
@@ -142,7 +142,7 @@ private val hashRegex = Regex("#[\\u0400-\\u04FFa-zA-Z_0-9]+$")
 
 /** One todo form (TodoVM) */
 class TodoVM {
-    val key = Db.newId()
+    val key = Ids.new()
     val focus = FocusRequester()
 
     var value by mutableStateOf(TextFieldValue(""))
@@ -327,8 +327,8 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                 todo.exactDate = exactDate(todo.title)
                 if (todo.completed) completedAtCreation.add(todo.text)
                 val delegate = vm.delegate
-                if (delegate?.serverId != null && me != null) {
-                    todo.userId = delegate.serverId
+                if (delegate?.id != null && me != null) {
+                    todo.userId = delegate.id
                     todo.delegatorId = me
                 }
                 toSave.add(todo)
@@ -370,14 +370,14 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                 titles.add(todo.title)
             }
         }
-        Db.write { toSave.forEach { saveTodo(it) } }
+        Db.saveTodos(toSave)
         completedAtCreation.forEach {
             Tags.incrementEpicPoints(it)
-            Todos.incrementHeroPoints(sync = false)
+            Todos.incrementHeroPoints()
         }
         if (breakdownTodo != null) {
             Tags.incrementEpicPoints(breakdownTodo.text)
-            Todos.incrementHeroPoints(sync = false)
+            Todos.incrementHeroPoints()
             val original = Db.todo(breakdownTodo.id) ?: breakdownTodo
             Db.updateTodo(original) { it.completed = true }
             titles.add(original.title)
@@ -390,12 +390,11 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
             if (hasFrog) Sounds.frogComplete() else Sounds.taskComplete()
         }
         Nav.back()
-        Tags.addTags(vms.map { it.text }, sync = false)
+        Tags.addTags(vms.map { it.text })
         Todos.fixOrder(titles, onTop, toBottom, involved)
         if (breakdownTodo != null && !dayCompletedInitially) Todos.checkDayCompletion()
         if (Onboarding.active) Onboarding.nextStep()
         focusManager.clearFocus()
-        Sync.request(Sync.Kind.Hero)
     }
 
     fun trySave() {
@@ -538,7 +537,7 @@ private fun SaveRow(isEdit: Boolean, plural: Boolean, enabled: Boolean, shake: I
 }
 
 private fun Todo.toJson() = JSONObject().apply {
-    put("_tempSyncId", id); put("_id", serverId); put("text", text); put("completed", completed); put("frog", frog)
+    put("_id", id); put("text", text); put("completed", completed); put("frog", frog)
     put("frogFails", frogFails); put("skipped", skipped); put("order", order); put("monthAndYear", monthAndYear)
     put("deleted", deleted); put("encrypted", encrypted); put("date", date); put("time", time); put("repetitive", repetitive)
     put("delegateAccepted", delegateAccepted); put("user", userId); put("delegator", delegatorId)
@@ -688,7 +687,7 @@ private fun TodoForm(vm: TodoVM, delete: (() -> Unit)?, showCross: Boolean) {
                 }, initial.hour, initial.minute, android.text.format.DateFormat.is24HourFormat(context)).show()
             }
             if (Session.user != null && vm.editedTodo == null) {
-                val delegates = dbState(initial = emptyList<DelegationUser>()) { Db.delegates().filter { it.serverId != me && it.serverId != null } }
+                val delegates = dbState(initial = emptyList<DelegationUser>()) { Db.delegates().filter { it.id != me && it.id != null } }
                 if (delegates.isNotEmpty()) FormRow(
                     vm.delegate?.name ?: t("delegate.pickDelegateField"),
                     if (vm.delegate != null) Colors.text else Colors.placeholder,

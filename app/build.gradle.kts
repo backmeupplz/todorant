@@ -15,6 +15,8 @@ android {
         // RN builds used ABI-split codes up to 4 * 1048576 + 173; stay above them so this installs as an update.
         versionCode = 5_000_000
         versionName = "2.0.0"
+        // Backend (REST + /v2/ws sync); `./gradlew -Papi=http://localhost:1337 ...` for a local one
+        buildConfigField("String", "API", "\"${project.findProperty("api") ?: "https://backend.todorant.com"}\"")
     }
     buildFeatures { compose = true; buildConfig = true }
     // Play upload key lives outside the repo; without it release builds are unsigned.
@@ -48,8 +50,6 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation("androidx.navigation:navigation-compose:2.10.2")
     implementation("sh.calvin.reorderable:reorderable:3.1.0")
-    // socket.io v2 server speaks Engine.IO 3, which only the 1.x Java client supports
-    implementation("io.socket:socket.io-client:1.0.2")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("androidx.credentials:credentials:1.6.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.6.0")

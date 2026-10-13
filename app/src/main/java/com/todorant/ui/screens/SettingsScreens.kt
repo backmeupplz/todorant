@@ -51,15 +51,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.todorant.data.Db
-import com.todorant.data.Db.saveTag
-import com.todorant.data.Db.saveTodo
-import com.todorant.data.Db.saveUser
+import com.todorant.data.TagEntity
+import com.todorant.data.TodoEntity
 import com.todorant.data.Hero
 import com.todorant.data.Session
 import com.todorant.data.Settings
 import com.todorant.data.Tag
 import com.todorant.data.Todo
-import com.todorant.data.millisToIso
 import com.todorant.logic.Crypto
 import com.todorant.logic.Todos
 import com.todorant.sync.Rest
@@ -194,51 +192,23 @@ fun SocketsScreen() {
     StackScreen(t("socketsInfo"), actions = { InfoButton("infoSockets") }) {
         Spacer(Modifier.height(16.dp))
         TableItem { TableText(t("connected")); CheckOrCross(Sync.connected) }
-        TableItem { TableText(t("authorized")); CheckOrCross(Sync.authorized) }
+        TableItem { TableText(t("authorized")); CheckOrCross(Sync.connected) }
         Sync.connectionError?.let { error ->
             TableItem { TableText(t("socketError")); TableText(error, Modifier.padding(start = 8.dp)) }
         }
     }
 }
 
-private fun cloneUser(id: String?, delegator: Boolean): Any = id?.let {
-    val name = Db.users("server_id = ? AND is_delegator = ?", arrayOf(it, if (delegator) "1" else "0")).firstOrNull()?.name
-        ?: Session.user?.takeIf { u -> u.id == it }?.name
-    JSONObject().put("_id", it).put("name", name ?: JSONObject.NULL)
-} ?: JSONObject.NULL
-
-/** cloneTodo from the RN app. Encrypted texts are sent encrypted (the RN app sent them decrypted). */
-private fun cloneTodo(todo: Todo) = JSONObject().apply {
+/** The RN app's data export; encrypted texts stay encrypted (the RN app sent them decrypted) */
+private fun export(todo: Todo) = TodoEntity.toJson(todo).apply {
     val key = Session.encryptionKey
-    put("_tempSyncId", todo.id); put("id", todo.id); put("_id", todo.serverId ?: JSONObject.NULL)
-    put("_exactDate", millisToIso(todo.exactDate)); put("createdAt", millisToIso(todo.createdAt)); put("updatedAt", millisToIso(todo.updatedAt))
-    put("text", if (todo.encrypted && key != null) Crypto.encrypt(todo.text, key) else todo.text)
-    put("completed", todo.completed); put("frog", todo.frog); put("frogFails", todo.frogFails); put("skipped", todo.skipped)
-    put("order", todo.order); put("monthAndYear", todo.monthAndYear ?: JSONObject.NULL); put("deleted", todo.deleted)
-    put("encrypted", todo.encrypted); put("date", todo.date ?: JSONObject.NULL); put("time", todo.time ?: JSONObject.NULL)
-    put("repetitive", todo.repetitive)
-    put("user", cloneUser(todo.userId, false)); put("delegator", cloneUser(todo.delegatorId, true))
-    put("delegateAccepted", todo.delegateAccepted ?: JSONObject.NULL)
-}
-
-private fun cloneTag(tag: Tag) = JSONObject().apply {
-    put("_tempSyncId", tag.id); put("id", tag.id); put("_id", tag.serverId ?: JSONObject.NULL)
-    put("createdAt", millisToIso(tag.createdAt)); put("updatedAt", millisToIso(tag.updatedAt)); put("deleted", tag.deleted)
-    put("tag", tag.tag); put("color", tag.color ?: JSONObject.NULL); put("numberOfUses", tag.numberOfUses)
-    put("epic", tag.epic ?: JSONObject.NULL); put("epicGoal", tag.epicGoal ?: JSONObject.NULL)
-    put("epicCompleted", tag.epicCompleted ?: JSONObject.NULL); put("epicPoints", tag.epicPoints ?: JSONObject.NULL)
-    put("epicOrder", tag.epicOrder ?: JSONObject.NULL)
+    if (todo.encrypted && key != null) put("text", Crypto.encrypt(todo.text, key))
 }
 
 @Composable
 fun DataScreen() {
-    val me = Session.user?.id ?: ""
     val counts = dbState(initial = listOf(0, 0, 0, 0)) {
-        listOf(
-            Db.count("todos", Db.UNDELETED), Db.count("tags", "is_deleted = 0"),
-            Db.count("users", "is_delegator = 1 AND is_deleted = 0 AND server_id IS NOT ?", arrayOf(me)),
-            Db.count("users", "is_delegator = 0 AND is_deleted = 0 AND server_id IS NOT ?", arrayOf(me)),
-        )
+        listOf(Db.count("todos", Db.UNDELETED), Db.count("tags", Db.UNDELETED), Db.delegators().size, Db.delegates().size)
     }
     fun date(millis: Long?) = millis?.let { dateTimeFormat.format(Date(it)) } ?: t("notSyncedYet")
     StackScreen(t("dataInfo"), actions = { InfoButton("infoData") }) {
@@ -253,7 +223,7 @@ fun DataScreen() {
             TableItem { TableText(t("accountLastSync"), Modifier.weight(1f)); TableText(date(Session.user?.updatedAt)) }
             TableItem { TableText(t("gamification"), Modifier.weight(1f)); TableText(date(Hero.updatedAt)) }
             Divider()
-            TableItem(onClick = { Ui.launch { runCatching { Sync.sync(Sync.Kind.All) }.onFailure { Ui.error(it.message ?: "$it") } } }) {
+            TableItem(onClick = { Ui.launch { runCatching { Sync.sync() }.onFailure { Ui.error(it.message ?: "$it") } } }) {
                 TableText(t("syncData"))
             }
             TableItem(onClick = { Ui.launch { runCatching { Sync.hardSync() }.onFailure { Ui.error(it.message ?: "$it") } } }) {
@@ -272,13 +242,12 @@ private fun sendDataToServer() {
     Ui.launch {
         val (todos, tags) = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Db.todos() to Db.tags() }
         try {
-            Rest.sendData(JSONObject().put("todos", JSONArray(todos.map(::cloneTodo))).put("tags", JSONArray(tags.map(::cloneTag))), token)
+            Rest.sendData(JSONObject().put("todos", JSONArray(todos.map(::export))).put("tags", JSONArray(tags.map(TagEntity::toJson))), token)
         } catch (e: Exception) {
             Ui.error(e.message ?: "$e")
         }
         // Re-push everything
-        Db.write { todos.forEach { saveTodo(it) }; tags.forEach { saveTag(it) } }
-        runCatching { Sync.sync(Sync.Kind.All) }
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Db.pushAgain(TodoEntity); Db.pushAgain(TagEntity) }
         Ui.toast("👍")
     }
 }
@@ -292,8 +261,7 @@ fun TagsScreen() {
                 TableItem(onClick = {
                     Ui.alert(t("deleteAllHashtagsConfirm"), null, listOf(
                         t("delete") to {
-                            Db.write { Db.undeletedTags().forEach { it.deleted = true; saveTag(it) } }
-                            Sync.request(Sync.Kind.Tag)
+                            Db.save(TagEntity, Db.undeletedTags().onEach { it.deleted = true })
                         },
                         t("cancel") to {},
                     ))
@@ -312,7 +280,6 @@ fun TagsScreen() {
                         IconBtn("delete_outline_28-iOS", Colors.destruct) {
                             Ui.confirm("${t("deleteTodo")} \"#${tag.tag.short()}\"?", t("delete")) {
                                 Db.updateTag(tag) { it.deleted = true }
-                                Sync.request(Sync.Kind.Tag)
                             }
                         }
                     }
@@ -327,7 +294,6 @@ private fun String.short() = if (length > 50) "${take(50)}..." else this
 
 private fun unEpic(tag: Tag) = Ui.confirm("${t("unEpicConfirm")} \"#${tag.tag.short()}\"?", t("unEpic")) {
     Db.updateTag(tag) { it.epicCompleted = false; it.epicGoal = 0; it.epicOrder = 0; it.epicPoints = 0; it.epic = false }
-    Sync.request(Sync.Kind.Tag)
 }
 
 @Composable
@@ -345,7 +311,6 @@ fun ColorPickerScreen(tagId: String) {
         DoneAction {
             tag?.let { Db.updateTag(it) { t -> t.color = current.toHex() } }
             Nav.back()
-            Sync.request(Sync.Kind.Tag)
         }
     }) {
         Column(Modifier.fillMaxSize().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -387,14 +352,13 @@ private fun saveTagText(tag: Tag, newNameInput: String, color: Color?) {
         // RN split words by spaces only, so tags next to line breaks weren't renamed
         val regex = Regex("(?<=^|\\s)#${Regex.escape(tag.tag)}(?=\\s|$)")
         val todos = Db.todos("${Db.UNDELETED} AND text LIKE ?", arrayOf("%#${tag.tag}%")).filter { regex.containsMatchIn(it.text) }
-        Db.write { todos.forEach { it.text = it.text.replace(regex, "#$newName"); saveTodo(it) } }
+        Db.saveTodos(todos.onEach { it.text = it.text.replace(regex, "#$newName") })
     }
     Db.updateTag(tag) {
         it.tag = newName ?: tag.tag
         color?.let { c -> it.color = c.toHex() }
     }
     Nav.back()
-    Sync.request(Sync.Kind.All)
 }
 
 @Composable
@@ -407,7 +371,6 @@ fun AddEpicScreen(tagId: String) {
             if (value <= 0 || tag == null) return@DoneAction
             Db.updateTag(tag) { it.epic = true; it.epicGoal = value; it.epicPoints = 0 }
             Nav.back()
-            Sync.request(Sync.Kind.Tag)
         }
     }) {
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -431,8 +394,6 @@ private object CalendarAuth {
         Ui.launch {
             try {
                 Settings.googleCalendarCredentials = Rest.calendarAuthorize(code, token).toString()
-                Settings.touch()
-                Sync.request(Sync.Kind.Settings)
             } catch (e: Exception) {
                 Ui.error(e.message ?: "$e")
             } finally {
@@ -459,8 +420,6 @@ private fun googleCalendarTapped() {
     if (Settings.googleCalendarCredentials != null) {
         Ui.actionSheet(null, listOf(t("disconnect")), destructive = setOf(0)) {
             Settings.googleCalendarCredentials = null
-            Settings.touch()
-            Sync.request(Sync.Kind.Settings)
         }
         return
     }
@@ -502,7 +461,7 @@ fun SecurityScreen() {
     var password by remember { mutableStateOf(Session.encryptionKey ?: "") }
     var passwordRepeat by remember { mutableStateOf(Session.encryptionKey ?: "") }
     var loading by remember { mutableStateOf(false) }
-    val ownWhere = "${Db.UNDELETED} AND delegator_id IS NULL AND is_encrypted = ?"
+    val ownWhere = "${Db.UNDELETED} AND delegator IS NULL AND encrypted = ?"
     val (encryptedCount, unencryptedCount) = dbState(initial = 0 to 0) { Db.count("todos", ownWhere, arrayOf("1")) to Db.count("todos", ownWhere, arrayOf("0")) }
 
     fun work(block: () -> Unit) {
@@ -514,17 +473,15 @@ fun SecurityScreen() {
     /** Marks all own todos as (un)encrypted; they get pushed (encrypted) on sync */
     fun changeEncrypted(encrypted: Boolean) = work {
         val todos = Db.todos(ownWhere, arrayOf(if (encrypted) "0" else "1"))
-        Db.write { todos.forEach { it.encrypted = encrypted; saveTodo(it) } }
-        Sync.request(Sync.Kind.Todo)
+        Db.saveTodos(todos.onEach { it.encrypted = encrypted })
     }
     /** Local texts of encrypted todos are kept decrypted while a key is set, and as ciphertext without one */
     fun encryptEncrypted(encrypt: Boolean, key: String) = work {
         val todos = Db.todos(ownWhere, arrayOf("1"))
         Db.write {
-            // RN replaced texts that failed to decrypt with ""; keep them as they are instead
-            todos.forEach { it.text = if (encrypt) Crypto.encrypt(it.text, key) else Crypto.decrypt(it.text, key) ?: it.text; saveTodo(it, local = false) }
+            // Local only. RN replaced texts that failed to decrypt with ""; keep them as they are instead
+            todos.forEach { it.text = if (encrypt) Crypto.encrypt(it.text, key) else Crypto.decrypt(it.text, key) ?: it.text; Db.writeLocal(TodoEntity, it) }
         }
-        Sync.request(Sync.Kind.Todo)
     }
 
     StackScreen(t("security")) {
@@ -583,20 +540,16 @@ fun SecurityScreen() {
 fun DelegationUsersScreen(delegators: Boolean) {
     val me = Session.user?.id
     val users = dbState(delegators, initial = emptyList<com.todorant.data.DelegationUser>()) {
-        (if (delegators) Db.delegators() else Db.delegates()).filter { it.serverId == null || it.serverId != me }
+        (if (delegators) Db.delegators() else Db.delegates()).filter { it.id != me }
     }
     StackScreen(t(if (delegators) "delegate.delegators" else "delegate.delegates")) {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(top = 16.dp)) {
             if (users.isEmpty()) TableItem { TableText(t(if (delegators) "delegate.noDelegators" else "delegate.noDelegates")) }
             for (user in users) TableItem {
-                TableText(user.name ?: user.delegateInviteToken ?: "", Modifier.weight(1f))
+                TableText(user.name ?: "", Modifier.weight(1f))
                 IconBtn("delete_outline_28-iOS", Colors.destruct) {
                     Ui.confirm(t("delegate.deleteDelegatorConfirmation"), t("delete"), user.name) {
-                        user.deleted = true
-                        user.pending = true
-                        user.updatedAt = System.currentTimeMillis()
-                        Db.write { saveUser(user) }
-                        Ui.launch { runCatching { Sync.sync(Sync.Kind.All) }.onFailure { Ui.error(it.message ?: "$it") } }
+                        Ui.launch { runCatching { Todos.removeDelegation(user) }.onFailure { Ui.error(it.message ?: "$it") } }
                     }
                 }
             }

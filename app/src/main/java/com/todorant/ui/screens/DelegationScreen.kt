@@ -59,7 +59,7 @@ private fun DelegationList(section: DelegateSection) {
     val byMe = section != DelegateSection.ToMe
     val groups = dbState(section, Session.user?.id, initial = emptyList<Pair<String, List<Todo>>>()) {
         // Counterpart: the delegate for todos I delegated, the delegator for todos delegated to me
-        val names = (if (byMe) Db.delegates() else Db.delegators()).mapNotNull { u -> u.serverId?.let { it to (u.name ?: "") } }.toMap()
+        val names = (if (byMe) Db.delegates() else Db.delegators()).associate { it.id to (it.name ?: "") }
         Todos.delegated(byMe, section == DelegateSection.Completed)
             .groupBy { if (byMe) it.userId else it.delegatorId }
             .mapNotNull { (id, todos) -> names[id]?.let { it to todos } }

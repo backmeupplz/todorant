@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.todorant.data.AppState
 import com.todorant.data.Db
-import com.todorant.data.Db.saveTag
+import com.todorant.data.TagEntity
 import com.todorant.data.Session
 import com.todorant.data.Tag
 import com.todorant.logic.Tags
@@ -118,8 +118,8 @@ fun CurrentScreen() {
 private fun epicKey(epic: Tag) = "epic-${epic.id}"
 
 private fun saveEpicOrder(epics: List<Tag>) {
-    Db.write { epics.forEachIndexed { i, epic -> epic.epicOrder = i; saveTag(epic) } }
-    Sync.request(Sync.Kind.Tag)
+    epics.forEachIndexed { i, epic -> epic.epicOrder = i }
+    Db.save(TagEntity, epics)
 }
 
 @Composable

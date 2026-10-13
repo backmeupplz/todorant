@@ -1,3 +1,2 @@
--keep class io.socket.** { *; }
 -dontwarn okhttp3.**
 -dontwarn okio.**

@@ -123,7 +123,7 @@ fun TodoCard(todo: Todo, type: CardType, modifier: Modifier = Modifier, dragModi
 private fun TodoCardBody(todo: Todo, type: CardType, dragModifier: Modifier, toggle: () -> Unit) {
     val isOld = type != CardType.done && type != CardType.delegation && isTodoOld(todo.monthAndYear, todo.date)
     val delegatorName = dbState(todo.delegatorId, initial = null as String?) {
-        todo.delegatorId?.let { id -> Db.users("server_id = ? AND is_delegator = 1", arrayOf(id)).firstOrNull()?.name }
+        Db.userName(todo.delegatorId, isDelegator = true)
     }
     Column(Modifier.padding(horizontal = 16.dp).fillMaxWidth().ifTrue(isOld) { background(Colors.oldTodoBackground) }) {
         if (!delegatorName.isNullOrEmpty() && type != CardType.delegation) {

@@ -183,14 +183,12 @@ object Widget {
             ACTION_DONE -> {
                 // Todos.complete without sounds, dialogs and confetti: no activity to show them in
                 Todos.incrementHeroPoints()
-                Tags.incrementEpicPoints(todo.text, sync = false)
+                Tags.incrementEpicPoints(todo.text)
                 Db.updateTodo(todo) { it.completed = true }
                 Session.numberOfTodosCompleted++
-                Sync.request(Sync.Kind.Todo)
             }
             ACTION_DELETE -> {
                 Db.updateTodo(todo) { it.deleted = true }
-                Sync.request(Sync.Kind.Todo)
             }
             ACTION_SKIP -> if (Todos.isSkippable(todo)) Todos.skip(todo)
         }

@@ -74,7 +74,7 @@ object SettingsList {
 @Composable
 fun SettingsScreen() {
     LaunchedEffect(Unit) {
-        if (Sync.authorized) runCatching { Sync.sync(Sync.Kind.All) }.onFailure { Ui.error(it.message ?: "$it") }
+        if (Sync.connected) runCatching { Sync.sync() }.onFailure { Ui.error(it.message ?: "$it") }
     }
     val user = Session.user
     // ponytail: the title is tagged instead of the info button, LargeTitleScreen has no info modifier
@@ -159,29 +159,20 @@ private fun AccountInfo() {
     var name by remember { mutableStateOf("") }
     val context = LocalContext.current
     if (loading) Spinner()
+    val shown = Session.name.ifEmpty { user.name }
     if (!editing) {
-        TableItem(onClick = { name = user.name; editing = true }) {
+        TableItem(onClick = { name = shown; editing = true }) {
             TableText(t("nameLabel"))
-            TableText(if (user.name.length <= 20) user.name else "${user.name.take(20)}...", Modifier.padding(start = 8.dp))
+            TableText(if (shown.length <= 20) shown else "${shown.take(20)}...", Modifier.padding(start = 8.dp))
         }
     } else {
         TableItem {
             SettingsField(name, { name = it.trim() }, t("nameLabel"), Modifier.weight(1f), singleLine = false)
             MIcon(MaterialIcons.Filled.Close, Colors.border, modifier = Modifier.padding(horizontal = 8.dp)) { editing = false }
-            if (name.isNotEmpty() && name != user.name) MIcon(MaterialIcons.Filled.Done, Colors.border, modifier = Modifier.padding(end = 8.dp)) {
+            if (name.isNotEmpty() && name != shown) MIcon(MaterialIcons.Filled.Done, Colors.border, modifier = Modifier.padding(end = 8.dp)) {
                 editing = false
-                loading = true
-                Ui.launch {
-                    try {
-                        Rest.setUserName(name, user.token)
-                        // The RN app didn't refresh the user, so the old name stayed until the next full sync
-                        Sync.request(Sync.Kind.User)
-                    } catch (e: Exception) {
-                        Ui.error(e.message ?: "$e")
-                    } finally {
-                        loading = false
-                    }
-                }
+                // Synced like any edit; the RN app kept showing the old name until the next full sync
+                Session.name = name
             }
         }
     }
@@ -224,31 +215,21 @@ private fun TimePickerRow(title: String, value: String, pickerValue: LocalTime, 
     }
 }
 
-/** Synced setting switch */
-@Composable
-private fun SyncedSwitch(title: String, value: Boolean?, set: (Boolean) -> Unit) = TextAndSwitch(title, value == true) {
-    set(it)
-    Settings.touch()
-    Sync.request(Sync.Kind.Settings)
-}
-
 @Composable
 private fun TodoSettings() {
     val context = LocalContext.current
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
-    SyncedSwitch("defaultToToday", Settings.showTodayOnAddTodo) { Settings.showTodayOnAddTodo = it }
-    SyncedSwitch("newTodosGoOnTop", Settings.newTodosGoFirst) { Settings.newTodosGoFirst = it }
-    SyncedSwitch("preserveOrderByTime", Settings.preserveOrderByTime) { Settings.preserveOrderByTime = it }
+    TextAndSwitch("defaultToToday", Settings.showTodayOnAddTodo == true) { Settings.showTodayOnAddTodo = it }
+    TextAndSwitch("newTodosGoOnTop", Settings.newTodosGoFirst == true) { Settings.newTodosGoFirst = it }
+    TextAndSwitch("preserveOrderByTime", Settings.preserveOrderByTime == true) { Settings.preserveOrderByTime = it }
     // Local only, the RN app needlessly bumped the settings version for it
     TextAndSwitch("askBeforeDelete", Settings.askBeforeDelete) { Settings.askBeforeDelete = it }
-    SyncedSwitch("settingsObject.duplicateTagInBreakdown", Settings.duplicateTagInBreakdown) { Settings.duplicateTagInBreakdown = it }
-    SyncedSwitch("settingsObject.showMoreByDefault", Settings.showMoreByDefault) { Settings.showMoreByDefault = it }
-    SyncedSwitch("settingsObject.removeCompletedFromCalendar", Settings.removeCompletedFromCalendar) { Settings.removeCompletedFromCalendar = it }
+    TextAndSwitch("settingsObject.duplicateTagInBreakdown", Settings.duplicateTagInBreakdown == true) { Settings.duplicateTagInBreakdown = it }
+    TextAndSwitch("settingsObject.showMoreByDefault", Settings.showMoreByDefault == true) { Settings.showMoreByDefault = it }
+    TextAndSwitch("settingsObject.removeCompletedFromCalendar", Settings.removeCompletedFromCalendar == true) { Settings.removeCompletedFromCalendar = it }
     TableItem(onClick = {
         Ui.actionSheet(null, (0..6).map { t("weekday$it") }) {
             Settings.firstDayOfWeek = it
-            Settings.touch()
-            Sync.request(Sync.Kind.Settings)
         }
     }) {
         TableText(t("firstDayOfWeek"), Modifier.weight(1f))
@@ -257,11 +238,9 @@ private fun TodoSettings() {
     TimePickerRow(
         "startTimeOfDay", Settings.startTimeOfDaySafe, parseTime(Settings.startTimeOfDaySafe) ?: LocalTime.MIDNIGHT,
         showClear = Settings.startTimeOfDaySafe != "00:00",
-        onClear = { Settings.startTimeOfDay = "00:00"; Settings.touch(); Sync.request(Sync.Kind.Settings) },
+        onClear = { Settings.startTimeOfDay = "00:00" },
     ) {
         Settings.startTimeOfDay = it
-        Settings.touch()
-        Sync.request(Sync.Kind.Settings)
     }
     TimePickerRow(
         "planningReminderTime", Settings.planningReminderTime ?: t("notSet"), parseTime(Settings.planningReminderTime) ?: LocalTime.MIDNIGHT,
@@ -292,7 +271,7 @@ private fun DelegationSettings() {
                 val token = Session.user?.token ?: return@actionSheet
                 Ui.launch {
                     try {
-                        val inviteToken = Rest.resetDelegateToken(token)
+                        val inviteToken = Rest.resetDelegateToken()
                         Session.user?.let { u -> Session.setUser(u.with { put("delegateInviteToken", inviteToken) }) }
                     } catch (e: Exception) {
                         Ui.error(e.message ?: "$e")
@@ -317,8 +296,6 @@ private fun LanguageAndColorMode() {
             Settings.languageSelect = code
             // The RN app only applied "auto" after a restart
             Settings.language = if (i == 0) I18n.languageTag() else code
-            Settings.touch()
-            Sync.request(Sync.Kind.Settings)
         }
     }) {
         TableText(t("languageSelect"), Modifier.weight(1f))

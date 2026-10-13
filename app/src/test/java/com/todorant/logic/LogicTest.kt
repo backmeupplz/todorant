@@ -59,7 +59,7 @@ class LogicTest {
 
     @Test
     fun fixOrderHelpers() {
-        fun todo(id: String, order: Double, time: String? = null) = Todo(id = id, serverId = id, order = order, time = time)
+        fun todo(id: String, order: Double, time: String? = null) = Todo(id = id, order = order, time = time)
         val sorted = Todos.sortForFix(listOf(todo("a", 0.0), todo("new", 0.0), todo("b", 1.0)), onTop = setOf("new"), onBottom = emptySet())
         assertEquals(listOf("new", "a", "b"), sorted.map { it.id })
 

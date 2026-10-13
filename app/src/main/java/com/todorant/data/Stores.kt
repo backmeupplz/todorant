@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.edit
+import org.json.JSONArray
 import org.json.JSONObject
 import java.time.Instant
 import java.util.UUID
@@ -21,21 +22,61 @@ object Prefs {
 }
 
 /** Compose-observable value persisted in SharedPreferences. null removes the key. */
-class Pref<T>(private val key: String, private val default: T, private val decode: (String) -> T) : ReadWriteProperty<Any?, T> {
+open class Pref<T>(private val key: String, private val default: T, private val decode: (String) -> T) : ReadWriteProperty<Any?, T> {
     private val state by lazy { mutableStateOf(Prefs.sp.getString(key, null)?.let(decode) ?: default) }
     override fun getValue(thisRef: Any?, property: KProperty<*>): T = state.value
-    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = store(value)
+
+    protected fun store(value: T) {
         state.value = value
         Prefs.sp.edit { if (value == null) remove(key) else putString(key, value.toString()) }
     }
+
+    protected val current get() = state.value
+    fun reset() = store(default)
 }
 
 fun boolPref(key: String, default: Boolean) = Pref(key, default) { it.toBoolean() }
-fun optBoolPref(key: String) = Pref<Boolean?>(key, null) { it.toBoolean() }
 fun intPref(key: String, default: Int) = Pref(key, default) { it.toInt() }
-fun optIntPref(key: String) = Pref<Int?>(key, null) { it.toIntOrNull() }
 fun optLongPref(key: String) = Pref<Long?>(key, null) { it.toLongOrNull() }
 fun optStringPref(key: String) = Pref<String?>(key, null) { it }
+
+/**
+ * A preference the server syncs (settings, hero points, name). Setting it queues the change like any
+ * todo edit; [apply] takes a server value unless a local change of it is still waiting to be pushed.
+ */
+class SyncedPref<T>(
+    private val collection: String,
+    private val field: String,
+    default: T,
+    private val toWire: (T) -> Any? = { it },
+    decode: (String) -> T,
+    private val fromWire: (Any?) -> T,
+) : Pref<T>("$collection.$field", default, decode) {
+    init { all.add(this) }
+
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        if (value == current) return
+        store(value)
+        Db.write { Db.enqueue(Change(collection, "", field, toWire(value), Db.now())) }
+        Db.onLocalChange()
+    }
+
+    fun apply(json: JSONObject) {
+        if (!json.has(field) || field in Db.pendingFields(collection, "")) return
+        store(fromWire(if (json.isNull(field)) null else json.get(field)))
+    }
+
+    companion object {
+        val all = mutableListOf<SyncedPref<*>>()
+        fun apply(collection: String, json: JSONObject) = all.filter { it.collection == collection }.forEach { it.apply(json) }
+        fun resetAll() = all.forEach { it.reset() }
+    }
+}
+
+private fun syncedBool(field: String) = SyncedPref<Boolean?>("settings", field, null, decode = { it.toBoolean() }, fromWire = { it as? Boolean })
+private fun syncedInt(field: String) = SyncedPref<Int?>("settings", field, null, decode = { it.toIntOrNull() }, fromWire = { (it as? Number)?.toInt() })
+private fun syncedString(field: String) = SyncedPref<String?>("settings", field, null, decode = { it }, fromWire = { it as? String })
 
 fun isoToMillis(value: Any?): Long? = when (value) {
     is Number -> value.toLong()
@@ -43,11 +84,9 @@ fun isoToMillis(value: Any?): Long? = when (value) {
     else -> null
 }
 
-fun millisToIso(value: Long?): Any = value?.let { Instant.ofEpochMilli(it).toString() } ?: JSONObject.NULL
-
-/** The server's user object; extra fields are kept in [json] so pushes don't drop them. */
+/** The user's profile from the server plus the login token */
 class User(val json: JSONObject) {
-    val id: String? get() = json.optString("_id").ifEmpty { null }
+    val id: String? get() = json.optString("_id").ifEmpty { json.optString("id") }.ifEmpty { null }
     val token: String get() = json.optString("token")
     val name: String get() = json.optString("name")
     val email: String? get() = json.optString("email").ifEmpty { null }
@@ -55,14 +94,9 @@ class User(val json: JSONObject) {
     val telegramId: String? get() = json.optString("telegramId").ifEmpty { null }
     val appleSubId: String? get() = json.optString("appleSubId").ifEmpty { null }
     val delegateInviteToken: String? get() = json.optString("delegateInviteToken").ifEmpty { null }
-    val updatedAt: Long? get() = isoToMillis(json.opt("updatedAt"))
-    val timezone: Any? get() = json.opt("timezone")
+    val updatedAt: Long? get() = json.optLong("updatedAt").takeIf { it > 0 }
 
     fun with(change: JSONObject.() -> Unit) = User(JSONObject(json.toString()).apply(change))
-
-    /** areUsersPartiallyEqual() from the RN app */
-    fun partiallyEquals(other: User) = id == other.id && email == other.email && facebookId == other.facebookId &&
-        telegramId == other.telegramId && name == other.name && timezone?.toString() == other.timezone?.toString()
 }
 
 object Session {
@@ -75,6 +109,9 @@ object Session {
     var askedToRate by boolPref("askedToRate", false)
     var installationId by optStringPref("installationId")
 
+    /** The user's name, synced (the rest of the profile is read-only) */
+    var name by SyncedPref("user", "name", "", decode = { it }, fromWire = { it as? String ?: "" })
+
     var loggingOut by mutableStateOf(false)
     var isInitialSync by mutableStateOf(false)
 
@@ -84,24 +121,36 @@ object Session {
     fun init() {
         if (installationId == null) installationId = UUID.randomUUID().toString()
     }
+
+    /** Server profile (keeps the token) */
+    fun applyProfile(profile: JSONObject) {
+        val token = user?.token ?: return
+        setUser(User(JSONObject(profile.toString()).put("token", token)))
+        SyncedPref.apply("user", profile)
+        profile.optJSONObject("settings")?.let { Settings.applyServer(it) }
+    }
 }
 
 enum class ColorMode { auto, dark, light }
 
 object Settings {
-    // Synced with the server
+    // Synced with the server, field by field
+    var showTodayOnAddTodo by syncedBool("showTodayOnAddTodo")
+    var firstDayOfWeek by syncedInt("firstDayOfWeek")
+    var startTimeOfDay by syncedString("startTimeOfDay")
+    var newTodosGoFirst by syncedBool("newTodosGoFirst")
+    var preserveOrderByTime by syncedBool("preserveOrderByTime")
+    var duplicateTagInBreakdown by syncedBool("duplicateTagInBreakdown")
+    var showMoreByDefault by syncedBool("showMoreByDefault")
+    var removeCompletedFromCalendar by syncedBool("removeCompletedFromCalendar")
+    var language by syncedString("language")
+    /** JSON object string; null disconnects the calendar */
+    var googleCalendarCredentials by SyncedPref<String?>(
+        "settings", "googleCalendarCredentials", null, toWire = { it?.let(::JSONObject) }, decode = { it },
+        fromWire = { (it as? JSONObject)?.toString() },
+    )
+    /** When the server last changed settings */
     var updatedAt by optLongPref("settings.updatedAt")
-    var showTodayOnAddTodo by optBoolPref("showTodayOnAddTodo")
-    var firstDayOfWeek by optIntPref("firstDayOfWeek")
-    var startTimeOfDay by optStringPref("startTimeOfDay")
-    var newTodosGoFirst by optBoolPref("newTodosGoFirst")
-    var preserveOrderByTime by optBoolPref("preserveOrderByTime")
-    var duplicateTagInBreakdown by optBoolPref("duplicateTagInBreakdown")
-    var showMoreByDefault by optBoolPref("showMoreByDefault")
-    var removeCompletedFromCalendar by optBoolPref("removeCompletedFromCalendar")
-    var language by optStringPref("language")
-    /** JSON object string */
-    var googleCalendarCredentials by optStringPref("googleCalendarCredentials")
 
     // Local only
     var colorMode by Pref("colorMode", ColorMode.auto) { ColorMode.valueOf(it) }
@@ -122,50 +171,26 @@ object Settings {
     val firstDayOfWeekSafe get() = firstDayOfWeek ?: if (language == "en") 0 else 1
     val startTimeOfDaySafe get() = startTimeOfDay ?: "00:00"
 
-    fun toJson() = JSONObject().apply {
-        put("showTodayOnAddTodo", showTodayOnAddTodo ?: JSONObject.NULL)
-        put("firstDayOfWeek", firstDayOfWeek ?: JSONObject.NULL)
-        put("startTimeOfDay", startTimeOfDay ?: JSONObject.NULL)
-        put("newTodosGoFirst", newTodosGoFirst ?: JSONObject.NULL)
-        put("preserveOrderByTime", preserveOrderByTime ?: JSONObject.NULL)
-        put("duplicateTagInBreakdown", duplicateTagInBreakdown ?: JSONObject.NULL)
-        put("showMoreByDefault", showMoreByDefault ?: JSONObject.NULL)
-        put("language", language ?: JSONObject.NULL)
-        put("removeCompletedFromCalendar", removeCompletedFromCalendar ?: JSONObject.NULL)
-        // undefined in the RN app drops the key, which the server reads as "disconnect calendar"
-        googleCalendarCredentials?.let { put("googleCalendarCredentials", JSONObject(it)) }
-    }
-
-    fun fromJson(s: JSONObject) {
-        fun optBool(k: String) = if (s.isNull(k)) null else s.optBoolean(k)
-        showTodayOnAddTodo = optBool("showTodayOnAddTodo")
-        firstDayOfWeek = if (s.isNull("firstDayOfWeek")) null else s.optInt("firstDayOfWeek")
-        startTimeOfDay = if (s.isNull("startTimeOfDay")) null else s.optString("startTimeOfDay")
-        newTodosGoFirst = optBool("newTodosGoFirst")
-        preserveOrderByTime = optBool("preserveOrderByTime")
-        duplicateTagInBreakdown = optBool("duplicateTagInBreakdown")
-        showMoreByDefault = optBool("showMoreByDefault")
-        language = if (s.isNull("language")) null else s.optString("language")
-        removeCompletedFromCalendar = optBool("removeCompletedFromCalendar")
-        googleCalendarCredentials = s.optJSONObject("googleCalendarCredentials")?.toString()
-        updatedAt = isoToMillis(s.opt("updatedAt"))
+    fun applyServer(settings: JSONObject) {
+        val before = language
+        SyncedPref.apply("settings", settings)
+        updatedAt = isoToMillis(settings.opt("updatedAt"))
+        // A language picked on another device sticks after restarts too
+        language?.takeIf { it != before }?.let { languageSelect = it }
     }
 
     fun logout() {
-        showTodayOnAddTodo = null; firstDayOfWeek = null; startTimeOfDay = null; newTodosGoFirst = null
-        preserveOrderByTime = null; duplicateTagInBreakdown = null; showMoreByDefault = null; language = null
-        removeCompletedFromCalendar = null; googleCalendarCredentials = null; updatedAt = null
-        soundOn = true; endOfDaySoundOn = false
+        updatedAt = null
+        soundOn = true
+        endOfDaySoundOn = false
     }
-
-    /** Marks a synced setting as changed locally */
-    fun touch() { updatedAt = System.currentTimeMillis() }
 }
 
 object Hero {
     val ranks = listOf(0, 5, 13, 42, 69, 85, 100, 221, 256, 300, 404, 777, 800, 1337, 1338, 2048, 9000, 12800, 1000000)
 
-    var points by intPref("hero.points", 0)
+    /** Synced; the server keeps the highest value any device reports */
+    var points by SyncedPref("hero", "points", 0, decode = { it.toInt() }, fromWire = { (it as? Number)?.toInt() ?: 0 })
     var updatedAt by optLongPref("hero.updatedAt")
 
     private fun bracket(): Pair<Int, Int>? {
@@ -181,13 +206,14 @@ object Hero {
     val nextRank get() = bracket()?.second ?: -1
     val rankIndex get() = bracket()?.let { ranks.indexOf(it.second) - 1 } ?: -1
     val progress get() = (points - rank).toFloat() / (nextRank - rank)
-
-    fun logout() { updatedAt = null; points = 0 }
 }
 
-object Delegation {
-    /** Last completed delegation sync */
-    var updatedAt by optLongPref("delegation.updatedAt")
+/** Invite links accepted while offline, retried on the next connection */
+object Invites {
+    private var pending by optStringPref("invites.pending")
+    val all: List<String> get() = pending?.let { p -> JSONArray(p).let { a -> (0 until a.length()).map(a::getString) } } ?: emptyList()
+    fun add(token: String) { if (token !in all) pending = JSONArray(all + token).toString() }
+    fun remove(token: String) { pending = JSONArray(all - token).toString() }
 }
 
 enum class TodoSection { planning, completed }

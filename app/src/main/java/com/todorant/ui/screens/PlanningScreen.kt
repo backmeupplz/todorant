@@ -139,7 +139,6 @@ fun PlanningScreen() {
                 listOf(t("cancel") to {}, t("breakdownButton") to { Nav.go(Route.breakdown(todo.id)) })
             )
         }
-        Sync.request(Sync.Kind.Todo)
     }
 
     Box(Modifier.fillMaxSize().background(Colors.background)) {

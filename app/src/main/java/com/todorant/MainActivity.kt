@@ -53,18 +53,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.todorant.data.AppState
 import com.todorant.data.Db
-import com.todorant.data.Db.saveTodo
-import com.todorant.data.Db.saveUser
-import com.todorant.data.DelegationUser
 import com.todorant.data.Session
 import com.todorant.data.Settings
 import com.todorant.data.Todo
 import com.todorant.logic.Tags
 import com.todorant.logic.Todos
-import com.todorant.logic.exactDate
 import com.todorant.logic.monthAndYear
 import com.todorant.logic.day
 import com.todorant.sync.Sync
+import com.todorant.sync.Rest
+import com.todorant.logic.Account
 import com.todorant.ui.Colors
 import com.todorant.ui.DialogHost
 import com.todorant.ui.EffectsLayer
@@ -251,6 +249,10 @@ private fun handleIntent(intent: Intent) {
         intent.getBooleanExtra("widget", false) -> Nav.go(Route.add())
         // QA: adb shell am start -n com.todorant.debug/com.todorant.MainActivity --es route tags
         BuildConfig.DEBUG && intent.getStringExtra("route") != null -> Nav.go(intent.getStringExtra("route")!!)
+        // QA: --es login <token> logs in without typing it
+        BuildConfig.DEBUG && intent.getStringExtra("login") != null -> Ui.launch {
+            runCatching { Account.login(Rest.loginToken(intent.getStringExtra("login")!!)) }.onFailure { Ui.error(it.message ?: "$it") }
+        }
         // QA: --es reminder 09:30 schedules it and posts the notification right away
         BuildConfig.DEBUG && intent.getStringExtra("reminder") != null -> {
             Settings.planningReminderTime = intent.getStringExtra("reminder")
@@ -279,12 +281,7 @@ private fun handleUrl(uri: Uri) {
                 Ui.error(t("pleaseLogin"))
                 return@confirm
             }
-            if (Db.users("is_delegator = 1 AND delegate_invite_token = ?", arrayOf(token)).isNotEmpty()) {
-                Ui.error(t("delegate.delegatorExists"))
-                return@confirm
-            }
-            Db.write { saveUser(DelegationUser(isDelegator = true, delegateInviteToken = token, pending = true)) }
-            Sync.request(Sync.Kind.Delegation)
+            Sync.acceptInvite(token)
         }
     }
 }
@@ -297,8 +294,7 @@ private fun addTodoFromLink(text: String) {
     }
     val today = LocalDate.now()
     val todo = Todo(text = text, monthAndYear = today.monthAndYear(), date = today.day(), encrypted = Session.encryptionKey != null)
-    todo.exactDate = exactDate(todo.title)
-    Db.write { saveTodo(todo) }
+    Db.saveTodos(listOf(todo))
     Ui.launch {
         val newFirst = Settings.newTodosGoFirst == true
         Todos.fixOrder(listOf(todo.title), if (newFirst) listOf(todo) else emptyList(), if (newFirst) emptyList() else listOf(todo))
