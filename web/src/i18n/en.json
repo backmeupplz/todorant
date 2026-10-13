@@ -9,7 +9,8 @@
     "disableConfirm": "Are you sure you want to remove the key and disable the encryption? This will not decrypt the tasks that are encrypted.",
     "errorDecrypting": "Wrong decryption password",
     "repeatPassword": "Repeat password",
-    "title": "Encryption"
+    "title": "Encryption",
+    "encryptedTodo": "Encrypted todo"
   },
   "search": "Search",
   "qr": {

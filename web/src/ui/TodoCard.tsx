@@ -18,6 +18,13 @@ export const setShowPlanning = (f: () => void) => (showPlanning = f)
 
 export function TodoText({ todo }: { todo: Todo }) {
   rev.value
+  if (todos.unreadable(todo))
+    return (
+      <span class="text muted encrypted-text">
+        🔒 {t('encryption.encryptedTodo')}
+        <IconButton icon="info" size={18} title={t('encryption.title')} onClick={() => import('../views/dialogs').then((m) => m.openEncryption())} />
+      </span>
+    )
   return (
     <span class="text">
       {todo.frog && '🐸 '}

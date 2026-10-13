@@ -174,6 +174,8 @@ function SlotForm(p: { slot: Slot; index: number; count: number; editing: boolea
     }
   }
   const min = dateString(today())
+  // Without the right password the text can't be shown or changed, only the rest of the todo
+  const locked = !!s.edited && todos.unreadable(s.edited)
   const delegates = people.value.delegates
   return (
     <section class="slot">
@@ -187,9 +189,10 @@ function SlotForm(p: { slot: Slot; index: number; count: number; editing: boolea
         ref={ref}
         class={`input${s.text.length > 1500 ? ' invalid' : ''}`}
         rows={2}
-        placeholder={t('todo.create.text')}
+        placeholder={locked ? t('encryption.errorDecrypting') : t('todo.create.text')}
         aria-label={t('todo.create.text')}
-        value={s.text}
+        value={locked ? '' : s.text}
+        disabled={locked}
         onInput={(e) => p.onChange({ text: e.currentTarget.value })}
         onKeyDown={onKey}
         onKeyUp={(e) => (ctrl.value = e.ctrlKey || e.metaKey)}

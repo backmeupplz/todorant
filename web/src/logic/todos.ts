@@ -2,6 +2,9 @@ import { addHeroPoint, create, people, session, settings, tags, todos, update, t
 import { dateString, dayOf, isOld, minutes, monthOf, today, todayTitle } from '../lib/time'
 import { hashtags } from '../lib/text'
 
+/** An encrypted text this browser can't decrypt (no or wrong password) */
+export const unreadable = (t: Pick<Todo, 'encrypted' | 'text'>) => t.encrypted && t.text.startsWith('U2FsdGVkX1')
+
 /** "YYYY-MM-DD" or "YYYY-MM" */
 export const titleOf = (t: Pick<Todo, 'monthAndYear' | 'date'>) => (t.date ? `${t.monthAndYear}-${t.date}` : t.monthAndYear ?? '')
 const me = () => session.value?.id
