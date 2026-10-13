@@ -81,6 +81,8 @@ async function handle(m: any) {
       setOffset(m.now - Date.now())
       attempts = 0
       connected.value = true
+      // Texts still encrypted although we have the password (it was entered mid-sync): fetch everything again
+      if (encryptionKey.value && [...todos.values()].some((t) => t.encrypted && t.text.startsWith('U2FsdGVkX1'))) setCursor(null)
       await send(true)
       break
     case 'synced':
