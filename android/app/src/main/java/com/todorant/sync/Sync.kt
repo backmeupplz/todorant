@@ -179,11 +179,7 @@ object Sync {
         if (changes.isEmpty() && !pull) return null
         val rid = requests.incrementAndGet()
         val message = JSONObject().put("t", "sync").put("rid", rid)
-        if (changes.isNotEmpty()) {
-            message.put("ops", ops(changes))
-            // The server needs the encryption password only to write todo texts to Google Calendar
-            if (Settings.googleCalendarCredentials != null) Session.encryptionKey?.let { message.put("key", it) }
-        }
+        if (changes.isNotEmpty()) message.put("ops", ops(changes))
         if (pull) message.put("since", cursor ?: 0)
         sent[rid] = changes
         val deferred = CompletableDeferred<JSONObject>()

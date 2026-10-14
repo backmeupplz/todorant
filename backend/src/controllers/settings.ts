@@ -1,7 +1,6 @@
 import { Context } from 'koa'
 import { Controller, Ctx, Flow, Post, Put } from 'koa-ts-controllers'
 import { authenticate } from '@/middlewares/authenticate'
-import { getGoogleCalendarApi } from '@/helpers/googleCalendar'
 import { requestSync } from '@/sockets/index'
 
 @Controller('/settings')
@@ -9,24 +8,6 @@ export default class SettingsController {
   @Post('/')
   @Flow(authenticate)
   async post(@Ctx() ctx: Context) {
-    if (
-      ctx.request.body.googleCalendarCredentials === null &&
-      ctx.state.user.settings.googleCalendarCredentials
-    ) {
-      const googleCredentials =
-        ctx.state.user.settings.googleCalendarCredentials
-      const resourceId = ctx.state.user.googleCalendarResourceId
-      if (resourceId) {
-        const api = getGoogleCalendarApi(googleCredentials)
-        await api.channels.stop({
-          requestBody: {
-            id: ctx.state.user._id,
-            resourceId: resourceId,
-          },
-        })
-      }
-      ctx.request.body.googleCalendarCredentials = undefined
-    }
     // Set settings
     ctx.state.user.settings = {
       ...(ctx.state.user.settings || {}),
@@ -47,24 +28,6 @@ export default class SettingsController {
   @Put('/')
   @Flow(authenticate)
   async put(@Ctx() ctx: Context) {
-    if (
-      ctx.request.body.googleCalendarCredentials === null &&
-      ctx.state.user.settings.googleCalendarCredentials
-    ) {
-      const googleCredentials =
-        ctx.state.user.settings.googleCalendarCredentials
-      const resourceId = ctx.state.user.googleCalendarResourceId
-      if (resourceId) {
-        const api = getGoogleCalendarApi(googleCredentials)
-        await api.channels.stop({
-          requestBody: {
-            id: ctx.state.user._id,
-            resourceId: resourceId,
-          },
-        })
-      }
-      ctx.request.body.googleCalendarCredentials = undefined
-    }
     // Set settings
     if (
       typeof ctx.request.body.showTodayOnAddTodo === 'string' ||

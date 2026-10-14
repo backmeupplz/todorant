@@ -10,7 +10,6 @@ import { TagModel } from '@/models/tag'
 import { TodoModel } from '@/models/todo'
 import { UserModel } from '@/models/user'
 import { authenticate, spend, tokenOf } from '@/v2/auth'
-import { getGoogleCalendarApi } from '@/helpers/googleCalendar'
 import { hint, kick } from '@/v2/hub'
 import { isObjectId } from '@/v2/schema'
 import { passwordRoutes } from '@/v2/password'
@@ -48,8 +47,7 @@ async function auth(ctx: Context, next: Next) {
   await next()
 }
 
-const ops = (ctx: Context, list: Op[]) =>
-  push(ctx.state.uid, list, undefined, ctx.get('password') || undefined)
+const ops = (ctx: Context, list: Op[]) => push(ctx.state.uid, list)
 
 /** Writes through sync; responds with the ack (409 when a field lost to a newer write, 400 on errors) */
 async function write(ctx: Context, op: Op) {
@@ -72,16 +70,13 @@ v2.post('/auth/:provider', (ctx, next) => {
 
 // Sync over HTTP: `{since?, ops?}` → `{acks?, cursor, todos, tags, …}` (widgets, one-shot clients)
 v2.post('/sync', auth, async (ctx) => {
-  const {
-    since,
-    ops: list,
-    key,
-  } = ctx.request.body as { since?: number; ops?: Op[]; key?: string }
+  const { since, ops: list } = ctx.request.body as {
+    since?: number
+    ops?: Op[]
+  }
   if (since !== undefined && !Number.isFinite(since))
     ctx.throw(400, 'Invalid since')
-  const acks = list?.length
-    ? await push(ctx.state.uid, list, undefined, key)
-    : undefined
+  const acks = list?.length ? await push(ctx.state.uid, list) : undefined
   ctx.body = {
     acks,
     ...(since !== undefined
@@ -325,18 +320,5 @@ v2.delete('/account', auth, async (ctx) => {
     ...fromThem,
   ]
   await touched(...new Map(others.map((o) => [String(o), o])).values())
-  // Google keeps calling a watched calendar until told to stop; never worth failing the deletion over
-  const calendar = user.settings?.googleCalendarCredentials
-  if (calendar && user.googleCalendarResourceId)
-    Promise.resolve()
-      .then(() =>
-        getGoogleCalendarApi(calendar).channels.stop({
-          requestBody: {
-            id: String(id),
-            resourceId: user.googleCalendarResourceId,
-          },
-        })
-      )
-      .catch(() => undefined)
   ctx.status = 204
 })

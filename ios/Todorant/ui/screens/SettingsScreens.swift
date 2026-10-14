@@ -228,65 +228,6 @@ struct AddEpicScreen: View {
     }
 }
 
-/// Google Calendar OAuth handoff between the integrations and the web view screens
-private enum CalendarAuth {
-    static var url = ""
-
-    static func authorize(_ code: String) {
-        AppState.shared.calendarLoading = true
-        Ui.attempt({ AppState.shared.calendarLoading = false }) {
-            let credentials = try await Rest.calendarAuthorize(code)
-            Settings.googleCalendarCredentials = String(data: try JSONSerialization.data(withJSONObject: credentials), encoding: .utf8)
-        }
-    }
-}
-
-struct IntegrationsScreen: View {
-    var body: some View {
-        List {
-            TableItem(action: { Ui.confirm(t("googleCalendarHint"), t("googleCalendarGotIt")) { googleCalendarTapped() } }) {
-                TableText(t("googleCalendar"))
-                Spacer()
-                if AppState.shared.calendarLoading { ProgressView() } else {
-                    TableText(t(Settings.googleCalendarCredentials != nil ? "connected" : "notConnected"), color: Colors.text.opacity(0.6))
-                }
-            }
-            .settingsRow()
-        }
-        .settingsList()
-        .navigationTitle(t("integrations"))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar { ToolbarItem(placement: .topBarTrailing) { InfoButton(message: "infoIntegrations") } }
-    }
-
-    private func googleCalendarTapped() {
-        if Settings.googleCalendarCredentials != nil {
-            return Ui.actionSheet(nil, [t("disconnect")], destructive: [0]) { _ in Settings.googleCalendarCredentials = nil }
-        }
-        AppState.shared.calendarLoading = true
-        Ui.attempt({ AppState.shared.calendarLoading = false }) {
-            CalendarAuth.url = try await Rest.calendarAuthenticationURL()
-            Nav.push(.googleCalendar)
-        }
-    }
-}
-
-struct GoogleCalendarScreen: View {
-    @State private var handled = false
-
-    var body: some View {
-        // Google refuses sign-in in web views that look like apps
-        WebPageScreen(title: t("googleCalendar"), url: CalendarAuth.url, userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1") { url in
-            let code = url.host == "accounts.google.com" ? nil : URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "code" }?.value
-            guard !handled, let code, !code.isEmpty else { return true }
-            handled = true
-            Nav.back()
-            CalendarAuth.authorize(code)
-            return false
-        }
-    }
-}
-
 struct SecurityScreen: View {
     @State private var encryptionOn = Session.encryptionKey != nil
     @State private var password = Session.encryptionKey ?? ""

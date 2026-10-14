@@ -75,7 +75,6 @@
     "facebook-node-sdk": "^0.2.0",
     "fluent-ffmpeg": "^2.1.2",
     "fuzzysort": "^1.1.4",
-    "googleapis": "^61.0.0",
     "http": "^0.0.1-security",
     "http-graceful-shutdown": "^2.3.2",
     "js-yaml": "^3.14.0",

@@ -145,8 +145,6 @@ struct SettingsScreen: View {
                         TableItem(action: { Nav.push(.data) }) { TableText(t("dataInfo")) }
                     }
                     LanguageAndColorMode()
-                    TableItem(action: { Nav.push(user != nil ? .integrations : .login) }) { TableText(t("integrations")) }
-                        .onboardingTarget(OnboardingTarget.integrationsButton).id(OnboardingTarget.integrationsButton)
                     GeneralSwitches()
                 }
                 .settingsRow()
@@ -297,7 +295,6 @@ private struct TodoSettings: View {
         TextAndSwitch(title: "askBeforeDelete", value: Settings.askBeforeDelete) { Settings.askBeforeDelete = $0 }
         TextAndSwitch(title: "settingsObject.duplicateTagInBreakdown", value: Settings.duplicateTagInBreakdown == true) { Settings.duplicateTagInBreakdown = $0 }
         TextAndSwitch(title: "settingsObject.showMoreByDefault", value: Settings.showMoreByDefault == true) { Settings.showMoreByDefault = $0 }
-        TextAndSwitch(title: "settingsObject.removeCompletedFromCalendar", value: Settings.removeCompletedFromCalendar == true) { Settings.removeCompletedFromCalendar = $0 }
         Picker(selection: Binding(get: { Settings.firstDayOfWeekSafe }, set: { Settings.firstDayOfWeek = $0 })) {
             ForEach(0..<7, id: \.self) { Text(t("weekday\($0)")).tag($0) }
         } label: { TableText(t("firstDayOfWeek")) }

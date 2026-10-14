@@ -23,7 +23,6 @@ import { getTags } from '@/helpers/getTags'
 import { getTagsBody } from '@/controllers/tag'
 import { isTodoOld } from '@/helpers/isTodoOld'
 import { requestSync } from '@/sockets/index'
-import { updateTodos } from '@/helpers/googleCalendar'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fuzzysort = require('fuzzysort')
 
@@ -145,12 +144,6 @@ export default class TodoController {
     for (const delegateId of delegatesToSync) {
       requestSync(delegateId)
     }
-    // Update calendar
-    updateTodos(
-      todosGoingOnTop.concat(todosGoingToBottom),
-      ctx.state.user.settings.googleCalendarCredentials,
-      password
-    )
   }
 
   @Put('/:id')
@@ -248,12 +241,6 @@ export default class TodoController {
     if (todo.delegator) {
       requestSync(todo.delegator.toString())
     }
-    // Update calendar
-    updateTodos(
-      [todo],
-      ctx.state.user.settings.googleCalendarCredentials,
-      password
-    )
     // Check incomplete frogs
     const incompleteFrogs = await TodoModel.find({
       user: ctx.state.user._id,
@@ -297,13 +284,6 @@ export default class TodoController {
     if (todo.delegator) {
       requestSync(todo.delegator.toString())
     }
-    // Update calendar
-    updateTodos(
-      [todo],
-      ctx.state.user.settings.googleCalendarCredentials,
-      ctx.headers.password,
-      ctx.state.user.settings.removeCompletedFromCalendar
-    )
     // Check incomplete frogs
     const incompleteFrogs = await TodoModel.find({
       user: ctx.state.user._id,
@@ -403,12 +383,6 @@ export default class TodoController {
     ctx.status = 200
     // Trigger sync
     requestSync(ctx.state.user._id)
-    // Update calendar
-    updateTodos(
-      [todo],
-      ctx.state.user.settings.googleCalendarCredentials,
-      ctx.headers.password
-    )
   }
 
   @Delete('/:id')
@@ -443,12 +417,6 @@ export default class TodoController {
     if (todo.delegator) {
       requestSync(todo.delegator.toString())
     }
-    // Update calendar
-    updateTodos(
-      [todo],
-      ctx.state.user.settings.googleCalendarCredentials,
-      ctx.headers.password
-    )
   }
 
   @Get('/current')
@@ -645,9 +613,7 @@ export default class TodoController {
     }
     // Save
     const todosToSave = Array.from(modifiedTodos.values())
-    const savedTodos = (await TodoModel.create(
-      todosToSave
-    )) as any as DocumentType<Todo>[] // weird bug in the mongoose types forces us to do this casting
+    await TodoModel.create(todosToSave)
     // Reorder if required
     if (ctx.state.user.settings.preserveOrderByTime) {
       fixOrder(ctx.state.user, Array.from(titlesToReorder))
@@ -656,12 +622,6 @@ export default class TodoController {
     ctx.status = 200
     // Trigger sync
     requestSync(ctx.state.user._id)
-    // Update calendar
-    updateTodos(
-      savedTodos,
-      ctx.state.user.settings.googleCalendarCredentials,
-      ctx.headers.password
-    )
   }
 }
 

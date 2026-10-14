@@ -13,7 +13,7 @@ export const Privacy = () => (
       <li><b>Your account:</b> your name, your email address and the ID of the sign-in method you chose (Google, Apple, Facebook, Telegram, or an email address and password). We store passwords only as a salted hash.</li>
       <li><b>What you put into Todorant:</b> your todos with their dates and times, hashtags, epics and settings such as your language and time zone, along with statistics about the todos you complete. We keep them so that your todos sync between your devices.</li>
       <li><b>Delegation:</b> when you connect with another person through an invite link, we store that connection and the todos you send to each other.</li>
-      <li><b>Integrations you turn on:</b> if you connect Google Calendar, we store the access it grants. Todorant then creates a calendar called Todorant in your Google account, adds your todos with times to it as events and reads back the changes you make there. To find that calendar and your time zone, it reads the list of your calendars. If you use the Telegram bot, we store your Telegram ID, and the messages you send to the bot become todos.</li>
+      <li><b>Telegram bot:</b> if you use the Telegram bot, we store your Telegram ID, and the messages you send to the bot become todos.</li>
       <li><b>Technical data:</b> our servers process your IP address and the details of each request in order to answer it and keep the service secure. When a request fails, an error report with technical details is sent to the developer so the bug can be fixed.</li>
       <li><b>Code scanner on Android:</b> when you scan a QR code to sign in on another device, the Android app uses Google's code scanner. It sends Google anonymous diagnostics (such as the device model, the Android version and performance metrics) along with an identifier tied to the app installation, as described in Google's ML Kit data disclosure. This data isn't linked to your Todorant account.</li>
     </ul>
@@ -79,11 +79,11 @@ export const DeleteAccount = () => (
       <li><b>Can't sign in?</b> Email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account and ask for it to be deleted.</li>
     </ul>
     <h2>What gets deleted</h2>
-    <p>Your account and profile (name, email address and linked sign-in IDs), all your todos, hashtags and settings, your hero points and shared reports, your delegation links and the Google Calendar connection. Todos other people delegated to you are removed from their lists too. All of it is removed from the live database immediately and can't be restored.</p>
+    <p>Your account and profile (name, email address and linked sign-in IDs), all your todos, hashtags and settings, your hero points and shared reports, and your delegation links. Todos other people delegated to you are removed from their lists too. All of it is removed from the live database immediately and can't be restored.</p>
     <h2>What stays</h2>
     <p>Todos you delegated to other people that they accepted stay in their accounts, because they belong to them now.</p>
     <h2>Delete some of your data and keep the account</h2>
-    <p>You can delete any todo or hashtag in the app at any time, and it disappears from all your devices. Disconnecting Google Calendar in Settings removes the calendar connection from your account. To remove everything from Todorant's servers, delete the account as described above.</p>
+    <p>You can delete any todo or hashtag in the app at any time, and it disappears from all your devices. To remove everything from Todorant's servers, delete the account as described above.</p>
     <Back />
   </article>
 )

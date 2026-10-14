@@ -18,22 +18,6 @@ Body Parameters
 
 Verifies Google purchase. Send all data Google gives you as body.
 
-### `GET` /google/calendarAuthenticationURL
-
-Gives google calendar OAuth URL.
-
-### `POST` /google/calendarAuthorize
-
-Verifies Apple purchase.
-
-Body Parameters
-
-| Field | Type   | Required | Description        |
-| ----- | ------ | -------- | ------------------ |
-| code  | string | True     | Authorization code |
-
-`Return:` token for the google calendar
-
 ## /state
 
 ### `GET` /state/

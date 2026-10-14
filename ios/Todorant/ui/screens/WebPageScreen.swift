@@ -2,18 +2,17 @@ import SwiftUI
 import WebKit
 
 /**
- * A pushed screen with a web view (terms, privacy, Telegram and Google logins).
+ * A pushed screen with a web view (terms, privacy and Telegram login).
  * [onNavigate] sees every navigation and returns false to stop it.
  */
 struct WebPageScreen: View {
     let title: String
     let url: String
-    var userAgent: String? = nil
     var onNavigate: (URL) -> Bool = { _ in true }
     @State private var loading = true
 
     var body: some View {
-        WebView(url: url, userAgent: userAgent, onNavigate: onNavigate, loading: $loading)
+        WebView(url: url, onNavigate: onNavigate, loading: $loading)
             .overlay { if loading { ProgressView() } }
             .background(Colors.background)
             .navigationTitle(title)
@@ -23,14 +22,12 @@ struct WebPageScreen: View {
 
 private struct WebView: UIViewRepresentable {
     let url: String
-    let userAgent: String?
     let onNavigate: (URL) -> Bool
     @Binding var loading: Bool
 
     func makeUIView(context: Context) -> WKWebView {
         let view = WKWebView()
         view.navigationDelegate = context.coordinator
-        view.customUserAgent = userAgent
         view.isOpaque = false
         view.backgroundColor = .clear
         if let url = URL(string: url) { view.load(URLRequest(url: url)) }

@@ -38,12 +38,7 @@ struct SyncedPref {
 
     static let all: [SyncedPref] = [
         bool("showTodayOnAddTodo"), int("firstDayOfWeek"), string("startTimeOfDay"), bool("newTodosGoFirst"),
-        bool("preserveOrderByTime"), bool("duplicateTagInBreakdown"), bool("showMoreByDefault"),
-        bool("removeCompletedFromCalendar"), string("language"),
-        // A JSON object on the wire, kept as its JSON text
-        SyncedPref(collection: "settings", field: "googleCalendarCredentials",
-                   toWire: { ($0 as? String).flatMap { try? JSONSerialization.jsonObject(with: Data($0.utf8)) } },
-                   fromWire: { $0.flatMap { try? JSONSerialization.data(withJSONObject: $0) }.flatMap { String(data: $0, encoding: .utf8) } }),
+        bool("preserveOrderByTime"), bool("duplicateTagInBreakdown"), bool("showMoreByDefault"), string("language"),
         SyncedPref(collection: "user", field: "name", fromWire: { $0 as? String }),
         SyncedPref(collection: "hero", field: "points", fromWire: { ($0 as? NSNumber)?.intValue }),
     ]
@@ -179,10 +174,7 @@ enum Settings {
     static var preserveOrderByTime: Bool? { get { synced("preserveOrderByTime") } set { setSynced("preserveOrderByTime", newValue) } }
     static var duplicateTagInBreakdown: Bool? { get { synced("duplicateTagInBreakdown") } set { setSynced("duplicateTagInBreakdown", newValue) } }
     static var showMoreByDefault: Bool? { get { synced("showMoreByDefault") } set { setSynced("showMoreByDefault", newValue) } }
-    static var removeCompletedFromCalendar: Bool? { get { synced("removeCompletedFromCalendar") } set { setSynced("removeCompletedFromCalendar", newValue) } }
     static var language: String? { get { synced("language") } set { setSynced("language", newValue) } }
-    /// JSON object text; nil disconnects the calendar
-    static var googleCalendarCredentials: String? { get { synced("googleCalendarCredentials") } set { setSynced("googleCalendarCredentials", newValue) } }
     /// When the server last changed settings
     static var updatedAt: Int? { get { Prefs.shared.get("settings.updatedAt") as? Int } set { Prefs.shared.set("settings.updatedAt", newValue) } }
 
@@ -274,5 +266,4 @@ final class AppState {
     var loggingOut = false
     var isInitialSync = false
     var systemDark = false
-    var calendarLoading = false
 }

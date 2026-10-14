@@ -13,8 +13,7 @@ export async function createWMDBTodo(
   sqlRaw: WMDBTodo,
   user: User,
   pushBackTodos: Todo[],
-  usersForSync: Set<Ref<User, string>>,
-  savedTodos: Todo[]
+  usersForSync: Set<Ref<User, string>>
 ) {
   const todoFromSql = fromSqlToObject(sqlRaw, WMDBTables.Todo, user._id) as Todo
   await sanitizeDelegation(todoFromSql, user)
@@ -43,7 +42,7 @@ export async function createWMDBTodo(
   }
   const todoExist = !!(await TodoModel.findOne(query))
   if (todoExist) {
-    await updateWMDBTodo(sqlRaw, user, pushBackTodos, usersForSync, savedTodos)
+    await updateWMDBTodo(sqlRaw, user, pushBackTodos, usersForSync)
     return
   }
   const mongoTodo = await new TodoModel(
@@ -53,15 +52,13 @@ export async function createWMDBTodo(
     ...todoFromSql,
     ...(mongoTodo as Document & { _doc: any })._doc,
   })
-  savedTodos.push(mongoTodo as unknown as Todo)
 }
 
 export async function updateWMDBTodo(
   sqlRaw: WMDBTodo,
   user: User,
   pushBackTodos: Todo[],
-  usersForSync: Set<Ref<User, string>>,
-  savedTodos: Todo[]
+  usersForSync: Set<Ref<User, string>>
 ) {
   const todoFromSql = fromSqlToObject(sqlRaw, WMDBTables.Todo, user._id) as Todo
   await sanitizeDelegation(todoFromSql, user)
@@ -84,7 +81,7 @@ export async function updateWMDBTodo(
   }
   const inMongo = await TodoModel.findOne(query)
   if (!inMongo) {
-    await createWMDBTodo(sqlRaw, user, pushBackTodos, usersForSync, savedTodos)
+    await createWMDBTodo(sqlRaw, user, pushBackTodos, usersForSync)
     return
   }
   const incorrectDelegation = await sanitizeDelegation(
@@ -104,5 +101,4 @@ export async function updateWMDBTodo(
     omit(todoFromSql, ['_id', 'createdAt', 'updatedAt', 'clientId'])
   )
   await inMongo.save()
-  savedTodos.push(inMongo)
 }

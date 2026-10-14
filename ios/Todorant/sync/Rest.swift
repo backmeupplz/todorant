@@ -59,11 +59,6 @@ enum Rest {
         return json
     }
 
-    /// Bodies that are plain strings may come JSON-quoted
-    private static func unquote(_ data: Data) -> String {
-        (try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? String) ?? String(data: data, encoding: .utf8) ?? ""
-    }
-
     private static func login(_ provider: String, _ body: [String: Any]) async throws -> User {
         User(json: try object(try await call("POST", "/v2/auth/\(provider)", body, token: nil)))
     }
@@ -89,12 +84,6 @@ enum Rest {
     static func setQrToken(_ uuid: String) async throws { try await call("POST", "/login/qr_token", ["uuid": uuid]) }
 
     static func sendData(_ data: [String: Any]) async throws { try await call("POST", "/data", ["data": data]) }
-
-    static func calendarAuthenticationURL() async throws -> String { unquote(try await call("GET", "/google/calendarAuthenticationURL")) }
-
-    static func calendarAuthorize(_ code: String) async throws -> [String: Any] {
-        try object(try await call("POST", "/google/calendarAuthorize", ["code": code]))
-    }
 
     static func resetDelegateToken() async throws -> String {
         try object(try await call("POST", "/v2/delegation/token", [:]))["token"] as? String ?? ""

@@ -144,13 +144,7 @@ object Settings {
     var preserveOrderByTime by syncedBool("preserveOrderByTime")
     var duplicateTagInBreakdown by syncedBool("duplicateTagInBreakdown")
     var showMoreByDefault by syncedBool("showMoreByDefault")
-    var removeCompletedFromCalendar by syncedBool("removeCompletedFromCalendar")
     var language by syncedString("language")
-    /** JSON object string; null disconnects the calendar */
-    var googleCalendarCredentials by SyncedPref<String?>(
-        "settings", "googleCalendarCredentials", null, toWire = { it?.let(::JSONObject) }, decode = { it },
-        fromWire = { (it as? JSONObject)?.toString() },
-    )
     /** When the server last changed settings */
     var updatedAt by optLongPref("settings.updatedAt")
 

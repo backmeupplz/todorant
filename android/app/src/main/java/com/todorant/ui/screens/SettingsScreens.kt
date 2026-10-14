@@ -356,62 +356,6 @@ fun AddEpicScreen(tagId: String) {
     }
 }
 
-/** Google Calendar OAuth handoff between the integrations and the web view screens */
-private object CalendarAuth {
-    var url = ""
-    var loading by mutableStateOf(false)
-
-    fun authorize(code: String) {
-        loading = true
-        Ui.attempt({ loading = false }) { Settings.googleCalendarCredentials = Rest.calendarAuthorize(code).toString() }
-    }
-}
-
-@Composable
-fun IntegrationsScreen() {
-    StackScreen(t("integrations"), actions = { InfoButton("infoIntegrations") }) {
-        Spacer(Modifier.height(16.dp))
-        TableItem(onClick = { Ui.confirm(t("googleCalendarHint"), t("googleCalendarGotIt")) { googleCalendarTapped() } }) {
-            TableText(t("googleCalendar"))
-            if (CalendarAuth.loading) Box(Modifier.size(25.dp)) { Spinner() }
-            else TableText(t(if (Settings.googleCalendarCredentials != null) "connected" else "notConnected"))
-        }
-    }
-}
-
-private fun googleCalendarTapped() {
-    if (Settings.googleCalendarCredentials != null) {
-        Ui.actionSheet(null, listOf(t("disconnect")), destructive = setOf(0)) {
-            Settings.googleCalendarCredentials = null
-        }
-        return
-    }
-    CalendarAuth.loading = true
-    Ui.attempt({ CalendarAuth.loading = false }) {
-        CalendarAuth.url = Rest.calendarAuthenticationURL()
-        Nav.go(Route.GOOGLE_CALENDAR)
-    }
-}
-
-@Composable
-fun GoogleCalendarScreen() {
-    var handled by remember { mutableStateOf(false) }
-    WebPageScreen(
-        t("googleCalendar"), CalendarAuth.url,
-        configure = { it.settings.userAgentString = "Safari/537.36" },
-        onPageStarted = { view, url ->
-            val uri = android.net.Uri.parse(url)
-            val code = if (uri.host == "accounts.google.com") null else runCatching { uri.getQueryParameter("code") }.getOrNull()
-            if (!handled && !code.isNullOrEmpty()) {
-                handled = true
-                view.stopLoading()
-                Nav.back()
-                CalendarAuth.authorize(code)
-            }
-        },
-    )
-}
-
 @Composable
 fun SecurityScreen() {
     var encryptionOn by remember { mutableStateOf(Session.encryptionKey != null) }

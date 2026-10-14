@@ -79,12 +79,11 @@ Changing the server signs you out of the previous one. Clearing the field takes 
 
 ## Optional integrations
 
-Each integration stays off until its variables are set. When the backend starts, its log says which of the Telegram and Google Calendar ones are off.
+Each integration stays off until its variables are set. When the backend starts, its log says which of the Telegram ones are off.
 
 | Integration | Variables | What it needs |
 | --- | --- | --- |
 | Error reports in Telegram | `TELEGRAM_ERROR_SENDER_TOKEN`, `CHAT_ID` | A bot from [@BotFather](https://t.me/BotFather) and the chat it should post to. Without them, errors go to `docker compose logs backend` |
-| Google Calendar | `GOOGLE_CALENDAR_CLIENT_ID`, `GOOGLE_CALENDAR_SECRET`, `BASE_URL`, `BACKEND_URL` | An OAuth client in the Google Cloud console with the Calendar API enabled and `<BASE_URL>/google_calendar_setup_web` as an authorized redirect URI. `BASE_URL` is your web app's address and `BACKEND_URL` your backend's |
 | Telegram bot | `TELEGRAM_LOGIN_TOKEN`, `WIT_LANGUAGES` | Your own bot, for accounts that signed in with Telegram: they can add todos by messaging it. The apps' Telegram sign-in uses the official @todorant_bot, so most servers skip this. Voice messages also need [wit.ai](https://wit.ai) tokens and ffmpeg, which the image doesn't include |
 | Facebook sign-in | `FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET` | Only for apps built with your own Facebook app |
 

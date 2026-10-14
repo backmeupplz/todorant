@@ -36,7 +36,7 @@ Todorant grew out of more than twenty productivity books and methodologies. When
 - **Realtime sync** between all your devices, with offline support and field-level conflict resolution, so changes made on two devices at once both survive.
 - **End-to-end encryption** of your todos with a password of your choice.
 - **Delegation**, to hand todos to friends and colleagues and accept the ones they hand to you.
-- **Google Calendar sync**, a **Telegram bot** that turns messages into todos, **hashtags and epics** to group related work, and **reports** of everything you've done.
+- A **Telegram bot** that turns messages into todos, **hashtags and epics** to group related work, and **reports** of everything you've done.
 - **Six languages** (English, Spanish, Italian, Portuguese, Russian and Ukrainian) and a dark mode on every platform.
 
 ## Host your own

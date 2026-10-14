@@ -158,8 +158,6 @@ struct RouteScreen: View {
         case .tags: TagsScreen()
         case let .addEpic(id): AddEpicScreen(tagId: id)
         case let .changeText(id): ChangeTextScreen(tagId: id)
-        case .integrations: IntegrationsScreen()
-        case .googleCalendar: GoogleCalendarScreen()
         case .security: SecurityScreen()
         case .delegators: DelegationUsersScreen(delegators: true)
         case .delegates: DelegationUsersScreen(delegators: false)

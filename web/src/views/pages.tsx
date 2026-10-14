@@ -1,11 +1,11 @@
 import { useSignal } from '../lib/state'
 import { useEffect } from 'preact/hooks'
 import { call } from '../data/rest'
-import { session, setSetting } from '../data/store'
+import { session } from '../data/store'
 import { t } from '../i18n'
-import { Spinner, alert, confirm, lazy, showError, toast } from '../ui/kit'
+import { Spinner, alert, confirm, lazy, toast } from '../ui/kit'
 import { ChartsSkeleton } from '../ui/skeletons'
-import { go, query } from '../ui/router'
+import { go } from '../ui/router'
 import { link } from './Landing'
 import { DeleteAccount, Privacy, Terms } from './static'
 import './pages.css'
@@ -24,7 +24,6 @@ export function Pages({ path }: { path: string }) {
   else if (path === '/mobile-login/telegram') body = <TelegramMobile />
   else if (path === '/mobile_login_success') body = <p class="page-center emoji">✅</p>
   else if (path === '/mobile_login_error') body = <p class="page-center emoji">❌</p>
-  else if (path === '/google_calendar_setup_web') body = <Task key={path} run={() => calendar(query.value.get('code'), query.value.get('state'))} />
   else if (path === '/apple_firefox_error') body = <p class="page-center" dangerouslySetInnerHTML={{ __html: t('errors.appleFirefox') }} />
   else body = (
     <div class="page-center">
@@ -65,22 +64,6 @@ async function acceptInvite(token: string) {
     } catch {
       toast(t('errors.delegate.invalidToken'), true)
     }
-  }
-  go('/superpower', true)
-}
-
-/**
- * Google's return from the calendar consent. The backend signed `state` into the consent URL it gave
- * us; a code without it was started by someone else (a link that would connect their calendar to this
- * account and receive its todos), so it's refused.
- */
-async function calendar(code: string | null, state: string | null) {
-  if (!session.value || !code || !state) return go('/', true)
-  try {
-    setSetting('googleCalendarCredentials', await call('POST', '/google/calendarAuthorize', { code, state, web: true }))
-    toast(t('googleCalendarEnableSuccess'))
-  } catch (e) {
-    showError(e)
   }
   go('/superpower', true)
 }

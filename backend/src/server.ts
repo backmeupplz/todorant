@@ -16,7 +16,7 @@ import { ensureIndexes } from '@/v2/indexes'
 import { runMongo } from '@/models/index'
 import { socketServer } from '@/sockets/io'
 
-// Only these are required; every integration (Telegram, Google Calendar, …) is off when unset
+// Only these are required; every integration (Telegram, Facebook, …) is off when unset
 for (const name of ['MONGO', 'JWT']) {
   if (!process.env[name]) {
     console.error(`${name} is required (see .env.example)`)

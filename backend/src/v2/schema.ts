@@ -41,8 +41,6 @@ const settings = {
   duplicateTagInBreakdown: 'boolean',
   showMoreByDefault: 'boolean',
   language: 'string',
-  removeCompletedFromCalendar: 'boolean',
-  googleCalendarCredentials: 'object',
 } as const
 
 export const fields = { todo, tag, settings } as const
@@ -71,17 +69,6 @@ const checks: { [field: string]: (value: any) => boolean } = {
   startTimeOfDay: hhmm,
   firstDayOfWeek: int(0, 6),
   language: (v) => /^[a-zA-Z]{2,8}([-_][a-zA-Z0-9]{1,8}){0,3}$/.test(v),
-  // Google's token response: a few flat strings and numbers, no operators, nesting or megabytes
-  googleCalendarCredentials: (v) =>
-    !Array.isArray(v) &&
-    Object.keys(v).length <= 10 &&
-    Object.entries(v).every(
-      ([key, x]) =>
-        /^[a-z_]{1,40}$/.test(key) &&
-        (x === null ||
-          Number.isFinite(x) ||
-          (typeof x === 'string' && x.length <= 4096))
-    ),
 }
 
 /** Keeps only known fields with valid values; null clears a field. Throws on anything else. */

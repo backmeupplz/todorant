@@ -150,7 +150,6 @@ const defaults = {
 /**
  * Applies todo/tag ops with field-level last-writer-wins on the client edit time (`at`, clamped to now):
  * a field changes only if nobody wrote it later; losing fields come back as `fix` in the ack.
- * Returns the acks and the changed todos (for side effects like the calendar).
  */
 async function applyDocs(
   collection: 'todo' | 'tag',
@@ -286,7 +285,6 @@ async function applyDocs(
   }
   return {
     acks,
-    changed: list.map((c) => docOf(c.id)),
     counterparts: new Set(
       list.flatMap((c) => {
         const doc = docOf(c.id)
@@ -347,14 +345,9 @@ async function applySettings(
 
 /**
  * Applies a batch of ops for [userId]; [origin] is the socket that sent them (it doesn't get its own
- * changes echoed). [key] is the client's encryption password, only used for Google Calendar like v1.
+ * changes echoed).
  */
-export async function push(
-  userId: string,
-  ops: Op[],
-  origin?: WebSocket,
-  key?: string
-) {
+export async function push(userId: string, ops: Op[], origin?: WebSocket) {
   if (!Array.isArray(ops)) throw invalid('Invalid ops')
   if (ops.length > 5000) throw invalid('Too many ops')
   spend(userId, ops.length / 100)
@@ -364,14 +357,12 @@ export async function push(
   const of = (c: Op['c']) => ops.filter((o) => o && o.c === c)
   const acks: Ack[] = []
   const counterparts = new Set<string>()
-  const changedTodos: Record<string, any>[] = []
   for (const collection of ['tag', 'todo'] as const) {
     const batch = of(collection)
     if (!batch.length) continue
     const result = await applyDocs(collection, user, batch, now, origin)
     acks.push(...result.acks.map((a) => ({ c: collection, ...a })))
     result.counterparts.forEach((c) => counterparts.add(c))
-    if (collection === 'todo') changedTodos.push(...result.changed)
   }
   if (of('settings').length)
     acks.push(await applySettings(user, of('settings'), now))
@@ -404,8 +395,6 @@ export async function push(
   if (acks.some((a) => a.u && a.c !== 'todo' && a.c !== 'tag'))
     publish(userId, { t: 'pull' }, origin)
   notifyLegacy([userId, ...counterparts])
-  if (changedTodos.length && user.settings?.googleCalendarCredentials)
-    updateCalendar(changedTodos, user, key)
   return acks
 }
 
@@ -415,19 +404,4 @@ function notifyLegacy(users: string[]) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { requestLegacySync } = require('@/sockets')
   for (const user of new Set(users)) requestLegacySync(user)
-}
-
-function updateCalendar(
-  todos: Record<string, any>[],
-  user: Record<string, any>,
-  key?: string
-) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { updateTodos } = require('@/helpers/googleCalendar')
-  updateTodos(
-    todos,
-    user.settings.googleCalendarCredentials,
-    key,
-    user.settings.removeCompletedFromCalendar
-  ).catch(() => undefined)
 }

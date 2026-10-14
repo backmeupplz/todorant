@@ -7,7 +7,7 @@ enum TutorialStep: Int, CaseIterable {
          Finished, Close, Start, Explain, AddTask, AddText, SelectDate, SelectFrog, SelectCompleted, ShowMore, AddAnotherTask,
          AddTodoComplete, ExplainCurrent, DeleteEditComplete, Breakdown, BreakdownTodo, BreakdownTodoAction, BreakdownVanish,
          PlanningExplain, PlanningExplain2, ExplainHashtags, ExplainSearchAndCompleted, ExplainReccuring, ExplainSettings,
-         ExplainNotifications, ExplainNotificationsGoogle, ExplainMultiplatform, ExplainPricing, Feedback, Rules, Info, Congratulations
+         ExplainNotifications, ExplainMultiplatform, ExplainPricing, Feedback, Rules, Info, Congratulations
 
     var name: String { String(describing: self) }
     /// Translation key: the RN enum value differs from its name for one step
@@ -31,7 +31,6 @@ enum OnboardingTarget {
     static let tabPlanning = "tabPlanning"
     static let tabSettings = "tabSettings"
     static let planningSegment = "planningSegment"
-    static let integrationsButton = "integrationsButton"
     static let supportButton = "supportButton"
     static let howToUse = "howToUse"
     static let infoButton = "infoButton"
@@ -181,7 +180,6 @@ final class Onboarding {
                         center: true, screen: "settings")
         case .ExplainSettings: return Step(target: OnboardingTarget.tabSettings, center: true, divider: 0.5)
         case .ExplainNotifications: return Step(center: true)
-        case .ExplainNotificationsGoogle: return Step(target: OnboardingTarget.integrationsButton, scroll: true)
         case .ExplainMultiplatform:
             return Step(buttons: [OnboardingButton(message: "website", preferred: true) { Ui.openUrl("https://todorant.com") }], center: true)
         case .ExplainPricing: return Step(center: true)

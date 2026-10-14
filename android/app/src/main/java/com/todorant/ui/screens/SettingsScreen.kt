@@ -112,11 +112,6 @@ fun SettingsScreen() {
             }
             LanguageAndColorMode()
         }
-        row(Target.INTEGRATIONS_BUTTON) {
-            TableItem(onClick = { Nav.go(if (user != null) Route.INTEGRATIONS else Route.login()) }, modifier = Modifier.onboardingTarget(Target.INTEGRATIONS_BUTTON)) {
-                TableText(t("integrations"))
-            }
-        }
         row { GeneralSwitches() }
         // Information
         row {
@@ -251,7 +246,6 @@ private fun TodoSettings() {
     TextAndSwitch("askBeforeDelete", Settings.askBeforeDelete) { Settings.askBeforeDelete = it }
     TextAndSwitch("settingsObject.duplicateTagInBreakdown", Settings.duplicateTagInBreakdown == true) { Settings.duplicateTagInBreakdown = it }
     TextAndSwitch("settingsObject.showMoreByDefault", Settings.showMoreByDefault == true) { Settings.showMoreByDefault = it }
-    TextAndSwitch("settingsObject.removeCompletedFromCalendar", Settings.removeCompletedFromCalendar == true) { Settings.removeCompletedFromCalendar = it }
     ValueRow(t("firstDayOfWeek"), t("weekday${Settings.firstDayOfWeekSafe}")) {
         Ui.actionSheet(null, (0..6).map { t("weekday$it") }) { Settings.firstDayOfWeek = it }
     }
