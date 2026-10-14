@@ -80,7 +80,10 @@ const PendingSignupModel = getModelForClass(PendingSignup, {
 const sha256 = (text: string) => createHash('sha256').update(text).digest('hex')
 const mailer = () =>
   process.env.SMTP_URL
-    ? createTransport(process.env.SMTP_URL, { from: process.env.MAIL_FROM })
+    ? createTransport(process.env.SMTP_URL, {
+        from: process.env.MAIL_FROM,
+        replyTo: process.env.MAIL_REPLY_TO,
+      })
     : undefined
 
 async function createUser(login: string, passwordHash: string, name: string) {
