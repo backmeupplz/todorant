@@ -7,10 +7,12 @@ import {
   index,
   prop,
 } from '@typegoose/typegoose'
+import { URLSearchParams } from 'url'
 import { User, UserModel } from '@/models/user'
 import { createHash, randomBytes, scrypt, timingSafeEqual } from 'crypto'
 import { createTransport } from 'nodemailer'
 import { sign } from '@/helpers/jwt'
+import axios from 'axios'
 
 /**
  * Email + password accounts, mainly for self-hosted servers without OAuth apps. The address lives in
@@ -58,8 +60,9 @@ setInterval(() => {
 }, 60000).unref()
 
 /**
- * With SMTP_URL set, a sign-up only emails a link: the account exists once the link is opened. Without it
- * (self-hosted servers on a home network) sign-up creates the account right away
+ * With SMTP_URL (or a Mailgun EMAIL_API_KEY + EMAIL_DOMAIN) set, a sign-up only emails a link: the account
+ * exists once the link is opened. Without either (self-hosted servers on a home network) sign-up creates the
+ * account right away
  */
 // updatedAt: signing up again sends a new link, good for another 24 hours
 @index({ updatedAt: 1 }, { expireAfterSeconds: 24 * 60 * 60 })
@@ -78,13 +81,30 @@ const PendingSignupModel = getModelForClass(PendingSignup, {
   schemaOptions: { timestamps: true },
 })
 const sha256 = (text: string) => createHash('sha256').update(text).digest('hex')
-const mailer = () =>
-  process.env.SMTP_URL
-    ? createTransport(process.env.SMTP_URL, {
-        from: process.env.MAIL_FROM,
-        replyTo: process.env.MAIL_REPLY_TO,
-      })
-    : undefined
+type Mail = { to: string; subject: string; text: string }
+function mailer() {
+  const { SMTP_URL, EMAIL_API_KEY, EMAIL_DOMAIN, MAIL_FROM, MAIL_REPLY_TO } =
+    process.env
+  if (SMTP_URL)
+    return createTransport(SMTP_URL, {
+      from: MAIL_FROM,
+      replyTo: MAIL_REPLY_TO,
+    })
+  if (!EMAIL_API_KEY || !EMAIL_DOMAIN) return undefined
+  // Mailgun's HTTP API (US region), with the key todorant.com already had
+  return {
+    sendMail: (mail: Mail) =>
+      axios.post(
+        `https://api.mailgun.net/v3/${EMAIL_DOMAIN}/messages`,
+        new URLSearchParams({
+          ...mail,
+          from: MAIL_FROM || `Todorant <todorant@${EMAIL_DOMAIN}>`,
+          ...(MAIL_REPLY_TO ? { 'h:Reply-To': MAIL_REPLY_TO } : {}),
+        }).toString(),
+        { auth: { username: 'api', password: EMAIL_API_KEY } }
+      ),
+  }
+}
 
 async function createUser(login: string, passwordHash: string, name: string) {
   const params = {
