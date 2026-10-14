@@ -178,6 +178,7 @@ struct SettingsScreen: View {
             }
         }
         .navigationTitle(t("settings"))
+        .largeTitleOnPhone()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 if Sync.shared.isSyncing { ProgressView() }

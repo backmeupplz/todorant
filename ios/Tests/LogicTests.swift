@@ -1,3 +1,4 @@
+import SQLite3
 import XCTest
 @testable import Todorant
 
@@ -230,4 +231,35 @@ final class LogicTests: XCTestCase {
     }
 
     // endregion
+
+    func testImportsUnsyncedWatermelonRecords() {
+        let path = NSTemporaryDirectory() + "watermelon-\(UUID().uuidString).db"
+        var old: OpaquePointer?
+        sqlite3_open(path, &old)
+        for sql in [
+            "CREATE TABLE todos (id TEXT, _status TEXT, server_id TEXT, text TEXT, is_completed INTEGER, is_frog INTEGER, frog_fails INTEGER, " +
+                "is_skipped INTEGER, \"order\" REAL, month_and_year TEXT, date TEXT, time TEXT, is_deleted INTEGER, is_encrypted INTEGER, " +
+                "is_repetitive INTEGER, is_delegate_accepted INTEGER, user_id TEXT, delegator_id TEXT, created_at REAL)",
+            "CREATE TABLE users (id TEXT, server_id TEXT, is_delegator INTEGER, delegate_invite_token TEXT)",
+            "CREATE TABLE tags (id TEXT, _status TEXT, server_id TEXT, tag TEXT, color TEXT, is_deleted INTEGER, is_epic INTEGER, " +
+                "epic_goal INTEGER, is_epic_completed INTEGER, epic_points INTEGER, epic_order INTEGER, number_of_uses INTEGER, created_at REAL)",
+            "INSERT INTO todos VALUES ('w1', 'created', NULL, 'Local only', 0, 1, 2, 0, 3, '2030-01', '05', '10:00', 0, 0, 0, NULL, NULL, NULL, 1700000000000)",
+            "INSERT INTO todos VALUES ('w2', 'synced', 'abcdefabcdefabcdefabcdef', 'Already synced', 0, 0, 0, 0, 0, '2030-01', '05', NULL, 0, 0, 0, NULL, NULL, NULL, 0)",
+            "INSERT INTO tags VALUES ('t1', 'updated', 'aaaaaaaaaaaaaaaaaaaaaaaa', 'home', '#2DCA8C', 0, 1, 10, 0, 3, 0, 4, 0)",
+        ] { sqlite3_exec(old, sql, nil, nil, nil) }
+        sqlite3_close(old)
+        XCTAssertEqual(Migration.importWatermelon(path), 3)
+        let todo = Db.shared.todos().first!
+        XCTAssertEqual(Db.shared.todos().count, 1)
+        XCTAssertEqual(todo.text, "Local only")
+        XCTAssertTrue(todo.frog)
+        XCTAssertEqual(todo.frogFails, 2)
+        XCTAssertEqual(todo.title, "2030-01-05")
+        XCTAssertEqual(todo.time, "10:00")
+        XCTAssertNotNil(todo.id.range(of: "^[0-9a-f]{24}$", options: .regularExpression))
+        let tag = Db.shared.tag("aaaaaaaaaaaaaaaaaaaaaaaa")!
+        XCTAssertEqual(tag.epicPoints, 3)
+        // Everything imported goes to the server
+        XCTAssertTrue(Db.shared.outbox().contains { $0.id == todo.id && $0.field == "text" })
+    }
 }

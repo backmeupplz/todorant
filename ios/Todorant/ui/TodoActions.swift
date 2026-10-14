@@ -59,7 +59,7 @@ extension Todos {
      * Unlinks a delegate or delegator on the server and deletes the todos shared with them,
      * like the RN app's removeDelegation
      */
-    static func removeDelegation(_ user: DelegationUser) async throws {
+    @MainActor static func removeDelegation(_ user: DelegationUser) async throws {
         try await Rest.removeDelegation(user.id, isDelegator: user.isDelegator)
         let shared = db.todos(user.isDelegator ? "delegator = ?" : "user = ?", [user.id])
         for todo in shared {

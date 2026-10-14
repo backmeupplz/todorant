@@ -15,6 +15,13 @@
 		7D0000000000000000000074 /* I18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000064 /* I18n.swift */; };
 		7D0000000000000000000075 /* translations in Resources */ = {isa = PBXBuildFile; fileRef = 7D000000000000000000000A /* translations */; };
 		7D0000000000000000000076 /* TodorantWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7D000000000000000000000D /* TodorantWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7D0000000000000000000090 /* Db.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000060 /* Db.swift */; };
+		7D0000000000000000000091 /* Stores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000061 /* Stores.swift */; };
+		7D0000000000000000000092 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000062 /* Text.swift */; };
+		7D0000000000000000000093 /* Todos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000063 /* Todos.swift */; };
+		7D0000000000000000000094 /* I18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000064 /* I18n.swift */; };
+		7D0000000000000000000095 /* translations in Resources */ = {isa = PBXBuildFile; fileRef = 7D000000000000000000000A /* translations */; };
+		7D0000000000000000000096 /* TodorantShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7D0000000000000000000019 /* TodorantShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +46,13 @@
 			remoteGlobalIDString = 7D0000000000000000000050;
 			remoteInfo = TodorantWidget;
 		};
+		7D0000000000000000000036 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7D0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7D0000000000000000000080;
+			remoteInfo = TodorantShare;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +63,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				7D0000000000000000000076 /* TodorantWidget.appex in Embed Foundation Extensions */,
+				7D0000000000000000000096 /* TodorantShare.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +85,9 @@
 		7D0000000000000000000062 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todorant/logic/Text.swift; sourceTree = "<group>"; };
 		7D0000000000000000000063 /* Todos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todorant/logic/Todos.swift; sourceTree = "<group>"; };
 		7D0000000000000000000064 /* I18n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todorant/I18n.swift; sourceTree = "<group>"; };
+		7D0000000000000000000019 /* TodorantShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodorantShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D000000000000000000001B /* Share.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Share.plist; sourceTree = "<group>"; };
+		7D000000000000000000001C /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -91,6 +109,11 @@
 		7D000000000000000000000E /* Widget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Widget;
+			sourceTree = "<group>";
+		};
+		7D000000000000000000001A /* Share */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Share;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -124,6 +147,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7D0000000000000000000082 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -139,7 +169,10 @@
 				7D000000000000000000000E /* Widget */,
 				7D000000000000000000000F /* Widget.plist */,
 				7D0000000000000000000017 /* Widget.entitlements */,
-				7D0000000000000000000018 /* Shared with the widget */,
+				7D000000000000000000001A /* Share */,
+				7D000000000000000000001B /* Share.plist */,
+				7D000000000000000000001C /* Share.entitlements */,
+				7D0000000000000000000018 /* Shared with the extensions */,
 				7D0000000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -151,11 +184,12 @@
 				7D000000000000000000000B /* Tests.xctest */,
 				7D000000000000000000000C /* UITests.xctest */,
 				7D000000000000000000000D /* TodorantWidget.appex */,
+				7D0000000000000000000019 /* TodorantShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7D0000000000000000000018 /* Shared with the widget */ = {
+		7D0000000000000000000018 /* Shared with the extensions */ = {
 			isa = PBXGroup;
 			children = (
 				7D0000000000000000000060 /* Db.swift */,
@@ -164,7 +198,7 @@
 				7D0000000000000000000063 /* Todos.swift */,
 				7D0000000000000000000064 /* I18n.swift */,
 			);
-			name = "Shared with the widget";
+			name = "Shared with the extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +217,7 @@
 			);
 			dependencies = (
 				7D0000000000000000000034 /* PBXTargetDependency */,
+				7D0000000000000000000037 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				7D0000000000000000000007 /* Todorant */,
@@ -254,6 +289,26 @@
 			productReference = 7D000000000000000000000D /* TodorantWidget.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		7D0000000000000000000080 /* TodorantShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D0000000000000000000056 /* Build configuration list for PBXNativeTarget "TodorantShare" */;
+			buildPhases = (
+				7D0000000000000000000081 /* Sources */,
+				7D0000000000000000000082 /* Frameworks */,
+				7D0000000000000000000083 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7D000000000000000000001A /* Share */,
+			);
+			name = TodorantShare;
+			productName = TodorantShare;
+			productReference = 7D0000000000000000000019 /* TodorantShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -270,6 +325,9 @@
 					7D0000000000000000000020 = {
 						CreatedOnToolsVersion = 27.0;
 						TestTargetID = 7D0000000000000000000010;
+					};
+					7D0000000000000000000080 = {
+						CreatedOnToolsVersion = 27.0;
 					};
 					7D0000000000000000000050 = {
 						CreatedOnToolsVersion = 27.0;
@@ -303,6 +361,7 @@
 				7D0000000000000000000020 /* Tests */,
 				7D0000000000000000000028 /* UITests */,
 				7D0000000000000000000050 /* TodorantWidget */,
+				7D0000000000000000000080 /* TodorantShare */,
 			);
 		};
 /* End PBXProject section */
@@ -335,6 +394,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D0000000000000000000075 /* translations in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D0000000000000000000083 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D0000000000000000000095 /* translations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +441,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7D0000000000000000000081 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D0000000000000000000090 /* Db.swift in Sources */,
+				7D0000000000000000000091 /* Stores.swift in Sources */,
+				7D0000000000000000000092 /* Text.swift in Sources */,
+				7D0000000000000000000093 /* Todos.swift in Sources */,
+				7D0000000000000000000094 /* I18n.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -391,6 +470,11 @@
 			isa = PBXTargetDependency;
 			target = 7D0000000000000000000050 /* TodorantWidget */;
 			targetProxy = 7D0000000000000000000035 /* PBXContainerItemProxy */;
+		};
+		7D0000000000000000000037 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7D0000000000000000000080 /* TodorantShare */;
+			targetProxy = 7D0000000000000000000036 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -599,6 +683,54 @@
 			};
 			name = Release;
 		};
+		7D0000000000000000000054 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Share.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 181;
+				DEVELOPMENT_TEAM = ACWP4F58HZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Share.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Todorant;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app.TodorantShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7D0000000000000000000055 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Share.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 181;
+				DEVELOPMENT_TEAM = ACWP4F58HZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Share.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Todorant;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app.TodorantShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -643,6 +775,15 @@
 			buildConfigurations = (
 				7D000000000000000000004C /* Debug */,
 				7D000000000000000000004D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D0000000000000000000056 /* Build configuration list for PBXNativeTarget "TodorantShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D0000000000000000000054 /* Debug */,
+				7D0000000000000000000055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

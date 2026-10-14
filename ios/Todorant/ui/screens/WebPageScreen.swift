@@ -33,7 +33,7 @@ private struct WebView: UIViewRepresentable {
         view.customUserAgent = userAgent
         view.isOpaque = false
         view.backgroundColor = .clear
-        URL(string: url).map { view.load(URLRequest(url: $0)) }
+        if let url = URL(string: url) { view.load(URLRequest(url: url)) }
         return view
     }
 
@@ -41,7 +41,7 @@ private struct WebView: UIViewRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
-    final class Coordinator: NSObject, WKNavigationDelegate {
+    @MainActor final class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView
         init(_ parent: WebView) { self.parent = parent }
 

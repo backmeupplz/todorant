@@ -31,14 +31,16 @@ struct Provider: TimelineProvider {
         Entry(date: Date(), loggedIn: true, todo: Todo(text: "Plan the week", frog: true), skippable: true, total: 5, done: 2)
     }
 
+    // The database is used from the main thread only, like in the app
     func getSnapshot(in context: Context, completion: @escaping (Entry) -> Void) {
-        completion(context.isPreview ? placeholder(in: context) : currentEntry())
+        let preview = context.isPreview ? placeholder(in: context) : nil
+        DispatchQueue.main.async { completion(preview ?? currentEntry()) }
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         // The app reloads the widget after every change; a new day needs a redraw on its own
         let next = min(calendar.startOfDay(for: Date()).plusDays(1).addingTimeInterval(60), Date().addingTimeInterval(30 * 60))
-        completion(Timeline(entries: [currentEntry()], policy: .after(next)))
+        DispatchQueue.main.async { completion(Timeline(entries: [currentEntry()], policy: .after(next))) }
     }
 }
 
@@ -56,7 +58,7 @@ struct TodoAction: AppIntent {
         self.action = action
     }
 
-    func perform() async throws -> some IntentResult {
+    @MainActor func perform() async throws -> some IntentResult {
         Db.shared.open()
         if let todo = Db.shared.todo(id), !todo.completed, !todo.deleted {
             switch action {

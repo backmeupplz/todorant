@@ -35,7 +35,7 @@ final class Ui {
     static func error(_ error: String) { alert(t("error"), error) }
 
     /// Runs [block]; a failure shows up as an error alert
-    static func attempt(_ finally: @escaping () -> Void = {}, _ block: @escaping () async throws -> Void) {
+    static func attempt(_ finally: @escaping () -> Void = {}, _ block: @escaping @MainActor () async throws -> Void) {
         Task { @MainActor in
             do { try await block() } catch { Ui.error(error) }
             finally()

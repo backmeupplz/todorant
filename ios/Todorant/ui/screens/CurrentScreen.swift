@@ -40,6 +40,7 @@ struct CurrentScreen: View {
         .appList()
         .readableWidth()
         .navigationTitle(t("current"))
+        .largeTitleOnPhone()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) { InfoButton(message: "infoCurrent") }
             if Settings.gamificationOn { ToolbarItem(placement: .topBarTrailing) { HeroButton() } }

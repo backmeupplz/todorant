@@ -50,7 +50,7 @@ sed -i.bak "s/^JWT=.*/JWT=$(openssl rand -hex 32)/" .env && rm .env.bak
 docker compose up -d
 ```
 
-Open http://localhost:8080 and create an account with your email and a password. The Android app connects to your server from **Settings → Server**. The [self-hosting guide](docs/self-hosting.md) walks through HTTPS, access from other devices, backups and every setting.
+Open http://localhost:8080 and create an account with your email and a password. The Android and iOS apps connect to your server from **Settings → Server**. The [self-hosting guide](docs/self-hosting.md) walks through HTTPS, access from other devices, backups and every setting.
 
 ## Repository
 
@@ -59,6 +59,7 @@ Open http://localhost:8080 and create an account with your email and a password.
 | [`backend`](backend) | The Koa and MongoDB API behind todorant.com: `/v2` REST with realtime WebSocket sync for the current apps, and the original API that older clients still use |
 | [`web`](web) | The web app at [todorant.com](https://todorant.com), built with Preact, keeping a copy of your data in IndexedDB and syncing it live |
 | [`android`](android) | The native Android app, written in Kotlin with Jetpack Compose |
+| [`ios`](ios) | The native iPhone and iPad app, written in Swift with SwiftUI, sharing the Android app's translations |
 | [`docs`](docs) | The self-hosting guide |
 
 ## Development
@@ -90,6 +91,17 @@ cd android
 ./gradlew :app:installDebug                              # against backend.todorant.com
 ./gradlew :app:installDebug -Papi=http://10.0.2.2:1337   # the emulator's view of your machine
 ```
+
+**iOS app** needs Xcode 27:
+
+```sh
+cd ios
+./build.sh                                # simulator build; run the Todorant scheme from Xcode
+./build.sh archive                        # App Store archive (automatic signing)
+xcodebuild -scheme Todorant -destination 'platform=iOS Simulator,name=iPhone 17' test -only-testing:Tests
+```
+
+Run it with the launch argument `-API http://localhost:1337` to use your local backend (Edit Scheme → Arguments).
 
 Pushes to `main` deploy on their own once the checks pass: the backend to backend.todorant.com, the web app to GitHub Pages, and fresh Docker images to the GitHub Container Registry. Android builds are attached to [releases](https://github.com/backmeupplz/todorant/releases).
 
