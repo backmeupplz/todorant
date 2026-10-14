@@ -301,6 +301,7 @@ struct AddTodoScreen: View {
                     .onMove { vms.move(fromOffsets: $0, toOffset: $1) }
                 }
                 .appList()
+                .scrollDismissesKeyboard(.interactively)
                 .readableWidth()
                 .onChange(of: vms.count) { _, _ in
                     if let last = vms.last { withAnimation { proxy.scrollTo(last.key, anchor: .top) } }
@@ -323,7 +324,7 @@ struct AddTodoScreen: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     if !isEdit {
                         Button { if mode == .breakdown || !Onboarding.active { addTodo() } } label: { Image(systemName: "plus") }
-                            .accessibilityLabel(t("addTodoSingular"))
+                            .accessibilityLabel(t("addTodo")).accessibilityIdentifier("addFormTop")
                             .onboardingTarget(OnboardingTarget.addButton)
                     }
                     InfoButton(message: isEdit ? "infoEdit" : mode == .breakdown ? "infoBreakdown" : "infoAdd")
@@ -365,6 +366,7 @@ private struct SaveRow: View {
                     .background(enabled ? Colors.primary : .gray, in: RoundedRectangle(cornerRadius: 10))
             }
             .buttonStyle(.plain).disabled(!saveAllowed)
+            .accessibilityIdentifier("saveTodos")
             .simultaneousGesture(LongPressGesture().onEnded { _ in
                 let json = editedTodo.flatMap { try? JSONSerialization.data(withJSONObject: TodoEntity.toJson($0)) }.flatMap { String(data: $0, encoding: .utf8) }
                 Ui.copy(json ?? "undefined", toast: t("copied"))
@@ -375,7 +377,7 @@ private struct SaveRow: View {
                 Button(action: onAdd) {
                     TIcon(name: "add_outline_28", size: 20, color: .white).frame(width: 48, height: 48).background(brandGradient, in: RoundedRectangle(cornerRadius: 10))
                 }
-                .buttonStyle(.plain).disabled(!addAllowed).accessibilityLabel(t("addTodoSingular"))
+                .buttonStyle(.plain).disabled(!addAllowed).accessibilityLabel(t("addTodo")).accessibilityIdentifier("addForm")
             }
         }
         .frame(height: 48)
@@ -438,7 +440,7 @@ private struct FormRow: View {
                 }
                 .contentShape(Rectangle())
             }
-            .buttonStyle(.plain).disabled(!enabled)
+            .buttonStyle(.plain).disabled(!enabled).accessibilityLabel(text)
             if let onClear {
                 Button(action: onClear) { Image(systemName: "xmark").foregroundStyle(Colors.border).frame(width: 24, height: 24) }
                     .buttonStyle(.plain).accessibilityLabel(t("cancel"))
@@ -486,6 +488,7 @@ private struct TodoForm: View {
             VStack(spacing: 0) {
                 FormRow(text: hasDay ? vm.datePickerValue! : t("addTodoDay"), color: hasDay ? Colors.text : Colors.placeholder, enabled: pickingAllowed) {
                     if dateBlocked() { return }
+                    focused.wrappedValue = nil
                     vm.showDatePicker.toggle()
                     if (vm.date ?? "").isEmpty {
                         vm.monthAndYear = nil
@@ -503,6 +506,7 @@ private struct TodoForm: View {
                 }
                 FormRow(text: monthSet ? vm.monthAndYear! : t("addTodoMonth"), color: monthSet ? Colors.text : Colors.placeholder, enabled: pickingAllowed) {
                     if dateBlocked() { return }
+                    focused.wrappedValue = nil
                     vm.showMonthAndYearPicker.toggle()
                     if !(vm.date ?? "").isEmpty {
                         vm.monthAndYear = nil

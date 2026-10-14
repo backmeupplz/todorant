@@ -123,6 +123,8 @@ struct LinkText: UIViewRepresentable {
         view.backgroundColor = .clear
         view.textContainerInset = .zero
         view.textContainer.lineFragmentPadding = 0
+        // Colors come from the text: links are tinted per hashtag
+        view.linkTextAttributes = [:]
         view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tapped)))
         view.isAccessibilityElement = true
@@ -180,11 +182,11 @@ private struct TodoCardActions: View {
             HStack(spacing: 0) {
                 IconBtn(name: "delete_outline_28-iOS", color: Colors.destruct, disabled: locked, label: t("delete")) { Todos.delete(todo) }
                 if type == .planning && todo.title != todayTitle() && !isTodoOld(todo.monthAndYear, todo.date) {
-                    IconBtn(name: "reply_outline_28-1", label: t("moveToToday")) { Todos.moveToToday(todo) }
+                    IconBtn(name: "reply_outline_28-1", label: "Move to today") { Todos.moveToToday(todo) }
                 }
                 IconBtn(name: "edit_outline_28", disabled: locked, label: t("editTodo")) { Nav.go(.edit(todo.id)) }
                 if type == .current && skippable {
-                    IconBtn(name: "arrow_right_outline_28--forward", disabled: locked, label: t("skip")) { Todos.skip(todo) }
+                    IconBtn(name: "arrow_right_outline_28--forward", disabled: locked, label: t("skipped")) { Todos.skip(todo) }
                 }
                 if type == .current || type == .planning {
                     IconBtn(name: "list_outline_28", disabled: locked && Onboarding.shared.step != .Breakdown, label: t("breakdownTodo")) {

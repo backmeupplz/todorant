@@ -8,6 +8,7 @@ struct TIcon: View {
 
     var body: some View {
         Text(Icons.codes[name] ?? "?").font(Fonts.icons(size)).foregroundStyle(color).frame(width: size, height: size)
+            .accessibilityHidden(true)
     }
 }
 
@@ -133,7 +134,7 @@ struct PlusButton: View {
         }
         .buttonStyle(.plain).disabled(!enabled)
         .padding(.trailing, 16).padding(.bottom, 24)
-        .accessibilityLabel(t("addTodo"))
+        .accessibilityLabel(t("addTodo")).accessibilityIdentifier("plus")
     }
 }
 
@@ -231,7 +232,11 @@ private struct ReadableWidth: ViewModifier {
     let width: CGFloat
     func body(content: Content) -> some View {
         GeometryReader { g in
-            content.contentMargins(.horizontal, max(0, (g.size.width - width) / 2), for: .scrollContent)
+            if g.size.width > width + 40 {
+                content.contentMargins(.horizontal, (g.size.width - width) / 2, for: .scrollContent)
+            } else {
+                content
+            }
         }
     }
 }

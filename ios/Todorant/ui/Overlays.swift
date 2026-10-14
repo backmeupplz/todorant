@@ -73,6 +73,7 @@ private struct DayCompleteOverlay: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black.opacity(0.7))
         .opacity(opacity)
+        .accessibilityHidden(!showing)
         .onChange(of: Effects.shared.dayCompleteKey) {
             // Ignored while already showing, like the RN overlay
             if showing { return }

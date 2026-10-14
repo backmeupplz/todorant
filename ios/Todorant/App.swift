@@ -59,8 +59,8 @@ struct RootView: View {
         let _ = Clock.shared.today
         let planningRequired = Todos.oldCount() > 0 && !Onboarding.active
         let delegatedToMe = Session.user == nil ? 0 : Todos.delegated(byMe: false).count
-        let tabs: [Tab] = Session.loggingOut || Session.isInitialSync ? [.settings]
-            : planningRequired ? [.planning, .delegation, .settings] : [.current, .planning, .delegation, .settings]
+        // Android shows only Settings during the first sync; here the login screen covers it with a progress overlay
+        let tabs: [Tab] = planningRequired ? [.planning, .delegation, .settings] : [.current, .planning, .delegation, .settings]
         GeometryReader { window in
             TabView(selection: Binding(get: { nav.tab }, set: { if !Onboarding.active { nav.tab = $0 } })) {
                 if tabs.contains(.current) { tab(.current, t("current"), "tab_current") { CurrentScreen() } }
@@ -198,6 +198,7 @@ enum QA {
         if let lang = args.string(forKey: "qaLanguage") { Settings.languageSelect = lang; Settings.language = lang }
         if let mode = args.string(forKey: "qaColorMode").flatMap(ColorMode.init(rawValue:)) { Settings.colorMode = mode }
         if let token = args.string(forKey: "qaToken"), Session.user?.token != token {
+            if Session.user != nil { Account.logout() }
             Task { @MainActor in
                 do { try await Account.login(try await Rest.loginToken(token)) } catch { Ui.error(error) }
             }
