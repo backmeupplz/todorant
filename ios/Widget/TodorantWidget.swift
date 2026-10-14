@@ -115,16 +115,16 @@ struct WidgetView: View {
                         .font(.system(size: family == .systemSmall ? 15 : 17)).lineLimit(family == .systemSmall ? 4 : 3)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     HStack {
-                        Button(intent: TodoAction(id: todo.id, action: "delete")) { Image(systemName: "trash") }.tint(.red)
+                        Button(intent: TodoAction(id: todo.id, action: "delete")) { Image(systemName: "trash").foregroundStyle(.red) }.accessibilityLabel(t("delete"))
                         if entry.skippable {
                             Spacer()
-                            Button(intent: TodoAction(id: todo.id, action: "skip")) { Image(systemName: "arrow.right") }.tint(.blue)
+                            Button(intent: TodoAction(id: todo.id, action: "skip")) { Image(systemName: "arrow.right").foregroundStyle(.blue) }.accessibilityLabel(t("skipped"))
                         }
                         Spacer()
-                        Button(intent: TodoAction(id: todo.id, action: "done")) { Image(systemName: "checkmark") }.tint(.green)
+                        Button(intent: TodoAction(id: todo.id, action: "done")) { Image(systemName: "checkmark").foregroundStyle(.green) }.accessibilityLabel(t("completed"))
                         if family != .systemSmall {
                             Spacer()
-                            Link(destination: URL(string: "todorant://create-todo")!) { Image(systemName: "plus") }.tint(.blue)
+                            Link(destination: URL(string: "todorant://create-todo")!) { Image(systemName: "plus").foregroundStyle(.blue) }.accessibilityLabel(t("addTodo"))
                         }
                     }
                     .font(.system(size: 17, weight: .semibold))

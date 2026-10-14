@@ -94,6 +94,7 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, phase in
             // AppState change → globalSync in the RN app
             if phase == .active {
+                Db.shared.touch()
                 Sync.shared.reconnect()
                 Sync.shared.request()
             }
