@@ -40,6 +40,13 @@ jest.mock('jwks-rsa', () => () => ({
   getSigningKey: (_: string, done: (e: null, key: unknown) => void) =>
     done(null, { publicKey: mockApple.publicKey }),
 }))
+// Emails land here instead of an SMTP server
+const mockMail: { to: string; text: string }[] = []
+jest.mock('nodemailer', () => ({
+  createTransport: () => ({
+    sendMail: async (mail: { to: string; text: string }) => mockMail.push(mail),
+  }),
+}))
 const WEB_CLIENT =
   '989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com'
 
@@ -975,6 +982,50 @@ describe('v2 sync and API', () => {
       email: 'owner@example.com',
       password: 'correct horse',
     }).expect(429)
+  })
+
+  it('creates an email + password account only once the emailed link is opened', async () => {
+    process.env.SMTP_URL = 'smtp://mock'
+    process.env.BACKEND_URL = 'https://backend.example.com'
+    try {
+      // Another client than the earlier tests, which used up 127.0.0.1's sign-in attempts
+      const post = (path: string, body: object) =>
+        request(server)
+          .post(`/v2/auth/${path}`)
+          .set('x-forwarded-for', '203.0.113.7')
+          .send(body)
+      const body = { email: 'Verify@Example.com', password: 'correct horse' }
+      const sent = await post('signup', body).expect(403)
+      expect(sent.body.error).toContain('verify@example.com')
+      expect(
+        await UserModel.exists({ passwordLogin: 'verify@example.com' })
+      ).toBeFalsy()
+      // Signing in before confirming says so
+      expect((await post('password', body).expect(403)).body.error).toContain(
+        'Confirm'
+      )
+      // Signing up again replaces the link
+      await post('signup', body).expect(403)
+      expect(mockMail.length).toBe(2)
+      const link = (text: string) => new URL(text.match(/http\S+/)![0])
+      const old = link(mockMail[0].text)
+      const fresh = link(mockMail[1].text)
+      expect(mockMail[1].to).toBe('verify@example.com')
+      await request(server)
+        .get(old.pathname + old.search)
+        .expect(404)
+      await request(server)
+        .get(fresh.pathname + fresh.search)
+        .expect(200)
+      await request(server)
+        .get(fresh.pathname + fresh.search)
+        .expect(404)
+      await post('password', body).expect(200)
+      await post('signup', body).expect(409)
+    } finally {
+      delete process.env.SMTP_URL
+      delete process.env.BACKEND_URL
+    }
   })
 
   it('deletes an account with everything it owns, leaving others what they accepted', async () => {
