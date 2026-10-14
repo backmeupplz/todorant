@@ -40,6 +40,13 @@ class TodorantUITest: XCTestCase {
         tap(e, line: line)
     }
 
+    /// Replaces a text field's text (taps its end first so deleting removes everything)
+    func clearAndType(_ field: XCUIElement, _ text: String) {
+        wait(field)
+        field.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
+        field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: ((field.value as? String)?.count ?? 0) + 5) + text)
+    }
+
     func button(_ label: String) -> XCUIElement { app.buttons[label].firstMatch }
     func text(_ label: String) -> XCUIElement { app.staticTexts[label].firstMatch }
     func containing(_ s: String) -> XCUIElement { app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", s)).firstMatch }
