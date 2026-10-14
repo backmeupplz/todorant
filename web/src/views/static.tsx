@@ -1,41 +1,44 @@
-import { link } from './Landing'
-
-const Back = () => <p><a {...link('/')}>Back to main page</a></p>
+// Plain anchors and no app imports: the build also renders these pages to static HTML (vite.config.ts)
+const Back = () => <p><a href="/">Back to main page</a></p>
 
 export const Privacy = () => (
   <article class="static">
     <h1>Privacy Policy of Todorant</h1>
-    <p>Todorant operates the todorant.com website, which provides the SERVICE.</p>
-    <p>This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the Todorant website.</p>
-    <p>If you choose to use our Service, then you agree to the collection and use of information in relation with this policy. The Personal Information that we collect is used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.</p>
-    <h2>Information Collection and Use</h2>
-    <p>For a better experience while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your name, phone number, and postal address. The information that we collect will be used to contact or identify you.</p>
-    <h2>Log Data</h2>
-    <p>We want to inform you that whenever you visit our Service, we collect information that your browser sends to us that is called Log Data. This Log Data may include information such as your computer’s Internet Protocol ("IP") address, browser version, pages of our Service that you visit, the time and date of your visit, the time spent on those pages, and other statistics.</p>
-    <h2>Cookies</h2>
-    <p>Cookies are files with small amount of data that is commonly used an anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your computer’s hard drive.</p>
-    <p>Our website uses these "cookies" to collect information and to improve our Service. You have the option to either accept or refuse these cookies, and know when a cookie is being sent to your computer. If you choose to refuse our cookies, you may not be able to use some portions of our Service.</p>
-    <h2>Service Providers</h2>
-    <p>We may employ third-party companies and individuals due to the following reasons:</p>
+    <p>Effective October 13, 2026</p>
+    <p>Todorant is a todo manager made by Nikita Kolmogorov. It runs on the web at todorant.com and as apps for Android and iPhone. This policy explains what data Todorant collects, why, who else sees it and how you can delete it. If you have questions, email <a href="mailto:n@borodutch.com">n@borodutch.com</a>.</p>
+    <h2>Using Todorant without an account</h2>
+    <p>The Android and iPhone apps work without signing in. In that case your todos stay on your device and nothing about them is sent to our servers.</p>
+    <h2>What we collect when you sign in</h2>
     <ul>
-      <li>To facilitate our Service;</li>
-      <li>To provide the Service on our behalf;</li>
-      <li>To perform Service-related services; or</li>
-      <li>To assist us in analyzing how our Service is used.</li>
+      <li><b>Your account:</b> your name, your email address and the ID of the sign-in method you chose (Google, Apple, Facebook, Telegram, or an email address and password). We store passwords only as a salted hash.</li>
+      <li><b>What you put into Todorant:</b> your todos with their dates and times, hashtags, epics and settings such as your language and time zone, along with statistics about the todos you complete. We keep them so that your todos sync between your devices.</li>
+      <li><b>Delegation:</b> when you connect with another person through an invite link, we store that connection and the todos you send to each other.</li>
+      <li><b>Integrations you turn on:</b> if you connect Google Calendar, we store the access it grants. Todorant then creates a calendar called Todorant in your Google account, adds your todos with times to it as events and reads back the changes you make there. To find that calendar and your time zone, it reads the list of your calendars. If you use the Telegram bot, we store your Telegram ID, and the messages you send to the bot become todos.</li>
+      <li><b>Technical data:</b> our servers process your IP address and the details of each request in order to answer it and keep the service secure. When a request fails, an error report with technical details is sent to the developer so the bug can be fixed.</li>
+      <li><b>Code scanner on Android:</b> when you scan a QR code to sign in on another device, the Android app uses Google's code scanner. It sends Google anonymous diagnostics (such as the device model, the Android version and performance metrics) along with an identifier tied to the app installation, as described in Google's ML Kit data disclosure. This data isn't linked to your Todorant account.</li>
     </ul>
-    <p>We want to inform our Service users that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.</p>
+    <h2>How we use it</h2>
+    <p>We use your data only to run Todorant: to sign you in, store and sync your todos, deliver delegated todos, run the integrations you turn on, keep the service secure and fix bugs. We don't sell your data, we don't show ads, and we don't use advertising or analytics trackers.</p>
+    <p>If you turn on encryption, the text of your todos is encrypted on your device with a password that never leaves it, and our servers only see the encrypted text.</p>
+    <h2>Who else sees it</h2>
+    <ul>
+      <li><b>People you choose:</b> the people you delegate todos to, and who delegate todos to you, see those todos and your name. If you share a link to a report, anyone with the link can see that report.</li>
+      <li><b>Sign-in and integration providers:</b> Google, Apple, Facebook and Telegram process your data when you use them with Todorant, under their own privacy policies.</li>
+      <li><b>Hosting:</b> our servers and database run at Hetzner Online in Germany, and the todorant.com website is served by GitHub Pages. Error reports reach the developer through Telegram.</li>
+      <li><b>The law:</b> we disclose data when the law requires it.</li>
+    </ul>
+    <p>Todorant's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+    <h2>How long we keep it and how to delete it</h2>
+    <p>We keep your data while your account exists. When you delete a todo or a hashtag, it disappears from all your devices, but our database keeps a record of the deletion so that every device can sync it, until you delete your account.</p>
+    <p>You can delete your account in Settings → Delete account in the Android app or on todorant.com (iPhone users can do it on the web, since it's the same account). Your account and everything in it are removed from our live database immediately. <a href="/delete-account">This page</a> describes what is deleted, and if you can't sign in, you can email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account.</p>
+    <h2>Your own server</h2>
+    <p>The apps can connect to a Todorant server that you or someone else runs. Your data then goes to that server instead of ours, and whoever runs it is responsible for it.</p>
+    <h2>Children</h2>
+    <p>Todorant isn't meant for children under 13, and we don't knowingly collect data from them. If you believe a child has given us personal data, email us and we will delete it.</p>
     <h2>Security</h2>
-    <p>We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.</p>
-    <h2>Links to Other Sites</h2>
-    <p>Our Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policy of these websites. We have no control over, and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.</p>
-    <h2>Children’s Privacy</h2>
-    <p>Our Services do not address anyone under the age of 13. We do not knowingly collect personal identifiable information from children under 13. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.</p>
-    <h2>Accounts</h2>
-    <p>To retrieve or delete your account data, please, send the request to <a href="mailto:accounts@todorant.com">accounts@todorant.com</a>.</p>
-    <h2>Changes to This Privacy Policy</h2>
-    <p>We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately, after they are posted on this page.</p>
-    <h2>Contact Us</h2>
-    <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.</p>
+    <p>All traffic between the apps and our servers is encrypted with HTTPS, passwords are hashed, and access to the servers is restricted. No system is perfectly secure, so we can't guarantee that your data will never be exposed.</p>
+    <h2>Changes</h2>
+    <p>When this policy changes, we post the new version on this page and update the date at the top.</p>
     <Back />
   </article>
 )
@@ -56,7 +59,7 @@ export const Terms = () => (
     <h2>6. Site Terms of Use Modifications</h2>
     <p>Todorant may revise these Terms of Use for its Website at any time without prior notice. By using this Website, you are agreeing to be bound by the current version of these Terms and Conditions of Use.</p>
     <h2>7. Your Privacy</h2>
-    <p>Please read <a {...link('/privacy')}>our Privacy Policy</a>.</p>
+    <p>Please read <a href="/privacy">our Privacy Policy</a>.</p>
     <h2>8. Governing Law</h2>
     <p>Any claim related to Todorant's Website shall be governed by the laws of ca without regards to its conflict of law provisions.</p>
     <h2>9. Encryption</h2>
@@ -72,7 +75,7 @@ export const DeleteAccount = () => (
     <h2>How to delete it</h2>
     <ul>
       <li><b>Android app:</b> open Settings and tap Delete account.</li>
-      <li><b>Web:</b> sign in at <a {...link('/')}>todorant.com</a>, open Settings and click Delete account. If you use the iPhone app, delete the account here: it's the same account.</li>
+      <li><b>Web:</b> sign in at <a href="/">todorant.com</a>, open Settings and click Delete account. If you use the iPhone app, delete the account here: it's the same account.</li>
       <li><b>Can't sign in?</b> Email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account and ask for it to be deleted.</li>
     </ul>
     <h2>What gets deleted</h2>

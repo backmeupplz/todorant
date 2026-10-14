@@ -17,10 +17,13 @@ const theme = () => document.documentElement.classList.toggle('dark', isDark())
 prefs.subscribe(theme)
 onSystemTheme(theme)
 const root = document.getElementById('app')!
+// Legal pages arrive with their text prerendered for crawlers (vite.config.ts); the app draws its own copy
+const prerendered = [...root.childNodes]
 // Signed-in users see the screen's skeleton while the language loads
 const tab = appRoute()?.tab
 if (session.value && tab) render(TAB_SKELETONS[tab](), root)
 await initLanguage()
+prerendered.forEach((node) => node.remove())
 const draw = () => render(<App />, root)
 onRerender(draw)
 draw()
