@@ -195,6 +195,8 @@ private func addTodoFromLink(_ text: String) {
 enum QA {
     static func apply() {
         let args = UserDefaults.standard
+        // QA runs pick their server with -API; a server switched to in an earlier run doesn't stick
+        if args.string(forKey: "API") != nil { Rest.server = nil }
         if args.bool(forKey: "qaSkipTutorial") { Onboarding.tutorialIsShown = true }
         if let lang = args.string(forKey: "qaLanguage") { Settings.languageSelect = lang; Settings.language = lang }
         if let mode = args.string(forKey: "qaColorMode").flatMap(ColorMode.init(rawValue:)) { Settings.colorMode = mode }

@@ -130,4 +130,50 @@ final class QA: TodorantUITest {
         wait(containing("Prepare the budget"), timeout: 10)
         shot("33-by-me")
     }
+
+    /// Dark mode, server switch (invalid, other server, back) and account deletion
+    func testSettingsServerAndDeletion() {
+        launch(token: env["TOKEN"])
+        wait(containing("Settings flow todo"), timeout: 30)
+        tab("Settings")
+        scrollTap(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Color mode")).firstMatch)
+        tap(button("Dark"))
+        tab("Current")
+        shot("50-dark-current")
+        tab("Settings")
+        scrollTap(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Color mode")).firstMatch)
+        tap(button("Light"))
+        app.swipeDown(); app.swipeDown()
+        // An invalid address is refused
+        tap(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Server")).firstMatch)
+        let field = app.textFields["serverField"]
+        clearAndType(field, "not a server!")
+        tap(button("Save"))
+        wait(app.alerts.firstMatch)
+        shot("51-server-invalid")
+        app.alerts.buttons["OK"].tap()
+        // Another server signs out
+        clearAndType(field, "todo.example.com")
+        tap(button("Save"))
+        tap(app.alerts.buttons["Logout"])
+        wait(containing("todo.example.com"))
+        wait(button("Login"))
+        shot("52-server-changed")
+        // Blank goes back to the default (here: the API launch argument)
+        tap(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Server")).firstMatch)
+        clearAndType(field, "")
+        tap(button("Save"))
+        wait(containing("localhost:3310"))
+        // Delete account
+        app.terminate()
+        launch(token: env["TOKEN"])
+        tab("Settings")
+        wait(button("Logout"), timeout: 30)
+        tap(button("Delete account"))
+        tap(app.alerts.buttons["Delete account"])
+        wait(button("Login"), timeout: 15)
+        shot("53-deleted")
+        let me = rest("POST", "/v2/sync", ["since": 0]) as? [String: Any]
+        XCTAssertNil(me?["todos"], "the token no longer works")
+    }
 }
