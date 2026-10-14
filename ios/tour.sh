@@ -26,7 +26,12 @@ for lang in $LANGS; do
     rm -rf /tmp/todorant-tour && mkdir -p "$out"
     xcrun simctl uninstall "$sim" com.todorant.app 2>/dev/null || true
     token=$(./seed.py "$API" "$lang")
-    tabs=$(python3 -c "import json,sys; d=json.load(open('../android/app/src/main/assets/translations/$lang.json')); print(','.join([d['current'], d['planning'], d['delegate']['title'], d['settings']]))")
+    tabs=$(python3 -c "
+import json
+t = '../android/app/src/main/assets/translations/%s.json'
+d, en = json.load(open(t % '$lang')), json.load(open(t % 'en'))
+get = lambda j, k: (j.get(k[0]) if len(k) == 1 else get(j.get(k[0], {}), k[1:]))
+print(','.join(get(d, k.split('.')) or get(en, k.split('.')) for k in ['current', 'planning', 'delegate.title', 'settings']))")
     TEST_RUNNER_API="$API" TEST_RUNNER_TOKEN="$token" TEST_RUNNER_LANG="$lang" TEST_RUNNER_TABS="$tabs" TEST_RUNNER_FROG="$(./seed.py "$API" "$lang" --frog)" \
     TEST_RUNNER_ADD_TEXT="$(add_text "$lang")" TEST_RUNNER_SHOTS=/tmp/todorant-tour \
       xcodebuild -scheme Todorant -destination "platform=iOS Simulator,name=$sim" -derivedDataPath build \

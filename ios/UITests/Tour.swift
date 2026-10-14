@@ -3,7 +3,10 @@ import XCTest
 /// App Store screenshots of a seeded account (see ../tour.sh). Env: TOKEN, LANG, FROG (a seeded text to wait for), ADD_TEXT, SHOTS.
 final class Tour: TodorantUITest {
     private func start(_ mode: String) {
-        launch(["-qaLanguage", env["LANG"] ?? "en", "-qaColorMode", mode], token: env["TOKEN"])
+        let lang = env["LANG"] ?? "en"
+        // The system language too, so the keyboard's spell check matches the typed text
+        let system = lang == "pt-br" ? "pt-BR" : lang
+        launch(["-qaLanguage", lang, "-qaColorMode", mode, "-AppleLanguages", "(\(system))"], token: env["TOKEN"])
     }
 
     /// Tabs by their translated titles (TABS: comma-separated); iPad shows them as a top bar, not a UITabBar
