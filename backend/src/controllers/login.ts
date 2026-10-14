@@ -393,7 +393,7 @@ bot.action(/ltr~.+/, async (ctx) => {
  * Unverified emails don't count either.
  */
 const ownGoogleToken = (audience: unknown, emailVerified: unknown) =>
-  /^(989382323327|599005831909)-[\w-]+\.apps\.googleusercontent\.com$/.test(
+  /^(167486246043|599005831909)-[\w-]+\.apps\.googleusercontent\.com$/.test(
     String(audience)
   ) && String(emailVerified) === 'true'
 

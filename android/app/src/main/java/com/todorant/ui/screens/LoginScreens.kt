@@ -56,7 +56,7 @@ import com.todorant.ui.Ui
 import org.json.JSONObject
 import java.util.UUID
 
-private const val GOOGLE_WEB_CLIENT_ID = "989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com"
+private const val GOOGLE_WEB_CLIENT_ID = "167486246043-304ktl4ng8njc185ov1f7vdoafj4gke8.apps.googleusercontent.com"
 
 /** Scans a QR code with Google's scanner (no camera permission needed) */
 internal fun scanQr(context: Context, onResult: (String) -> Unit) {

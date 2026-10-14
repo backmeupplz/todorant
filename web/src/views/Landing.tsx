@@ -133,7 +133,7 @@ const PROVIDERS: { name: string; key: string; icon: string; go: () => void }[] =
   },
   {
     name: 'google', key: 'home.google', icon: '/img/google.svg',
-    go: () => redirect(`https://accounts.google.com/o/oauth2/v2/auth?client_id=989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com&redirect_uri=${location.origin}/google_login_result&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&prompt=select_account&state=${newState()}`),
+    go: () => redirect(`https://accounts.google.com/o/oauth2/v2/auth?client_id=167486246043-304ktl4ng8njc185ov1f7vdoafj4gke8.apps.googleusercontent.com&redirect_uri=${location.origin}/google_login_result&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&prompt=select_account&state=${newState()}`),
   },
   {
     name: 'apple', key: 'home.apple', icon: '/img/apple.svg',
