@@ -94,7 +94,7 @@ describe('Login endpoint', () => {
         name: 'Default Name',
         email: 'defaultname@gmail.com',
         email_verified: 'true',
-        aud: '989382323327-rou6lmk2umbnoaq55493v1kqm8fvp22q.apps.googleusercontent.com',
+        aud: '167486246043-304ktl4ng8njc185ov1f7vdoafj4gke8.apps.googleusercontent.com',
       })
     const response = await request(server)
       .post('/login/google')
