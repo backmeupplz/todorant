@@ -302,6 +302,9 @@ final class Db {
         changes += 1
     }
 
+    /// Re-reads everything (the widget may have written while the app was in the background)
+    func touch() { changes += 1 }
+
     // region SQLite
 
     private func prepare(_ sql: String, _ args: [Any?]) -> OpaquePointer? {
