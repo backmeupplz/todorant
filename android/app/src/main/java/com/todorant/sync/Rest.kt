@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import org.json.JSONTokener
 import java.util.concurrent.TimeUnit
 
 /** A typed server address → its base URL (http or https, https when left out; no trailing slash), null when it isn't one */
@@ -46,9 +45,6 @@ object Rest {
             }
         }
 
-    /** Bodies that are plain strings may come JSON-quoted */
-    private fun unquote(text: String) = runCatching { JSONTokener(text).nextValue() as? String }.getOrNull() ?: text
-
     private suspend fun login(provider: String, body: JSONObject) = User(JSONObject(call("POST", "/v2/auth/$provider", body, token = null)))
 
     suspend fun loginGoogle(idToken: String) = login("google", JSONObject().put("accessToken", idToken))
@@ -69,11 +65,6 @@ object Rest {
     suspend fun sendFeedback(state: JSONObject) = call("POST", "/feedback", JSONObject().put("state", state))
 
     suspend fun sendData(data: JSONObject) = call("POST", "/data", JSONObject().put("data", data))
-
-    suspend fun calendarAuthenticationURL() = unquote(call("GET", "/google/calendarAuthenticationURL"))
-
-    suspend fun calendarAuthorize(code: String) =
-        JSONObject(call("POST", "/google/calendarAuthorize", JSONObject().put("code", code)))
 
     suspend fun resetDelegateToken() = JSONObject(call("POST", "/v2/delegation/token", JSONObject())).getString("token")
 

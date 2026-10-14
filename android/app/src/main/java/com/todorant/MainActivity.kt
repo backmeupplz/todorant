@@ -85,9 +85,7 @@ import com.todorant.ui.screens.CurrentScreen
 import com.todorant.ui.screens.DataScreen
 import com.todorant.ui.screens.DelegationScreen
 import com.todorant.ui.screens.DelegationUsersScreen
-import com.todorant.ui.screens.GoogleCalendarScreen
 import com.todorant.ui.screens.HeroScreen
-import com.todorant.ui.screens.IntegrationsScreen
 import com.todorant.ui.screens.LoginScreen
 import com.todorant.ui.screens.PlanningScreen
 import com.todorant.ui.screens.RulesScreen
@@ -193,8 +191,6 @@ private fun Root(intent: Intent?, onIntentHandled: () -> Unit) {
                     composable(Route.TAGS) { TagsScreen() }
                     composable(Route.ADD_EPIC) { AddEpicScreen(it.arguments?.getString("id")!!) }
                     composable(Route.CHANGE_TEXT) { ChangeTextScreen(it.arguments?.getString("id")!!) }
-                    composable(Route.INTEGRATIONS) { IntegrationsScreen() }
-                    composable(Route.GOOGLE_CALENDAR) { GoogleCalendarScreen() }
                     composable(Route.SECURITY) { SecurityScreen() }
                     composable(Route.DELEGATORS) { DelegationUsersScreen(delegators = true) }
                     composable(Route.DELEGATES) { DelegationUsersScreen(delegators = false) }

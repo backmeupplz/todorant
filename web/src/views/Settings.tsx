@@ -57,7 +57,6 @@ const PAGES: Record<string, { title: () => string; info?: string; body: () => JS
   delegates: { title: () => t('m.delegate.delegates'), body: () => <People /> },
   security: { title: () => t('m.security'), body: Security },
   stats: { title: () => t('report.title'), body: Report },
-  integrations: { title: () => t('m.integrations'), info: 'm.infoIntegrations', body: Integrations },
   data: { title: () => t('m.dataInfo'), info: 'm.infoData', body: Data },
   apps: { title: () => t('apps'), body: Apps },
   hero: { title: () => t('m.heroProfileTitle'), info: 'm.infoHero', body: Hero },
@@ -125,7 +124,6 @@ function List() {
       {local('askBeforeDelete', t('m.askBeforeDelete'))}
       {synced('duplicateTagInBreakdown', t('m.settingsObject.duplicateTagInBreakdown'))}
       {synced('showMoreByDefault', t('m.settingsObject.showMoreByDefault'))}
-      {synced('removeCompletedFromCalendar', t('m.settingsObject.removeCompletedFromCalendar'))}
       <Picker
         label={t('m.firstDayOfWeek')}
         value={String(s.firstDayOfWeek ?? (language.value === 'en' ? 0 : 1))}
@@ -172,7 +170,6 @@ function List() {
       <SectionDivider />
       <Caption>{t('m.info')}</Caption>
       <TableRow label={t('report.title')} onClick={nav('stats')} />
-      <TableRow label={t('m.integrations')} onClick={nav('integrations')} />
       <TableRow label={t('m.dataInfo')} onClick={nav('data')} />
       <TableRow label={t('apps')} onClick={nav('apps')} />
       {p.gamification && <TableRow label={t('m.heroProfileTitle')} onClick={nav('hero')} />}
@@ -447,34 +444,7 @@ const Rank = (p: { points: number; color: string; progress: number; left?: numbe
 
 // endregion
 
-// region Integrations and data
-
-function Integrations() {
-  const busy = useSignal(false)
-  const on = !!settings.value.googleCalendarCredentials
-  async function tap() {
-    if (on) {
-      if (!(await confirm(t('settings.disconnectConfirm'), t('m.disconnect'), true))) return
-      setSetting('googleCalendarCredentials', null)
-      return toast(t('googleCalendarDisableSuccess'))
-    }
-    if (!(await confirm(t('m.googleCalendarHint'), t('m.googleCalendarGotIt')))) return
-    // Google sends the user back to /google_calendar_setup_web, which finishes the setup
-    busyWhile(busy, async () => {
-      const url = await call<string>('GET', '/google/calendarAuthenticationURL?web=true')
-      // Only ever navigate to Google's consent screen (never a javascript: or foreign URL)
-      if (!url.startsWith('https://accounts.google.com/')) throw new Error(t('m.error'))
-      location.href = url
-    })
-  }
-  return (
-    <TableRow
-      label={<span class="row app"><img src="/img/google.svg" alt="" width={20} height={20} />{t('m.googleCalendar')}</span>}
-      value={busy.value ? <Spinner /> : t(on ? 'm.connected' : 'm.notConnected')}
-      onClick={busy.value ? undefined : tap}
-    />
-  )
-}
+// region Data
 
 function Data() {
   const list = [...todos.values()]

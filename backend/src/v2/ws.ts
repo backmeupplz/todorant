@@ -10,7 +10,6 @@ type Message = {
   rid?: unknown
   since?: number
   ops?: []
-  key?: string
 }
 
 /** Sockets one user may hold at once (tabs, phones, widgets) */
@@ -78,9 +77,7 @@ async function handle(userId: string, ws: WebSocket, text: string) {
     if (!spend(userId, 1)) throw invalid('Too many requests')
     if (since !== undefined && !Number.isFinite(since))
       throw invalid('Invalid since')
-    const acks = ops?.length
-      ? await push(userId, ops, ws, message.key)
-      : undefined
+    const acks = ops?.length ? await push(userId, ops, ws) : undefined
     const delta =
       since !== undefined ? await pull(userId, since || undefined) : {}
     send(ws, { t: 'synced', rid, acks, ...delta })

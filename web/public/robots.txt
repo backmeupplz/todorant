@@ -3,7 +3,6 @@ Disallow: /superpower
 
 Disallow: /report/*
 Disallow: /invite/*
-Disallow: /google_calendar_setup_web
 Disallow: /facebook_login_result
 Disallow: /google_login_result
 Disallow: /apple_login_result

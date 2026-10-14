@@ -106,7 +106,7 @@
     "Todorant non ha e non avrà mai compiti ricorrenti — l'unica cosa che fanno bene è causare ansia che ricade su di voi come compiti incompiuti. Se avete bisogno di completare i compiti ripetuti — aggiungeteli tutti manualmente, il vostro cervello vi ringrazierà per averci pensato.",
     "Todorant non ha il concetto di \"Progetti\" in quanto ha dimostrato di essere demotivante, alcune delle \"cartelle\" non si aprono mai. I progetti \"Fitness\" e \"Automiglioramento\" mandano i loro saluti. Usa invece gli #hashtag.",
     "Le rane appariranno sempre in cima alla lista.",
-    "Todorant non dispone di notifiche sui prossimi compiti con l'ora esatta impostata. Tuttavia, sentitevi liberi di utilizzare l'integrazione di Google Calendar in modo che Google possa infastidirvi con le notifiche, non Todorant."
+    "Todorant non dispone di notifiche sui prossimi compiti con l'ora esatta impostata."
   ],
   "earlyAdopter": "Pioniere 🦄",
   "active": "Attivo",
@@ -139,8 +139,6 @@
     "differenceText2": "Todorant usa una serie di limiti e di elogi accuratamente studiati per punire i cattivi comportamenti e sostenere le buone abitudini. Colpisce la parte primitiva del cervello per fargli desiderare di completare i todos come le persone desiderano lo zucchero.",
     "differenceText3": "Ho letto e provato più di 20 libri e metodologie di produttività. Quando tutti hanno fallito uno ad uno ho combinato i loro componenti e semplificato il risultato. È così che è stato creato il Todorant."
   },
-  "googleCalendarDisableSuccess": "Google Calendar disabilitato",
-  "googleCalendarEnableSuccess": "Google Calendar abilitato",
   "m": {
     "account": "Account",
     "addTodo": "Aggiungi attività",
@@ -169,7 +167,6 @@
     "defaultToToday": "Predefinito ad oggi",
     "deleteTodo": "Vuoi davvero eliminare",
     "disable": "Disattivare",
-    "disconnect": "Disconnetti",
     "editTodo": "Modifica attività",
     "email": "Email",
     "emptyHashtags": "L'elenco degli hashtag è vuoto per ora. Create il vostro primo compito con un #hashtag per aggiungere il primo hashtag qui!",
@@ -185,7 +182,6 @@
     "facebook": "Facebook",
     "firstDayOfWeek": "Primo giorno della settimana",
     "general": "Generale",
-    "googleCalendar": "Google Calendar",
     "howTo": "Come fare",
     "howToUse": "Come usare Todorant",
     "important": "Importante",
@@ -195,14 +191,12 @@
     "infoCurrent": "Questa è la pagina delle attività correnti. Essa mostra solo un compito su cui si dovrebbe lavorare in questo momento. Rimanete concentrati, questa è l'unica pagina che vi serve dopo aver pianificato la vostra giornata.\n\nPotete saltare l'attività se non è una rana e se non è l'ultima attività della giornata.\n\nSe l'attività è troppo ampia — usate la funzione di ripartizione. Dopo aver interrotto l'attività, verrà automaticamente contrassegnata come completata.",
     "infoData": "Qui potete vedere le informazioni più recenti sulla memorizzazione locale dei dati e le statistiche di sincronizzazione.",
     "infoEdit": "Questa è la schermata di modifica delle attività. Qui è possibile modificare l'attività. Sì, è questa.",
-    "infoIntegrations": "Qui è possibile impostare integrazioni di applicazioni di terze parti toccando le opzioni.",
     "infoPlanning": "Questa è la vostra sezione di pianificazione. Sentitevi liberi di riorganizzare le attività e i titoli delle date (premendo a lungo e trascinandoli) — è divertente!\n\nInoltre, non dimenticate di usare gli #hashtag.",
     "infoRules": "Per favore, leggi completamente le regole per usare al meglio Todorant.",
     "infoSecurity": "Utilizzate questa sezione con la massima cautela! La crittografia non funziona se non si aggiunge una password. Ci saranno due tipi di attività: criptata e non criptata. Tutti i nuovi compiti saranno criptati. I vecchi todos possono essere convertiti per essere criptati con il pulsante qui sotto. Se si perde la password non ci sarà modo di recuperare le attività.",
     "infoSettings": "Questa è la schermata delle impostazioni. Qui potete configurare diverse opzioni. Assicuratevi di leggere la sezione \"Come usare Todorant\".",
     "infoTags": "Questo è l'elenco di tutti gli hashtag che avete usato. Se non vedi nulla — vai avanti, crea un'attività con un #hastag nel testo, è l'unico modo per aggiungere hashtag a questa lista.\n\nSe vuoi cambiare il colore di un hashtag o cancellarlo, toccalo. Non preoccupatevi, gli hashtag sono separati dalle attività — fare qualcosa su questa schermata non influirà sulle vostre attività. Beh, cambiare i colori può rendere le vostre attività più fighe.",
     "infoTitle": "Info",
-    "integrations": "Integrazioni",
     "languageAuto": "Auto",
     "languageSelect": "Lingua",
     "light": "Chiaro",

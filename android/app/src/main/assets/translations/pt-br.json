@@ -89,7 +89,7 @@
     "Todorant não tem e nunca terá tarefas repetidas — a única coisa que elas fazem é causar uma ansiedade pairando sobre você como tarefas inacabadas. Se você precisar concluir tarefas repetidas — adicione todas elas manualmente, seu cérebro agradecerá por tarefas conscientes.",
     "Todorant não tem o conceito de \"Projetos\", pois provou ser desmotivador. Algumas das \"pastas\" nunca se abrem. Os projetos \"Fitness\" e \"Auto-aperfeiçoamento\" enviam seus cumprimentos. Em vez disso, use #hashtags.",
     "Sapos sempre aparecerão no topo da lista.",
-    "Todorant não tem notificações sobre as próximas tarefas com a hora exata definida. No entanto, sinta-se à vontade para usar a integração com o Google Agenda para que o Google possa incomodá-lo com notificações, não o Todorant."
+    "Todorant não tem notificações sobre as próximas tarefas com a hora exata definida."
   ],
   "termsOfUse": "Termos de uso",
   "privacyPolicy": "Política de Privacidade",
@@ -181,11 +181,7 @@
   "rateSolicitationApple": "Você se importaria de deixar Todorant com uma classificação de 5 estrelas na App Store, por favor? Isso ajuda muito!",
   "rateSolicitationGoogle": "Você se importaria de deixar Todorant com uma classificação de 5 estrelas na Play Store, por favor? Isso ajuda muito!",
   "rateButton": "Deixar uma classificação!",
-  "integrations": "Integrações",
   "notConnected": "Não conectado",
-  "disconnect": "Desconectar",
-  "infoIntegrations": "Você pode configurar integrações de aplicativos de terceiros aqui tocando nas opções.",
-  "googleCalendar": "Google Agenda",
   "loginQR": "Entrar com QR Code",
   "qrDescription": "Por favor, abra o pop-up do código QR no site da Todorant e digitalize o código aqui",
   "cameraAuthorization": "Camera não autorizada",

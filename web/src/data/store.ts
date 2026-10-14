@@ -5,7 +5,7 @@ import * as idb from './idb'
 export const FIELDS = {
   todo: ['text', 'completed', 'frog', 'frogFails', 'skipped', 'order', 'monthAndYear', 'date', 'time', 'deleted', 'encrypted', 'repetitive', 'delegateAccepted'],
   tag: ['tag', 'color', 'deleted', 'epic', 'epicCompleted', 'epicGoal', 'epicPoints', 'epicOrder', 'numberOfUses'],
-  settings: ['showTodayOnAddTodo', 'firstDayOfWeek', 'startTimeOfDay', 'newTodosGoFirst', 'preserveOrderByTime', 'duplicateTagInBreakdown', 'showMoreByDefault', 'language', 'removeCompletedFromCalendar', 'googleCalendarCredentials'],
+  settings: ['showTodayOnAddTodo', 'firstDayOfWeek', 'startTimeOfDay', 'newTodosGoFirst', 'preserveOrderByTime', 'duplicateTagInBreakdown', 'showMoreByDefault', 'language'],
 } as const
 
 export type Todo = {
@@ -49,8 +49,6 @@ export type Settings = {
   duplicateTagInBreakdown?: boolean
   showMoreByDefault?: boolean
   language?: string
-  removeCompletedFromCalendar?: boolean
-  googleCalendarCredentials?: object | null
 }
 export type Profile = {
   id: string

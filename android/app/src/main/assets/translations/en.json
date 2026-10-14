@@ -92,7 +92,7 @@
     "Todorant does not have and will never have repeating tasks — the only thing they do well causing anxiety by hanging over you as unfinished tasks. If you need to complete repeating tasks — add all of them manually, your brain will thank you for conscious tasks.",
     "Todorant does not have the concept of \"Projects\" as it has proven itself to be demotivating, some of the \"folder\" never get open. Projects \"Fitness\" and \"Self-improvement\" send their regards. Instead, use #hashtags.",
     "Frogs will always appear on the top of the list.",
-    "Todorant does not have notifications about the upcoming tasks with the exact time set. However, feel free to use Google Calendar integration so that Google can annoy you with notifications, not Todorant."
+    "Todorant does not have notifications about the upcoming tasks with the exact time set."
   ],
   "termsOfUse": "Terms of use",
   "privacyPolicy": "Privacy policy",
@@ -184,11 +184,7 @@
   "rateSolicitationApple": "Would you mind leaving Todorant a 5 star rating on the App Store, please? It helps a lot!",
   "rateSolicitationGoogle": "Would you mind leaving Todorant a 5 star rating on the Play Store, please? It helps a lot!",
   "rateButton": "Leave rating!",
-  "integrations": "Integrations",
   "notConnected": "Not connected",
-  "disconnect": "Disconnect",
-  "infoIntegrations": "You can setup third party app integrations here by tapping the options.",
-  "googleCalendar": "Google Calendar",
   "loginQR": "Login with QR",
   "qrDescription": "Please open the QR code popup on the Todorant website and scan the code here",
   "cameraAuthorization": "Camera not authorized",
@@ -262,8 +258,7 @@
   },
   "settingsObject": {
     "duplicateTagInBreakdown": "Copy hashtags during a breakdown",
-    "showMoreByDefault": "Show more when adding todos by default",
-    "removeCompletedFromCalendar": "Remove completed todos from Google Calendar"
+    "showMoreByDefault": "Show more when adding todos by default"
   },
   "level": "Level",
   "points": "points",
@@ -425,9 +420,6 @@
     "ExplainSettings": {
       "messageBoxBody": "This is the screen with all the settings you need in Todorant. Feel free to explore it later. Notable ones are the “default tasks to today” and copy the tags during a breakdown”."
     },
-    "ExplainNotificationsGoogle": {
-      "messageBoxBody": "If you still need notifications, you can integrate Google Calendar. It will send you alerts, but only for the tasks that have an exact time assigned to them."
-    },
     "ExplainNotifications": {
       "messageBoxBody": "You can also notice that there are no notifications in Todorant (except for the optional planning reminder at the beginning of a day). It is also done on purpose.\n\nPeople tend to start ignoring notifications when there are too many of them. This leads to missing important alerts."
     },
@@ -482,8 +474,6 @@
   "updateVersionTitle": "Hey there! A new version of Todorant is available",
   "updateVersionMsg": "There is a chance that something will break on the old version, so please update as soon as possible.",
   "update": "Update",
-  "googleCalendarHint": "Only the tasks created in Todorant with an exact time will be synced to Google Calendar",
-  "googleCalendarGotIt": "Got it!",
   "frogsAlert": {
     "title": "Stop! It's illegal",
     "text": "Don't break the rules. If you have any frogs today — finish them first, break them down, move them to future days or remove the frog flag from them. Please, just don't ignore the frogs!"

@@ -9,7 +9,6 @@ setGlobalOptions({
 import * as dotenv from 'dotenv'
 dotenv.config({ path: `${process.cwd()}/.env` })
 // The rest of dependencies
-import '@/helpers/googleCalendarChannel'
 import '@/sockets'
 import 'reflect-metadata'
 import * as Koa from 'koa'

@@ -19,15 +19,14 @@ import com.todorant.ui.StackScreen
 import androidx.compose.ui.graphics.toArgb
 
 /**
- * A stack screen with a WebView (terms, privacy, Telegram and Google logins).
- * [onPageStarted] sees every navigation; [configure] can tweak the WebView before loading.
+ * A stack screen with a WebView (terms, privacy and Telegram login).
+ * [onPageStarted] sees every navigation.
  */
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebPageScreen(
     title: String,
     url: String,
-    configure: (WebView) -> Unit = {},
     onPageStarted: (WebView, String) -> Unit = { _, _ -> },
 ) {
     var loading by remember { mutableStateOf(true) }
@@ -43,7 +42,6 @@ fun WebPageScreen(
                             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) = onPageStarted(view, url)
                             override fun onPageFinished(view: WebView, url: String) { loading = false }
                         }
-                        configure(this)
                         loadUrl(url)
                     }
                 },

@@ -10,7 +10,7 @@ You need Node 16 (see `.nvmrc`) and a MongoDB.
 2. `yarn install --ignore-engines`
 3. `yarn develop` starts the API on port 1337 and rebuilds on every change
 
-Everything else is optional: each integration (Telegram bots, Google Calendar, Facebook sign-in, error reports) stays off until its variables are set, and the log says which ones are off. [`.env.example`](../.env.example) in the repository root describes every variable.
+Everything else is optional: each integration (Telegram bots, Facebook sign-in, error reports) stays off until its variables are set, and the log says which ones are off. [`.env.example`](../.env.example) in the repository root describes every variable.
 
 ## Tests
 

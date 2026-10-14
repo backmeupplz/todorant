@@ -222,11 +222,8 @@
     "newTodosGoFirst": "New todos are added on top of the list",
     "preserveOrderByTime": "Preserve exact time order",
     "general": "General",
-    "integrations": "Integrations",
     "connected": "Connected",
     "notConnected": "Not connected",
-    "googleCalendar": "Google Calendar",
-    "disconnectConfirm": "Are you sure you want to disconnect this service?",
     "account": "Account",
     "duplicateTagInBreakdown": "Copy hashtags during a breakdown",
     "export": "Export data",
@@ -235,8 +232,7 @@
     "username": "Name",
     "telegram": "Telegram",
     "coloredCardBackgrounds": "Color tasks with hashtag colors",
-    "newLineOnReturn": "Insert new line on enter",
-    "removeCompletedFromCalendar": "Remove completed todos from Google Calendar"
+    "newLineOnReturn": "Insert new line on enter"
   },
   "allDoneTitle": "Congratulations!",
   "allDoneText": "🥳 You did it! All the tasks for today are done, go get rest or maybe dance a little 💃",
@@ -262,7 +258,7 @@
     "Todorant does not have and will never have repeating tasks — the only thing they do well causing anxiety by hanging over you as unfinished tasks. If you need to complete repeating tasks — add all of them manually, your brain will thank you for conscious tasks.",
     "Todorant does not have the concept of \"Projects\" as it has proven itself to be demotivating, some of the \"folder\" never get open. Projects \"Fitness\" and \"Self-improvement\" send their regards. Instead, use #hashtags.",
     "Frogs will always appear on the top of the list.",
-    "Todorant does not have notifications about the upcoming tasks with the exact time set. However, feel free to use Google Calendar integration so that Google can annoy you with notifications, not Todorant."
+    "Todorant does not have notifications about the upcoming tasks with the exact time set."
   ],
   "earlyAdopter": "Early adopter 🦄",
   "active": "Active",
@@ -336,8 +332,6 @@
     "differenceText2": "Todorant uses a carefully crafted set of limits and praise to punish bad behaviour and support good habits. It affects the primitive part of the brain to make it crave completing todos like people crave sugar.",
     "differenceText3": "I've read and tried 20+ productivity books and methodologies. When all of them failed one by one I combined their components and simplified the result. This is how Todorant was created."
   },
-  "googleCalendarDisableSuccess": "Google Calendar disabled",
-  "googleCalendarEnableSuccess": "Google Calendar enabled",
   "spread": {
     "hint": "Choose tasks to spread, choose dates to spread over, press a button and see how selected tasks spread evenly between the selected dates",
     "spreading": "Spreading",
@@ -409,8 +403,6 @@
   "settingsObject": {
     "showMoreByDefault": "Show more when adding todos by default"
   },
-  "googleCalendarHint": "Only the tasks created in Todorant with an exact time will be synced to Google Calendar",
-  "googleCalendarGotIt": "Got it!",
   "frogsAlert": {
     "title": "Stop! It's illegal",
     "text": "Don't break the rules. If you have any frogs today — finish them first, break them down, move them to future days or remove the frog flag from them. Please, just don't ignore the frogs!"
@@ -472,7 +464,6 @@
     "deleteAllHashtagsConfirm": "Are you sure you want to delete all hashtags?",
     "deleteTodo": "Would you really like to delete",
     "disable": "Disable",
-    "disconnect": "Disconnect",
     "editHashtag": "Edit hashtag",
     "editName": "New hashtag text",
     "editTodo": "Edit todo",
@@ -501,9 +492,6 @@
     "firstDayOfWeek": "First day of a week",
     "gamification": "Gamification",
     "general": "General",
-    "googleCalendar": "Google Calendar",
-    "googleCalendarGotIt": "Got it!",
-    "googleCalendarHint": "Only the tasks created in Todorant with an exact time will be synced to Google Calendar",
     "heroProfileTitle": "Hero profile",
     "howTo": "How to",
     "howToUse": "How to use Todorant",
@@ -515,14 +503,12 @@
     "infoData": "Here you can see the most recent info about you local data storage and sync stats.",
     "infoEdit": "This is the edit task screen. Here you can edit the task. Yep, this is it.",
     "infoHero": "This is the profile page of you — the hero! Complete tasks and earn points to achieve higher and higher ranks!\n\nYou won't know the whole list of ranks until you achieve the highest! Remember: the only way to get to the top is through the everyday sequence of small steps.",
-    "infoIntegrations": "You can setup third party app integrations here by tapping the options.",
     "infoPlanning": "This is your planning section. Feel free to rearrange tasks and date titles (by long pressing and dragging them) — it's fun!\n\nAlso, don't forget to use #hashtags.",
     "infoRules": "Please, read the rules thoroughly to get the most out of Todorant.",
     "infoSecurity": "Use this section with the utmost caution! Encryption will not work unless you add a password. There will be two types of tasks: encrypted and unencrypted. All new tasks will be encrypted. Old todos can be converted to be encrypted with the button below. If you loose the password there will be no way to recover tasks.",
     "infoSettings": "This is your settings screen. Here you can configure various options. Please, make sure you read the \"How to use Todorant\" section.",
     "infoTags": "This is the list of all the hashtags you have used. If you don't see anything — go on, create a task with a #hastag in its text, it is the only way to add hashtags to this list.\n\nIf you want to change a hashtags color or to delete it, tap on it. Don't worry, hashtags are separate from todos — doing anything on this screen won't affect your todos. Well, changing colors can make your todos look cooler.",
     "infoTitle": "Info",
-    "integrations": "Integrations",
     "languageAuto": "Auto",
     "languageSelect": "Language",
     "level": "Level",
@@ -550,7 +536,6 @@
     },
     "settingsObject": {
       "duplicateTagInBreakdown": "Copy hashtags during a breakdown",
-      "removeCompletedFromCalendar": "Remove completed todos from Google Calendar",
       "showMoreByDefault": "Show more when adding todos by default"
     },
     "signUp": "Create account",

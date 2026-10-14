@@ -23,7 +23,7 @@ import {
 } from '@/__tests__/testUtils'
 import { ensureIndexes } from '@/v2/indexes'
 import { runMongo, stopMongo } from '@/models/index'
-import { sign, verify } from '@/helpers/jwt'
+import { sign } from '@/helpers/jwt'
 import { spend } from '@/v2/auth'
 import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
@@ -634,30 +634,21 @@ describe('v2 sync and API', () => {
       { language: 'x'.repeat(100) },
       { firstDayOfWeek: 7 },
       { startTimeOfDay: '24:00' },
-      { googleCalendarCredentials: { $where: 'sleep(1000)' } },
-      { googleCalendarCredentials: { 'a.b': 'x' } },
-      { googleCalendarCredentials: { nested: { deep: true } } },
-      { googleCalendarCredentials: ['x'] },
     ])
       expect((await settings(set)).e).toMatch(/^Invalid /)
-    const credentials = {
-      access_token: 'ya29.x',
-      refresh_token: '1//x',
-      scope: 'https://www.googleapis.com/auth/calendar',
-      token_type: 'Bearer',
-      id_token: null,
-      expiry_date: Date.now(),
-    }
+    // Shipped apps still send the removed Google Calendar settings: ignored, not stored
     expect(
       await settings({
         language: 'pt-BR',
         firstDayOfWeek: 0,
-        googleCalendarCredentials: credentials,
+        googleCalendarCredentials: { access_token: 'ya29.x' },
+        removeCompletedFromCalendar: false,
       })
     ).not.toHaveProperty('e')
-    expect(
-      (await UserModel.findById(a._id))!.settings.googleCalendarCredentials
-    ).toEqual(credentials)
+    const saved = (await UserModel.findById(a._id))!.settings as any
+    expect(saved.language).toBe('pt-BR')
+    expect(saved).not.toHaveProperty('googleCalendarCredentials')
+    expect(saved).not.toHaveProperty('removeCompletedFromCalendar')
     const auth = { authorization: `Bearer ${a.token}` }
     await request(server)
       .patch('/v2/settings')
@@ -913,24 +904,6 @@ describe('v2 sync and API', () => {
     delete process.env.TELEGRAM_LOGIN_TOKEN
   })
 
-  it('binds Google Calendar codes to the account that asked for them', async () => {
-    const auth = (u: { token: string }) => ({ token: u.token })
-    const link = (
-      await request(server)
-        .get('/google/calendarAuthenticationURL?web=true')
-        .set(auth(a))
-        .expect(200)
-    ).text
-    const state = new URL(link).searchParams.get('state')!
-    expect(((await verify(state)) as any).calendar).toBe(a._id)
-    // A link carrying a's code and state, opened by b, is refused before Google is asked
-    for (const forged of [state, 'garbage'])
-      await request(server)
-        .post('/google/calendarAuthorize')
-        .set(auth(b))
-        .send({ code: 'a-code', web: true, state: forged })
-        .expect(403)
-  })
   it('signs up and in with email + password, apart from OAuth accounts', async () => {
     const post = (path: string, body: object) =>
       request(server).post(`/v2/auth/${path}`).send(body)

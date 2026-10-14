@@ -11,11 +11,9 @@ import {
   WMDBTodo,
   convertModelToRawSql,
 } from '@/helpers/wmdb'
-import { getGoogleCalendarApi, updateTodos } from '@/helpers/googleCalendar'
 import { hint } from '@/v2/hub'
 import { io } from '@/sockets/io'
 import { omit } from 'lodash'
-import { report } from '@/helpers/report'
 import { setupAuthorization } from '@/sockets/setupAuthorization'
 import { setupSync } from '@/sockets/setupSync'
 
@@ -77,64 +75,47 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on(
-    'push_wmdb',
-    async (
-      changes: WMDBChanges,
-      lastPulledTimestamp: number,
-      password?: string
-    ) => {
-      const savedTodos = [] as Todo[]
-      try {
-        const userId = socket.user._id
-        const toPushBack = { todos: [] as Todo[], tags: [] as Tag[] }
-        const usersForSync = new Set<Ref<User, string>>([userId])
-        await Promise.all([
-          ...changes.todos.created.map(async (sqlRaw) => {
-            await createWMDBTodo(
-              sqlRaw,
-              socket.user,
-              toPushBack.todos,
-              usersForSync,
-              savedTodos
-            )
-          }),
-          ...changes.todos.updated.map(async (sqlRaw) => {
-            await updateWMDBTodo(
-              sqlRaw,
-              socket.user,
-              toPushBack.todos,
-              usersForSync,
-              savedTodos
-            )
-          }),
-          ...changes.tags.created.map(async (sqlRaw) => {
-            await createWMDBTag(sqlRaw, socket.user, toPushBack.tags)
-          }),
-          ...changes.tags.updated.map(async (sqlRaw) => {
-            await updateWMDBTag(sqlRaw, socket.user, toPushBack.tags)
-          }),
-        ])
-        usersForSync.forEach((user) => {
-          requestSync(user.toString())
-        })
-        socket.emit('complete_wmdb', toPushBack)
-        // Update calendar
-        updateTodos(
-          savedTodos,
-          socket.user.settings.googleCalendarCredentials,
-          password,
-          socket.user.settings.removeCompletedFromCalendar
-        )
-      } catch (err) {
-        console.log(err)
-        socket.emit(
-          `wmdb_sync_error`,
-          typeof err === 'string' ? err : err.message
-        )
-      }
+  socket.on('push_wmdb', async (changes: WMDBChanges) => {
+    try {
+      const userId = socket.user._id
+      const toPushBack = { todos: [] as Todo[], tags: [] as Tag[] }
+      const usersForSync = new Set<Ref<User, string>>([userId])
+      await Promise.all([
+        ...changes.todos.created.map(async (sqlRaw) => {
+          await createWMDBTodo(
+            sqlRaw,
+            socket.user,
+            toPushBack.todos,
+            usersForSync
+          )
+        }),
+        ...changes.todos.updated.map(async (sqlRaw) => {
+          await updateWMDBTodo(
+            sqlRaw,
+            socket.user,
+            toPushBack.todos,
+            usersForSync
+          )
+        }),
+        ...changes.tags.created.map(async (sqlRaw) => {
+          await createWMDBTag(sqlRaw, socket.user, toPushBack.tags)
+        }),
+        ...changes.tags.updated.map(async (sqlRaw) => {
+          await updateWMDBTag(sqlRaw, socket.user, toPushBack.tags)
+        }),
+      ])
+      usersForSync.forEach((user) => {
+        requestSync(user.toString())
+      })
+      socket.emit('complete_wmdb', toPushBack)
+    } catch (err) {
+      console.log(err)
+      socket.emit(
+        `wmdb_sync_error`,
+        typeof err === 'string' ? err : err.message
+      )
     }
-  )
+  })
 
   setupSync<Settings>(
     socket,
@@ -151,26 +132,6 @@ io.on('connection', (socket) => {
       const user = await UserModel.findById(socket.user._id)
       if (!user) {
         throw new Error('User not found')
-      }
-      // Check google calendar
-      if (
-        settings.googleCalendarCredentials === undefined &&
-        user.settings.googleCalendarCredentials
-      ) {
-        const api = getGoogleCalendarApi(
-          user.settings.googleCalendarCredentials
-        )
-        try {
-          await api.channels.stop({
-            requestBody: {
-              id: user._id,
-              resourceId: user.googleCalendarResourceId,
-            },
-          })
-        } catch (err) {
-          report(err)
-        }
-        user.settings.googleCalendarCredentials = undefined
       }
       // Merge settings and update updated at
       user.settings = {

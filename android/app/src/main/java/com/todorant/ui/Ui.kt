@@ -184,8 +184,6 @@ object Route {
     const val TAGS = "tags"
     const val ADD_EPIC = "addEpic/{id}"
     const val CHANGE_TEXT = "changeText/{id}"
-    const val INTEGRATIONS = "integrations"
-    const val GOOGLE_CALENDAR = "googleCalendar"
     const val SECURITY = "security"
     const val DELEGATORS = "delegators"
     const val DELEGATES = "delegates"

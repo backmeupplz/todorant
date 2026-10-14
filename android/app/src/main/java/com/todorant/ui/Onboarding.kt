@@ -24,7 +24,7 @@ enum class TutorialStep {
     Finished, Close, Start, Explain, AddTask, AddText, SelectDate, SelectFrog, SelectCompleted, ShowMore, AddAnotherTask,
     AddTodoComplete, ExplainCurrent, DeleteEditComplete, Breakdown, BreakdownTodo, BreakdownTodoAction, BreakdownVanish,
     PlanningExplain, PlanningExplain2, ExplainHashtags, ExplainSearchAndCompleted, ExplainReccuring, ExplainSettings,
-    ExplainNotifications, ExplainNotificationsGoogle, ExplainMultiplatform, ExplainPricing, Feedback, Rules, Info, Congratulations;
+    ExplainNotifications, ExplainMultiplatform, ExplainPricing, Feedback, Rules, Info, Congratulations;
 
     /** Translation key: the RN enum value differs from its name for one step */
     val key get() = if (this == BreakdownCompletedTodo) "BreakDownCompletedTodo" else name
@@ -47,7 +47,6 @@ object Target {
     const val TAB_PLANNING = "tabPlanning"
     const val TAB_SETTINGS = "tabSettings"
     const val PLANNING_SEGMENT = "planningSegment"
-    const val INTEGRATIONS_BUTTON = "integrationsButton"
     const val SUPPORT_BUTTON = "supportButton"
     const val HOW_TO_USE = "howToUse"
     const val INFO_BUTTON = "infoButton"
@@ -185,7 +184,6 @@ object Onboarding {
         )
         TutorialStep.ExplainSettings -> Step(center = true, target = Target.TAB_SETTINGS, divider = 0.5f)
         TutorialStep.ExplainNotifications -> Step(center = true)
-        TutorialStep.ExplainNotificationsGoogle -> Step(target = Target.INTEGRATIONS_BUTTON, scroll = true)
         TutorialStep.ExplainMultiplatform -> Step(
             center = true, buttons = listOf(OnboardingButton("website", preferred = true) { Ui.openUrl("https://todorant.com") }),
         )

@@ -8,7 +8,6 @@ import { authenticate } from '@/middlewares/authenticate'
 import { errors } from '@/helpers/errors'
 import { fixOrder } from '@/helpers/fixOrder'
 import { requestSync } from '@/sockets/index'
-import { updateTodos } from '@/helpers/googleCalendar'
 
 @Controller('/delegate')
 export default class DelegateController {
@@ -140,12 +139,6 @@ export default class DelegateController {
     await fixOrder(ctx.state.user, [getTitle(todo)])
     // Trigger sync
     requestSync(ctx.state.user._id)
-    // Update calendar
-    updateTodos(
-      [todo],
-      ctx.state.user.settings.googleCalendarCredentials,
-      ctx.headers.password
-    )
   }
 
   @Get('/todos')

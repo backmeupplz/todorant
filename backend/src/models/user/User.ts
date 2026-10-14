@@ -1,10 +1,8 @@
 import * as randToken from 'rand-token'
-import { GoogleCalendarCredentials } from '@/helpers/googleCalendar'
 import { Ref, prop } from '@typegoose/typegoose'
 import { omit } from 'lodash'
 
 export interface Settings {
-  removeCompletedFromCalendar?: boolean
   showTodayOnAddTodo?: boolean
   firstDayOfWeek?: number
   startTimeOfDay?: string
@@ -13,7 +11,6 @@ export interface Settings {
   duplicateTagInBreakdown?: boolean
   showMoreByDefault?: boolean
   updatedAt?: Date
-  googleCalendarCredentials?: GoogleCalendarCredentials
   language?: string
 }
 
@@ -44,7 +41,7 @@ export class User {
   name: string
   @prop({
     required: true,
-    default: { preserveOrderByTime: true, removeCompletedFromCalendar: true },
+    default: { preserveOrderByTime: true },
     _id: false,
   })
   settings: Settings
@@ -66,15 +63,11 @@ export class User {
   @prop({ default: new Date() })
   delegatesUpdatedAt: Date
 
-  @prop()
-  googleCalendarResourceId?: string
-
   stripped(withExtra = false, withToken = true) {
     const stripFields = [
       '__v',
       'todos',
       'delegates',
-      'googleCalendarResourceId',
       'settingsFts',
       'passwordHash',
     ]

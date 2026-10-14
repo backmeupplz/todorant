@@ -185,11 +185,7 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
         requests += 1
         let rid = requests
         var message: [String: Any] = ["t": "sync", "rid": rid]
-        if !changes.isEmpty {
-            message["ops"] = ops(changes)
-            // The server needs the encryption password only to write todo texts to Google Calendar
-            if Settings.googleCalendarCredentials != nil, let key = Session.encryptionKey { message["key"] = key }
-        }
+        if !changes.isEmpty { message["ops"] = ops(changes) }
         if pull { message["since"] = cursor ?? 0 }
         sent[rid] = changes
         if let waiter { waiting[rid] = waiter }

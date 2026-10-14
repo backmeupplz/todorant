@@ -141,7 +141,7 @@ enum Tab: Hashable { case current, planning, delegation, settings }
 
 /// Screens pushed onto a tab's stack
 enum Route: Hashable {
-    case login, terms, privacy, telegram, hero, rules, sockets, data, tags, integrations, googleCalendar, security, delegators, delegates
+    case login, terms, privacy, telegram, hero, rules, sockets, data, tags, security, delegators, delegates
     case addEpic(String), changeText(String)
 }
 

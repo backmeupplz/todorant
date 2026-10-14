@@ -1,7 +1,7 @@
 import type { JSX } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 import { Icon } from '../assets/icons'
-import { prefs, rev, settings, update, type Todo } from '../data/store'
+import { prefs, rev, update, type Todo } from '../data/store'
 import { t } from '../i18n'
 import { useSignal } from '../lib/state'
 import { ellipsize } from '../lib/text'
@@ -21,10 +21,10 @@ const ids = (s: Section) => s.todos.map((t) => t.id).join()
 const listSections = (completed: boolean, query: string, tags: string[]): Section[] =>
   planning(completed, query, tags).sort((a, b) => (+isPast(b.title) - +isPast(a.title)) * (completed ? -1 : 1))
 
-/** Dated sections for the calendar, with completed todos unless the setting hides them */
+/** Dated sections for the calendar, completed todos included */
 function calendarSections(tags: string[]): Section[] {
   const days = new Map<string, Todo[]>()
-  for (const completed of settings.value.removeCompletedFromCalendar ? [false] : [false, true])
+  for (const completed of [false, true])
     for (const s of planning(completed, '', tags)) if (s.title.length === 10) days.set(s.title, [...(days.get(s.title) ?? []), ...s.todos])
   return [...days].map(([title, todos]) => ({ title, todos }))
 }
