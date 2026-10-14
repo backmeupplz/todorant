@@ -129,7 +129,7 @@ const redirect = (url: string) => (location.href = url)
 const PROVIDERS: { name: string; key: string; icon: string; go: () => void }[] = [
   {
     name: 'facebook', key: 'home.facebook', icon: '/img/facebook.svg',
-    go: () => redirect(`https://www.facebook.com/dialog/oauth?client_id=640750769753434&redirect_uri=${location.origin}/facebook_login_result&scope=email,public_profile&response_type=token&auth_type=rerequest&state=${newState()}`),
+    go: () => redirect(`https://www.facebook.com/dialog/oauth?client_id=1478238080805015&redirect_uri=${location.origin}/facebook_login_result&scope=email,public_profile&response_type=token&auth_type=rerequest&state=${newState()}`),
   },
   {
     name: 'google', key: 'home.google', icon: '/img/google.svg',
