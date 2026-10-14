@@ -65,6 +65,7 @@ Settings live in `.env`, and [`.env.example`](../.env.example) explains every li
 | `MONGO` | `mongodb://mongo:27017/todorant` | MongoDB connection string. The default is the compose file's own database |
 | `TODORANT_API` | `http://localhost:1337` | The backend address that the web app calls. The web image on its own defaults to `https://backend.todorant.com` |
 | `PASSWORD_SIGNUP` | `true` | Set it to `false` to stop new email + password sign-ups |
+| `SMTP_URL`, `MAIL_FROM` | empty | An SMTP server (`smtps://user:password@smtp.example.com:465`) and sender address. Once set, a sign-up emails a confirmation link, built from `BACKEND_URL` or else `TODORANT_API`, and the account exists once it's opened |
 
 The optional integrations below have their own variables, and they stay off while those are empty.
 

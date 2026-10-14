@@ -24,6 +24,11 @@ import { handleMongoErrors } from '@/middlewares/handleMongoErrors'
 import { v2 } from '@/v2/http'
 
 export const app = new Koa()
+// ctx.ip is the client's (the per-IP sign-in and sign-up limits), not the reverse proxy's: the last
+// X-Forwarded-For hop is the one the proxy added. ponytail: without a proxy a client can pick its own IP
+// there, leaving the per-address limits; add a TRUST_PROXY switch if bare-port servers need it
+app.proxy = true
+app.maxIpsCount = 1
 ;(async () => {
   try {
     const router = new Router()
