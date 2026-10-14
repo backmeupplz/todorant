@@ -279,24 +279,31 @@ struct OnboardingOverlay: View {
                         .padding(12).frame(maxWidth: 424).frame(maxWidth: .infinity)
                         .background(GeometryReader { b in Color.clear.onAppear { boxHeight = b.size.height }.onChange(of: b.size.height) { _, h in boxHeight = h } })
                         .offset(y: y)
-                    if !step.notShowClose {
-                        let atBottom = onboarding.step == .AddAnotherTask || onboarding.step == .ExplainSearchAndCompleted
-                        Button { hideKeyboard(); Onboarding.nextStep(.Close) } label: {
-                            Image(systemName: "xmark").font(.system(size: 22, weight: .semibold)).foregroundStyle(.white).frame(width: 48, height: 48)
-                        }
-                        .accessibilityLabel(t("onboarding.Close.closeEverything"))
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: atBottom ? .bottomTrailing : .topTrailing)
-                        .padding(12)
-                    }
                 }
                 .animation(.easeInOut(duration: 0.5), value: hole)
                 .animation(.easeInOut(duration: 0.5), value: y)
             }
             .ignoresSafeArea()
+            // Inside the safe area, unlike the dimming
+            .overlay { closeButton }
             .transition(.opacity)
             .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
                 if onboarding.step == .AddText { Onboarding.nextStep(.AddTextContinueButton) }
             }
+        }
+    }
+
+    @ViewBuilder
+    private var closeButton: some View {
+        let step = onboarding.stepObject
+        if !step.notShowClose {
+            let atBottom = onboarding.step == .AddAnotherTask || onboarding.step == .ExplainSearchAndCompleted
+            Button { hideKeyboard(); Onboarding.nextStep(.Close) } label: {
+                Image(systemName: "xmark").font(.system(size: 22, weight: .semibold)).foregroundStyle(.white).frame(width: 48, height: 48)
+            }
+            .accessibilityLabel(t("onboarding.Close.closeEverything"))
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: atBottom ? .bottomTrailing : .topTrailing)
+            .padding(12)
         }
     }
 

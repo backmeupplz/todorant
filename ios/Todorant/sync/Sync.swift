@@ -300,7 +300,7 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
     }
 
     /// Pushes and pulls now, waiting for the answer (login, the Data screen); throws when offline
-    func sync() async throws {
+    @MainActor func sync() async throws {
         connect()
         let deadline = Date().addingTimeInterval(30)
         while !connected {
@@ -317,12 +317,12 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
     }
 
     /// Pull everything again (Data screen)
-    func hardSync() async throws {
+    @MainActor func hardSync() async throws {
         cursor = nil
         try await sync()
     }
 
-    func login() async throws {
+    @MainActor func login() async throws {
         cursor = nil
         disconnect()
         try await sync()

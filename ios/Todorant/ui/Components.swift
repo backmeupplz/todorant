@@ -228,6 +228,18 @@ extension View {
     }
 }
 
+/// Large titles on iPhone; on iPad the content is centered, so is the title
+private struct LargeTitleOnPhone: ViewModifier {
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    func body(content: Content) -> some View {
+        content.navigationBarTitleDisplayMode(sizeClass == .regular ? .inline : .large)
+    }
+}
+
+extension View {
+    func largeTitleOnPhone() -> some View { modifier(LargeTitleOnPhone()) }
+}
+
 private struct ReadableWidth: ViewModifier {
     let width: CGFloat
     func body(content: Content) -> some View {

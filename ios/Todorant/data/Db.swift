@@ -308,6 +308,8 @@ final class Db {
     // region SQLite
 
     private func prepare(_ sql: String, _ args: [Any?]) -> OpaquePointer? {
+        // One connection, used from the main thread only
+        assert(Thread.isMainThread, "Db used off the main thread")
         var stmt: OpaquePointer?
         guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else {
             print("SQL error \(String(cString: sqlite3_errmsg(db))): \(sql)")

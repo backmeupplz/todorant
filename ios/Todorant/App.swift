@@ -83,6 +83,7 @@ struct RootView: View {
         .modifier(DialogHost(active: nav.sheet == nil))
         .sheet(item: Binding(get: { nav.sheet }, set: { nav.sheet = $0 })) { sheet in
             AddTodoScreen(sheet: sheet)
+                .modifier(PageSizedSheet())
                 .overlay { OnboardingOverlay() }
                 .modifier(DialogHost())
                 .preferredColorScheme(colorScheme)
@@ -130,6 +131,13 @@ struct RootView: View {
             guard let i = tabs.firstIndex(of: tab) else { continue }
             Onboarding.shared.targets[id] = CGRect(x: frame.minX + width * CGFloat(i), y: frame.maxY - height, width: width, height: height)
         }
+    }
+}
+
+/// iPad's default form sheet is too short for the add screen's calendar
+private struct PageSizedSheet: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 18, *) { content.presentationSizing(.page) } else { content }
     }
 }
 

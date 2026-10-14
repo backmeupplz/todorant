@@ -68,7 +68,7 @@ private final class LoginState {
     var syncLoading = false
 
     /// Gets the user from [request], logs in and leaves the login screen
-    func login(_ errorText: String? = nil, _ request: @escaping () async throws -> User) {
+    func login(_ errorText: String? = nil, _ request: @escaping @MainActor () async throws -> User) {
         loading = true
         Task { @MainActor in
             do {
