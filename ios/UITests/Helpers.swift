@@ -34,6 +34,12 @@ class TodorantUITest: XCTestCase {
         e.tap()
     }
 
+    /// Lists build rows lazily: swipes until [e] exists, then taps it
+    func scrollTap(_ e: XCUIElement, up: Bool = true, line: UInt = #line) {
+        for _ in 0..<12 where !(e.exists && e.isHittable) { up ? app.swipeUp() : app.swipeDown() }
+        tap(e, line: line)
+    }
+
     func button(_ label: String) -> XCUIElement { app.buttons[label].firstMatch }
     func text(_ label: String) -> XCUIElement { app.staticTexts[label].firstMatch }
     func containing(_ s: String) -> XCUIElement { app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", s)).firstMatch }
@@ -54,11 +60,7 @@ class TodorantUITest: XCTestCase {
         wait(field)
         field.tap()
         field.typeText(text)
-        let dayRow = button("Select exact day")
-        if dayRow.exists {
-            dayRow.tap()
-            tap(button(day ?? todayString()))
-        }
+        if day != nil || button("Select exact day").exists { pickDay(day ?? todayString()) }
         if frog { app.switches["It's a frog!"].firstMatch.switches.firstMatch.tap() }
         if save { tap(app.buttons["saveTodos"]) }
     }
@@ -92,6 +94,11 @@ class TodorantUITest: XCTestCase {
             if Date() > deadline { return XCTFail("no \(answer)") }
             Thread.sleep(forTimeInterval: 0.5)
         }
+    }
+
+    func pickDay(_ day: String) {
+        tap(app.buttons["dateRow"].firstMatch)
+        tap(button(day))
     }
 
     func todayString() -> String {
