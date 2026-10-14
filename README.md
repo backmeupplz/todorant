@@ -7,7 +7,8 @@
 Todorant is a todo manager that uses behavioral psychology to help you get things done.<br>
 It runs on the web, Android and iOS, and you can host your own server in a couple of minutes.
 
-**[Open todorant.com](https://todorant.com)** · [iOS](https://apps.apple.com/app/todorant/id1482078243) · [Android](https://github.com/backmeupplz/todorant/releases?q=android&expanded=true) · [Self-hosting](docs/self-hosting.md)
+**[Open todorant.com](https://todorant.com)** · [iOS](https://apps.apple.com/app/todorant/id1482078243) · [Android](https://github.com/backmeupplz/todorant/releases?q=android&expanded=true) · [Self-hosting](docs/self-hosting.md)<br>
+<sub>iOS 2.2.0 for iPhone and iPad (iOS 17 or later) · Android 2.2.0</sub>
 
 <br>
 
@@ -103,7 +104,7 @@ xcodebuild -scheme Todorant -destination 'platform=iOS Simulator,name=iPhone 17'
 
 Run it with the launch argument `-API http://localhost:1337` to use your local backend (Edit Scheme → Arguments).
 
-Pushes to `main` deploy on their own once the checks pass: the backend to backend.todorant.com, the web app to GitHub Pages, and fresh Docker images to the GitHub Container Registry. Android builds are attached to [releases](https://github.com/backmeupplz/todorant/releases).
+Pushes to `main` deploy on their own once the checks pass: the backend to backend.todorant.com, the web app to GitHub Pages, and fresh Docker images to the GitHub Container Registry. Android builds are attached to [releases](https://github.com/backmeupplz/todorant/releases). The iOS app ships only through the [App Store](https://apps.apple.com/app/todorant/id1482078243), since an App Store build can't be installed any other way.
 
 ## License
 
