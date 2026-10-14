@@ -8,9 +8,16 @@ final class ShareCheck: TodorantUITest {
         let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
         safari.launch()
         safari.open(URL(string: "https://example.com")!)
-        sleep(4)
+        sleep(5)
+        shot("69-safari")
         let share = safari.buttons["Share"].firstMatch
-        if !share.waitForExistence(timeout: 5) { safari.buttons.matching(NSPredicate(format: "label CONTAINS[c] 'More'")).firstMatch.tap() }
+        if !share.waitForExistence(timeout: 5) {
+            print(safari.buttons.allElementsBoundByIndex.map(\.label))
+            safari.buttons["Page Menu"].firstMatch.tap()
+            sleep(1)
+            shot("69-menu")
+            print(safari.buttons.allElementsBoundByIndex.map(\.label))
+        }
         tap(safari.buttons["Share"].firstMatch)
         sleep(2)
         shot("70-share-sheet")
