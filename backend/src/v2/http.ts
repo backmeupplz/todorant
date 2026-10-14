@@ -1,13 +1,17 @@
 import * as Router from 'koa-router'
 import * as randToken from 'rand-token'
 import { Context, Next } from 'koa'
+import { HeroModel } from '@/models/hero'
 import { ObjectId } from 'mongodb'
 import { Op, pull, push } from '@/v2/sync'
+import { QrLoginModel } from '@/models/QrLoginModel'
+import { ReportModel } from '@/models/report'
 import { TagModel } from '@/models/tag'
 import { TodoModel } from '@/models/todo'
 import { UserModel } from '@/models/user'
 import { authenticate, spend, tokenOf } from '@/v2/auth'
-import { hint } from '@/v2/hub'
+import { getGoogleCalendarApi } from '@/helpers/googleCalendar'
+import { hint, kick } from '@/v2/hub'
 import { isObjectId } from '@/v2/schema'
 import { passwordRoutes } from '@/v2/password'
 import { wire } from '@/v2/wire'
@@ -265,4 +269,74 @@ v2.post('/delegation/token', auth, async (ctx) => {
   )
   hint(ctx.state.uid)
   ctx.body = { token }
+})
+
+/**
+ * Deletes the account for good with its todos, hashtags, hero, reports and QR logins, and unlinks it from
+ * delegation. Todos it delegated that were accepted stay with their delegates as their own; what the
+ * other side still lists (pending delegations, todos delegated to it) becomes a tombstone their devices
+ * drop on the next pull.
+ */
+v2.delete('/account', auth, async (ctx) => {
+  const id = uid(ctx)
+  const user = await UserModel.collection.findOne({ _id: id })
+  if (!user) return ctx.throw(401, 'Unauthorized')
+  const [delegators, toThem, fromThem] = await Promise.all([
+    UserModel.collection.distinct('_id', { delegates: id }),
+    TodoModel.collection.distinct('user', { delegator: id }),
+    TodoModel.collection.distinct('delegator', {
+      user: id,
+      delegator: { $ne: null },
+    }),
+  ])
+  const now = new Date()
+  const tombstone = { deleted: true, text: '', updatedAt: now }
+  await Promise.all([
+    TodoModel.collection.deleteMany({ user: id, delegator: null }),
+    TodoModel.collection.updateMany(
+      { user: id, delegator: { $ne: null } },
+      { $set: tombstone }
+    ),
+    TodoModel.collection.updateMany(
+      { delegator: id, delegateAccepted: true },
+      { $set: { delegator: null, updatedAt: now } }
+    ),
+    TodoModel.collection.updateMany(
+      { delegator: id, delegateAccepted: { $ne: true } },
+      { $set: { ...tombstone, delegator: null } }
+    ),
+    TagModel.collection.deleteMany({ user: id }),
+    HeroModel.collection.deleteMany({ user: id }),
+    ReportModel.collection.deleteMany({ user: id }),
+    QrLoginModel.collection.deleteMany({ token: user.token }),
+    UserModel.collection.updateMany(
+      { delegates: id },
+      { $pull: { delegates: id } }
+    ),
+  ])
+  // Last, so a failure above leaves an account its owner can delete again. Then its token resolves to
+  // nobody: its devices can't write or reconnect
+  await UserModel.collection.deleteOne({ _id: id })
+  kick(id)
+  const others = [
+    ...(user.delegates || []),
+    ...delegators,
+    ...toThem,
+    ...fromThem,
+  ]
+  await touched(...new Map(others.map((o) => [String(o), o])).values())
+  // Google keeps calling a watched calendar until told to stop; never worth failing the deletion over
+  const calendar = user.settings?.googleCalendarCredentials
+  if (calendar && user.googleCalendarResourceId)
+    Promise.resolve()
+      .then(() =>
+        getGoogleCalendarApi(calendar).channels.stop({
+          requestBody: {
+            id: String(id),
+            resourceId: user.googleCalendarResourceId,
+          },
+        })
+      )
+      .catch(() => undefined)
+  ctx.status = 204
 })

@@ -77,8 +77,8 @@ object Ui {
         if (confirmText != null && confirm != null) listOf(confirmText to confirm, t("ok") to {}) else listOf(t("ok") to {})
     )
 
-    fun confirm(message: String, confirmText: String, title: String? = null, onConfirm: () -> Unit) =
-        show(DialogSpec(title ?: t("pleaseConfirm"), message, listOf(t("cancel") to {}, confirmText to onConfirm)))
+    fun confirm(message: String, confirmText: String, title: String? = null, destructive: Boolean = false, onConfirm: () -> Unit) =
+        show(DialogSpec(title ?: t("pleaseConfirm"), message, listOf(t("cancel") to {}, confirmText to onConfirm), if (destructive) setOf(1) else emptySet()))
 
     /** Options plus a cancel button; [onPick] gets the option index */
     fun actionSheet(title: String?, options: List<String>, destructive: Set<Int> = emptySet(), onPick: (Int) -> Unit) = show(

@@ -79,6 +79,9 @@ object Rest {
 
     suspend fun acceptInvite(invite: String) = call("POST", "/v2/delegation/accept", JSONObject().put("token", invite))
 
+    /** Deletes the account and everything in it on the server */
+    suspend fun deleteAccount() = call("DELETE", "/v2/account")
+
     suspend fun removeDelegation(userId: String, isDelegator: Boolean) =
         call("DELETE", "/v2/delegation/${if (isDelegator) "delegators" else "delegates"}/$userId")
 }

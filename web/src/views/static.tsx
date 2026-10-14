@@ -64,3 +64,23 @@ export const Terms = () => (
     <Back />
   </article>
 )
+
+export const DeleteAccount = () => (
+  <article class="static">
+    <h1>Delete your Todorant account</h1>
+    <p>Todorant is made by Nikita Kolmogorov. You can delete your Todorant account and everything in it at any time.</p>
+    <h2>How to delete it</h2>
+    <ul>
+      <li><b>Android app:</b> open Settings and tap Delete account.</li>
+      <li><b>Web:</b> sign in at <a {...link('/')}>todorant.com</a>, open Settings and click Delete account. If you use the iPhone app, delete the account here: it's the same account.</li>
+      <li><b>Can't sign in?</b> Email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account and ask for it to be deleted.</li>
+    </ul>
+    <h2>What gets deleted</h2>
+    <p>Your account and profile (name, email address and linked sign-in IDs), all your todos, hashtags and settings, your hero points and shared reports, your delegation links and the Google Calendar connection. Todos other people delegated to you are removed from their lists too. All of it is removed from the live database immediately and can't be restored.</p>
+    <h2>What stays</h2>
+    <p>Todos you delegated to other people that they accepted stay in their accounts, because they belong to them now.</p>
+    <h2>Delete some of your data and keep the account</h2>
+    <p>You can delete any todo or hashtag in the app at any time, and it disappears from all your devices. Disconnecting Google Calendar in Settings removes the calendar connection from your account. To remove everything from Todorant's servers, delete the account as described above.</p>
+    <Back />
+  </article>
+)

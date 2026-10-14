@@ -1,5 +1,5 @@
 import { encryptionKey, load, pending, reset, session, type Profile } from './store'
-import { login } from './rest'
+import { call, login } from './rest'
 import * as sync from './sync'
 import { go } from '../ui/router'
 import { closeDialogs, showError } from '../ui/kit'
@@ -29,6 +29,20 @@ export async function start(profile: Profile) {
 export async function logout() {
   // Edits not pushed yet would be lost with the local data; give them a few seconds to reach the server
   if (pending().length) await Promise.race([sync.sync(), new Promise((r) => setTimeout(r, 5000))])
+  await forget()
+}
+
+/** Deletes the account with all its data on the server, then forgets this browser's copy like logout */
+export async function deleteAccount() {
+  try {
+    await call('DELETE', '/v2/account')
+  } catch (e) {
+    return showError(e)
+  }
+  await forget()
+}
+
+async function forget() {
   // The old site's shared login cookie would sign us right back in
   for (const domain of ['', '; domain=todorant.com', '; domain=.todorant.com']) document.cookie = `token=; Max-Age=0; path=/${domain}`
   localStorage.setItem('signedOut', '1')

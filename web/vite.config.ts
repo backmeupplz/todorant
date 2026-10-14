@@ -20,11 +20,12 @@ export default defineConfig({
   oxc: { jsx: { runtime: 'automatic', importSource: 'preact' } },
   plugins: [
     { name: 'csp', apply: 'build', transformIndexHtml: (html) => html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${csp}" />`) },
-    // GitHub Pages serves 404.html for unknown paths, so deep links boot the SPA
+    // GitHub Pages serves 404.html for unknown paths, so deep links boot the SPA. Pages linked from store
+    // listings get a copy of their own: Pages serves /privacy from privacy.html with a 200, not a 404
     {
       name: 'spa-404',
       closeBundle() {
-        copyFileSync('dist/index.html', 'dist/404.html')
+        for (const page of ['404', 'privacy', 'terms', 'delete-account']) copyFileSync('dist/index.html', `dist/${page}.html`)
         // Local QA helpers (a test session, phone frame) live in public/ but must never ship
         for (const f of readdirSync('dist')) if (f.startsWith('qa-')) rmSync(`dist/${f}`)
       },

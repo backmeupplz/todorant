@@ -62,6 +62,8 @@
   "loginTelegram": "Login with Telegram",
   "logoutText": "Would you like to logout?",
   "logout": "Logout",
+  "deleteAccount": "Delete account",
+  "deleteAccountText": "This permanently deletes your account with all your todos, hashtags and settings from the server. It can't be undone.",
   "loginButton": "Login",
   "alreadyRegistered": "(You are already registered)",
   "purchaseError": "Hm, looks like something went wrong with the purchases. Please, go to the website, login and subscribe there!",

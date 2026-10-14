@@ -10,5 +10,5 @@ esac
 origin=$(echo "$api" | sed -E 's|^(https?://[^/?#]+).*|\1|')
 cd /usr/share/nginx/html
 printf 'window.TODORANT_API = "%s"\n' "$api" > config.js
-sed -i "s#https://backend.todorant.com#$origin#g; s#wss://backend.todorant.com#$(echo "$origin" | sed 's/^http/ws/')#g" index.html 404.html
+sed -i "s#https://backend.todorant.com#$origin#g; s#wss://backend.todorant.com#$(echo "$origin" | sed 's/^http/ws/')#g" *.html
 echo "Todorant web: backend at $api"

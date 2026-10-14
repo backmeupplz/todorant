@@ -193,6 +193,15 @@ private fun AccountInfo() {
             }
         }
     }) { TableText(t("addDevices")) }
+    TableItem(onClick = {
+        Ui.confirm(t("deleteAccountText"), t("deleteAccount"), destructive = true) {
+            loading = true
+            Ui.attempt({ loading = false }) {
+                Rest.deleteAccount()
+                Account.logout()
+            }
+        }
+    }) { TableText(t("deleteAccount"), color = Colors.destruct) }
 }
 
 /** The server: [label] shows its address and opens an editor; empty means todorant's own */

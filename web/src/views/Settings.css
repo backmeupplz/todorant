@@ -6,6 +6,7 @@
 .table-row > .icon-btn:last-child { margin-right: -8px; }
 .settings-note { padding: 8px 16px; color: var(--muted); font-size: 15px; }
 .logout { padding: 8px 16px 4px; }
+.logout .btn-text { margin-top: 4px; }
 .field-error { color: var(--red); font-size: 13px; }
 
 /* Value rows picked with the native picker: an invisible select covers the whole row */

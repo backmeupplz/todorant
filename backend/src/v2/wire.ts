@@ -20,6 +20,8 @@ export function wire(
   if (!only) {
     if (doc.user) out.user = String(doc.user)
     if (doc.delegator) out.delegator = String(doc.delegator)
+    // Cleared on purpose (the delegator deleted their account): devices merge fields, so say so
+    else if (doc.delegator === null) out.delegator = null
     if (doc.createdAt) out.createdAt = ms(doc.createdAt)
   }
   if (doc.updatedAt) out.updatedAt = ms(doc.updatedAt)

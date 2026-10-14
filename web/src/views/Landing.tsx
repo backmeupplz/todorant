@@ -73,6 +73,7 @@ export function Landing() {
         <nav>
           <a {...link('/privacy')}>{t('home.privacy')}</a>
           <a {...link('/terms')}>Terms of use</a>
+          <a {...link('/delete-account')}>{t('m.deleteAccount')}</a>
           <select aria-label="Language" title="Language" value={language.value} onChange={(e) => setLanguage(e.currentTarget.value as Language)}>
             {Object.entries(LANGUAGES).map(([code, name]) => <option key={code} value={code}>{name}</option>)}
           </select>

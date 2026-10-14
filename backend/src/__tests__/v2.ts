@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken'
 import * as randToken from 'rand-token'
 import * as request from 'supertest'
 import { AddressInfo } from 'net'
+import { HeroModel } from '@/models/hero'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { ObjectId } from 'mongodb'
 import { Server } from 'http'
@@ -974,5 +975,93 @@ describe('v2 sync and API', () => {
       email: 'owner@example.com',
       password: 'correct horse',
     }).expect(429)
+  })
+
+  it('deletes an account with everything it owns, leaving others what they accepted', async () => {
+    const signup = await request(server)
+      .post('/v2/auth/signup')
+      .send({ email: 'gone@example.com', password: 'correct horse' })
+      .expect(200)
+    const d = {
+      token: signup.body.token as string,
+      _id: String(signup.body._id),
+    }
+    const accept = async (who: { token: string }, inviter: { _id: string }) =>
+      request(server)
+        .post('/v2/delegation/accept')
+        .set('authorization', `Bearer ${who.token}`)
+        .send({
+          token: (await UserModel.findById(inviter._id))!.delegateInviteToken,
+        })
+        .expect(200)
+    // a and d delegate to each other
+    await accept(d, a)
+    await accept(a, d)
+    const [own, accepted, pending, toD] = [id(), id(), id(), id()]
+    const at = Date.now()
+    const delegated = (text: string, user: string, delegator: string) => ({
+      text,
+      ...day,
+      user,
+      delegator,
+    })
+    await sync(d.token, {
+      ops: [
+        { c: 'todo', id: own, at, set: { text: 'mine', ...day } },
+        { c: 'tag', id: id(), at, set: { tag: 'gone' } },
+        { c: 'hero', at, set: { points: 5 } },
+        { c: 'todo', id: accepted, at, set: delegated('for a', a._id, d._id) },
+        { c: 'todo', id: pending, at, set: delegated('secret', a._id, d._id) },
+      ],
+    })
+    await sync(a.token, {
+      ops: [
+        { c: 'todo', id: toD, at, set: delegated('for d', d._id, a._id) },
+        { c: 'todo', id: accepted, at, set: { delegateAccepted: true } },
+      ],
+    })
+    const { cursor } = await sync(a.token, { since: 0 })
+    const remove = (token: string) =>
+      request(server)
+        .delete('/v2/account')
+        .set('authorization', `Bearer ${token}`)
+    await remove(d.token).expect(204)
+    // The token is dead and nothing of d is left but tombstones for a's devices
+    await remove(d.token).expect(401)
+    await request(server)
+      .post('/v2/sync')
+      .set('authorization', `Bearer ${d.token}`)
+      .send({ since: 0 })
+      .expect(401)
+    expect(await UserModel.findById(d._id)).toBeNull()
+    expect(await TodoModel.findById(own)).toBeNull()
+    expect(await TagModel.countDocuments({ user: d._id })).toBe(0)
+    expect(await HeroModel.countDocuments({ user: d._id })).toBe(0)
+    expect(
+      await TodoModel.countDocuments({ text: { $in: ['mine', 'secret'] } })
+    ).toBe(0)
+    expect((await UserModel.findById(a._id))!.delegates).toHaveLength(0)
+    const delta = await sync(a.token, { since: cursor })
+    const sent = Object.fromEntries(delta.todos.map((t: any) => [t.id, t]))
+    expect(sent[accepted]).toMatchObject({
+      text: 'for a',
+      user: a._id,
+      delegator: null,
+      deleted: false,
+    })
+    expect(sent[pending]).toMatchObject({
+      deleted: true,
+      text: '',
+      delegator: null,
+    })
+    expect(sent[toD]).toMatchObject({ deleted: true })
+    expect(delta.delegation).toEqual({ delegates: [], delegators: [] })
+    // The accepted todo is a's to edit now
+    const { acks } = await sync(a.token, {
+      ops: [
+        { c: 'todo', id: accepted, at: Date.now(), set: { text: 'mine now' } },
+      ],
+    })
+    expect(acks[0].fix).toBeUndefined()
   })
 })

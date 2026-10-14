@@ -451,6 +451,8 @@
     "dataInfo": "Data info",
     "decryptAllButton": "Decrypt all",
     "defaultToToday": "Default to today",
+    "deleteAccount": "Delete account",
+    "deleteAccountText": "This permanently deletes your account with all your todos, hashtags and settings from the server. It can't be undone.",
     "delegate": {
       "ByMe": "By me",
       "ToMe": "Inbox",

@@ -32,3 +32,7 @@ export function publish(userId: unknown, message: unknown, except?: WebSocket) {
 export const hint = (userId: unknown) => publish(userId, { t: 'pull' })
 
 export const socketsOf = (userId: string) => sockets.get(userId)?.size || 0
+
+/** Closes every socket of a deleted account (reconnects are refused: its token no longer resolves) */
+export const kick = (userId: unknown) =>
+  sockets.get(String(userId))?.forEach((s) => s.close(4401, 'Unauthorized'))

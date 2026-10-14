@@ -1,7 +1,7 @@
 import type { JSX } from 'preact'
 import { useEffect, useMemo } from 'preact/hooks'
 import { Icon } from '../assets/icons'
-import { logout } from '../data/account'
+import { deleteAccount, logout } from '../data/account'
 import { call } from '../data/rest'
 import {
   encryptionKey, hero, isDark, people, prefs, rev, session, setName, setPref, setSetting, settings, tags, todos, update,
@@ -111,6 +111,9 @@ function List() {
       <div class="logout">
         <button type="button" class="btn btn-orange btn-block" onClick={async () => (await confirm(t('m.logoutText'), t('m.logout'), true)) && logout()}>
           {t('m.logout')}
+        </button>
+        <button type="button" class="btn btn-text danger btn-block" onClick={async () => (await confirm(t('m.deleteAccountText'), t('m.deleteAccount'), true)) && deleteAccount()}>
+          {t('m.deleteAccount')}
         </button>
       </div>
 
