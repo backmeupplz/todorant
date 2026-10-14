@@ -110,7 +110,7 @@ private struct PlanningHeader: ToolbarContent {
                 Button { state.hash.removeAll() } label: { Image(systemName: "xmark") }.accessibilityLabel(t("cancel"))
             } else if !completed {
                 Button { state.calendarEnabled.toggle() } label: { TIcon(name: "calendar_outline_28--event", size: 24).opacity(0.5) }
-                    .disabled(locked).accessibilityLabel(t("calendar"))
+                    .disabled(locked).accessibilityLabel(t("addTodoDay"))
             } else {
                 InfoButton(message: "infoPlanning")
             }
