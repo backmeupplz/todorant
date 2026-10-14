@@ -67,4 +67,67 @@ final class QA: TodorantUITest {
         XCTAssertTrue(synced, "offline edits reached the server")
         shot("13-online")
     }
+
+    /// Turns encryption on; texts go out in the crypto-js format (the shell checks them with openssl) and
+    /// a text encrypted by openssl shows decrypted
+    func testEncryption() {
+        launch(token: env["TOKEN"])
+        wait(text("To infinity!"), timeout: 30)
+        tab("Settings")
+        scrollTap(button("Security"))
+        app.switches["Encrypt todos"].firstMatch.switches.firstMatch.tap()
+        tap(app.secureTextFields["encryptionPassword"])
+        app.typeText("correct horse")
+        tap(app.secureTextFields["encryptionPasswordRepeat"])
+        app.typeText("correct horse")
+        shot("20-security")
+        tap(button("Save"))
+        tap(app.alerts.buttons["Save"])
+        tap(app.alerts.buttons["OK"])
+        app.navigationBars.buttons.firstMatch.tap()
+        tab("Current")
+        tap(app.buttons["plus"])
+        addTodo("Secret plan #private")
+        wait(containing("Secret plan"))
+        let today = todayString()
+        rest("POST", "/v2/todos", ["text": env["ENC_TEXT"] ?? "", "encrypted": true, "monthAndYear": String(today.prefix(7)), "date": String(today.suffix(2)), "order": 5])
+        tab("Planning")
+        wait(containing("Encrypted by openssl"), timeout: 10)
+        shot("21-encrypted-planning")
+    }
+
+    /// Overdue todos lock the Current tab until they're replanned; delegation both ways
+    func testPlanningAndDelegation() {
+        launch(token: env["TOKEN"])
+        wait(containing("Looks like you have some planning to do"), timeout: 30)
+        XCTAssertFalse(app.tabBars.buttons["Current"].exists, "Current is hidden while planning is required")
+        shot("30-planning-required")
+        tap(containing("Renew passport"))
+        tap(button("Edit todo"))
+        pickDay(todayString())
+        tap(app.buttons["saveTodos"])
+        wait(app.tabBars.buttons["Current"], timeout: 10)
+        tab("Current")
+        wait(containing("Renew passport"))
+        shot("31-replanned")
+
+        tab("Delegation")
+        wait(containing("Review the slides"), timeout: 10)
+        shot("32-inbox")
+        tap(button("Accept"))
+        tab("Planning")
+        wait(containing("Review the slides"), timeout: 10)
+        tab("Current")
+
+        tap(app.buttons["plus"])
+        addTodo("Prepare the budget", save: false)
+        tap(button("More..."))
+        tap(button("Delegate"))
+        tap(app.buttons[env["NAME_B"] ?? "qa-b"].firstMatch)
+        tap(app.buttons["saveTodos"])
+        tab("Delegation")
+        tap(app.segmentedControls.buttons["By me"])
+        wait(containing("Prepare the budget"), timeout: 10)
+        shot("33-by-me")
+    }
 }

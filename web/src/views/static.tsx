@@ -30,7 +30,7 @@ export const Privacy = () => (
     <p>Todorant's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
     <h2>How long we keep it and how to delete it</h2>
     <p>We keep your data while your account exists. When you delete a todo or a hashtag, it disappears from all your devices, but our database keeps a record of the deletion so that every device can sync it, until you delete your account.</p>
-    <p>You can delete your account in Settings → Delete account in the Android app or on todorant.com (iPhone users can do it on the web, since it's the same account). Your account and everything in it are removed from our live database immediately. <a href="/delete-account">This page</a> describes what is deleted, and if you can't sign in, you can email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account.</p>
+    <p>You can delete your account in Settings → Delete account in the Android or iPhone app or on todorant.com. Your account and everything in it are removed from our live database immediately. <a href="/delete-account">This page</a> describes what is deleted, and if you can't sign in, you can email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account.</p>
     <h2>Your own server</h2>
     <p>The apps can connect to a Todorant server that you or someone else runs. Your data then goes to that server instead of ours, and whoever runs it is responsible for it.</p>
     <h2>Children</h2>
@@ -74,8 +74,8 @@ export const DeleteAccount = () => (
     <p>Todorant is made by Nikita Kolmogorov. You can delete your Todorant account and everything in it at any time.</p>
     <h2>How to delete it</h2>
     <ul>
-      <li><b>Android app:</b> open Settings and tap Delete account.</li>
-      <li><b>Web:</b> sign in at <a href="/">todorant.com</a>, open Settings and click Delete account. If you use the iPhone app, delete the account here: it's the same account.</li>
+      <li><b>Android and iPhone apps:</b> open Settings and tap Delete account.</li>
+      <li><b>Web:</b> sign in at <a href="/">todorant.com</a>, open Settings and click Delete account.</li>
       <li><b>Can't sign in?</b> Email <a href="mailto:n@borodutch.com">n@borodutch.com</a> from the address on your account and ask for it to be deleted.</li>
     </ul>
     <h2>What gets deleted</h2>

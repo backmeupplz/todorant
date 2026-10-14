@@ -497,6 +497,7 @@ private struct TodoForm: View {
                     vm.showMonthAndYearPicker = false
                 }
                 .shake(vm.monthAndYear == nil ? vm.shake : 0)
+                .accessibilityIdentifier("dateRow")
                 if vm.showDatePicker {
                     let selected = hasDay ? vm.datePickerValue.flatMap(parseTitle) : nil
                     MonthCalendar(month: $vm.calendarMonth, selected: selected, minDate: todayWithStartOfDay()) {
