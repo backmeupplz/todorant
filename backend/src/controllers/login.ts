@@ -150,7 +150,7 @@ export default class LoginController {
       key.method
     )
 
-    const response = await verified(
+    const response: any = await verified(
       ctx,
       appleAuth.accessToken(ctx.request.body.code)
     )
