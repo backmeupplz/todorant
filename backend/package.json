@@ -100,6 +100,7 @@
     "telegraf": "^3.38.0",
     "telegraf-i18n": "^6.6.0",
     "temp": "^0.9.1",
+    "uuid": "^8.3.0",
     "ws": "7.5.10"
   },
   "_moduleAliases": {
