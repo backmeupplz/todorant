@@ -49,6 +49,8 @@ app.maxIpsCount = 1
     app.use(router.allowedMethods())
     app.use(mount('/docs', serve('./docs/site')))
   } catch (err) {
-    console.log('Koa app starting error: ', err)
+    // Crash instead of serving 404s without CORS headers, so a broken deploy is visible
+    console.error('Koa app starting error: ', err)
+    process.exit(1)
   }
 })()
