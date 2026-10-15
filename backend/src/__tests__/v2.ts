@@ -844,6 +844,26 @@ describe('v2 sync and API', () => {
         .update('fb-token')
         .digest('hex')}`
     )
+    // Tokens the provider rejects are 401s; the provider being down stays a 5xx
+    axiosMock.onGet(`${tokeninfo}?id_token=expired`).reply(400)
+    axiosMock.onGet(`${tokeninfo}?access_token=expired`).reply(400)
+    axiosMock.onGet(`${tokeninfo}?id_token=down`).reply(503)
+    facebookApiSpy.mockImplementationOnce(
+      (_: string, done: (e: unknown) => void) =>
+        done({ type: 'OAuthException', code: 190 })
+    )
+    for (const [provider, body] of [
+      ['google', { accessToken: 'expired' }],
+      ['google-firebase', { accessToken: 'expired' }],
+      ['facebook', { accessToken: 'expired' }],
+      ['apple-firebase', { credential: { oauthIdToken: 'garbage' } }],
+      ['apple-firebase', {}],
+    ] as const)
+      await request(server).post(`/v2/auth/${provider}`).send(body).expect(401)
+    await request(server)
+      .post('/v2/auth/google')
+      .send({ accessToken: 'down' })
+      .expect(500)
     // Telegram: a signed payload is only good for a day, not forever
     process.env.TELEGRAM_LOGIN_TOKEN = 'bot-token'
     const telegram = (age: number) => {

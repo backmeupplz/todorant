@@ -30,7 +30,10 @@ export const telegramLoginRequests = {} as {
 export default class LoginController {
   @Post('/facebook')
   async facebook(@Ctx() ctx: Context) {
-    const fbProfile: any = await getFBUser(ctx.request.body.accessToken)
+    const fbProfile: any = await verified(
+      ctx,
+      getFBUser(ctx.request.body.accessToken)
+    )
     const { user } = await getOrCreateUser({
       name: fbProfile.name,
 
@@ -63,10 +66,13 @@ export default class LoginController {
     const accessToken = ctx.request.body.accessToken
 
     const userData: any = (
-      await axios(
-        `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${encodeURIComponent(
-          accessToken
-        )}`
+      await verified(
+        ctx,
+        axios(
+          `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${encodeURIComponent(
+            accessToken
+          )}`
+        )
       )
     ).data
     if (!ownGoogleToken(userData.aud, userData.email_verified)) {
@@ -85,19 +91,25 @@ export default class LoginController {
   async googleFirebase(@Ctx() ctx: Context) {
     const accessToken = ctx.request.body.accessToken
     const tokenInfo: any = (
-      await axios(
-        `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${encodeURIComponent(
-          accessToken
-        )}`
+      await verified(
+        ctx,
+        axios(
+          `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${encodeURIComponent(
+            accessToken
+          )}`
+        )
       )
     ).data
 
     const userData: any = (
-      await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      await verified(
+        ctx,
+        axios.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+      )
     ).data
     if (!ownGoogleToken(tokenInfo.aud, userData.email_verified)) {
       return ctx.throw(403)
@@ -138,7 +150,10 @@ export default class LoginController {
       key.method
     )
 
-    const response = await appleAuth.accessToken(ctx.request.body.code)
+    const response = await verified(
+      ctx,
+      appleAuth.accessToken(ctx.request.body.code)
+    )
     const idToken = decode(response.id_token) as any
 
     const appleSubId = idToken.sub
@@ -200,9 +215,12 @@ export default class LoginController {
 
   @Post('/apple-firebase')
   async appleFirebase(@Ctx() ctx: Context) {
-    const idToken = (await verifyAppleToken(
-      ctx.request.body.credential.oauthIdToken,
-      'com.todorant.web'
+    const idToken = (await verified(
+      ctx,
+      verifyAppleToken(
+        ctx.request.body.credential?.oauthIdToken,
+        'com.todorant.web'
+      )
     )) as any
 
     const appleSubId = idToken.sub
@@ -396,6 +414,22 @@ const ownGoogleToken = (audience: unknown, emailVerified: unknown) =>
   /^(167486246043|599005831909)-[\w-]+\.apps\.googleusercontent\.com$/.test(
     String(audience)
   ) && String(emailVerified) === 'true'
+
+/** A token the provider rejects is a 401; the provider being down or unreachable stays a 5xx */
+async function verified<T>(ctx: Context, check: Promise<T>): Promise<T> {
+  try {
+    return await check
+  } catch (error) {
+    const { response, code } = (error || {}) as {
+      response?: { status: number }
+      code?: unknown
+    }
+    // HTTP errors carry the provider's status; network errors a string code (ECONNRESET, …)
+    if (response ? response.status >= 500 : typeof code === 'string')
+      throw error
+    return ctx.throw(401, 'Invalid token')
+  }
+}
 
 function getFBUser(accessToken: string) {
   return new Promise((res, rej) => {
