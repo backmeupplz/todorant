@@ -1,5 +1,6 @@
 # One published GitHub release vX.Y.Z ships everything: the bundle to Google Play, the iPhone app to the App Store,
-# the signed APKs as todorant-X.Y.Z.apk (play) and todorant-fdroid-X.Y.Z.apk on the release, and the new version to the
+# the signed APKs as todorant-X.Y.Z.apk (play) and todorant-fdroid-X.Y.Z.apk on the release (plus unversioned copies
+# for todorant.com's download link), and the new version to the
 # F-Droid merge request while it's open (once merged, F-Droid follows new tags itself and builds them; it ships our
 # fdroid APK only if its own build matches it).
 # A previous version still waiting for review or in review is replaced on both stores.
@@ -107,7 +108,10 @@ jobs:
         run: |
           cp android/app/build/outputs/apk/play/release/app-play-release.apk "todorant-$VERSION.apk"
           cp android/app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "todorant-fdroid-$VERSION.apk"
-          gh release upload "$TAG" "todorant-$VERSION.apk" "todorant-fdroid-$VERSION.apk" --clobber
+          # Unversioned copies for releases/latest/download links (todorant.com's APK button)
+          cp "todorant-$VERSION.apk" todorant.apk
+          cp "todorant-fdroid-$VERSION.apk" todorant-fdroid.apk
+          gh release upload "$TAG" "todorant-$VERSION.apk" "todorant-fdroid-$VERSION.apk" todorant.apk todorant-fdroid.apk --clobber
       - name: Google Play
         if: env.MODE != 'testflight-only'
         run: |

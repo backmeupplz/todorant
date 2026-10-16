@@ -12,6 +12,7 @@ import './Landing.css'
 
 const APP_STORE = 'https://apps.apple.com/app/todorant/id1482078243'
 const PLAY = 'https://play.google.com/store/apps/details?id=com.todorant'
+const APK = 'https://github.com/backmeupplz/todorant/releases/latest/download/todorant.apk'
 const SHOTS = ['en', 'es', 'it', 'ru', 'uk']
 
 /** Props for an in-app link: a real href for new tabs, client-side navigation on a plain click */
@@ -46,6 +47,7 @@ export function Landing() {
               <button type="button" class="hero-signin" onClick={openSignIn}>{t('home.signIn')}</button>
               <a href={APP_STORE} target="_blank" rel="noreferrer noopener" title="App Store"><img src="/img/appstore.svg" alt="App Store" /></a>
               <a href={PLAY} target="_blank" rel="noreferrer noopener" title="Google Play"><img src="/img/playstore.svg" alt="Google Play" /></a>
+              <a href={APK} title="Android APK"><img src="/img/apk.svg" alt="Android APK" /></a>
             </div>
           </div>
           <ul class="hero-features">

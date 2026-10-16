@@ -385,7 +385,7 @@ const PLANE = <svg viewBox="0 0 24 24" width="28" height="28" fill="#2aabee" ari
 const APPS: [name: string, url: string, icon: JSX.Element][] = [
   ['iOS', 'https://apps.apple.com/app/todorant/id1482078243', <img src="/img/appstore.svg" alt="" width={28} height={28} />],
   ['Google Play', 'https://play.google.com/store/apps/details?id=com.todorant', <img src="/img/playstore.svg" alt="" width={28} height={28} />],
-  ['Android APK', 'https://github.com/backmeupplz/todorant/releases', <Icon name="apps" size={28} style={{ color: 'var(--green)' }} />],
+  ['Android APK', 'https://github.com/backmeupplz/todorant/releases/latest/download/todorant.apk', <Icon name="apps" size={28} style={{ color: 'var(--green)' }} />],
   ['Telegram', 'https://t.me/todorant_bot', PLANE],
 ]
 
