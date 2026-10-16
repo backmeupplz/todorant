@@ -5,8 +5,10 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.DeviceFontFamilyName
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import com.todorant.R
 import com.todorant.data.Settings
 
@@ -63,12 +65,14 @@ object Colors {
     fun forRank(rankIndex: Int) = if (rankIndex >= 0) colorSchemes[rankIndex % colorSchemes.size] else colorSchemes.last()
 }
 
+/** The system font at the weights of the RN app's SF Pro faces (Apple's fonts don't ship on Android) */
 object Fonts {
-    val displayBold = FontFamily(Font(R.font.sf_pro_display_bold))
-    val displayMedium = FontFamily(Font(R.font.sf_pro_display_medium))
-    val roundedBold = FontFamily(Font(R.font.sf_pro_rounded_bold))
-    val roundedRegular = FontFamily(Font(R.font.sf_pro_rounded_regular))
-    val textRegular = FontFamily(Font(R.font.sf_pro_text_regular))
+    private fun system(weight: FontWeight) = FontFamily(Font(DeviceFontFamilyName("sans-serif"), weight))
+    val displayBold = system(FontWeight.Bold)
+    val displayMedium = system(FontWeight.Medium)
+    val roundedBold = system(FontWeight.Bold)
+    val roundedRegular = system(FontWeight.Normal)
+    val textRegular = system(FontWeight.Normal)
     val icons = FontFamily(Font(R.font.icomoon))
 }
 
