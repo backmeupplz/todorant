@@ -1,0 +1,1 @@
+Todorant is now on F-Droid. This build has no Google code: QR codes are scanned with the open-source ZXing scanner, and you can sign in with an email and a password, Apple, Telegram or a QR code.

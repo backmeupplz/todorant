@@ -35,6 +35,7 @@ import com.todorant.logic.Account
 import com.todorant.logic.ellipsize
 import com.todorant.logic.hhmm
 import com.todorant.logic.parseTime
+import com.todorant.rememberQrScanner
 import com.todorant.sync.Rest
 import com.todorant.sync.Sync
 import com.todorant.t
@@ -155,7 +156,13 @@ private fun AccountInfo() {
     var loading by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
-    val context = LocalContext.current
+    // The scanned page gets this account's token: a QR shown by someone else would hand it to them
+    val addDevice = rememberQrScanner { uuid ->
+        Ui.confirm(t("addDevicesConfirm"), t("addDevices")) {
+            loading = true
+            Ui.attempt({ loading = false }) { Rest.setQrToken(uuid) }
+        }
+    }
     if (loading) Spinner()
     val shown = Session.name.ifEmpty { user.name }
     if (!editing) {
@@ -179,15 +186,7 @@ private fun AccountInfo() {
     user.telegramId?.let { InfoRow(t("telegram"), it) }
     user.appleSubId?.let { InfoRow(t("apple"), it) }
     user.passwordLogin?.let { InfoRow(t("email"), it) }
-    TableItem(onClick = {
-        scanQr(context) { uuid ->
-            // The scanned page gets this account's token: a QR shown by someone else would hand it to them
-            Ui.confirm(t("addDevicesConfirm"), t("addDevices")) {
-                loading = true
-                Ui.attempt({ loading = false }) { Rest.setQrToken(uuid) }
-            }
-        }
-    }) { TableText(t("addDevices")) }
+    TableItem(onClick = addDevice) { TableText(t("addDevices")) }
     TableItem(onClick = {
         Ui.confirm(t("deleteAccountText"), t("deleteAccount"), destructive = true) {
             loading = true
