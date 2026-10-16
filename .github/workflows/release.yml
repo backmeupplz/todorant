@@ -98,10 +98,12 @@ jobs:
           mkdir -p ~/.android
           echo "$KEYSTORE" | base64 -d > ~/.android/todorant-upload.jks
           { echo "storeFile=$HOME/.android/todorant-upload.jks"; echo "$PROPERTIES"; } > ~/.android/todorant-upload.properties
-      - run: ./gradlew :app:assemblePlayRelease :app:assembleFdroidRelease :app:bundlePlayRelease
+      - id: build
+        run: ./gradlew :app:assemblePlayRelease :app:assembleFdroidRelease :app:bundlePlayRelease
         working-directory: android
       # F-Droid compares its own build of the tag with the fdroid APK, so it has to come from this clean CI build
       - name: Attach the APKs
+        id: attach
         if: env.MODE == 'full'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -112,13 +114,14 @@ jobs:
           cp "todorant-$VERSION.apk" todorant.apk
           cp "todorant-fdroid-$VERSION.apk" todorant-fdroid.apk
           gh release upload "$TAG" "todorant-$VERSION.apk" "todorant-fdroid-$VERSION.apk" todorant.apk todorant-fdroid.apk --clobber
+      # Play and F-Droid don't block each other: either still runs if the other failed
       - name: Google Play
-        if: env.MODE != 'testflight-only'
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && env.MODE != 'testflight-only' }}
         run: |
           [ -n "$PLAY_SERVICE_ACCOUNT_JSON" ] || { echo "::warning::No PLAY_SERVICE_ACCOUNT_JSON secret: skipping Google Play"; exit 0; }
           python3 .github/scripts/play.py android/app/build/outputs/bundle/playRelease/app-play-release.aab "$VERSION" "$NOTES_DIR/$CODE.txt" $DRY
       - name: F-Droid merge request
-        if: env.MODE != 'testflight-only'
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.attach.outcome != 'failure' && env.MODE != 'testflight-only' }}
         run: python3 .github/scripts/fdroid.py "$VERSION" "$CODE" "${{ needs.version.outputs.commit }}" $DRY
 
   ios:
