@@ -7,7 +7,7 @@
 Todorant is a todo manager that uses behavioral psychology to help you get things done.<br>
 It runs on the web, Android and iOS, and you can host your own server in a couple of minutes.
 
-**[Open todorant.com](https://todorant.com)** · [iOS](https://apps.apple.com/app/todorant/id1482078243) · [Android](https://github.com/backmeupplz/todorant/releases?q=android&expanded=true) · [Self-hosting](docs/self-hosting.md)<br>
+**[Open todorant.com](https://todorant.com)** · [iOS](https://apps.apple.com/app/todorant/id1482078243) · [Android](https://play.google.com/store/apps/details?id=com.todorant) · [Self-hosting](docs/self-hosting.md)<br>
 <sub>iOS 2.2.0 for iPhone and iPad (iOS 17 or later) · Android 2.2.1</sub>
 
 <br>
