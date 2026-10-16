@@ -185,7 +185,8 @@ struct SettingsScreen: View {
                 InfoButton(message: "infoSettings").onboardingTarget(OnboardingTarget.infoButton)
             }
         }
-        .task { if Sync.shared.connected { do { try await Sync.shared.sync() } catch { Ui.error(error) } } }
+        // Leaving the screen cancels this: that's no error
+        .task { if Sync.shared.connected { do { try await Sync.shared.sync() } catch { if !Task.isCancelled { Ui.error(error) } } } }
     }
 }
 
