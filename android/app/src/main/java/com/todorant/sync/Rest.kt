@@ -22,8 +22,9 @@ object Rest {
     /** A self-hosted server picked by the user, null for todorant's own */
     var server by optStringPref("server")
     val base get() = server ?: BuildConfig.API
-    // Pings notice dead sync sockets (network switches) within seconds instead of minutes
-    val http: OkHttpClient = OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).pingInterval(15, TimeUnit.SECONDS).build()
+    // Pings notice dead sync sockets (network switches). A pong waits behind whatever the server is sending,
+    // and a first pull is megabytes: a short interval kills the socket mid-download on a slow network
+    val http: OkHttpClient = OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).pingInterval(60, TimeUnit.SECONDS).build()
     private val json = "application/json".toMediaType()
 
     class HttpError(message: String) : Exception(message)
