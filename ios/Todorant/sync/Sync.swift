@@ -38,6 +38,8 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
     /// Outbox rows sent with each request, acknowledged when it's answered
     @ObservationIgnored private var sent = [Int: [Change]]()
     @ObservationIgnored private var waiting = [Int: CheckedContinuation<[String: Any], Error>]()
+    /// The pull being answered and its cursor: login, resume and the settings screen all pull right after "hello" does, and a first pull is the whole account
+    @ObservationIgnored private var pulling: (rid: Int, since: Int)?
     @ObservationIgnored private let network = NWPathMonitor()
 
     struct SyncError: LocalizedError {
@@ -68,10 +70,11 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
         socket = task
         task.resume()
         receive(task)
-        // Pings notice dead sockets (network switches) within seconds instead of minutes
+        // Pings notice dead sockets (network switches). A pong waits behind whatever the server is sending,
+        // and a first pull is megabytes: a short interval kills the socket mid-download on a slow network
         awaitingPong = false
         pingTimer?.invalidate()
-        pingTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self, weak task] _ in
+        pingTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self, weak task] _ in
             guard let self, let task, task === self.socket else { return }
             if self.awaitingPong { task.cancel(with: .goingAway, reason: nil); return self.closed(task, "Ping timeout") }
             self.awaitingPong = true
@@ -133,6 +136,7 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
         connectionError = error
         let failed = waiting
         waiting.removeAll()
+        pulling = nil
         failed.values.forEach { $0.resume(throwing: SyncError(message: error ?? "Disconnected")) }
         sent.removeAll()
         inFlight = 0
@@ -157,6 +161,7 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
         case "synced":
             let rid = (message["rid"] as? NSNumber)?.intValue ?? 0
             inFlight = max(0, inFlight - 1)
+            if pulling?.rid == rid { pulling = nil }
             acknowledge(message["acks"] as? [[String: Any]], sent.removeValue(forKey: rid) ?? [])
             apply(message)
             waiting.removeValue(forKey: rid)?.resume(returning: message)
@@ -167,6 +172,7 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
         case "error":
             let rid = (message["rid"] as? NSNumber)?.intValue ?? 0
             inFlight = max(0, inFlight - 1)
+            if pulling?.rid == rid { pulling = nil }
             sent.removeValue(forKey: rid)
             let text = message["message"] as? String ?? "Error"
             waiting.removeValue(forKey: rid)?.resume(throwing: SyncError(message: text))
@@ -179,6 +185,8 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
     @discardableResult
     private func send(pull: Bool = false, waiter: CheckedContinuation<[String: Any], Error>? = nil) -> Bool {
         guard let ws = socket, connected else { return false }
+        // Outbox rows left out here go with the next push, scheduled when that pull is answered; sync() waits for it
+        if pull, waiter == nil, pulling?.since == (cursor ?? 0) { return true }
         let inBatches = sent.values.flatMap { $0 }
         let changes = groups(Db.shared.outbox().filter { !inBatches.contains($0) }).prefix(MAX_OPS).flatMap { $0 }
         if changes.isEmpty && !pull { return false }
@@ -186,7 +194,7 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
         let rid = requests
         var message: [String: Any] = ["t": "sync", "rid": rid]
         if !changes.isEmpty { message["ops"] = ops(changes) }
-        if pull { message["since"] = cursor ?? 0 }
+        if pull { message["since"] = cursor ?? 0; pulling = (rid, cursor ?? 0) }
         sent[rid] = changes
         if let waiter { waiting[rid] = waiter }
         inFlight += 1
@@ -303,10 +311,17 @@ final class Sync: NSObject, URLSessionWebSocketDelegate {
             if Date() > deadline || Session.user == nil { throw SyncError(message: "Not connected") }
             try await Task.sleep(nanoseconds: 50_000_000)
         }
+        // A first pull of a big account is megabytes: give a slow network time, a dead socket fails it sooner
+        let answerBy = Date().addingTimeInterval(120)
+        // The same pull is on its way already (hello pulls on connect): wait for it instead of downloading the account twice
+        while pulling?.since == (cursor ?? 0) {
+            if Date() > answerBy { throw SyncError(message: "Timed out") }
+            try await Task.sleep(nanoseconds: 50_000_000)
+        }
         _ = try await withCheckedThrowingContinuation { (c: CheckedContinuation<[String: Any], Error>) in
             if !send(pull: true, waiter: c) { return c.resume(throwing: SyncError(message: "Not connected")) }
             let rid = requests
-            DispatchQueue.main.asyncAfter(deadline: .now() + max(1, deadline.timeIntervalSinceNow)) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + max(1, answerBy.timeIntervalSinceNow)) { [weak self] in
                 self?.waiting.removeValue(forKey: rid)?.resume(throwing: SyncError(message: "Timed out"))
             }
         }
