@@ -1,0 +1,148 @@
+# One published GitHub release vX.Y.Z ships everything: the bundle to Google Play, the iPhone app to the App Store,
+# the signed APKs as todorant-X.Y.Z.apk (play) and todorant-fdroid-X.Y.Z.apk on the release, and the new version to the
+# F-Droid merge request while it's open (once merged, F-Droid follows new tags itself and builds them; it ships our
+# fdroid APK only if its own build matches it).
+# A previous version still waiting for review or in review is replaced on both stores.
+# Before releasing: bump versionName/versionCode in android/app/build.gradle.kts and add
+# fastlane/metadata/android/en-US/changelogs/<versionCode>.txt, the notes Play, the App Store and F-Droid all show.
+# The iPhone app takes the same version, and the versionCode as its build number.
+# Run by hand (Actions → Release → Run workflow): dry-run builds everything and publishes nothing,
+# testflight-only uploads the iPhone build without submitting it, full is what a published release does.
+# Secrets: ANDROID_UPLOAD_KEYSTORE_BASE64, ANDROID_UPLOAD_PROPERTIES, PLAY_SERVICE_ACCOUNT_JSON, ASC_KEY_P8 (the .p8 key),
+# GITLAB_TOKEN (write_repository on the fdroiddata fork). A step whose secret is missing is skipped with a warning.
+# .github/scripts is shared with ABS+ and Mesh+: keep it identical there; this repo's values are the env below.
+name: Release
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, e.g. v2.2.5 (a dry run also takes a branch)
+        required: true
+      mode:
+        description: What to publish
+        type: choice
+        options: [dry-run, testflight-only, full]
+        default: dry-run
+permissions:
+  contents: write # attach the APKs
+# Each store holds one pending submission, so releases go one at a time
+concurrency:
+  group: release
+env:
+  TAG: ${{ github.event.release.tag_name || inputs.tag }}
+  MODE: ${{ inputs.mode || 'full' }}
+  NOTES_DIR: fastlane/metadata/android/en-US/changelogs
+  PLAY_PACKAGE: com.todorant
+  APP_STORE_APP_ID: '1482078243'
+  ASC_KEY_ID: 3FT23S9NSM
+  ASC_ISSUER_ID: a18f42ff-6c44-410c-badf-50b11de8dbb8
+  FDROID_MR: '52830'
+  FDROID_APP_ID: com.todorant
+  FDROID_FORK: backmeupplz/fdroiddata
+  FDROID_BRANCH: com.todorant
+  # Releases were tagged android-vX.Y.Z before: the first v* release moves the merge request to v* tags
+  FDROID_UPDATE_CHECK_MODE: Tags ^v
+  FDROID_BINARIES: https://github.com/backmeupplz/todorant/releases/download/v%v/todorant-fdroid-%v.apk
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.version.outputs.name }}
+      code: ${{ steps.version.outputs.code }}
+      commit: ${{ steps.version.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - id: version
+        name: The tag matches the app's version, which has release notes
+        run: |
+          python3 -m unittest discover -s .github/scripts
+          name=$(sed -nE 's/^ *versionName = "(.+)"/\1/p' android/app/build.gradle.kts)
+          code=$(sed -nE 's/^ *versionCode = ([0-9_]+)/\1/p' android/app/build.gradle.kts | tr -d _)
+          if [ "$TAG" != "v$name" ]; then
+            [ "$MODE" = dry-run ] || { echo "::error::$TAG doesn't match versionName $name in android/app/build.gradle.kts"; exit 1; }
+            echo "::warning::$TAG doesn't match versionName $name (fine for a dry run)"
+          fi
+          test -s "$NOTES_DIR/$code.txt" || { echo "::error::No release notes in $NOTES_DIR/$code.txt"; exit 1; }
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  android:
+    needs: version
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.version.outputs.name }}
+      CODE: ${{ needs.version.outputs.code }}
+      DRY: ${{ inputs.mode == 'dry-run' && '--dry-run' || '' }}
+      PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Restore upload key
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          PROPERTIES: ${{ secrets.ANDROID_UPLOAD_PROPERTIES }} # storePassword, keyAlias, keyPassword lines
+        run: |
+          [ -n "$KEYSTORE" ] || { echo "::error::No ANDROID_UPLOAD_KEYSTORE_BASE64 secret: release builds would come out unsigned"; exit 1; }
+          mkdir -p ~/.android
+          echo "$KEYSTORE" | base64 -d > ~/.android/todorant-upload.jks
+          { echo "storeFile=$HOME/.android/todorant-upload.jks"; echo "$PROPERTIES"; } > ~/.android/todorant-upload.properties
+      - run: ./gradlew :app:assemblePlayRelease :app:assembleFdroidRelease :app:bundlePlayRelease
+        working-directory: android
+      # F-Droid compares its own build of the tag with the fdroid APK, so it has to come from this clean CI build
+      - name: Attach the APKs
+        if: env.MODE == 'full'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/play/release/app-play-release.apk "todorant-$VERSION.apk"
+          cp android/app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "todorant-fdroid-$VERSION.apk"
+          gh release upload "$TAG" "todorant-$VERSION.apk" "todorant-fdroid-$VERSION.apk" --clobber
+      - name: Google Play
+        if: env.MODE != 'testflight-only'
+        run: |
+          [ -n "$PLAY_SERVICE_ACCOUNT_JSON" ] || { echo "::warning::No PLAY_SERVICE_ACCOUNT_JSON secret: skipping Google Play"; exit 0; }
+          python3 .github/scripts/play.py android/app/build/outputs/bundle/playRelease/app-play-release.aab "$VERSION" "$NOTES_DIR/$CODE.txt" $DRY
+      - name: F-Droid merge request
+        if: env.MODE != 'testflight-only'
+        run: python3 .github/scripts/fdroid.py "$VERSION" "$CODE" "${{ needs.version.outputs.commit }}" $DRY
+
+  ios:
+    needs: version
+    runs-on: macos-26
+    timeout-minutes: 90
+    env:
+      VERSION: ${{ needs.version.outputs.name }}
+      CODE: ${{ needs.version.outputs.code }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+    steps:
+      - name: App Store Connect key
+        run: |
+          [ -n "$ASC_KEY_P8" ] || { echo "::warning::No ASC_KEY_P8 secret: skipping the iPhone app"; exit 0; }
+          mkdir -p ~/.appstoreconnect/private_keys
+          printf '%s\n' "$ASC_KEY_P8" > ~/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8
+          echo "IOS=1" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        if: env.IOS
+        with:
+          ref: ${{ env.TAG }}
+      - name: Newest Xcode
+        if: env.IOS
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)" && xcodebuild -version
+      # The build number is the Android versionCode, so both stores count the same way
+      - name: Archive, sign and upload
+        if: env.IOS
+        run: ios/release.sh "$VERSION" "$CODE" ${{ env.MODE == 'dry-run' && '--no-upload' || '' }}
+      - name: App Review
+        if: env.IOS && env.MODE != 'testflight-only'
+        run: python3 .github/scripts/appstore.py "$VERSION" "$CODE" "$NOTES_DIR/$CODE.txt" ${{ env.MODE == 'dry-run' && '--dry-run' || '' }}
