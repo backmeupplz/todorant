@@ -27,4 +27,4 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-      - run: ./gradlew :app:testDebugUnitTest :app:assembleDebug
+      - run: ./gradlew :app:testPlayDebugUnitTest :app:assembleDebug

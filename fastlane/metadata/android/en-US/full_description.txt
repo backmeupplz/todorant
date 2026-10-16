@@ -1,0 +1,14 @@
+Todorant is a todo manager that uses behavioral psychology to help you get things done. Most productivity apps are great at storing, organizing and automating endless lists of tasks, and that is exactly where they fail you, because a list that keeps growing doesn't get anything done. Todorant cares about the one thing that matters, which is finishing what you planned.
+
+It does that with four simple rules, backed by a carefully tuned set of limits and praise that makes finishing todos feel rewarding:
+
+<ul>
+<li><b>Focus on one task at a time.</b> The Current screen shows only the todo you should be doing right now.</li>
+<li><b>Always add a date or a month to a task.</b> Every todo gets its place in time, so nothing lingers in a list forever.</li>
+<li><b>Complete unpleasant tasks first.</b> Todos you dread are marked as frogs and come before everything else on their day.</li>
+<li><b>Keep your inbox empty.</b> Overdue todos have to be planned again before you can get back to work.</li>
+</ul>
+
+Your todos sync in real time between your devices and todorant.com, keep working offline, and can be end-to-end encrypted with a password of your choice. Delegation lets you hand todos to friends and colleagues and accept the ones they hand to you, hashtags and epics group related work, and reports show everything you've done. The app speaks English, Spanish, Italian, Portuguese, Russian and Ukrainian, and it has a dark mode.
+
+You can use Todorant without an account and keep everything on your phone, or sign in with an email and a password, with Apple, with Telegram or with a QR code from todorant.com. If you'd rather keep your data on your own machine, you can run your own Todorant server in a couple of minutes and point the app at it from the settings.

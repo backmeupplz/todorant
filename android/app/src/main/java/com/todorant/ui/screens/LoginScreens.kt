@@ -1,7 +1,6 @@
 package com.todorant.ui.screens
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.webkit.JavascriptInterface
@@ -36,15 +35,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.todorant.BuildConfig
 import com.todorant.data.User
+import com.todorant.googleIdToken
 import com.todorant.logic.Account
+import com.todorant.rememberQrScanner
 import com.todorant.sync.Rest
 import com.todorant.t
 import com.todorant.ui.Colors
@@ -55,16 +50,6 @@ import com.todorant.ui.StackScreen
 import com.todorant.ui.Ui
 import org.json.JSONObject
 import java.util.UUID
-
-private const val GOOGLE_WEB_CLIENT_ID = "167486246043-304ktl4ng8njc185ov1f7vdoafj4gke8.apps.googleusercontent.com"
-
-/** Scans a QR code with Google's scanner (no camera permission needed) */
-internal fun scanQr(context: Context, onResult: (String) -> Unit) {
-    Ui.toast(t("qrDescription"))
-    GmsBarcodeScanning.getClient(context).startScan()
-        .addOnSuccessListener { barcode -> barcode.rawValue?.takeIf { it.isNotEmpty() }?.let(onResult) }
-        .addOnFailureListener { Ui.error(it.message ?: t("cameraAuthorization")) }
-}
 
 private class LoginState {
     var loading by mutableStateOf(false)
@@ -95,6 +80,7 @@ fun LoginScreen(wall: Boolean) {
     val state = remember { LoginState() }
     val context = LocalContext.current
     var debugToken by remember { mutableStateOf("") }
+    val scanLogin = rememberQrScanner { token -> state.login { Rest.loginToken(token) } }
     // Self-hosted servers may have no OAuth apps: email + password comes first there
     val custom = Rest.server != null
     Box(Modifier.fillMaxSize()) {
@@ -104,26 +90,16 @@ fun LoginScreen(wall: Boolean) {
                 if (wall) Text(t("loginWall"), color = Colors.text, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp))
                 if (state.loading) Spinner()
                 if (custom) PasswordLogin(state)
-                PrimaryButton(t("loginGoogle"), color = Color(0xFFFF6347), enabled = !state.loading) {
-                    state.login {
-                        val option = GetGoogleIdOption.Builder()
-                            .setServerClientId(GOOGLE_WEB_CLIENT_ID)
-                            .setFilterByAuthorizedAccounts(false)
-                            .build()
-                        val credential = CredentialManager.create(context)
-                            .getCredential(context, GetCredentialRequest.Builder().addCredentialOption(option).build()).credential
-                        if (credential !is CustomCredential || credential.type != GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                            throw Exception(t("googleTokenError"))
-                        }
-                        Rest.loginGoogle(GoogleIdTokenCredential.createFrom(credential.data).idToken)
+                // Not in the F-Droid build, which has no Google code
+                googleIdToken?.let { idToken ->
+                    PrimaryButton(t("loginGoogle"), color = Color(0xFFFF6347), enabled = !state.loading) {
+                        state.login { Rest.loginGoogle(idToken(context)) }
                     }
                 }
                 PrimaryButton(" Sign in with Apple", color = Color.Black, enabled = !state.loading) { state.appleOpen = true }
                 // The Telegram page signs in on todorant.com only
                 if (!custom) PrimaryButton(t("loginTelegram"), color = Color(0xFF1E90FF), enabled = !state.loading) { Nav.go(com.todorant.ui.Route.TELEGRAM) }
-                PrimaryButton(t("loginQR"), color = Color(0xFF483D8B), enabled = !state.loading) {
-                    scanQr(context) { token -> state.login { Rest.loginToken(token) } }
-                }
+                PrimaryButton(t("loginQR"), color = Color(0xFF483D8B), enabled = !state.loading, onClick = scanLogin)
                 if (!custom) PasswordLogin(state)
                 if (BuildConfig.DEBUG) {
                     SettingsField(debugToken, { debugToken = it }, "Enter token here")
