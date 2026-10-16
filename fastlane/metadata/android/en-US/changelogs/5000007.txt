@@ -1,0 +1,1 @@
+Fixes the first sign-in on big accounts: loading the data no longer times out and leaves only the Settings tab.

@@ -67,6 +67,8 @@ object Sync {
     /** Outbox rows sent with each request, acknowledged when it's answered */
     private val sent = ConcurrentHashMap<Int, List<Change>>()
     private val waiting = ConcurrentHashMap<Int, CompletableDeferred<JSONObject>>()
+    /** The pull being answered and its cursor: login, resume and the settings screen all pull right after "hello" does, and a first pull is the whole account */
+    @Volatile private var pulling: Pair<Long, CompletableDeferred<JSONObject>>? = null
 
     fun start() {
         Db.now = { System.currentTimeMillis() + offset }
@@ -174,6 +176,8 @@ object Sync {
     private fun send(pull: Boolean = false): CompletableDeferred<JSONObject>? {
         val ws = socket ?: return null
         if (!connected) return null
+        // Outbox rows left out here go with the next push, scheduled when this pull is answered
+        if (pull) pulling?.let { (since, answer) -> if (since == (cursor ?: 0) && answer.isActive) return answer }
         val changes = Db.outbox().filter { c -> sent.values.none { batch -> c in batch } }
             .groupBy { Triple(it.collection, it.id, it.at) }.values.take(MAX_OPS).flatten()
         if (changes.isEmpty() && !pull) return null
@@ -184,6 +188,7 @@ object Sync {
         sent[rid] = changes
         val deferred = CompletableDeferred<JSONObject>()
         waiting[rid] = deferred
+        if (pull) pulling = (cursor ?: 0) to deferred
         inFlight++
         if (!ws.send(message.toString())) {
             sent.remove(rid); waiting.remove(rid); inFlight--
@@ -276,10 +281,9 @@ object Sync {
     /** Pushes and pulls now, waiting for the answer (login, the Data screen); throws when offline */
     suspend fun sync() {
         connect()
-        withTimeout(30_000) {
-            while (!connected) delay(50)
-            (send(pull = true) ?: error("Not connected")).await()
-        }
+        withTimeout(30_000) { while (!connected) delay(50) }
+        // A first pull of a big account is megabytes: give a slow network time, a dead socket fails it sooner
+        withTimeout(120_000) { (send(pull = true) ?: error("Not connected")).await() }
     }
 
     /** Pull everything again (Data screen) */

@@ -60,6 +60,7 @@ import com.todorant.ui.TutorialStep
 import com.todorant.ui.Ui
 import com.todorant.ui.onboardingTarget
 import java.time.LocalTime
+import kotlinx.coroutines.isActive
 
 /** The settings list, so the tutorial can scroll to its targets */
 object SettingsList {
@@ -75,7 +76,8 @@ object SettingsList {
 @Composable
 fun SettingsScreen() {
     LaunchedEffect(Unit) {
-        if (Sync.connected) runCatching { Sync.sync() }.onFailure(Ui::error)
+        // Leaving the screen cancels this: that's no error
+        if (Sync.connected) runCatching { Sync.sync() }.onFailure { if (isActive) Ui.error(it) }
     }
     val user = Session.user
     // ponytail: the title is tagged instead of the info button, LargeTitleScreen has no info modifier
