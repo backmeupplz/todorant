@@ -1,7 +1,5 @@
 package com.todorant.ui
 
-import android.os.VibrationEffect
-import android.os.Vibrator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -32,7 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -65,7 +64,7 @@ val LocalTagColors = compositionLocalOf<Map<String, String>> { emptyMap() }
 fun TodoCard(todo: Todo, type: CardType, modifier: Modifier = Modifier, dragModifier: Modifier = Modifier, showDivider: Boolean = true) {
     var expanded by rememberSaveable(todo.id) { mutableStateOf(false) }
     val swipeEnabled = Settings.swipeActions && !Onboarding.active && (type == CardType.current || type == CardType.planning)
-    val context = LocalContext.current
+    val haptics = LocalHapticFeedback.current
     val threshold = with(LocalDensity.current) { 100.dp.toPx() }
     val state = rememberSwipeToDismissBoxState(positionalThreshold = { threshold })
     LaunchedEffect(state.currentValue) {
@@ -76,7 +75,8 @@ fun TodoCard(todo: Todo, type: CardType, modifier: Modifier = Modifier, dragModi
     }
     LaunchedEffect(state.targetValue) {
         if (state.targetValue != SwipeToDismissBoxValue.Settled) {
-            context.getSystemService(Vibrator::class.java)?.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+            // Haptics need no VIBRATE permission
+            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         }
     }
     Column(modifier.ifTrue(type == CardType.current) { onboardingTarget(Target.CURRENT_TODO) }) {
