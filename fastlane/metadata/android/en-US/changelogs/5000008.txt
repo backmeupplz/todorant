@@ -1,1 +1,1 @@
-Small cleanup release. On Android, Todorant now asks only for the permissions it actually uses: internet access, notifications for the planning reminder, and the camera for scanning a login QR code.
+Small cleanup release. On Android, Todorant now asks only for the permissions it actually uses, like internet access and notifications for the planning reminder.
