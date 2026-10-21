@@ -1,6 +1,6 @@
 # Layered so a deploy only rebuilds what changed: dependencies are cached until
 # package.json/yarn.lock change, the docs until docs/ changes.
-FROM node:16.20.2-bullseye-slim AS deps
+FROM node:22.23.4-bookworm-slim AS deps
 WORKDIR /app
 # mongodb-memory-server (tests only) would download a MongoDB binary on install
 ENV MONGOMS_DISABLE_POSTINSTALL=1
@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir mkdocs-material==9.5.50
 COPY docs /docs
 RUN cd /docs && mkdocs build --quiet
 
-FROM node:16.20.2-bullseye-slim
+FROM node:22.23.4-bookworm-slim
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=prod-deps /app/node_modules node_modules

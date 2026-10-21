@@ -4,7 +4,7 @@ The Koa and MongoDB API behind [todorant.com](https://todorant.com). It serves `
 
 ## Local launch
 
-You need Node 16 (see `.nvmrc`) and a MongoDB.
+You need Node 22 (see `.nvmrc`) and a MongoDB.
 
 1. `cp .env.sample .env` and set at least `MONGO` and `JWT`
 2. `yarn install --ignore-engines`
