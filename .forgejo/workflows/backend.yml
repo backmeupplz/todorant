@@ -2,9 +2,9 @@ name: Backend
 on:
   push:
     branches: [main]
-    paths: [backend/**, .github/workflows/backend.yml]
+    paths: [backend/**, .forgejo/workflows/backend.yml]
   pull_request:
-    paths: [backend/**, .github/workflows/backend.yml]
+    paths: [backend/**, .forgejo/workflows/backend.yml]
 
 concurrency:
   group: backend-${{ github.ref }}
@@ -54,6 +54,5 @@ jobs:
     permissions:
       contents: write
     steps:
-      - run: gh api -X PATCH repos/${{ github.repository }}/git/refs/heads/deploy/backend -f sha=${{ github.sha }} -F force=true
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@v4
+      - run: git push --force origin "${{ github.sha }}:refs/heads/deploy/backend"
