@@ -23,7 +23,7 @@ jobs:
         working-directory: backend
     env:
       MONGOMS_DISABLE_POSTINSTALL: 1
-      TEST_MONGO: mongodb://localhost:27017
+      TEST_MONGO: mongodb://mongo:27017
       JWT: test
     steps:
       - uses: actions/checkout@v4
