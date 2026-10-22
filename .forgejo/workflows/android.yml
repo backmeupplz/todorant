@@ -25,6 +25,8 @@ jobs:
           java-version: 17
       # GitHub-hosted runners ship the Android SDK; the Forgejo job image does not
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       # Caches the Gradle distribution, dependencies, build cache and configuration cache
       - uses: gradle/actions/setup-gradle@v4
         with:
