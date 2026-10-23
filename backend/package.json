@@ -80,14 +80,14 @@
     "js-yaml": "^3.14.0",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.10.1",
-    "koa": "^2.13.0",
+    "koa": "^2.16.4",
     "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",
     "koa-mount": "^4.0.0",
     "koa-router": "^9.4.0",
     "koa-static": "^5.0.0",
     "koa-ts-controllers": "^2.3.0",
-    "linkify-it": "^3.0.2",
+    "linkify-it": "^5.0.2",
     "lodash": "^4.17.20",
     "module-alias": "^2.2.2",
     "mongoose": "^5.10.9",
@@ -95,15 +95,18 @@
     "qrcode": "1.5.4",
     "rand-token": "^1.0.1",
     "showdown": "^1.9.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.1",
     "supertest": "^6.0.0",
     "telegraf": "^3.38.0",
     "telegraf-i18n": "^6.6.0",
     "temp": "^0.9.1",
     "uuid": "^8.3.0",
-    "ws": "7.5.10"
+    "ws": "7.5.13"
   },
   "_moduleAliases": {
     "@": "dist"
+  },
+  "resolutions": {
+    "qs": "^6.14.1"
   }
 }
