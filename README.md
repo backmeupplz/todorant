@@ -104,7 +104,7 @@ xcodebuild -scheme Todorant -destination 'platform=iOS Simulator,name=iPhone 17'
 
 Run it with the launch argument `-API http://localhost:1337` to use your local backend (Edit Scheme → Arguments).
 
-Pushes to `main` deploy on their own once the checks pass: the backend to backend.todorant.com, the web app to GitHub Pages, and fresh Docker images to the GitHub Container Registry. Android builds are attached to [releases](https://github.com/backmeupplz/todorant/releases). The iOS app ships only through the [App Store](https://apps.apple.com/app/todorant/id1482078243), since an App Store build can't be installed any other way.
+Pushes to `main` deploy on their own once the checks pass: the backend to backend.todorant.com, the web app to GitHub Pages, and fresh Docker images to the GitHub Container Registry. Android builds are attached to [releases](https://github.com/backmeupplz/todorant/releases). To release, bump `versionName`/`versionCode` in `android/app/build.gradle.kts`, add `fastlane/metadata/android/en-US/changelogs/<versionCode>.txt` and publish the release on git.borodutch.com: `tea release create --repo backmeupplz/todorant --tag vX.Y.Z --target main --title "Todorant X.Y.Z" --note-file fastlane/metadata/android/en-US/changelogs/<versionCode>.txt`. `.forgejo/workflows/release.yml` then ships Google Play, the App Store and the F-Droid merge request, and attaches the APKs to that release and to the same release on GitHub, which it creates there since releases don't mirror. The iOS app ships only through the [App Store](https://apps.apple.com/app/todorant/id1482078243), since an App Store build can't be installed any other way.
 
 ## License
 

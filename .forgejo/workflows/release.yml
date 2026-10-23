@@ -1,6 +1,7 @@
-# One published GitHub release vX.Y.Z ships everything: the bundle to Google Play, the iPhone app to the App Store,
-# the signed APKs as todorant-X.Y.Z.apk (play) and todorant-fdroid-X.Y.Z.apk on the release (plus unversioned copies
-# for todorant.com's download link), and the new version to the
+# One release vX.Y.Z published on git.borodutch.com ships everything: the bundle to Google Play, the iPhone app to the
+# App Store, the signed APKs as todorant-X.Y.Z.apk (play) and todorant-fdroid-X.Y.Z.apk on the release and on the same
+# release on the GitHub mirror (created there when missing; plus unversioned copies for todorant.com's download link,
+# which points at GitHub), and the new version to the
 # F-Droid merge request while it's open (once merged, F-Droid follows new tags itself and builds them; it ships our
 # fdroid APK only if its own build matches it).
 # A previous version still waiting for review or in review is replaced on both stores.
@@ -10,7 +11,8 @@
 # Run by hand (Actions → Release → Run workflow): dry-run builds everything and publishes nothing,
 # testflight-only uploads the iPhone build without submitting it, full is what a published release does.
 # Secrets: ANDROID_UPLOAD_KEYSTORE_BASE64, ANDROID_UPLOAD_PROPERTIES, PLAY_SERVICE_ACCOUNT_JSON, ASC_KEY_P8 (the .p8 key),
-# GITLAB_TOKEN (write_repository on the fdroiddata fork). A step whose secret is missing is skipped with a warning.
+# GITLAB_TOKEN (write_repository on the fdroiddata fork), GH_MIRROR_TOKEN (GitHub token with repo scope, for the GitHub
+# release). A step whose secret is missing is skipped with a warning.
 # .github/scripts is shared with ABS+ and Mesh+: keep it identical there; this repo's values are the env below.
 name: Release
 on:
@@ -89,6 +91,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      # GitHub-hosted runners ship the Android SDK; the Forgejo job image does not
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - name: Restore upload key
         env:
           KEYSTORE: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
@@ -106,14 +112,18 @@ jobs:
         id: attach
         if: env.MODE == 'full'
         env:
-          GH_TOKEN: ${{ github.token }}
+          FORGEJO_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_MIRROR_TOKEN }}
+          RELEASE_TITLE: ${{ github.event.release.name }}
+          RELEASE_NOTES: ${{ github.event.release.body }}
+          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
         run: |
           cp android/app/build/outputs/apk/play/release/app-play-release.apk "todorant-$VERSION.apk"
           cp android/app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "todorant-fdroid-$VERSION.apk"
           # Unversioned copies for releases/latest/download links (todorant.com's APK button)
           cp "todorant-$VERSION.apk" todorant.apk
           cp "todorant-fdroid-$VERSION.apk" todorant-fdroid.apk
-          gh release upload "$TAG" "todorant-$VERSION.apk" "todorant-fdroid-$VERSION.apk" todorant.apk todorant-fdroid.apk --clobber
+          .github/scripts/attach.sh "$TAG" "todorant-$VERSION.apk" "todorant-fdroid-$VERSION.apk" todorant.apk todorant-fdroid.apk
       # Play and F-Droid don't block each other: either still runs if the other failed
       - name: Google Play
         if: ${{ !cancelled() && steps.build.outcome == 'success' && env.MODE != 'testflight-only' }}
@@ -133,19 +143,19 @@ jobs:
       CODE: ${{ needs.version.outputs.code }}
       ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
     steps:
+      # The Mac runner is shared, so the key stays in this job's temp folder (ios/release.sh, altool and appstore.py read
+      # API_PRIVATE_KEYS_DIR) and is removed at the end. The build uses the Mac's selected Xcode.
       - name: App Store Connect key
         run: |
           [ -n "$ASC_KEY_P8" ] || { echo "::warning::No ASC_KEY_P8 secret: skipping the iPhone app"; exit 0; }
-          mkdir -p ~/.appstoreconnect/private_keys
-          printf '%s\n' "$ASC_KEY_P8" > ~/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8
+          keys=$(mktemp -d "$RUNNER_TEMP/asc.XXXXXX")
+          printf '%s\n' "$ASC_KEY_P8" > "$keys/AuthKey_$ASC_KEY_ID.p8"
+          echo "API_PRIVATE_KEYS_DIR=$keys" >> "$GITHUB_ENV"
           echo "IOS=1" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         if: env.IOS
         with:
           ref: ${{ env.TAG }}
-      - name: Newest Xcode
-        if: env.IOS
-        run: sudo xcode-select -s "$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)" && xcodebuild -version
       # The build number is the Android versionCode, so both stores count the same way
       - name: Archive, sign and upload
         if: env.IOS
@@ -153,3 +163,6 @@ jobs:
       - name: App Review
         if: env.IOS && env.MODE != 'testflight-only'
         run: python3 .github/scripts/appstore.py "$VERSION" "$CODE" "$NOTES_DIR/$CODE.txt" ${{ env.MODE == 'dry-run' && '--dry-run' || '' }}
+      - name: Remove the key
+        if: always() && env.API_PRIVATE_KEYS_DIR
+        run: rm -rf "$API_PRIVATE_KEYS_DIR"
