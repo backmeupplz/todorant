@@ -34,8 +34,8 @@ object Migration {
     private const val TAG = "Migration"
 
     fun run(context: Context) {
-        if (Prefs.sp.getBoolean("rnMigrationDone", false)) return
-        Prefs.sp.edit { putBoolean("rnMigrationDone", true) }
+        if (Prefs.sp.getBoolean("rnMigrationDone", false)) return rescue(context)
+        Prefs.sp.edit { putBoolean("rnMigrationDone", true); putBoolean("rnWatermelonRescued", true) }
         val old = context.getSharedPreferences("wit_player_shared_preferences", Context.MODE_PRIVATE)
         val stores = runCatching { readMmkv(File(context.filesDir, "mmkv/default")) }.onFailure { Log.w(TAG, "MMKV", it) }.getOrDefault(emptyMap())
         val oldUser = stores["SessionStore"]?.optJSONObject("user")
@@ -51,6 +51,16 @@ object Migration {
                 .onFailure { Log.w(TAG, "token login", it) }.getOrNull()
             user?.let { runCatching { Account.login(it) }.onFailure { e -> Log.w(TAG, "login", e) } }
         }
+    }
+
+    /**
+     * Up to 2.2.6 the import looked in databases/ and found nothing, so on-device todos never came over.
+     * The old file is still there: bring back the records that never reached a server (synced ones are, and may have changed since).
+     */
+    private fun rescue(context: Context) {
+        if (Prefs.sp.getBoolean("rnWatermelonRescued", false)) return
+        Prefs.sp.edit { putBoolean("rnWatermelonRescued", true) }
+        runCatching { importWatermelon(context, localOnly = true) }.onFailure { Log.w(TAG, "WatermelonDB rescue", it) }
     }
 
     /** Local-only settings, counters and hero points from the RN stores (synced ones get reconciled by updatedAt) */
@@ -118,16 +128,18 @@ object Migration {
     }
 
     /** Imports unsynced records; returns > 0 when the old app had any todos */
-    private fun importWatermelon(context: Context): Int {
-        val file = context.getDatabasePath("watermelon.db")
+    private fun importWatermelon(context: Context, localOnly: Boolean = false): Int {
+        // WatermelonDB strips /databases from the path (JSIInstaller.java / Database.kt), so it lives in the data dir
+        val file = File(context.getDatabasePath("watermelon.db").path.replace("/databases", ""))
         if (!file.exists()) return 0
         val old = SQLiteDatabase.openDatabase(file.path, null, SQLiteDatabase.OPEN_READONLY)
         return old.use { db ->
             val anyTodos = db.rawQuery("SELECT COUNT(*) FROM todos", null).use { it.moveToFirst(); it.getInt(0) } > 0
             val serverIds = db.rawQuery("SELECT id, server_id FROM users WHERE server_id IS NOT NULL", null)
                 .rows { it.getString(0) to it.getString(1) }.toMap()
-            val todos = db.rawQuery("SELECT * FROM todos WHERE _status != 'synced'", null).rows { it.oldTodo(serverIds) }
-            val tags = db.rawQuery("SELECT * FROM tags WHERE _status != 'synced'", null).rows { it.oldTag() }
+            val unsynced = "_status != 'synced'" + if (localOnly) " AND server_id IS NULL" else ""
+            val todos = db.rawQuery("SELECT * FROM todos WHERE $unsynced", null).rows { it.oldTodo(serverIds) }
+            val tags = db.rawQuery("SELECT * FROM tags WHERE $unsynced", null).rows { it.oldTag() }
             // Invites accepted offline that never reached the server
             val invites = db.rawQuery(
                 "SELECT delegate_invite_token FROM users WHERE server_id IS NULL AND is_delegator = 1 AND delegate_invite_token IS NOT NULL", null

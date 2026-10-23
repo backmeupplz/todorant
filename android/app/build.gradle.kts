@@ -13,8 +13,8 @@ android {
         minSdk = 26
         targetSdk = 36
         // RN builds used ABI-split codes up to 4 * 1048576 + 173; stay above them so this installs as an update.
-        versionCode = 5_000_008
-        versionName = "2.2.6"
+        versionCode = 5_000_009
+        versionName = "2.2.7"
         // Backend (REST + /v2/ws sync); `./gradlew -Papi=http://localhost:1337 ...` for a local one
         buildConfigField("String", "API", "\"${project.findProperty("api") ?: "https://backend.todorant.com"}\"")
     }

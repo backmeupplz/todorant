@@ -545,7 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.6;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -573,7 +573,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.6;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -650,7 +650,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.6;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app.TodorantHomescreen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -674,7 +674,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.6;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app.TodorantHomescreen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -698,7 +698,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.6;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app.TodorantShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -722,7 +722,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.6;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.todorant.app.TodorantShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

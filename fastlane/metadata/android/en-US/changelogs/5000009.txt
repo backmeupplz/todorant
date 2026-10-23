@@ -1,0 +1,1 @@
+Brings back tasks that were stored only on your device in the old Todorant app and went missing after the update.
