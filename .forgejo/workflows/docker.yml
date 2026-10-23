@@ -37,10 +37,23 @@ jobs:
       cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    # Jobs have no Docker daemon of their own: the builds run on the runner's Docker-in-Docker
+    # Jobs have no Docker daemon of their own: the builds run on the runner's Docker-in-Docker,
+    # which only accepts TLS clients holding its client certificate (repo secrets DIND_*)
     env:
-      DOCKER_HOST: tcp://172.31.250.2:2375
+      DOCKER_HOST: tcp://172.31.250.2:2376
+      DOCKER_TLS_VERIFY: '1'
+      DOCKER_CERT_PATH: /tmp/dind-certs
     steps:
+      - name: Write Docker-in-Docker client certificate
+        env:
+          DIND_CA: ${{ secrets.DIND_CA }}
+          DIND_CERT: ${{ secrets.DIND_CERT }}
+          DIND_KEY: ${{ secrets.DIND_KEY }}
+        run: |
+          mkdir -p "$DOCKER_CERT_PATH" && cd "$DOCKER_CERT_PATH"
+          printf '%s\n' "$DIND_CA" > ca.pem
+          printf '%s\n' "$DIND_CERT" > cert.pem
+          (umask 077 && printf '%s\n' "$DIND_KEY" > key.pem)
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
