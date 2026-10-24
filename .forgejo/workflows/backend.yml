@@ -18,8 +18,11 @@ jobs:
     # downloading and copying Node into the tool cache on every run
     container: node:22.23.4-bookworm
     services:
+      # Data on tmpfs: on the runner's saturated disk, dropping and re-indexing the database
+      # before each test sometimes took over jest's 60 s hook timeout
       mongo:
         image: mongo:4.4
+        options: --tmpfs /data/db
     defaults:
       run:
         working-directory: backend
