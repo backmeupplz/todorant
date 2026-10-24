@@ -28,7 +28,8 @@ import { spend } from '@/v2/auth'
 import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
 
-jest.setTimeout(20000)
+// The shared CI runner can be busy: setup (drop, indexes, two users) took over 20 s under load
+jest.setTimeout(60000)
 
 // Apple's signing keys, without the network
 const mockApple = generateKeyPairSync('rsa', {
