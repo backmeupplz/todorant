@@ -12,17 +12,29 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Our own PRs and pushes run on the Mac runners; outsiders' PRs (AGit via the github bot) on Linux
+    runs-on: ${{ (github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude"]'), github.event.pull_request.user.login)) && 'macos-latest' || 'ubuntu-latest' }}
     timeout-minutes: 30
     defaults:
       run:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
-      # GitHub-hosted runners ship the JDK and Android SDK; the Forgejo job image does not, and
-      # downloading them (JDK, cmdline-tools, plus the build-tools and platform AGP installs
-      # mid-build) took ~2 min per run. A partial hit still restores most of it.
+      # Mac: Homebrew's JDK 17, and an Android SDK kept in the runner's tool cache, where AGP
+      # installs the build-tools and platform it needs on a runner's first build. Gradle's own
+      # caches persist in the runner user's ~/.gradle, so setup-gradle's slow cache transfer is skipped.
+      - if: runner.os == 'macOS'
+        run: |
+          sdk="$RUNNER_TOOL_CACHE/android-sdk"
+          mkdir -p "$sdk/licenses"
+          # The Android SDK license this Mac's own SDK accepted (cmdline-tools sdkmanager --licenses)
+          echo 24333f8a63b6825ea9c5514f83c2829b004d1fee > "$sdk/licenses/android-sdk-license"
+          echo "ANDROID_HOME=$sdk" >> "$GITHUB_ENV"
+          echo "JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home" >> "$GITHUB_ENV"
+      # Linux: GitHub-hosted runners ship the JDK and Android SDK; the Forgejo job image does not,
+      # so both are cached (the build-tools and platform AGP installs mid-build included)
       - id: sdk
+        if: runner.os == 'Linux'
         uses: actions/cache@v4
         with:
           path: |
@@ -31,18 +43,21 @@ jobs:
           key: android-sdk-jdk17-${{ hashFiles('android/build.gradle.kts', 'android/app/build.gradle.kts') }}
           restore-keys: android-sdk-jdk17-
       # Finds the cached JDK in the tool cache without downloading
-      - uses: actions/setup-java@v4
+      - if: runner.os == 'Linux'
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-      - if: steps.sdk.outputs.cache-hit != 'true'
+      - if: runner.os == 'Linux' && steps.sdk.outputs.cache-hit != 'true'
         uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
-      - if: steps.sdk.outputs.cache-hit == 'true'
+      - if: runner.os == 'Linux' && steps.sdk.outputs.cache-hit == 'true'
         run: echo "ANDROID_HOME=$HOME/.android/sdk" >> "$GITHUB_ENV"
       # Caches the Gradle distribution, dependencies, build cache and configuration cache
-      - uses: gradle/actions/setup-gradle@v4
+      - if: runner.os == 'Linux'
+        uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-      - run: ./gradlew :app:testPlayDebugUnitTest :app:assembleDebug
+      # The daemon outlives the job on the Mac: keep it for the next run, but not for hours
+      - run: ./gradlew -Dorg.gradle.daemon.idletimeout=900000 :app:testPlayDebugUnitTest :app:assembleDebug
