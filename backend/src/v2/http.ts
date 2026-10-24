@@ -306,7 +306,8 @@ v2.delete('/account', auth, async (ctx) => {
     QrLoginModel.collection.deleteMany({ token: user.token }),
     UserModel.collection.updateMany(
       { delegates: id },
-      { $pull: { delegates: id } }
+      // The driver's types can't $pull from a Ref<User>[] (a union per element)
+      { $pull: { delegates: id } } as Record<string, unknown>
     ),
   ])
   // Last, so a failure above leaves an account its owner can delete again. Then its token resolves to

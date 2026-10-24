@@ -40,8 +40,13 @@ export function v2Sync(
     if (collection === 'todo' && doc.delegator) publish(doc.delegator, message)
   })
 
-  for (const op of ['updateOne', 'updateMany', 'findOneAndUpdate', 'update']) {
-    schema.pre(op, function (this: mongoose.Query<unknown>) {
+  for (const op of [
+    'updateOne',
+    'updateMany',
+    'findOneAndUpdate',
+    'update',
+  ] as const) {
+    schema.pre(op, function (this: mongoose.Query<unknown, unknown>) {
       const update = this.getUpdate() as Record<string, any>
       if (!update) return
       const changed = synced.filter(
@@ -55,7 +60,7 @@ export function v2Sync(
         ...Object.fromEntries(changed.map((f) => [`_fts.${f}`, now])),
       }
     })
-    schema.post(op, function (this: mongoose.Query<unknown>) {
+    schema.post(op, function (this: mongoose.Query<unknown, unknown>) {
       const user = (this.getFilter() as Record<string, any>).user
       if (user && typeof user !== 'object') hint(user)
     })

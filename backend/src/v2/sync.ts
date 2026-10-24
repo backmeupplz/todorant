@@ -377,7 +377,7 @@ export async function push(userId: string, ops: Op[], origin?: WebSocket) {
         $set: { updatedAt: new Date(now) },
         $setOnInsert: { createdAt: new Date(now) },
       },
-      { upsert: true, returnOriginal: false }
+      { upsert: true, returnDocument: 'after' }
     )
     acks.push({ c: 'hero', u: now, fix: { points: result.value?.points } })
   }

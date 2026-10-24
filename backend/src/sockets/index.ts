@@ -36,11 +36,15 @@ async function getUpdatedOrCreatedItems(
   } else {
     query.deleted = false
   }
-  return (await model.find(query).populate('user').populate('delegator')).map(
-    (todoOrTag) => {
-      return todoOrTag.stripped()
-    }
-  )
+  // Both models have find/populate, but TypeScript can't call a union of their overloads
+  return (
+    await (model as typeof TodoModel)
+      .find(query)
+      .populate('user')
+      .populate('delegator')
+  ).map((todoOrTag) => {
+    return todoOrTag.stripped()
+  })
 }
 
 io.on('connection', (socket) => {
