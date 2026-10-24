@@ -29,13 +29,21 @@ process.on('unhandledRejection', (error) =>
   console.error('Unhandled rejection', error)
 )
 // Run mongo
-runMongo().then(() => {
-  console.log('Mongo connected')
-  ensureIndexes().then(
-    () => console.log('Indexes ready'),
-    (err) => console.log('Index error', err)
-  )
-})
+// A failed first connect never retries and mongoose buffers every query forever: exit so the
+// orchestrator restarts us (e.g. the DB was still starting)
+runMongo().then(
+  () => {
+    console.log('Mongo connected')
+    ensureIndexes().then(
+      () => console.log('Indexes ready'),
+      (err) => console.log('Index error', err)
+    )
+  },
+  (err) => {
+    console.error('Mongo connection failed', err)
+    process.exit(1)
+  }
+)
 // Start rest (and v2 sync over WebSocket on the same port)
 const server = app.listen(1337).on('listening', () => {
   console.log('HTTP is listening on 1337')
