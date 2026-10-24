@@ -1,6 +1,10 @@
 # Layered so a deploy only rebuilds what changed: dependencies are cached until
 # package.json/yarn.lock change, the docs until docs/ changes.
-FROM node:22.23.4-bookworm-slim AS deps
+# Every stage but the last runs on the build machine's platform: their output (compiled JS,
+# pure-JS node_modules with no native addons, static docs) is the same for amd64 and arm64,
+# so a multi-arch build does this work once instead of again under qemu emulation.
+# If a dependency with a native addon is ever added, drop --platform from prod-deps.
+FROM --platform=$BUILDPLATFORM node:22.23.4-bookworm-slim AS deps
 WORKDIR /app
 # mongodb-memory-server (tests only) would download a MongoDB binary on install
 ENV MONGOMS_DISABLE_POSTINSTALL=1
@@ -12,10 +16,14 @@ COPY tsconfig.json ./
 COPY src src
 RUN yarn build-ts
 
-FROM deps AS prod-deps
+# Independent of deps, so both installs run in parallel
+FROM --platform=$BUILDPLATFORM node:22.23.4-bookworm-slim AS prod-deps
+WORKDIR /app
+ENV MONGOMS_DISABLE_POSTINSTALL=1
+COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-engines --production --network-timeout 600000 && yarn cache clean
 
-FROM python:3.12-slim AS docs
+FROM --platform=$BUILDPLATFORM python:3.12-slim AS docs
 RUN pip install --no-cache-dir mkdocs-material==9.5.50
 COPY docs /docs
 RUN cd /docs && mkdocs build --quiet
