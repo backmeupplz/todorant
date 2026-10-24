@@ -14,6 +14,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # The production image's Node (backend/Dockerfile), preinstalled: setup-node spent ~20 s
+    # downloading and copying Node into the tool cache on every run
+    container: node:22.23.4-bookworm
     services:
       mongo:
         image: mongo:4.4
@@ -26,9 +29,6 @@ jobs:
       JWT: test
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: backend/.nvmrc
       # node_modules itself is cached: a hit skips the install entirely
       - id: modules
         uses: actions/cache@v4

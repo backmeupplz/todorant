@@ -19,14 +19,28 @@ jobs:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
+      # GitHub-hosted runners ship the JDK and Android SDK; the Forgejo job image does not, and
+      # downloading them (JDK, cmdline-tools, plus the build-tools and platform AGP installs
+      # mid-build) took ~2 min per run. A partial hit still restores most of it.
+      - id: sdk
+        uses: actions/cache@v4
+        with:
+          path: |
+            /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk
+            ~/.android/sdk
+          key: android-sdk-jdk17-${{ hashFiles('android/build.gradle.kts', 'android/app/build.gradle.kts') }}
+          restore-keys: android-sdk-jdk17-
+      # Finds the cached JDK in the tool cache without downloading
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-      # GitHub-hosted runners ship the Android SDK; the Forgejo job image does not
-      - uses: android-actions/setup-android@v3
+      - if: steps.sdk.outputs.cache-hit != 'true'
+        uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
+      - if: steps.sdk.outputs.cache-hit == 'true'
+        run: echo "ANDROID_HOME=$HOME/.android/sdk" >> "$GITHUB_ENV"
       # Caches the Gradle distribution, dependencies, build cache and configuration cache
       - uses: gradle/actions/setup-gradle@v4
         with:
