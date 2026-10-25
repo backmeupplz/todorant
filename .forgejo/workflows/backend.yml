@@ -29,8 +29,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: backend/.nvmrc
-      # On Linux node_modules itself is cached (a hit skips the install); on the Mac yarn's
-      # global cache persists, and a warm install beats an actions/cache restore there
+      # On Linux node_modules itself is cached (a hit skips the install); on the Mac each runner keeps
+      # its own yarn cache (yarn 1's shared global cache corrupts when two runners install at once)
       - id: modules
         if: runner.os == 'Linux'
         uses: actions/cache@v4
@@ -38,7 +38,7 @@ jobs:
           path: backend/node_modules
           key: backend-modules-${{ runner.os }}-${{ hashFiles('backend/yarn.lock', 'backend/.nvmrc') }}
       - if: steps.modules.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile --ignore-engines
+        run: yarn install --frozen-lockfile --ignore-engines ${{ runner.os == 'macOS' && '--cache-folder "$RUNNER_TOOL_CACHE/yarn"' || '' }}
       # A native mongod (the Mac runners have no Docker for a service container), installed once
       # per runner tool cache and checked against MongoDB's published SHA-256
       - name: MongoDB
