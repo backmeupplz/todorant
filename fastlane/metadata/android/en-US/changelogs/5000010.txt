@@ -1,0 +1,1 @@
+Fixes the add screen going blank after you add a second task and then delete it.
