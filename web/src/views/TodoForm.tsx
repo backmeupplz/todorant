@@ -149,7 +149,11 @@ function TodoForm({ mode, todo, title, text, accepting, close }: { mode: Mode; t
           count={slots.value.length}
           editing={mode === 'edit'}
           onChange={(patch) => set(s.key, patch)}
-          onRemove={() => (slots.value = slots.value.filter((x) => x.key !== s.key))}
+          onRemove={() => {
+            const rest = slots.value.filter((x) => x.key !== s.key)
+            // Keep one todo open: a lone collapsed one has no header, so the sheet looked empty
+            slots.value = rest.some((x) => !x.collapsed) ? rest : rest.map((x, j) => (j === rest.length - 1 ? { ...x, collapsed: false } : x))
+          }}
           onSave={save}
           onAdd={add}
         />

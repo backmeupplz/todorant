@@ -284,7 +284,10 @@ struct AddTodoScreen: View {
                         TodoCard(todo: breakdownTodo, type: .breakdown).onboardingTarget(OnboardingTarget.breakdownTodo).plainRow()
                     }
                     ForEach(vms) { vm in
-                        let delete: (() -> Void)? = vms.count > 1 ? { vms.removeAll { $0 === vm } } : nil
+                        let delete: (() -> Void)? = vms.count > 1 ? {
+                            vms.removeAll { $0 === vm }
+                            if vms.allSatisfy(\.collapsed) { vms.last?.collapsed = false }
+                        } : nil
                         VStack(spacing: 0) {
                             if vm.collapsed {
                                 CollapsedTodo(vm: vm, delete: delete)

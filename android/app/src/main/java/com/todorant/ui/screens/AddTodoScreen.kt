@@ -468,7 +468,7 @@ fun AddTodoScreen(mode: AddMode, todoId: String?, date: String?, text: String?) 
                     item(vm.key) {
                         ReorderableItem(reorderState, vm.key) {
                             Column(Modifier.background(Colors.background)) {
-                                val delete = if (vms.size > 1) ({ vms.remove(vm); Unit }) else null
+                                val delete = if (vms.size > 1) ({ vms.remove(vm); if (vms.all { it.collapsed }) vms.last().collapsed = false }) else null
                                 if (vm.collapsed) {
                                     CollapsedTodo(vm, delete, Modifier.longPressDraggableHandle())
                                 } else {
