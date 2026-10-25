@@ -76,14 +76,3 @@ jobs:
           done
           TEST_MONGO=mongodb://127.0.0.1:$port yarn -s jest --forceExit src/__tests__/v2.ts src/__tests__/appleAuthKey.ts & jest=$!
           for job in $prettier $eslint $tsc $jest; do wait $job || exit 1; done
-
-  # Easypanel builds the `deploy/backend` branch, so only backend changes deploy
-  deploy:
-    needs: check
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - run: git push --force origin "${{ github.sha }}:refs/heads/deploy/backend"
