@@ -1,7 +1,7 @@
 import type { JSX } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 import { Icon } from '../assets/icons'
-import { prefs, rev, update, type Todo } from '../data/store'
+import { prefs, rev, todos, update, type Todo } from '../data/store'
 import { t } from '../i18n'
 import { useSignal } from '../lib/state'
 import { ellipsize } from '../lib/text'
@@ -167,6 +167,18 @@ export function Planning() {
     const id = setTimeout(() => ((query.value = input.value), (limit.value = PAGE)), 300)
     return () => clearTimeout(id)
   }, [input.value])
+
+  // The draft is a snapshot: todos completed, uncompleted or deleted meanwhile leave it, edits show up
+  useEffect(() => {
+    if (!mode.value) return
+    draft.value = draft.value.map((s) => ({
+      ...s,
+      todos: s.todos.flatMap((t) => {
+        const now = todos.get(t.id)
+        return now && !now.deleted && now.completed === t.completed ? [now] : []
+      }),
+    }))
+  }, [rev.value])
 
   useEffect(() => {
     if (searching.value) searchRef.current?.focus()
