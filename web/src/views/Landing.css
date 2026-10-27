@@ -1,4 +1,6 @@
 .landing { min-height: 100vh; display: flex; flex-direction: column; }
+/* The prerendered copy, while the app takes a signed-in person to their tasks (index.html) */
+:root.signed-in .landing { display: none; }
 .landing main { flex: 1; width: 100%; }
 .landing-top { width: 100%; padding-top: 28px; padding-bottom: 24px; }
 .landing-logo { display: block; height: 30px; width: auto; }

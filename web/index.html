@@ -28,6 +28,15 @@
     <link rel="manifest" href="/favicon/site.webmanifest" />
     <meta name="apple-itunes-app" content="app-id=1482078243" />
     <link rel="preconnect" href="https://backend.todorant.com" />
+    <script>
+      // Before the first paint: the saved color mode (main.tsx keeps it in sync), and signed-in people opening
+      // the prerendered landing page don't see it flash before the app takes them to their tasks
+      try {
+        var mode = JSON.parse(localStorage.getItem('prefs') || '{}').colorMode || 'auto'
+        if (mode === 'dark' || (mode === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark')
+        if (localStorage.getItem('session') && location.pathname === '/') document.documentElement.classList.add('signed-in')
+      } catch (e) {}
+    </script>
     <script src="/config.js"></script>
     <script type="application/ld+json">
     {

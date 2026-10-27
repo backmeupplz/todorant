@@ -17,13 +17,14 @@ const theme = () => document.documentElement.classList.toggle('dark', isDark())
 prefs.subscribe(theme)
 onSystemTheme(theme)
 const root = document.getElementById('app')!
-// Legal pages arrive with their text prerendered for crawlers (vite.config.ts); the app draws its own copy
+// The landing and legal pages arrive with their text prerendered for crawlers (npm run prerender); the app draws its own copy
 const prerendered = [...root.childNodes]
 // Signed-in users see the screen's skeleton while the language loads
 const tab = appRoute()?.tab
 if (session.value && tab) render(TAB_SKELETONS[tab](), root)
 await initLanguage()
 prerendered.forEach((node) => node.remove())
+document.documentElement.classList.remove('signed-in')
 const draw = () => render(<App />, root)
 onRerender(draw)
 draw()
