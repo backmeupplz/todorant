@@ -150,8 +150,13 @@ struct SettingsScreen: View {
                 .settingsRow()
                 Section(t("info")) {
                     TableItem(action: {
-                        Onboarding.tutorialIsShown = false
-                        Onboarding.nextStep(.Start)
+                        let start = {
+                            Onboarding.tutorialIsShown = false
+                            Onboarding.nextStep(.Start)
+                        }
+                        // An add screen left open in the side column would skip the tutorial's add step: it closes
+                        // first, asking about unsaved changes like another todo would
+                        if let close = Nav.shared.draft?.requestClose { close(start) } else { start() }
                     }) { TableText(t("tutorialButton")) }
                     TableItem(action: { Nav.push(.terms) }) { TableText(t("termsOfUse")) }
                     TableItem(action: { Nav.push(.privacy) }) { TableText(t("privacyPolicy")) }

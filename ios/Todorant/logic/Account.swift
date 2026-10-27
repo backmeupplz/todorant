@@ -18,6 +18,8 @@ enum Account {
     static func logout() {
         Session.loggingOut = true
         defer { Session.loggingOut = false }
+        // The side column stays open across tabs; the old account's todo must not be saved after its data is gone
+        Nav.closeEditor()
         Sync.shared.logout()
         Session.setUser(nil)
         Session.encryptionKey = nil

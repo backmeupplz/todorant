@@ -88,25 +88,58 @@ func applyTagText(_ text: String, _ cursor: Int, _ tag: String) -> (String, Int)
     return after.isEmpty ? (head + " ", head.count + 1) : (head + after, head.count + 1)
 }
 
-struct AddTodoScreen: View {
+/**
+ * Everything the add screen is editing: its forms, the focused one and the save state. Nav keeps it while the screen
+ * is open, so folding or resizing, which moves the screen between a sheet and the side column, keeps the typed text,
+ * dates and tags.
+ */
+@Observable
+final class AddTodoDraft: Identifiable {
     let mode: AddMode
     let date: String?
     let text: String?
-    @State private var baseTodo: Todo?
-    @State private var vms = [TodoVM]()
-    @State private var saving = false
-    @State private var buttonShake = 0
-    @State private var started = false
-    @FocusState private var focused: String?
+    let baseTodo: Todo?
+    var vms = [TodoVM]()
+    var saving = false
+    var buttonShake = 0
+    var started = false
+    /// The form with the keyboard, given back to the screen when it's shown again
+    var focused: String?
+    /// Set by the shown screen: closes it, asking about unsaved changes first, then runs the given block
+    @ObservationIgnored var requestClose: ((@escaping () -> Void) -> Void)?
 
-    init(sheet: Sheet) {
+    init(_ sheet: Sheet) {
         var id: String?
         switch sheet {
         case let .add(date, text): mode = .add; self.date = date; self.text = text
         case let .edit(todoId): mode = .edit; id = todoId; date = nil; text = nil
         case let .breakdown(todoId): mode = .breakdown; id = todoId; date = nil; text = nil
         }
-        _baseTodo = State(initialValue: id.flatMap(Db.shared.todo))
+        baseTodo = id.flatMap(Db.shared.todo)
+    }
+}
+
+struct AddTodoScreen: View {
+    let draft: AddTodoDraft
+    /// Shown as the column next to the tabs rather than as a sheet
+    var inline = false
+    @FocusState private var focused: String?
+
+    private var mode: AddMode { draft.mode }
+    private var date: String? { draft.date }
+    private var text: String? { draft.text }
+    private var baseTodo: Todo? { draft.baseTodo }
+    private var vms: [TodoVM] {
+        get { draft.vms }
+        nonmutating set { draft.vms = newValue }
+    }
+    private var saving: Bool {
+        get { draft.saving }
+        nonmutating set { draft.saving = newValue }
+    }
+    private var buttonShake: Int {
+        get { draft.buttonShake }
+        nonmutating set { draft.buttonShake = newValue }
     }
 
     private var breakdownTodo: Todo? { mode == .breakdown ? baseTodo : nil }
@@ -140,8 +173,12 @@ struct AddTodoScreen: View {
 
     // componentDidMount
     private func start() {
-        if started { return }
-        started = true
+        if draft.started {
+            // Shown again after a fold or resize: the keyboard goes back to the form that had it
+            if let key = draft.focused { DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { focused = key } }
+            return
+        }
+        draft.started = true
         if Onboarding.active && Onboarding.step == .Breakdown {
             for key in ["onboarding.breakdownTodo1", "onboarding.breakdownTodo2", "onboarding.breakdownTodo3"] {
                 let vm = TodoVM()
@@ -192,24 +229,27 @@ struct AddTodoScreen: View {
                 if edited.frogFails > 2 && (edited.monthAndYear != newMonth || edited.date != vm.date) {
                     // The RN app left the screen stuck in "saving" here
                     saving = false
-                    return Todos.requestBreakdown(edited) { Nav.back() }
+                    return Todos.requestBreakdown(edited) { Nav.closeEditor() }
                 }
                 let failed = isTodoOld(edited.monthAndYear, edited.date) && (edited.date != vm.date || edited.monthAndYear != vm.monthAndYear) && !edited.completed
-                if vm.completed && !edited.completed { completedAtCreation.append(vm.text) }
-                // Fresh copy so fields synced while editing aren't overwritten
+                // Fresh copy, and only the fields this form changed: a sync, or the list next to the side column, may
+                // have changed the others while it was open
                 let todo = Db.shared.todo(edited.id) ?? edited
-                todo.text = vm.text
-                todo.completed = vm.completed
-                todo.frog = vm.frog
-                todo.monthAndYear = newMonth
-                todo.date = vm.date
-                todo.time = vm.time
-                todo.repetitive = vm.repetitive
+                if vm.completed && !edited.completed && !todo.completed { completedAtCreation.append(vm.text) }
+                if vm.text != edited.text { todo.text = vm.text }
+                if vm.completed != edited.completed { todo.completed = vm.completed }
+                if vm.frog != edited.frog { todo.frog = vm.frog }
+                if vm.monthAndYear != edited.monthAndYear || vm.date != edited.date {
+                    todo.monthAndYear = newMonth
+                    todo.date = vm.date
+                }
+                if vm.time != edited.time { todo.time = vm.time }
+                if vm.repetitive != edited.repetitive { todo.repetitive = vm.repetitive }
                 if failed && !(todo.date ?? "").isEmpty {
                     todo.frogFails += 1
                     if todo.frogFails > 1 { todo.frog = true }
                 }
-                todo.delegateAccepted = vm.delegateAccepted
+                if vm.delegateAccepted != edited.delegateAccepted { todo.delegateAccepted = vm.delegateAccepted }
                 toSave.append(todo)
                 titles += [oldTitle, todo.title]
             } else {
@@ -232,14 +272,17 @@ struct AddTodoScreen: View {
         }
         if let breakdownTodo {
             let original = Db.shared.todo(breakdownTodo.id) ?? breakdownTodo
-            Todos.markCompleted(original)
+            // The list next to the side column may have completed or deleted it already: no second points or confetti
+            if !original.completed && !original.deleted {
+                Todos.markCompleted(original)
+                Effects.confetti()
+            }
             titles.append(original.title)
-            Effects.confetti()
         }
         let hasCompleted = breakdownTodo != nil || vms.contains { $0.editedTodo?.completed == true || $0.completed }
         let hasFrog = breakdownTodo?.frog == true || vms.contains { $0.editedTodo?.frog == true || $0.frog }
         if hasCompleted && !initiallyCompleted { if hasFrog { Sounds.frogComplete() } else { Sounds.taskComplete() } }
-        Nav.back()
+        Nav.closeEditor()
         Tags.addTags(vms.map(\.text))
         Todos.fixOrder(titles, addTodosOnTop: onTop, addTodosToBottom: toBottom, timeTodosToYield: toSave)
         if breakdownTodo != nil && !dayCompletedInitially { Todos.checkDayCompletion() }
@@ -264,12 +307,29 @@ struct AddTodoScreen: View {
             focused = nil
             return
         }
-        if !isDirty() { return Nav.back() }
+        askToClose()
+    }
+
+    /// Closes the screen, asking first what to do with unsaved changes; [then] runs once it's closed
+    private func askToClose(then: @escaping () -> Void = {}) {
+        if !isDirty() {
+            Nav.closeEditor()
+            return then()
+        }
         let plural = vms.count > 1
         func s(_ key: String) -> String { t(plural ? key : "\(key)Singular") }
         var buttons = [(String, () -> Void)]()
-        if isValid { buttons.append((s("saveTasks"), { saveTodo() })) }
-        buttons.append((s("dissmissTasks"), { Nav.back() }))
+        if isValid {
+            buttons.append((s("saveTasks"), {
+                saveTodo()
+                // Saving can stop short (a breakdown is needed first): then the screen stays
+                if Nav.shared.sheet == nil { then() }
+            }))
+        }
+        buttons.append((s("dissmissTasks"), {
+            Nav.closeEditor()
+            then()
+        }))
         buttons.append((s(isValid ? "changeTasks" : "fixTasks"), {}))
         Ui.shared.dialogs.append(DialogSpec(title: s(isValid ? "dirtyValidSave" : "dirtyInvalidSave"), message: nil, buttons: buttons,
                                             destructive: [isValid ? 1 : 0], sheet: true))
@@ -321,7 +381,7 @@ struct AddTodoScreen: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     // Only the add screen asks about unsaved changes in RN
-                    Button { if mode == .add { onBackPress() } else { Nav.back() } } label: { Image(systemName: "xmark") }
+                    Button { if mode == .add { onBackPress() } else { Nav.closeEditor() } } label: { Image(systemName: "xmark") }
                         .accessibilityLabel(t("cancel"))
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -335,9 +395,14 @@ struct AddTodoScreen: View {
             }
         }
         .interactiveDismissDisabled(Onboarding.active || isDirty())
+        .onChange(of: focused) { _, key in
+            // Losing the keyboard because this copy of the screen is going away (fold, resize) isn't the user's choice
+            if key != nil || Nav.shared.editorInline == inline { draft.focused = key }
+        }
         .onAppear {
             start()
             Onboarding.shared.saveTodo = { trySave() }
+            draft.requestClose = { askToClose(then: $0) }
         }
         .onDisappear { Onboarding.shared.saveTodo = {} }
         // keyboardDidHide in TodoVM: finishing the text moves the tutorial on

@@ -50,10 +50,24 @@ final class Clock {
     }
 }
 
+/// Narrowest window that gets the add screen as a column next to the tabs: an unfolded iPhone Duo (669 pt) or any iPad
+private let INLINE_EDITOR_MIN_WIDTH: CGFloat = 600
+/// The column takes half the window up to this width, so on the Duo it ends at the hinge in the middle
+private let INLINE_EDITOR_MAX_WIDTH: CGFloat = 440
+
 struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var systemScheme
+    @Environment(\.horizontalSizeClass) private var systemSizeClass
+    @State private var width: CGFloat = 0
     private var nav: Nav { Nav.shared }
+
+    private var sizeClass: UserInterfaceSizeClass? {
+        #if DEBUG
+        if let forced = QA.Layout.shared.sizeClass { return forced }
+        #endif
+        return systemSizeClass
+    }
 
     var body: some View {
         let _ = Clock.shared.today
@@ -61,28 +75,48 @@ struct RootView: View {
         let delegatedToMe = Session.user == nil ? 0 : Todos.delegated(byMe: false).count
         // Android shows only Settings during the first sync; here the login screen covers it with a progress overlay
         let tabs: [Tab] = planningRequired ? [.planning, .delegation, .settings] : [.current, .planning, .delegation, .settings]
-        GeometryReader { window in
-            TabView(selection: Binding(get: { nav.tab }, set: { if !Onboarding.active { nav.tab = $0 } })) {
-                if tabs.contains(.current) { tab(.current, t("current"), "tab_current") { CurrentScreen() } }
-                if tabs.contains(.planning) { tab(.planning, t("planning"), "tab_planning") { PlanningScreen() } }
-                if tabs.contains(.delegation) {
-                    tab(.delegation, t("delegate.title"), "tab_delegation") { DelegationScreen() }.badge(delegatedToMe)
+        // Wide regular width (unfolded, iPad) edits next to the list; the tutorial always uses the sheet it was written for
+        let inline = sizeClass == .regular && width >= INLINE_EDITOR_MIN_WIDTH && !Onboarding.active
+        // The tabs stay the first view whether or not the column shows, so folding never rebuilds them
+        HStack(spacing: 0) {
+            GeometryReader { window in
+                TabView(selection: Binding(get: { nav.tab }, set: { if !Onboarding.active { nav.tab = $0 } })) {
+                    if tabs.contains(.current) { tab(.current, t("current"), "tab_current") { CurrentScreen() } }
+                    if tabs.contains(.planning) { tab(.planning, t("planning"), "tab_planning") { PlanningScreen() } }
+                    if tabs.contains(.delegation) {
+                        tab(.delegation, t("delegate.title"), "tab_delegation") { DelegationScreen() }.badge(delegatedToMe)
+                    }
+                    tab(.settings, t("settings"), "tab_settings") { SettingsScreen() }.badge(Session.user == nil ? Text("!") : nil)
                 }
-                tab(.settings, t("settings"), "tab_settings") { SettingsScreen() }.badge(Session.user == nil ? Text("!") : nil)
+                .onAppear { registerTabTargets(window, tabs) }
+                .onChange(of: window.size) { registerTabTargets(window, tabs) }
+                .onChange(of: tabs) { _, tabs in
+                    registerTabTargets(window, tabs)
+                    if !tabs.contains(nav.tab) { nav.tab = tabs[0] }
+                }
             }
-            .onAppear { registerTabTargets(window, tabs) }
-            .onChange(of: window.size) { registerTabTargets(window, tabs) }
-            .onChange(of: tabs) { _, tabs in
-                registerTabTargets(window, tabs)
-                if !tabs.contains(nav.tab) { nav.tab = tabs[0] }
+            .ignoresSafeArea(.keyboard)
+            if nav.editorInline, let draft = nav.draft {
+                Rectangle().fill(Colors.border).frame(width: 1).ignoresSafeArea()
+                // TODO(#212): on iOS 27.1, UIView.reservedRegions(kind: .division) gives the hinge; the half-width column already ends there
+                AddTodoScreen(draft: draft, inline: true)
+                    .frame(width: min(width / 2, INLINE_EDITOR_MAX_WIDTH))
+                    .id(ObjectIdentifier(draft))
+                    .transition(.move(edge: .trailing))
             }
         }
-        .ignoresSafeArea(.keyboard)
+        // The column's form keeps clear of the keyboard; everything else ignores it as before
+        .ignoresSafeArea(nav.editorInline ? [] : .keyboard)
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
+        .onChange(of: inline, initial: true) { _, inline in nav.editorInline = inline }
+        .environment(\.horizontalSizeClass, sizeClass)
         .overlay { EffectsLayer() }
-        .overlay { if nav.sheet == nil { OnboardingOverlay() } }
-        .modifier(DialogHost(active: nav.sheet == nil))
-        .sheet(item: Binding(get: { nav.sheet }, set: { nav.sheet = $0 })) { sheet in
-            AddTodoScreen(sheet: sheet)
+        .overlay { if nav.sheet == nil || nav.editorInline { OnboardingOverlay() } }
+        .modifier(DialogHost(active: nav.sheet == nil || nav.editorInline))
+        // Read live in the setter too: a sheet closed because the screen moved to the column must not end the edit.
+        // Presented by its draft, so the closing sheet keeps showing the form while it slides away.
+        .sheet(item: Binding(get: { nav.editorInline ? nil : nav.draft }, set: { if !nav.editorInline && $0 == nil { Nav.closeEditor() } })) { draft in
+            AddTodoScreen(draft: draft)
                 .modifier(PageSizedSheet())
                 .overlay { OnboardingOverlay() }
                 .modifier(DialogHost())
@@ -170,6 +204,9 @@ struct RouteScreen: View {
 private func handleUrl(_ url: URL) {
     let c = URLComponents(url: url, resolvingAgainstBaseURL: false)
     func query(_ name: String) -> String? { c?.queryItems?.first { $0.name == name }?.value }
+    #if DEBUG
+    if url.scheme == "todorant" && url.host == "qa-size-class" { return QA.overrideSizeClass(query("value")) }
+    #endif
     if url.scheme == "todorant" && url.host == "create-todo" {
         let text = query("articleBody") ?? ""
         if text.isEmpty { Nav.go(.add()) } else { addTodoFromLink(text) }
@@ -198,13 +235,15 @@ private func addTodoFromLink(_ text: String) {
 }
 
 #if DEBUG
-/// QA launch arguments (debug builds only): -qaToken <token> signs in, -qaSkipTutorial YES, -qaLanguage ru, -qaColorMode dark
+/// QA launch arguments (debug builds only): -qaToken <token> signs in, -qaSkipTutorial YES, -qaLanguage ru, -qaColorMode dark,
+/// -qaSizeClass compact
 enum QA {
     static func apply() {
         let args = UserDefaults.standard
         // QA runs pick their server with -API; a server switched to in an earlier run doesn't stick
         if args.string(forKey: "API") != nil { Rest.server = nil }
         if args.bool(forKey: "qaSkipTutorial") { Onboarding.tutorialIsShown = true }
+        overrideSizeClass(args.string(forKey: "qaSizeClass"))
         if let lang = args.string(forKey: "qaLanguage") { Settings.languageSelect = lang; Settings.language = lang }
         if let mode = args.string(forKey: "qaColorMode").flatMap(ColorMode.init(rawValue:)) { Settings.colorMode = mode }
         if let token = args.string(forKey: "qaToken"), Session.user?.token != token {
@@ -213,6 +252,18 @@ enum QA {
                 do { try await Account.login(try await Rest.loginToken(token)) } catch { Ui.error(error) }
             }
         }
+    }
+
+    /// The horizontal size class the layout uses instead of the system's: a fold or unfold on any simulator
+    @Observable
+    final class Layout {
+        static let shared = Layout()
+        var sizeClass: UserInterfaceSizeClass?
+    }
+
+    /// compact, regular, or anything else for the system's; also todorant://qa-size-class?value= while running
+    static func overrideSizeClass(_ value: String?) {
+        Layout.shared.sizeClass = value == "compact" ? .compact : value == "regular" ? .regular : nil
     }
 }
 #endif

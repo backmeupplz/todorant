@@ -74,6 +74,8 @@ struct MonthCalendar: View {
             }
         }
         .padding(.horizontal, 8)
+        // Day numbers sit in fixed circles, seven to a row: accessibility text sizes spilled out of them
+        .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
     }
 }
 

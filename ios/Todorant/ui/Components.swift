@@ -45,9 +45,10 @@ struct Divider: View {
     var color: Color = Colors.border
     var vertical: CGFloat = 6
     var horizontal: CGFloat = 16
+    @Environment(\.displayScale) private var displayScale
 
     var body: some View {
-        Rectangle().fill(color).frame(height: 1 / UIScreen.main.scale * 2).padding(.horizontal, horizontal).padding(.vertical, vertical)
+        Rectangle().fill(color).frame(height: 1 / displayScale * 2).padding(.horizontal, horizontal).padding(.vertical, vertical)
     }
 }
 
@@ -243,12 +244,10 @@ extension View {
 private struct ReadableWidth: ViewModifier {
     let width: CGFloat
     func body(content: Content) -> some View {
+        // One view for every width (nil keeps the system margins): swapping views at the threshold would reset the list,
+        // its scroll position and focus, whenever a foldable unfolds or a window is resized past it
         GeometryReader { g in
-            if g.size.width > width + 40 {
-                content.contentMargins(.horizontal, (g.size.width - width) / 2, for: .scrollContent)
-            } else {
-                content
-            }
+            content.contentMargins(.horizontal, g.size.width > width + 40 ? (g.size.width - width) / 2 : nil, for: .scrollContent)
         }
     }
 }

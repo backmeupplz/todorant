@@ -1,0 +1,48 @@
+name: iOS
+on:
+  push:
+    branches: [main]
+    paths: [ios/**, .forgejo/workflows/ios.yml]
+  pull_request:
+    paths: [ios/**, .forgejo/workflows/ios.yml]
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    # Xcode needs the Mac runners, which run our own PRs and pushes only; outsiders' PRs (AGit via the github bot) skip it
+    if: github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude"]'), github.event.pull_request.user.login)
+    runs-on: macos-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      # A simulator of its own on the shared Mac (the newest runtime that has the device), removed at the end. Ones that a
+      # cancelled run left behind are removed once they're older than any run could be.
+      - name: Simulator
+        run: |
+          for udid in $(xcrun simctl list devices | sed -nE 's/^ *ci-todorant-[0-9]+ \(([0-9A-F-]{36})\).*/\1/p'); do
+            if [ -n "$(find "$HOME/Library/Developer/CoreSimulator/Devices/$udid/device.plist" -mmin +120 2>/dev/null)" ]; then
+              xcrun simctl shutdown "$udid" 2>/dev/null || true
+              xcrun simctl delete "$udid" || true
+            fi
+          done
+          SIM=$(xcrun simctl create "ci-todorant-$GITHUB_RUN_ID" com.apple.CoreSimulator.SimDeviceType.iPhone-17)
+          echo "SIM=$SIM" >> "$GITHUB_ENV"
+      - name: Build and unit tests
+        run: |
+          xcodebuild -scheme Todorant -destination "platform=iOS Simulator,id=$SIM" -derivedDataPath "$RUNNER_TEMP/ios-build" \
+            -collect-test-diagnostics never test -only-testing:Tests > "$RUNNER_TEMP/xcodebuild.log" 2>&1 || {
+            grep -E 'error:|failed|TEST FAIL' "$RUNNER_TEMP/xcodebuild.log" | head -50
+            exit 1
+          }
+          grep -E 'Executed|TEST SUCC' "$RUNNER_TEMP/xcodebuild.log" | tail -3
+      - name: Remove the simulator
+        if: always() && env.SIM
+        run: |
+          xcrun simctl shutdown "$SIM" 2>/dev/null || true
+          xcrun simctl delete "$SIM"

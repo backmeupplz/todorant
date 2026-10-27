@@ -168,17 +168,36 @@ final class Nav {
     static let shared = Nav()
     var tab = Tab.current
     var paths: [Tab: [Route]] = [:]
-    var sheet: Sheet?
+    /// The open add, edit or breakdown screen. Its draft lives here rather than in the screen, so the forms survive the
+    /// screen moving between a sheet and the side column when a foldable folds or a window is resized.
+    var sheet: Sheet? {
+        didSet {
+            guard sheet != oldValue else { return }
+            // The closure holds the screen, which holds the draft: let them both go
+            draft?.requestClose = nil
+            draft = sheet.map(AddTodoDraft.init)
+        }
+    }
+    private(set) var draft: AddTodoDraft?
+    /// The add screen shows as a column next to the tabs (wide regular width) instead of a sheet; RootView decides
+    var editorInline = false
 
-    /// Tabs close pushed screens and sheets first, like RN's root stack
+    /// Tabs close pushed screens and sheets first, like RN's root stack. The add screen in the side column isn't above
+    /// the tabs, so it stays.
     static func go(_ tab: Tab) {
-        shared.sheet = nil
+        if !shared.editorInline { shared.sheet = nil }
         shared.paths[tab] = []
         shared.tab = tab
     }
 
     static func go(_ sheet: Sheet) {
         if shared.sheet == nil { return shared.sheet = sheet }
+        if shared.editorInline {
+            // Side by side the list stays usable: another todo replaces the open one once it's closed like its ✕ would
+            if shared.sheet == sheet { return }
+            guard let close = shared.draft?.requestClose else { return shared.sheet = sheet }
+            return close { shared.sheet = sheet }
+        }
         // One sheet at a time: the old one has to be gone before the new one shows
         shared.sheet = nil
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { shared.sheet = sheet }
@@ -186,9 +205,14 @@ final class Nav {
 
     static func push(_ route: Route) { shared.paths[shared.tab, default: []].append(route) }
 
+    /// Closes the sheet, or else the current tab's top screen. Pushed screens stay reachable next to the side column,
+    /// so their back is theirs.
     static func back() {
-        if shared.sheet != nil { shared.sheet = nil } else if !(shared.paths[shared.tab] ?? []).isEmpty { shared.paths[shared.tab]!.removeLast() }
+        if shared.sheet != nil && !shared.editorInline { closeEditor() } else if !(shared.paths[shared.tab] ?? []).isEmpty { shared.paths[shared.tab]!.removeLast() }
     }
+
+    /// Closes the add, edit or breakdown screen, wherever it shows
+    static func closeEditor() { shared.sheet = nil }
 }
 
 // endregion

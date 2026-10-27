@@ -139,7 +139,10 @@ struct LinkText: UIViewRepresentable {
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize? {
-        let width = proposal.width ?? UIScreen.main.bounds.width
+        // No width offered (ideal size): its window's width as before (the screen's on a full-screen iPhone), or the
+        // text's one-line width while it isn't in a window yet
+        let width = proposal.width ?? uiView.window?.bounds.width
+            ?? uiView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: .greatestFiniteMagnitude)).width
         return CGSize(width: width, height: ceil(uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height))
     }
 
