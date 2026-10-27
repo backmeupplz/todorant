@@ -1,0 +1,1 @@
+Todorant asks for a rating at most twice, and only after a few fully done days. Settings has a new Send feedback item.
