@@ -1,1 +1,1 @@
-A todo manager that uses behavioral psychology to help you get things done
+A todo app built on behavioral psychology: one task at a time, frogs first.

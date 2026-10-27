@@ -1,1 +1,1 @@
-Todorant
+Todorant: To-Do List & Planner
