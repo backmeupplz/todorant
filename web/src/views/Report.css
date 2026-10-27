@@ -1,5 +1,5 @@
-.report-filters { display: flex; align-items: flex-end; gap: 4px; padding: 4px 8px 4px 16px; }
-.report-filters.dates { gap: 8px; padding-right: 16px; }
+.report-filters { display: flex; align-items: flex-end; gap: 4px; padding-block: 4px; padding-inline: 16px 8px; }
+.report-filters.dates { gap: 8px; padding-inline-end: 16px; }
 .report-filters .field { min-width: 0; }
 .report-filters .field input { padding: 8px 12px; }
 .report-filters > .icon-btn { padding: 8px; margin-bottom: 2px; color: var(--muted); }
@@ -8,8 +8,10 @@
 .chart { margin: 0 16px 8px; min-width: 0; }
 .chart-plot { position: relative; height: 140px; border-bottom: 1px solid var(--divider); }
 .chart-plot svg { width: 100%; height: 100%; display: block; fill: var(--orange); }
+/* Arabic: the first day sits on the right, under the first axis label */
+[dir='rtl'] .chart-plot svg { transform: scaleX(-1); }
 .chart-plot rect:hover { opacity: 0.75; }
-.chart-max { position: absolute; top: -4px; left: 0; width: 100%; border-top: 1px dashed var(--divider); font-size: 11px; color: var(--muted); pointer-events: none; }
+.chart-max { position: absolute; top: -4px; inset-inline-start: 0; width: 100%; text-align: start; border-top: 1px dashed var(--divider); font-size: 11px; color: var(--muted); pointer-events: none; }
 .chart-axis { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: var(--muted); }
 .report-link { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .report-links { display: flex; flex-wrap: wrap; gap: 2px; padding: 0 6px 16px; }

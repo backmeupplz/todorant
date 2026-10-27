@@ -296,6 +296,9 @@ private fun DelegationSettings() {
 
 private val languageNames = linkedMapOf(
     "en" to "English", "ru" to "Русский", "uk" to "Українська", "it" to "Italiano", "es" to "Español", "pt-br" to "Português Brasileiro",
+    "pt-pt" to "Português (Portugal)", "de" to "Deutsch", "fr" to "Français", "nl" to "Nederlands", "pl" to "Polski", "tr" to "Türkçe",
+    "sv" to "Svenska", "ja" to "日本語", "ko" to "한국어", "zh-hans" to "简体中文", "zh-hant" to "繁體中文", "ar" to "العربية", "hi" to "हिन्दी",
+    "id" to "Bahasa Indonesia", "vi" to "Tiếng Việt", "th" to "ไทย",
 )
 
 @Composable
@@ -309,7 +312,7 @@ private fun LanguageAndColorMode() {
         }
     }) {
         TableText(t("languageSelect"), Modifier.weight(1f))
-        TableText(if (Settings.languageSelect == "auto") t("languageAuto") else languageNames[Settings.language ?: "en"] ?: "English")
+        TableText(if (Settings.languageSelect == "auto") t("languageAuto") else languageNames[I18n.current()] ?: "English")
     }
     val modes = listOf(ColorMode.auto to "languageAuto", ColorMode.dark to "dark", ColorMode.light to "light")
     ValueRow(t("colorMode"), t(modes.first { it.first == Settings.colorMode }.second)) {

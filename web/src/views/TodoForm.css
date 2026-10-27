@@ -5,7 +5,7 @@
 .slot-head { display: flex; align-items: center; gap: 4px; padding: 2px 8px 0 8px; }
 .slot-summary {
   flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 8px; border: 0; border-radius: 10px;
-  background: none; color: var(--muted); font: inherit; text-align: left;
+  background: none; color: var(--muted); font: inherit; text-align: start;
 }
 .slot-summary:hover { background: var(--hover); }
 .slot-summary b { color: var(--muted); font-weight: 600; }
@@ -22,7 +22,7 @@
 .slot .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 8px; }
 .slot .tags .chip { padding: 4px 10px; cursor: pointer; }
 .form-row select {
-  border: 0; background: none; color: var(--text); font: inherit; text-align: right; padding: 4px 0; min-width: 0; max-width: 60%; outline: none;
+  border: 0; background: none; color: var(--text); font: inherit; text-align: end; padding: 4px 0; min-width: 0; max-width: 60%; outline: none;
 }
 .form-row select { appearance: none; -webkit-appearance: none; color: var(--muted); cursor: pointer; }
 .form-row input:focus-visible, .form-row select:focus-visible { outline: 2px solid var(--blue); border-radius: 6px; }

@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">Todorant 小组件</string>
+    <string name="widget_login">请登录 Todorant</string>
+    <string name="widget_loading">正在加载&#8230;</string>
+</resources>

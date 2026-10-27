@@ -113,7 +113,7 @@ export const HowItWorks = () => (
       <li><b>End-to-end encryption</b> of your todos with a password of your choice.</li>
       <li><b>Delegation</b>, to hand todos to friends and colleagues and accept the ones they hand to you.</li>
       <li>A <b>Telegram bot</b> that turns messages into todos, <b>hashtags and epics</b> to group related work, and <b>reports</b> of everything you've done.</li>
-      <li><b>Six languages</b> (English, Spanish, Italian, Portuguese, Russian and Ukrainian) and a dark mode on every platform.</li>
+      <li><b>More than twenty languages</b>, from German, French and Spanish to Japanese, Chinese, Arabic and Hindi, that follow your device language, and a dark mode on every platform.</li>
     </ul>
     <h2>Get Todorant</h2>
     <ul>

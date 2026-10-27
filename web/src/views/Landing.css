@@ -13,9 +13,9 @@
 }
 .hero h1 { font-size: 40px; line-height: 1.2; font-weight: 800; letter-spacing: -0.5px; }
 .hero-features { list-style: none; margin: 0; padding: 20px 24px; background: rgba(255, 255, 255, 0.14); border-radius: 16px; display: grid; gap: 12px; }
-.hero-features li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.4; }
+.hero-features li { position: relative; padding-inline-start: 28px; font-size: 16px; line-height: 1.4; }
 .hero-features li::before {
-  content: ''; position: absolute; left: 0; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff;
+  content: ''; position: absolute; inset-inline-start: 0; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff;
   -webkit-mask: radial-gradient(circle, transparent 0 3px, #000 3.5px); mask: radial-gradient(circle, transparent 0 3px, #000 3.5px);
 }
 .hero-cta { display: flex; align-items: center; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
@@ -76,7 +76,7 @@
 }
 .signin-btn:hover { background: color-mix(in srgb, var(--text) 5%, var(--surface)); }
 .signin-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-.signin-btn img { position: absolute; left: 15px; top: 50%; translate: 0 -50%; }
+.signin-btn img { position: absolute; inset-inline-start: 15px; top: 50%; translate: 0 -50%; }
 :root:not(.dark) .signin-apple img, :root.dark .signin-qr img { filter: invert(1); }
 .qr { display: flex; flex-direction: column; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
 .qr-code { background: #fff; border-radius: 12px; width: 240px; max-width: 100%; height: auto; }

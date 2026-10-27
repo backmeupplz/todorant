@@ -1,11 +1,33 @@
 {
+  "encryption": {
+    "info": "¡Usa esta sección con muchísimo cuidado! El cifrado no funcionará a menos que agregues una contraseña. Habrá dos tipos de tareas: cifradas y sin cifrar. Todas las tareas nuevas se cifrarán. Las tareas antiguas se pueden cifrar con el botón de abajo. Si pierdes la contraseña, no habrá forma de recuperar las tareas.",
+    "switch": "Cifrar tareas",
+    "password": "Contraseña",
+    "encryptAllButton": "Cifrar todas",
+    "decryptAllButton": "Descifrar todas",
+    "confirm": "¿Seguro que quieres cifrar las tareas con esta contraseña? Más adelante podrás descifrarlas con la misma contraseña. Si la pierdes, ¡no podrás descifrar tus tareas!",
+    "disableConfirm": "¿Seguro que quieres eliminar la clave y desactivar el cifrado? Esto no descifrará las tareas que ya están cifradas.",
+    "errorDecrypting": "Contraseña de descifrado incorrecta",
+    "repeatPassword": "Repite la contraseña",
+    "title": "Cifrado",
+    "encryptedTodo": "Tarea cifrada"
+  },
+  "search": "Buscar",
+  "qr": {
+    "code": "Código QR",
+    "description": {
+      "app_login": "Usa este código QR para iniciar sesión en dispositivos móviles. Esta imagen es una contraseña: ¡no la compartas con nadie!",
+      "web_login": "Inicia sesión en la app móvil de Todorant, ve a Ajustes, toca el botón \"Agregar dispositivos\" en la sección \"Cuenta\" y escanea este código QR para permitir el inicio de sesión en Todorant aquí. Recuerda: ¡este código QR solo es válido durante 10 minutos!"
+    }
+  },
   "breakdown": {
     "request": "Parece que has pospuesto demasiado esta tarea. Por favor desglósala, ya no puedes posponerla a otra fecha. ¡Creéme, te ayudará a completarla!",
     "button": "Desglosar"
   },
   "warning": "Advertencia",
   "hashtags": {
-    "title": "Hashtags"
+    "title": "Hashtags",
+    "name": "Nombre del hashtag"
   },
   "supportAlert": {
     "title": "Soporte",
@@ -14,6 +36,7 @@
   "loginMobile": {
     "telegram": {
       "headline": "Por favor inicia sesión con Telegram introduciendo tu ID de Telegram en el campo que se encuentra debajo y haciendo clic en el botón de \"Iniciar sesión\". Puedes obtener tu ID de Telegram enviando <code>/id</code> al bot <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a>.",
+      "id": "123456789",
       "idHint": "ID de Telegram",
       "loginButton": "Iniciar sesión",
       "noCredentialsError": "Por favor, introduce una ID de Telegram",
@@ -61,30 +84,37 @@
       "reviews": [
         {
           "name": "Sergey Romanov",
+          "username": "Gendoor",
           "text": "Los mensajes en la parte de la suscripción son lindos :)\n\nGracias por un servicio simple y próspero por el servicio ideal. Resultó que no sólo ayuda a ser productivo sino también proactivo. Pequeñas mejoras diarias mejoran la vida con confianza, y la mente libre está constantemente buscando cómo llenar la lista de tareas vacía para que pueda sentir el placer de completar tareas una y otra vez, y es una ruta directa hacia la mejora de todo lo que me rodea.\n\nCon todo, no importa cuán simple sea a primera vista Todorant, puede convertirse en un aliado fiel en cualquier negocio. Gracias, Nikita, por desatar los aspectos de la verdadera productividad y compartirlos con nosotros en una solución conveniente.\n\nUn agradecido suscriptor de Todorant."
         },
         {
           "name": "Dinislam Sad",
+          "username": "Azerzet",
           "text": "Las principales ventajas que a mí (y estoy seguro que también a otros) me gustaron.\n1. Interfaz simple y conveniente.\n2. Las tareas pospuestas se vuelven sapos automáticamente y existe la opción de marcar una tarea como sapo desde el inicio.\n3. El comando /done era algo obligado, y gracias por ello, Nikita. Yo usé Todoist, Wunderlist, Bitrix24. Todos eran demasiado complicados.\n4. Bot de Telegram."
         },
         {
           "name": "Aleksei Kaut",
+          "username": "aleksei_kaut",
           "text": "Después de que creé las primeras tareas y cambié a la pestaña \"Actual\" me sorprendí de que tenía solamente una tarea y de que necesitaba completarla antes de continuar. Esta idea de una sola tarea a la vez y plena concentración en ella me pareció sorprendente, parece obvio, pero no podía usarla antes.\n\nUsualmente rastreaba tareas e ideas en Notas, lo que debería hacerse pronto, pero no lo enfoqué como un sistema. He estado utilizando el servicio durante un par de semanas, no de manera muy activa, pero creo que esta es una forma muy sólida de sistematizar los asuntos y las tareas.\n\n¡Gracias por tu trabajo!"
         },
         {
           "name": "Anton",
+          "username": "mas1311",
           "text": "Probé Todorant. Al inicio estaba escéptico (ya he probado muchos servicios de planeación de tareas), pero me di cuenta de que trabaja muy efectivamente y de que es muy fácil de usar.\n\nAdemás, por razones desconocidas para mí, cuando todas las tareas del día están completadas aparece una fuerte satisfacción, la cual estaba ausente en otros planificadores (había una sensación como de \"bueno, eso fue todo... ¿o no?\").\n\n¡Gracias por tu trabajo!"
         },
         {
           "name": "Willsey Paslen",
+          "username": "WillseyPaslen",
           "text": "Gracias por el estupendo servicio. Suficiente tiempo ha pasado, así que ahora puedo decir definitivamente: me funciona. Gracias, Nikita 😁 y buena suerte con la app."
         },
         {
           "name": "Igor Malinkin",
+          "username": "sxe4kilo",
           "text": "Comencé al fin a hacer algo con Todorant, así que mi productividad subió desde 0."
         },
         {
           "name": "Vladimir Dubenko",
+          "username": "dubenko_v",
           "text": "Tu servicio es increíble en términos de al menos tres cosas:\n1. Conveniente:¡es minimalista!\n2. Inculca un hábito.\n3. Aunque parezca extraño, no te obliga a pensar racionalmente.\n\nSoy irracional por naturaleza, Simplemente no puedo dirigir un proyecto (me agoto rápidamente). ¡Mi vida es la multitarea! 3 proyectos al mismo tiempo son fáciles, pero 3 no es suficiente... 7 suena mucho mejor. Y tu servicio permite conseguir esto. Es la alternancia de tareas la que previene que el cerebro se fatigue en una dirección particular. Y, de alguna manera mágica, alterna tareas de un proyecto y otro."
         },
         {
@@ -94,12 +124,17 @@
         },
         {
           "name": "Kiku Reise",
+          "username": "Kiku_Reise",
           "text": "He ordenado mis tareas del trabajo, de programación y de mis pasatiempos. Incluso esta opinión fue escrita gracias a Todorant. Solamente una tarea, sin complicaciones. Ese es todo el punto de la app: me ayudó a concentrarme sin tener que estar evadiendo mis tareas constantemente. \n\nPor supuesto, puedes definir tareas y olvidarte de ellas, pero para mí es más simple abrir de nuevo una aplicación minimalista con una sola tarea que gastar medio día buscando en qué tarea trabajar ahora de cientos planeadas en Telegram o Notion.\n\nEstuve especialmente complacido con la actualización que trajo los hashtags: ahora todas las estadísticas están en la palma de mi mano, puedo rastrear y compartir con mis amigos cuántas tareas he completado este mes.\n\n¡Muchas gracias por!"
         }
       ]
     },
     "act": "¡actúe!",
-    "apple": "Registrarse con Apple"
+    "apple": "Registrarse con Apple",
+    "crossplatform": {
+      "title": "Realmente multiplataforma"
+    },
+    "mobile": "Iniciar sesión con la app móvil"
   },
   "menu": {
     "darkMode": {
@@ -114,7 +149,8 @@
       "facebook": "No se pudo iniciar sesión con Facebook",
       "google": "No se pudo iniciar sesión con Google",
       "telegram": "No se pudo iniciar sesión con Telegram",
-      "apple": "No se pudo iniciar sesión con Apple"
+      "apple": "No se pudo iniciar sesión con Apple",
+      "mobile": "No se pudo iniciar sesión con la app móvil"
     },
     "internal": "Error interno del servidor",
     "loadTodos": "No se pudo extraer las tareas",
@@ -125,7 +161,17 @@
     },
     "invalidForm": "Por favor, completa los campos requeridos",
     "report": "No se pudo cargar el reporte",
-    "appleFirefox": "Desafortunadamente hay <a href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=1628361\">un bug</a> con el inicio de sesión en Apple desde Firefox. Hasta que lo solucionen, por favor, usa otro navegador para iniciar sesión con Apple, y después une tu sesión con otras cuentas sociales en Todorant. Una disculpa por la inconveniencia."
+    "appleFirefox": "Desafortunadamente hay <a href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=1628361\">un bug</a> con el inicio de sesión en Apple desde Firefox. Hasta que lo solucionen, por favor, usa otro navegador para iniciar sesión con Apple, y después une tu sesión con otras cuentas sociales en Todorant. Una disculpa por la inconveniencia.",
+    "delegate": {
+      "invalidToken": "El enlace de invitación ya no es válido"
+    },
+    "epic": {
+      "numberError": "Debe ser un número",
+      "greaterThanZeroError": "Debe ser mayor que 0"
+    },
+    "tag": {
+      "whitespaces": "Los hashtags no deben contener espacios"
+    }
   },
   "close": "Cerrar",
   "notFound": "Página no encontrada",
@@ -142,7 +188,8 @@
       "goFirst": "Agregar hasta arriba"
     },
     "list": {
-      "completed": "Mostrar completadas"
+      "completed": "Mostrar completadas",
+      "delegated": "Mostrar las tareas que delegué"
     },
     "edit": {
       "title": "Editar"
@@ -174,7 +221,18 @@
     "firstDayOfWeek": "Primer día de la semana",
     "newTodosGoFirst": "Las tareas nuevas se agregan en la parte superior de la lista",
     "preserveOrderByTime": "Conservar el orden exacto por tiempo",
-    "startTimeOfDay": "Comienzo del día"
+    "general": "General",
+    "connected": "Conectado",
+    "notConnected": "No conectado",
+    "account": "Cuenta",
+    "duplicateTagInBreakdown": "Copiar hashtags al desglosar",
+    "export": "Exportar datos",
+    "hotkeys": "Atajos de teclado",
+    "startTimeOfDay": "Comienzo del día",
+    "username": "Nombre",
+    "telegram": "Telegram",
+    "coloredCardBackgrounds": "Colorear las tareas con el color de sus hashtags",
+    "newLineOnReturn": "Insertar salto de línea con Enter"
   },
   "allDoneTitle": "¡Felicidades!",
   "allDoneText": "🥳 ¡Lo hiciste! Todas las tareas para hoy están hechas, ve a descansar o quizás a bailar un poco 💃",
@@ -199,7 +257,8 @@
     "Usa el modo de edición (el ícono de orden de lista en la parte superior) en la página de Planificación para cambiar el orden de las tareas. Si deseas asignar una tarea a una semana específica, simplemente asígnala al lunes correspondiente y reasígnala durante la fase de planificación ese lunes por la mañana.",
     "Todorant no tiene y nunca tendrá la función de programar tareas repetitivas, lo único que hacen bien es causar ansiedad al colgarse de ti como tareas inacabadas. Si necesitas completar tareas repetitivas, agrégalas manualmente, tu cerebro te agradecerá el trabajo consciente.",
     "Todorant no tiene el concepto de \"Proyectos\", ya que ha demostrado ser desmotivador, algunas de las \"carpetas\"nunca se abren. Los proyectos \"Hacer ejercicio\"y \"Superación personal\" envían saludos. En su lugar, usa #hashtags.",
-    "Los sapos siempre aparecerán en la parte superior de la lista."
+    "Los sapos siempre aparecerán en la parte superior de la lista.",
+    "Todorant no envía notificaciones sobre las próximas tareas que tienen una hora exacta."
   ],
   "earlyAdopter": "Primer adoptante 🦄",
   "active": "Activo",
@@ -216,9 +275,51 @@
   "introButton": "Mensaje de introducción",
   "introBack": "¡Vamos!",
   "back": "Atrás",
+  "soundEffects": "Efectos de sonido",
   "emptyHashtags": "La lista de Hashtag está vacía por ahora. ¡Crea tu primera tarea con un #hashtag para añadir el primer hashtag aquí!",
   "refreshRequest": "Hay una nueva versión de Todorant disponible. Por favor, refresque la página para obtener el nuevo material brillante 🦄",
   "refresh": "Actualizar",
+  "heroProfileTitle": "Perfil del héroe",
+  "infoHero": "¡Esta es tu página de perfil, la del héroe! ¡Completa tareas y gana puntos para alcanzar rangos cada vez más altos!\n\n¡No conocerás la lista completa de rangos hasta que alcances el más alto! Recuerda: la única forma de llegar a la cima es con pequeños pasos, día tras día.",
+  "rank": "🔥 Tu rango 🔥",
+  "rank-1Title": "Ser infinito de materia oscura 😈",
+  "rank-1Description": "¡Alcanzaste el rango que ningún humano había logrado antes! Felicidades, aquí tienes tu pastel: 🍰. Esta vez no es mentira.",
+  "rank0Title": "Bajo cero −273.15 °C 🥶",
+  "rank0Description": "Sería mucho más cool… si se pudiera.",
+  "rank5Title": "V de Vroductividad 👺",
+  "rank5Description": "Recuerda, peque: si se te cae la productividad y la recoges en menos de 5 segundos, ¡no pasa nada!",
+  "rank13Title": "Freddy feliz 😱",
+  "rank13Description": "Ya sabes qué día es. Es el día en que Jason te hornea un pastel. Ahora todos los días son ese día.",
+  "rank42Title": "Pescador 🐬",
+  "rank42Description": "¡Hasta luego, y gracias por todo el pescado!",
+  "rank69Title": "¡Maestro nice! 😝",
+  "rank69Description": "El rango más nice que existe. Punto.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Podría decirse que tu productividad está hecha de Hierro.",
+  "rank100Title": "Usuario de la fuerza al 100% ⚡️",
+  "rank100Description": "¡100 hechas, infinitas por delante! Sigue cada día, ¡vale la pena!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Resolviste el caso de la productividad. ¡Bien por ti!",
+  "rank256Title": "Plomero feliz 👾",
+  "rank256Description": "8 bits de productividad después, sigues pensando en los buenos juegos de antes.",
+  "rank300Title": "Espartano 💪",
+  "rank300Description": "Despeja tu mente, simplifica tus rutinas, ¡vive los próximos 100 puntos como un verdadero espartano!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rango no encontrado.",
+  "rank777Title": "¡Gran maestro con suerte! 🍀",
+  "rank777Description": "Este rango solo dura 23 puntos. Aprovéchalo, ¡es tu día de suerte!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Eres el exterminador de los temibles sapos. ¡Ve a exterminar unos cuantos!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Iniciando hackeo de productividad... Hackeando...",
+  "rank1338Title": "3L1T3 (Hackeado) 🧑‍💻",
+  "rank1338Description": "¡Productividad hackeada con éxito!",
+  "rank2048Title": "Maestro del ajedrez ♔",
+  "rank2048Description": "Prefieres la productividad a los juegos interminables y sin sentido para matar el tiempo, ¿verdad? ¿VERDAD?",
+  "rank9000Title": "Usuario con poder de más de 9000 🏋️",
+  "rank9000Description": "¡Levantas las tareas como si nada!",
+  "rank12800Title": "Doctor Manhattan ⚛",
+  "rank12800Description": "Desglosas las tareas como quien divide átomos. ¡Sigue así!",
   "homeShort": {
     "headline": "Los sistemas de productividad fallan.",
     "headline2": "Todorant funciona.",
@@ -231,8 +332,93 @@
     "differenceText2": "Todorant utiliza un conjunto cuidadosamente elaborado de límites y elogios para castigar el mal comportamiento y apoyar los buenos hábitos. Afecta a la parte primitiva del cerebro para hacer que ansíe completar todos como la gente ansía el azúcar.",
     "differenceText3": "He leído y probado más de 20 libros y metodologías de productividad. Cuando todos ellos fallaron uno por uno combiné sus componentes y simplifiqué el resultado. Así es como se creó Todorant."
   },
+  "spread": {
+    "hint": "Elige las tareas que quieres repartir y las fechas entre las que repartirlas, haz clic en el botón y mira cómo las tareas seleccionadas se reparten de forma equitativa entre las fechas elegidas",
+    "spreading": "Repartiendo",
+    "chooseTasks": "Haz clic en las tareas que quieres repartir",
+    "between": "entre",
+    "chooseDates": "Haz clic en las fechas entre las que quieres repartirlas"
+  },
+  "level": "Nivel",
+  "points": "puntos",
+  "pointsTillNextLevel": "puntos para desbloquear el siguiente nivel",
+  "accept": "Aceptar",
+  "delegate": {
+    "title": "Delegación",
+    "noDelegators": "Aún no tienes delegadores. Pide un enlace de invitación para convertirte en delegado de alguien.",
+    "noDelegates": "Aún no tienes delegados. Comparte el enlace de invitación con las personas que quieras tener como delegados",
+    "noDelegatedTasks": "No tienes más tareas delegadas nuevas.",
+    "link": "Enlace de invitación para delegados",
+    "linkDescription": "Las personas pueden convertirse en tus delegados con este enlace. Los delegados solo verán las tareas que les delegues.",
+    "resetConfirmation": "¿Seguro que quieres restablecer el enlace? ¡El enlace actual dejará de funcionar!",
+    "delegators": "Delegadores",
+    "delegates": "Delegados",
+    "inviteSuccess": "¡Listo! Ahora este usuario puede delegarte tareas.",
+    "inviteConfirm": "¿Seguro que quieres convertirte en delegado de este usuario?",
+    "deleteDelegateConfirmation": "¿Seguro que quieres eliminar a este delegado? Ya no podrás delegarle tareas.",
+    "deleteDelegatorConfirmation": "¿Seguro que quieres eliminar a este delegador? Ya no podrá delegarte tareas.",
+    "pickDelegateField": "Delegado",
+    "noDelegatorsShort": "Aún no tienes delegadores",
+    "noDelegatedTasksTo": "Aún no has delegado ninguna tarea.",
+    "noDelegatesShort": "Aún no tienes delegados"
+  },
+  "epic": {
+    "intoEpic": "Convertir en épica",
+    "epicGoal": "Meta de la épica",
+    "name": "Nombre de la épica",
+    "epicForeword": "Elige cuántas tareas con este hashtag hay que completar. Esto convertirá el hashtag en una épica. El progreso de la épica se mostrará en la página Actual."
+  },
+  "success": "¡Listo!",
+  "notLogginedBody": "Por favor, inicia sesión en ",
+  "settingsActions": {
+    "swipeActions": "Acciones al deslizar"
+  },
+  "cannotLoadTitle": "¡Uy!",
+  "cannotLoadText": "No se pudieron cargar tus tareas. ¿Quizás se cayó Internet?",
+  "deleteAllHashtagsConfirm": "¿Seguro que quieres eliminar todos los hashtags?",
+  "deleteAll": "Eliminar todo",
+  "apps": "Aplicaciones",
+  "next": "Siguiente",
+  "letsGo": "¡Vamos!",
+  "introText0": "¡Hola! Soy Nikita, el creador de Todorant. Me alegra mucho que hayas descargado Todorant, porque significa que pronto tú también disfrutarás de una productividad ilimitada.",
+  "introText1": "La mayoría de quienes llegan aquí son como yo: probaron lo que parecen todas las herramientas de productividad, pero ninguna terminó de convencerlos.",
+  "introText2": "Déjame mostrarte cómo Todorant se convirtió en la última y única herramienta de productividad para mí, y qué te pasará en las próximas 3-4 semanas. ¡Solo desliza o usa los botones de abajo!",
+  "introText3": "Lo primero que te pasará después de pasar todas tus tareas a Todorant es que a los demás les parecerá que te acuerdas de todo. No tendrás que hacer nada extra: el sistema simplemente funcionará.",
+  "introText4": "Por eso a mi esposa le encanta que use Todorant. Antes olvidaba cosas y compromisos que a mí no me parecían importantes, pero que sí lo eran para ella.",
+  "introText5": "Ahora, cada vez que asumo un compromiso o hago una promesa, lo agrego a Todorant y, cuando llega el momento, sé lo que hay que hacer y puedo planearlo bien.",
+  "introText6": "Lo segundo que te pasará es que tendrás la mente tranquila. Dejarás de estresarte por las tareas pendientes y por las que crees haber olvidado.",
+  "introText7": "Siempre sabrás en qué tienes que trabajar en cada momento y te quedarás más tiempo en la \"zona de flujo\", alcanzando metas y completando tareas.",
+  "introText8": "Aunque mantengo más de una docena de servicios que usan más de 20 000 000 de personas, ya nunca me siento estresado. Siempre tengo delante la tarea actual y sé que, si avanzo, tarde o temprano alcanzaré la meta.",
+  "introText9": "Lo tercero que te pasará es que tendrás un poder de planeación casi sobrehumano. Podrás estimar con precisión cuánto durará cualquier tarea y cuándo estará lista.",
+  "introText10": "Cada vez que un colega o un amigo me pregunta cuándo estará lista alguna cosa, reviso Todorant y veo cuándo está programado trabajar en esa tarea. Casi siempre puedo darle una estimación bastante realista.",
+  "introText11": "Personalmente, ya nunca tengo que apresurar nada. ¡Se acabaron las carreras de último minuto! Completo las tareas a un ritmo cómodo y la gente a mi alrededor puede confiar en mí.",
+  "introText12": "Ten por seguro que estás en buena compañía. Miles de usuarios confían su productividad a Todorant cada día, incluido yo.",
+  "introText13": "Si alguna vez tienes dudas sobre la app, solo toca el botón \"i\" arriba a la derecha. Si no encuentras la respuesta ahí, busca mis contactos personales en la sección \"Soporte\" de los ajustes y ¡escríbeme!",
+  "introText14": "¡Pero hay algo más! Para dominar por completo este superpoder, tienes que aprender a usarlo. ¡No olvides leer \"Cómo usar Todorant\" en los ajustes!",
+  "introText15": "¡Mucha suerte con Todorant! ¡Espero que transforme tu vida para bien, como transformó la mía!",
+  "introText0web": "¡Hola! Soy Nikita, el creador de Todorant. Me alegra mucho que hayas decidido probar Todorant, porque significa que pronto tú también disfrutarás de una productividad ilimitada.",
+  "introText2web": "Déjame mostrarte cómo Todorant se convirtió en la última y única herramienta de productividad para mí, y qué te pasará en las próximas 3-4 semanas. ¡Solo usa los botones de abajo para avanzar!",
+  "introText14web": "¡Pero hay algo más! Para dominar por completo este superpoder, tienes que aprender a usarlo. ¡No olvides leer \"Cómo usar Todorant\" haciendo clic en el botón de información de la esquina superior derecha!",
+  "edit": "Editar",
+  "settingsObject": {
+    "showMoreByDefault": "Mostrar más opciones por defecto al agregar tareas"
+  },
+  "frogsAlert": {
+    "title": "¡Alto! Eso es ilegal",
+    "text": "No rompas las reglas. Si hoy tienes sapos, termínalos primero, desglósalos, muévelos a días futuros o quítales la marca de sapo. ¡Pero no ignores a los sapos!"
+  },
+  "to": "Para",
+  "from": "De",
+  "unEpicInfo": "Restablecer épica",
+  "unEpicConfirm": "¿Seguro que quieres restablecer la épica?",
+  "breakdownMessage": {
+    "title": "Tarea repetitiva",
+    "text": "Esta es una tarea repetitiva. ¿Quieres desglosarla o completarla?",
+    "complete": "Completar"
+  },
   "m": {
     "account": "Cuenta",
+    "addDevices": "Agregar dispositivos",
     "addTodo": "Agregar tarea",
     "addTodoDay": "Selecciona el día exacto",
     "addTodoMonth": "O mes",
@@ -248,20 +434,64 @@
     "changeColor": "Cambiar color",
     "colorMode": "Modo de color",
     "completed": "Completada",
+    "confirmDecryptAll": "¿Seguro que quieres descifrar todas las tareas?",
+    "confirmEncryptAll": "¿Seguro que quieres cifrar todas las tareas con la contraseña? Si la pierdes, ¡no podrás descifrar las tareas!",
     "connected": "Conectado",
     "copied": "copiada",
     "count": "Conteo",
     "dark": "Oscuro",
     "dataInfo": "Información sobre datos",
+    "decryptAllButton": "Descifrar todas",
     "defaultToToday": "Establecer el día de hoy como predeterminado",
+    "delegate": {
+      "ByMe": "Por mí",
+      "ToMe": "Recibidas",
+      "delegates": "Delegados",
+      "delegators": "Delegadores",
+      "deleteDelegateConfirmation": "¿Seguro que quieres eliminar a este delegado? Ya no podrás delegarle tareas.",
+      "deleteDelegatorConfirmation": "¿Seguro que quieres eliminar a este delegador? Ya no podrá delegarte tareas.",
+      "link": "Enlace de invitación para delegados",
+      "noDelegatedTasks": "No tienes más tareas delegadas nuevas.",
+      "noDelegatedTasksTo": "Aún no has delegado ninguna tarea.",
+      "noDelegates": "Aún no tienes delegados. Comparte el enlace de invitación con las personas que quieras tener como delegados",
+      "noDelegators": "Aún no tienes delegadores. Pide un enlace de invitación para convertirte en delegado de alguien.",
+      "resetConfirmation": "¿Seguro que quieres restablecer el enlace? ¡El enlace actual dejará de funcionar!",
+      "resetLink": "Restablecer enlace"
+    },
+    "deleteAccount": "Eliminar cuenta",
+    "deleteAccountText": "Esto elimina para siempre del servidor tu cuenta con todas tus tareas, hashtags y ajustes. No se puede deshacer.",
+    "deleteAllHashtags": "Eliminar todos los hashtags",
+    "deleteAllHashtagsConfirm": "¿Seguro que quieres eliminar todos los hashtags?",
     "deleteTodo": "¿De verdad te gustaría eliminar?",
+    "disable": "Desactivar",
+    "editHashtag": "Editar hashtag",
+    "editName": "Nuevo texto del hashtag",
     "editTodo": "Editar tarea",
     "email": "Correo electrónico",
     "emptyHashtags": "La lista de Hashtag está vacía por ahora. ¡Crea tu primera tarea con un #hashtag para añadir el primer hashtag aquí!",
-    "error": "Error",
+    "encryptAllButton": "Cifrar todas",
+    "encryptTodo": "Cifrar tareas",
+    "encryptedTodos": "Tareas cifradas",
+    "encryption": {
+      "encryptionSaved": "¡Todo listo! Ahora todas tus tareas nuevas se cifrarán",
+      "repeatPassword": "Repite la contraseña"
+    },
+    "encryptionConfirm": "¿Seguro que quieres cifrar las tareas con esta contraseña? Más adelante podrás descifrarlas con la misma contraseña. Si la pierdes, ¡no podrás descifrar tus tareas!",
+    "encryptionDisableConfirm": "¿Seguro que quieres eliminar la clave y desactivar el cifrado? Esto no descifrará las tareas que ya están cifradas.",
+    "epic": {
+      "epicGoal": "Meta de la épica",
+      "intoEpic": "Convertir en épica"
+    },
+    "errors": {
+      "epic": {
+        "numberError": "Debe ser un número"
+      }
+    },
     "facebook": "Facebook",
     "firstDayOfWeek": "Primer día de la semana",
+    "gamification": "Gamificación",
     "general": "General",
+    "heroProfileTitle": "Perfil del héroe",
     "howTo": "Cómo hacer...",
     "howToUse": "Cómo usar Todorant",
     "important": "Importante",
@@ -271,24 +501,46 @@
     "infoCurrent": "Esta es la página de la tarea actual. Sólo te muestra una tarea: en la que deberías estar trabajando ahora mismo. Mantente enfocado, esta es la única página que necesitas después de planear tu día. \n\nPuedes omitir la tarea si no es un sapo y si no es la última tarea del día.\n\nSi la tarea es demasiado amplia, usa la función de desglose. Después de desglosar la tarea, se marcará automáticamente como completada.",
     "infoData": "Aquí puedes ver la información más reciente sobre tu almacenamiento de datos local y estadísticas de sincronización.",
     "infoEdit": "Esta es la pantalla de edición de tareas. Aquí puedes editar la tarea. Sí, eso es todo.",
+    "infoHero": "¡Esta es tu página de perfil, la del héroe! ¡Completa tareas y gana puntos para alcanzar rangos cada vez más altos!\n\n¡No conocerás la lista completa de rangos hasta que alcances el más alto! Recuerda: la única forma de llegar a la cima es con pequeños pasos, día tras día.",
     "infoPlanning": "Esta es la pantalla de planeación. Siéntete libre de reordenar las tareas y las fechas (presionando y arrastrando) ¡Es divertido!\n\nNo te olvides de usar #hashtags.",
     "infoRules": "Por favor, lee las reglas a fondo para obtener lo máximo de Todorant.",
+    "infoSecurity": "¡Usa esta sección con muchísimo cuidado! El cifrado no funcionará a menos que agregues una contraseña. Habrá dos tipos de tareas: cifradas y sin cifrar. Todas las tareas nuevas se cifrarán. Las tareas antiguas se pueden cifrar con el botón de abajo. Si pierdes la contraseña, no habrá forma de recuperar las tareas.",
     "infoSettings": "Esta es la pantalla de ajustes. Aquí puedes configurar varias opciones. Por favor, asegúrate de leer la sección \"Cómo usar Todorant\".",
     "infoTags": "Esta es la lista de todos los hashtags que has usado. Si no ves nada, vamos, crea una tarea con un #hastag en el texto, es la única manera de agregar hashtags a esta lista.\n\nSi quieres cambiar el color de un hashtag o borrarlo, haz clic en él. No te preocupes, los hashtags están separados de las tareas: hacer algo en esta pantalla no afectará tus tareas. Bueno, cambiar los colores puede hacer que tus tareas se vean mejor.",
     "infoTitle": "Información",
     "languageAuto": "Automático",
+    "languageSelect": "Idioma",
+    "level": "Nivel",
     "light": "Claro",
     "loginTelegram": "Iniciar sesión con Telegram",
     "logout": "Cerrar sesión",
     "logoutText": "¿Deseas cerrar sesión?",
+    "nameLabel": "Nombre",
     "newTodosGoOnTop": "Tareas nuevas van en la parte superior",
     "noTodosExistText": "¡Vamos, crea unas pocas tareas haciendo click al botón de más que se encuentra debajo!",
     "noTodosExistTitle": "Sin tareas todavía",
+    "notConnected": "No conectado",
+    "password": "Contraseña",
+    "passwordError": "Contraseña incorrecta. Parece que algunas de tus tareas cifradas no se pueden descifrar con esta contraseña.",
     "planning": "Planeación",
+    "points": "puntos",
+    "pointsTillNextLevel": "puntos para desbloquear el siguiente nivel",
     "preserveOrderByTime": "Preservar el orden de tiempo exacto",
     "privacyPolicy": "Política de Privacidad",
     "saveTodo": "¡Guardar tarea!",
+    "search": "Buscar",
+    "security": "Seguridad",
+    "settingsActions": {
+      "swipeActions": "Acciones al deslizar"
+    },
+    "settingsObject": {
+      "duplicateTagInBreakdown": "Copiar hashtags al desglosar",
+      "showMoreByDefault": "Mostrar más opciones por defecto al agregar tareas"
+    },
+    "signUp": "Crear cuenta",
+    "soundEffects": "Efectos de sonido",
     "startTimeOfDay": "Comienzo del día",
+    "supportLabel": "Soporte",
     "supportText": "¿Tienes preguntas o retroalimentación? ¡Envíame un email o contáctame en Telegram!",
     "sync": "Sincronización",
     "syncData": "Sincronizar datos",
@@ -296,8 +548,11 @@
     "tags": "Hashtags",
     "tagsCount": "Hashtags",
     "telegram": "Telegram",
-    "termsOfUse": "Términos de usi",
+    "termsOfUse": "Términos de uso",
     "todoCount": "Tareas",
-    "todos": "Tareas"
+    "todos": "Tareas",
+    "unEpic": "Restablecer épica",
+    "unEpicConfirm": "¿Seguro que quieres restablecer la épica?",
+    "unencryptedTodos": "Tareas sin cifrar"
   }
 }

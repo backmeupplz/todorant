@@ -1,7 +1,7 @@
 /* Month grid: day numbers with dots on phones, chips with text from 640px; the selected day is listed below */
 .cal-head { position: relative; display: flex; align-items: center; justify-content: center; padding: 0 8px; }
 .cal-head b { flex: 0 1 200px; text-align: center; font: 600 17px var(--font); }
-.cal-head .cal-spread { position: absolute; right: 8px; color: var(--blue); }
+.cal-head .cal-spread { position: absolute; inset-inline-end: 8px; color: var(--blue); }
 .cal-head .icon-btn { padding: 8px; color: var(--muted); }
 .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); padding: 0 8px; }
 .cal-weekday { padding: 2px 0 6px; text-align: center; font-size: 12px; color: var(--muted); }
@@ -26,21 +26,21 @@
 .cal-chip.dragging { opacity: 0.25; }
 @media (min-width: 640px) {
   .cal-day { min-height: 84px; padding: 3px; align-items: stretch; }
-  .cal-day:not(:nth-child(7n + 1)) { border-left: 1px solid var(--divider); }
+  .cal-day:not(:nth-child(7n + 1)) { border-inline-start: 1px solid var(--divider); }
   .cal-num { width: 26px; height: 26px; font-size: 14px; }
   .cal-chips { max-height: none; flex-direction: column; flex-wrap: nowrap; pointer-events: auto; }
   .cal-chip {
     width: auto; height: auto; padding: 1px 5px; border-radius: 4px; color: #fff; font-size: 12px; line-height: 16px;
-    text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .cal-rearrange .cal-chip { cursor: grab; touch-action: none; }
 }
 
 .cal-list { padding-top: 4px; }
-.cal-pick { display: block; width: 100%; padding: 10px 16px; border: 0; background: none; text-align: left; font-size: 16px; line-height: 1.38; overflow-wrap: anywhere; }
+.cal-pick { display: block; width: 100%; padding: 10px 16px; border: 0; background: none; text-align: start; font-size: 16px; line-height: 1.38; overflow-wrap: anywhere; }
 .cal-pick + .cal-pick { border-top: 1px solid var(--divider); }
 .cal-pick:hover { background: var(--hover); }
 
-.cal-more { display: block; width: 100%; border: 0; background: none; color: var(--muted); font: 600 12px var(--rounded); text-align: left; padding: 1px 4px; border-radius: 4px; }
+.cal-more { display: block; width: 100%; border: 0; background: none; color: var(--muted); font: 600 12px var(--rounded); text-align: start; padding: 1px 4px; border-radius: 4px; }
 .cal-more:hover { background: var(--hover); color: var(--text); }
 @media (max-width: 639px) { .cal-more { display: none; } }

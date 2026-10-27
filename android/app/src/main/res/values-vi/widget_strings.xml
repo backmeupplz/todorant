@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">Tiện ích Todorant</string>
+    <string name="widget_login">Vui lòng đăng nhập Todorant</string>
+    <string name="widget_loading">Đang tải&#8230;</string>
+</resources>

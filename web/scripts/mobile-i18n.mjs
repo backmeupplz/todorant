@@ -16,7 +16,11 @@ const set = (o, path, value) => {
   const parts = path.split('.')
   parts.slice(0, -1).reduce((v, k) => (v[k] ??= {}), o)[parts.at(-1)] = value
 }
-const LANGS = { en: 'en', ru: 'ru', uk: 'uk', es: 'es', it: 'it', 'pt-BR': 'pt-br' }
+// web file → app file
+const LANGS = {
+  en: 'en', ru: 'ru', uk: 'uk', es: 'es', it: 'it', 'pt-BR': 'pt-br', 'pt-PT': 'pt-pt', de: 'de', fr: 'fr', nl: 'nl', pl: 'pl', tr: 'tr',
+  sv: 'sv', ja: 'ja', ko: 'ko', 'zh-Hans': 'zh-hans', 'zh-Hant': 'zh-hant', ar: 'ar', hi: 'hi', id: 'id', vi: 'vi', th: 'th',
+}
 for (const [lang, source] of Object.entries(LANGS)) {
   const from = JSON.parse(readFileSync(join(mobile, `${source}.json`), 'utf8'))
   const target = join(web, `src/i18n/${lang}.json`)

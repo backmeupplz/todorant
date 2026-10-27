@@ -61,6 +61,7 @@ struct RootView: View {
     @Environment(\.horizontalSizeClass) private var systemSizeClass
     @State private var width: CGFloat = 0
     private var nav: Nav { Nav.shared }
+    private var layoutDirection: LayoutDirection { I18n.rtl ? .rightToLeft : .leftToRight }
 
     private var sizeClass: UserInterfaceSizeClass? {
         #if DEBUG
@@ -121,8 +122,11 @@ struct RootView: View {
                 .overlay { OnboardingOverlay() }
                 .modifier(DialogHost())
                 .preferredColorScheme(colorScheme)
+                .environment(\.layoutDirection, layoutDirection)
         }
         .tint(Colors.primary)
+        // The in-app language can differ from the system one, so the layout direction follows it, not the system
+        .environment(\.layoutDirection, layoutDirection)
         .preferredColorScheme(colorScheme)
         .onAppear { Settings.systemDark = systemScheme == .dark; Onboarding.restore() }
         .onChange(of: systemScheme) { _, s in Settings.systemDark = s == .dark }

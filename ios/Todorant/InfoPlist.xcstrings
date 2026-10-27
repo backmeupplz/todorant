@@ -1,0 +1,280 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSCameraUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant uses the camera to scan QR codes for signing in on this or another device."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدم Todorant الكاميرا لمسح رموز QR لتسجيل الدخول على هذا الجهاز أو على جهاز آخر."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant nutzt die Kamera, um QR-Codes für die Anmeldung auf diesem oder einem anderen Gerät zu scannen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant usa la cámara para escanear códigos QR con los que iniciar sesión en este u otro dispositivo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant utilise l’appareil photo pour scanner les codes QR qui permettent de vous connecter sur cet appareil ou un autre."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant इस या किसी दूसरे डिवाइस पर लॉग इन करने के लिए QR कोड स्कैन करने के लिए कैमरे का इस्तेमाल करता है।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant menggunakan kamera untuk memindai kode QR agar kamu bisa masuk di perangkat ini atau perangkat lain."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant usa la fotocamera per scansionare i codici QR con cui accedere su questo o su un altro dispositivo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このデバイスや別のデバイスでログインするための QR コードを読み取るために、Todorant はカメラを使用します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant는 이 기기나 다른 기기에서 로그인할 때 QR 코드를 스캔하기 위해 카메라를 사용합니다."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant gebruikt de camera om QR-codes te scannen waarmee je inlogt op dit of een ander apparaat."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant używa aparatu do skanowania kodów QR, aby zalogować się na tym lub innym urządzeniu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Todorant usa a câmera para ler códigos QR e entrar na sua conta neste ou em outro dispositivo."
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Todorant usa a câmara para ler códigos QR e iniciar sessão neste ou noutro dispositivo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant использует камеру, чтобы сканировать QR-коды для входа на этом или другом устройстве."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant använder kameran för att skanna QR-koder när du loggar in på den här eller en annan enhet."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant ใช้กล้องเพื่อสแกนคิวอาร์โค้ดสำหรับเข้าสู่ระบบบนอุปกรณ์นี้หรืออุปกรณ์อื่น"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant, bu veya başka bir cihazda giriş yapmak için QR kodlarını taramak üzere kamerayı kullanır."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant використовує камеру, щоб сканувати QR-коди для входу на цьому чи іншому пристрої."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant dùng camera để quét mã QR giúp bạn đăng nhập trên thiết bị này hoặc thiết bị khác."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant 使用相机扫描二维码，以便在此设备或其他设备上登录。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant 會使用相機掃描 QR 碼，以便在這部或其他裝置上登入。"
+          }
+        }
+      }
+    },
+    "NSLocalNetworkUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant connects to your self-hosted Todorant server, which may be on your local network."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتصل Todorant بخادم Todorant الخاص بك، والذي قد يكون على شبكتك المحلية."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant verbindet sich mit deinem eigenen Todorant-Server, der sich in deinem lokalen Netzwerk befinden kann."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant se conecta a tu propio servidor de Todorant, que puede estar en tu red local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant se connecte à votre propre serveur Todorant, qui peut se trouver sur votre réseau local."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant आपके अपने Todorant सर्वर से कनेक्ट होता है, जो आपके लोकल नेटवर्क पर हो सकता है।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant terhubung ke server Todorant milikmu sendiri, yang mungkin berada di jaringan lokalmu."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant si collega al tuo server Todorant self-hosted, che potrebbe trovarsi sulla tua rete locale."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant は、ローカルネットワーク上にある可能性があるご自身の Todorant サーバーに接続します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant는 로컬 네트워크에 있을 수 있는 직접 운영하는 Todorant 서버에 연결합니다."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant maakt verbinding met je eigen Todorant-server, die op je lokale netwerk kan staan."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant łączy się z Twoim własnym serwerem Todorant, który może działać w sieci lokalnej."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Todorant se conecta ao seu próprio servidor do Todorant, que pode estar na sua rede local."
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Todorant liga-se ao teu próprio servidor do Todorant, que pode estar na tua rede local."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant подключается к вашему собственному серверу Todorant, который может находиться в локальной сети."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant ansluter till din egen Todorant-server, som kan finnas i ditt lokala nätverk."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant เชื่อมต่อกับเซิร์ฟเวอร์ Todorant ของคุณเอง ซึ่งอาจอยู่ในเครือข่ายภายในของคุณ"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant, yerel ağında olabilecek kendi Todorant sunucuna bağlanır."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant підключається до вашого власного сервера Todorant, який може бути в локальній мережі."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant kết nối với máy chủ Todorant riêng của bạn, có thể nằm trong mạng cục bộ."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant 会连接到你自行托管的 Todorant 服务器，该服务器可能位于你的本地网络中。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todorant 會連線到你自行架設的 Todorant 伺服器，該伺服器可能位於你的區域網路中。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

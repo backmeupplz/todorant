@@ -1,0 +1,500 @@
+{
+  "search": "Tìm kiếm",
+  "support": "Có gì chưa rõ? Liên hệ mình qua <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "todo": {
+    "create": {
+      "text": "Nội dung việc cần làm",
+      "placeholder": "Việc cần làm",
+      "frog": "Đây là ếch!"
+    }
+  },
+  "cancel": "Hủy",
+  "save": "Lưu",
+  "delete": "Xóa",
+  "current": "Hiện tại",
+  "planning": "Kế hoạch",
+  "skipped": "Đã bỏ qua",
+  "name": "Tiếng Việt",
+  "language": "Vui lòng chọn ngôn ngữ.",
+  "login": "Vui lòng đăng nhập vào todorant.com bằng nút bên dưới.",
+  "settings": "Cài đặt",
+  "addTodo": "Thêm việc",
+  "breakdownTodo": "Chia nhỏ",
+  "pleaseLogin": "Vui lòng đăng nhập",
+  "subscription": "Gói đăng ký",
+  "allDoneTitle": "Chúc mừng!",
+  "allDoneText": "🥳 Bạn làm được rồi! Mọi việc hôm nay đã xong, đi nghỉ ngơi hay nhảy một chút đi nào 💃",
+  "noTodosTitle": "Tới vô cực!",
+  "noTodosText": "Hôm nay bạn không có việc nào. Nếu muốn làm việc — hãy thêm việc mới cho hôm nay hoặc lấy việc từ những ngày sắp tới.",
+  "addTodoDay": "Chọn ngày cụ thể",
+  "addTodoMonth": "Hoặc tháng",
+  "addTodoTime": "Giờ cụ thể",
+  "completed": "Đã hoàn thành",
+  "addTodoOnTop": "Thêm lên đầu",
+  "addTodoMore": "Xem thêm...",
+  "addTodoSingular": "Thêm việc!",
+  "addTodoPlural": "Thêm các việc!",
+  "saveTodo": "Lưu việc!",
+  "planningText": "Có vẻ bạn cần lên kế hoạch rồi! Hãy phân bổ lại các việc còn tồn bên dưới để mở khóa tab “Hiện tại” và tiếp tục làm việc hiệu quả nhé. Cố lên!",
+  "editTodo": "Sửa việc",
+  "anonymousText": "Hiện tại toàn bộ dữ liệu của bạn được lưu trên thiết bị. Để bắt đầu đồng bộ với máy chủ Todorant, bạn cần đăng nhập.",
+  "nameLabel": "Tên",
+  "email": "Email",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "Số lượng",
+  "todosLastSync": "Việc cần làm",
+  "tags": "Hashtag",
+  "tagsCount": "Hashtag",
+  "todoCount": "Việc cần làm",
+  "notSyncedYet": "Chưa đồng bộ",
+  "settingsLastSync": "Cài đặt",
+  "accountLastSync": "Tài khoản",
+  "syncData": "Đồng bộ dữ liệu",
+  "googleTokenError": "Google không trả về access token",
+  "facebookPermissionsError": "Chưa cấp quyền cho Facebook",
+  "facebookTokenError": "Không thể lấy access token của Facebook",
+  "loginWall": "Có vẻ bạn đã dùng Todorant hơn một tháng mà vẫn chưa đăng nhập! Đừng để việc cần làm bị mất — đăng nhập ngay và dùng Todorant thật an tâm nhé!",
+  "loginGoogle": "Đăng nhập bằng Google",
+  "loginFacebook": "Đăng nhập bằng Facebook",
+  "loginApple": "Đăng nhập bằng Apple",
+  "loginTelegram": "Đăng nhập bằng Telegram",
+  "logoutText": "Bạn có muốn đăng xuất không?",
+  "logout": "Đăng xuất",
+  "deleteAccount": "Xóa tài khoản",
+  "deleteAccountText": "Thao tác này sẽ xóa vĩnh viễn tài khoản của bạn cùng toàn bộ việc cần làm, hashtag và cài đặt khỏi máy chủ. Không thể hoàn tác.",
+  "loginButton": "Đăng nhập",
+  "alreadyRegistered": "(Bạn đã đăng ký rồi)",
+  "purchaseError": "Hừm, có vẻ đã xảy ra lỗi khi mua hàng. Bạn vui lòng vào trang web, đăng nhập và đăng ký ở đó nhé!",
+  "purchaseThankYou": "Cảm ơn bạn",
+  "purchaseThankYouText": "Cảm ơn bạn đã mua gói đăng ký!",
+  "activeText": "🎉 Cảm ơn bạn rất nhiều vì đã ủng hộ Todorant! Mình hy vọng Todorant đã giúp cuộc sống của bạn tốt hơn và sẽ còn tốt hơn nữa trong tương lai! Sự ủng hộ của bạn giúp mình cải thiện Todorant mỗi ngày, thêm tính năng mới và đơn giản hóa quy trình làm việc!",
+  "inactiveText": "🐝 Có vẻ thời gian dùng thử Todorant của bạn đã kết thúc. Todorant có giúp cuộc sống của bạn tốt hơn ít nhất $5/tháng không? Mình thật lòng hy vọng là có! Mình xin vào thẳng vấn đề.\n\nĐề nghị trao đổi. Mình nhận: $5 mỗi tháng, $36 mỗi năm (giảm tận 40%) hoặc $150 một lần. Bạn nhận: năng suất không giới hạn và tặng kèm Todorant không giới hạn.\n\nBạn thấy sao?",
+  "earlyAdopterText": "👏👏 — đây là mình đang vỗ tay cho bạn; bạn — một trong những người “điên rồ” đã đồng ý dùng thử công cụ giúp năng suất ngày càng tăng, Todorant, từ những ngày đầu tiên. Có thể nói bạn thuộc “nghìn người vàng”, những người có phản hồi đã định hình Todorant ngay từ đầu. Bạn có toàn quyền dùng Todorant bao nhiêu tùy thích — bạn sẽ không bao giờ gặp giới hạn nào, vì bạn xứng đáng với điều đó. Tuy nhiên, nếu thấy Todorant đã cải thiện cuộc sống của bạn rõ rệt — bạn vẫn có thể mua gói đăng ký, như một lời “Cảm ơn” tuyệt vời nhất. Bạn sẽ không bao giờ mất danh hiệu “Người dùng tiên phong 🦄” — và luôn có thể hủy gói đăng ký bất cứ lúc nào. Cảm ơn bạn rất nhiều vì vẫn đang dùng Todorant — mình sẽ tiếp tục thêm tính năng mới để cải thiện sản phẩm có ích cho tất cả chúng ta. Chúc bạn may mắn!",
+  "earlyAdopterTextBonus": "🤗 Trời +*%$! Có vẻ Todorant hoặc chính mình đã giúp bạn nhiều đến mức bạn mua gói đăng ký dù có thể dùng Todorant miễn phí mãi mãi. Mình thật sự cảm động và rất vui được mời bạn một ly cà phê hoặc chỉ đơn giản là trò chuyện một chút. Cứ thoải mái liên hệ mình qua Telegram (@borodutch) hoặc email — chỉ cần nhấn vào tên mình bên dưới. Cảm ơn bạn rất nhiều! Thật khó hình dung đóng góp của bạn quan trọng đến mức nào!",
+  "trialText": "💪 Chào mừng bạn đến với Todorant! Bạn có 30 ngày kể từ khi đăng ký để xem Todorant có hợp với mình không. Sau 30 ngày, bạn vẫn xem được các việc cũ nhưng sẽ không thể thêm việc mới. Bạn hoàn toàn có thể mua gói đăng ký trước khi hết 30 ngày. Mình tin rằng Todorant sẽ đưa năng suất cá nhân của bạn lên một tầm cao mới!",
+  "signature": "— Nikita, người tạo ra Todorant",
+  "rules": [
+    "Ngay khi có một việc cần làm (nhận được email, cuộc gọi, tin nhắn, hoặc thấy điều gì đáng chú ý cần đưa vào danh sách việc cần làm) — hãy tạo việc cho nó ngay lập tức. Đừng chần chừ, nếu không ghi lại bạn sẽ quên mất.",
+    "Việc cần làm phải luôn hành động được và càng cụ thể càng tốt. Nếu một việc mất chưa tới 2 phút, hãy làm ngay rồi ghi lại là đã hoàn thành.",
+    "Khi tạo việc, bạn hoặc chọn một ngày cụ thể, hoặc chọn một tháng. Bạn không thể chọn tháng hiện tại mà không chọn ngày cụ thể. Điều này giúp đầu óc bạn thư thái. Nếu bạn tin vào hệ thống và đặt mọi việc cần làm vào đúng ngày — bạn sẽ gặp lại nó đúng lúc. Rất nhiều ý chí bị lãng phí vì cứ lo lắng mãi về “cái việc kia mình phải xử lý mà chẳng nhớ rõ là gì”. Hãy học cách tin tưởng và thư giãn.",
+    "Việc đầu tiên mỗi tháng là lên kế hoạch trước. Bạn lấy toàn bộ việc được gán cho tháng hiện tại và sắp xếp chúng vào đúng ngày. Nhờ đó bạn lọc bỏ được những việc đã lỗi thời và yên tâm vì biết chính xác tháng này mình cần làm gì.",
+    "Việc đầu tiên mỗi sáng là lên kế hoạch cho ngày. Hãy liếc qua mục Kế hoạch. Bạn có làm xuể hết không? Phân bổ những việc không thể làm hôm nay sang ngày khác. Phân bổ lại các việc còn dang dở từ những ngày trước.",
+    "Trừ khi khẩn cấp, đừng xem mục Kế hoạch sau khi đã lên kế hoạch xong. Về mặt tâm lý, sẽ tốt hơn nhiều nếu bạn chỉ tập trung vào một việc, vì vậy hãy dán mắt vào mục Hiện tại. Hãy tin vào hệ thống, nó nhớ hết mọi thứ. Cứ làm việc của bạn và thả lỏng đầu óc.",
+    "Mục Hiện tại chỉ chứa một việc duy nhất bạn cần tập trung — không gì khác. Một ngày bạn có thể có nhiều việc, số lượng việc và thanh tiến độ được hiển thị để bạn tiện theo dõi. Bạn không được nhảy qua lại giữa các việc — hãy xử lý tuần tự, từng việc một.",
+    "Ếch là loại việc đặc biệt mà bạn thường không muốn đụng tới. Thường đó là những việc bị bỏ lại hàng tháng, thậm chí hàng năm. Todorant đảm bảo bạn xử lý ếch đầu tiên mỗi ngày. Buổi sáng, lượng ý chí của bạn đủ lớn để giải quyết cả những việc khó nhằn nhất. Và khi cuối cùng cũng xử lý xong một con ếch — bạn sẽ nhận được vừa đủ niềm vui để mỉm cười suốt cả ngày. Bạn sẽ thấy tự hào về bản thân khi xử lý được ếch.",
+    "Bạn được phép bỏ qua việc hiện tại — nhưng hãy cố làm thế càng ít càng tốt. Bạn không thể bỏ qua ếch. Nếu bạn không hoàn thành một việc và phải phân bổ lại nó hai lần, nó sẽ trở thành ếch.",
+    "Nếu việc hiện tại quá chung chung, hãy chia nhỏ nó thành danh sách các việc con. Ngay khi bạn chia nhỏ, việc gốc sẽ được đánh dấu là đã hoàn thành.",
+    "Hãy thêm càng nhiều thông tin liên quan vào việc càng tốt. Thêm liên kết đến email cụ thể (Gmail trên web cho phép làm điều này), trang web, ghi chú (như Evernote), tài liệu (như Dropbox), để lại số điện thoại hoặc bất kỳ thông tin nào bạn có thể cần để hoàn thành việc. Todorant không phải là nơi lưu trữ tài liệu tham khảo — thay vào đó, nó nên là danh mục các liên kết đến thông tin tham khảo liên quan đến từng việc.",
+    "Cứ thoải mái tham gia nhóm Telegram đa ngôn ngữ của chúng mình để chia sẻ kinh nghiệm và mẹo làm việc hiệu quả hơn — @todorant_feedback! Mọi phản hồi về dịch vụ — góp ý, mong muốn và phàn nàn — đều rất được hoan nghênh.",
+    "Dùng chế độ chỉnh sửa (biểu tượng sắp xếp danh sách ở trên cùng) trong trang Kế hoạch để thay đổi thứ tự việc. Nếu muốn gán một việc cho một tuần cụ thể, chỉ cần gán nó vào thứ Hai rồi phân bổ lại trong buổi lên kế hoạch sáng thứ Hai.",
+    "Todorant không có và sẽ không bao giờ có việc lặp lại — thứ duy nhất chúng làm tốt là gây lo âu khi cứ lơ lửng trên đầu bạn như những việc chưa xong. Nếu cần làm những việc lặp lại — hãy tự thêm từng việc một, não bạn sẽ cảm ơn bạn vì những việc được làm có ý thức.",
+    "Todorant không có khái niệm “Dự án” vì nó đã chứng tỏ là gây mất động lực, có những “thư mục” chẳng bao giờ được mở ra. Dự án “Thể dục” và “Phát triển bản thân” gửi lời hỏi thăm. Thay vào đó, hãy dùng #hashtag.",
+    "Ếch luôn xuất hiện ở đầu danh sách.",
+    "Todorant không thông báo về các việc sắp tới có đặt giờ cụ thể."
+  ],
+  "termsOfUse": "Điều khoản sử dụng",
+  "privacyPolicy": "Chính sách quyền riêng tư",
+  "socketsInfo": "Thông tin kết nối",
+  "dataInfo": "Thông tin dữ liệu",
+  "howTo": "Hướng dẫn",
+  "howToUse": "Cách dùng Todorant",
+  "account": "Tài khoản",
+  "todos": "Việc cần làm",
+  "general": "Chung",
+  "info": "Thông tin",
+  "supportLabel": "Hỗ trợ",
+  "sendFeedback": "Gửi phản hồi",
+  "supportText": "Có câu hỏi hay góp ý? Gửi email hoặc nhắn mình qua Telegram nhé!",
+  "socketError": "Lỗi kết nối: ",
+  "connected": "Đã kết nối",
+  "authorized": "Đã xác thực",
+  "daysLeft": "Số ngày còn lại: ",
+  "buySubscription": "Mua gói đăng ký",
+  "defaultToToday": "Mặc định là hôm nay",
+  "newTodosGoOnTop": "Việc mới ở trên cùng",
+  "deleteTodo": "Bạn có thật sự muốn xóa",
+  "earlyAdopter": "Người dùng tiên phong 🦄",
+  "active": "Đang hoạt động",
+  "inactive": "Không hoạt động",
+  "trial": "Dùng thử",
+  "error": "Lỗi",
+  "ok": "OK",
+  "pleaseConfirm": "Vui lòng xác nhận",
+  "purchaseReceiptError": "Không tìm thấy biên nhận mua hàng",
+  "noTodosExistTitle": "Chưa có việc nào",
+  "noTodosExistText": "Bắt đầu thôi — tạo vài việc bằng cách nhấn nút dấu cộng bên dưới!",
+  "restorePurchases": "Khôi phục giao dịch",
+  "noPurchasesError": "Rất tiếc, bạn chưa có giao dịch mua nào",
+  "appleSigninError": "Không thể đăng nhập bằng Apple",
+  "syncDataHard": "Đồng bộ toàn bộ",
+  "firstDayOfWeek": "Ngày đầu tuần",
+  "weekday1": "Thứ Hai",
+  "weekday2": "Thứ Ba",
+  "weekday3": "Thứ Tư",
+  "weekday4": "Thứ Năm",
+  "weekday5": "Thứ Sáu",
+  "weekday6": "Thứ Bảy",
+  "weekday0": "Chủ Nhật",
+  "appleUnauthorizedText": "Mình buộc phải đề nghị bạn bắt đầu dùng thử bằng cách chọn một gói bên dưới vì đây là quy định bắt buộc. Nếu bạn đã có gói đăng ký đang hoạt động, vui lòng đăng nhập vào tài khoản trong phần Cài đặt.",
+  "appleUnauthorizedTextGoodNews": "Tin vui là: bạn sẽ không bị tính phí cho đến khi kết thúc 30 ngày dùng thử.",
+  "appleUnauthorizedButtonExtra": "Dùng thử miễn phí 30 ngày, sau đó",
+  "introTitle": "Chào mừng!",
+  "introBack": "Bắt đầu thôi!",
+  "infoTitle": "Thông tin",
+  "infoIntro": "Giỏi lắm, bạn đã nhấn nút “i”! Đây là lời chào giải thích Todorant là gì. Không hơn, không kém.",
+  "infoCurrent": "Đây là trang việc hiện tại. Trang này chỉ hiển thị một việc mà bạn nên làm ngay lúc này. Hãy tập trung, đây là trang duy nhất bạn cần sau khi đã lên kế hoạch cho ngày.\n\nBạn có thể bỏ qua việc nếu nó không phải ếch và không phải việc cuối cùng trong ngày.\n\nNếu việc quá chung chung — hãy dùng tính năng chia nhỏ. Sau khi chia nhỏ, việc gốc sẽ tự động được đánh dấu là đã hoàn thành.",
+  "infoBreakdown": "Đây là màn hình chia nhỏ việc. Cứ thoải mái thêm nhiều việc sẽ xuất hiện trong danh sách thay cho việc gốc. Sau khi bạn thêm các việc nhỏ mới, việc gốc sẽ được đánh dấu là đã hoàn thành.",
+  "infoAdd": "Đây là màn hình thêm việc. Việc phải luôn hành động được (“Tìm vé máy bay tốt nhất đi Mexico” thay vì “Đi Mexico”) và càng nhỏ, càng cụ thể càng tốt (“Lau bụi màn hình” thay vì “Dọn nhà”). Bạn có thể thêm nhiều việc cùng lúc ở đây.\n\nMỗi việc phải được gán một ngày hoặc một tháng. Bạn không thể chọn tháng hiện tại.\n\nẾch là những việc bạn không muốn đụng tới — chúng sẽ xuất hiện đầu tiên trong danh sách. Bắt tay vào ếch càng sớm, bạn càng có nhiều khả năng hoàn thành nó.",
+  "infoEdit": "Đây là màn hình sửa việc. Ở đây bạn có thể sửa việc. Ừ, chỉ vậy thôi.",
+  "infoPlanning": "Đây là mục Kế hoạch của bạn. Cứ thoải mái sắp xếp lại việc và tiêu đề ngày (bằng cách nhấn giữ rồi kéo) — vui lắm đấy!\n\nVà đừng quên dùng #hashtag nhé.",
+  "infoSettings": "Đây là màn hình cài đặt. Ở đây bạn có thể tùy chỉnh nhiều tùy chọn khác nhau. Nhớ đọc mục “Cách dùng Todorant” nhé.",
+  "infoSockets": "Todorant dùng socket để đồng bộ dữ liệu với máy chủ. Mọi thứ hoạt động như phép màu khi cả hai dấu tích đều hiện lên.",
+  "infoData": "Ở đây bạn có thể xem thông tin mới nhất về bộ nhớ dữ liệu trên thiết bị và số liệu đồng bộ.",
+  "infoRules": "Hãy đọc kỹ các quy tắc để tận dụng tối đa Todorant.",
+  "preserveOrderByTime": "Giữ thứ tự theo giờ cụ thể",
+  "subscriptionMonth": "tháng",
+  "languageSelect": "Ngôn ngữ",
+  "languageAuto": "Tự động",
+  "syncExactDates": "Tính lại ngày cụ thể",
+  "askBeforeDelete": "Xác nhận khi xóa việc",
+  "copied": "đã sao chép",
+  "sync": "Đồng bộ",
+  "infoTags": "Đây là danh sách tất cả hashtag bạn đã dùng. Nếu chưa thấy gì — hãy tạo một việc có #hashtag trong nội dung, đó là cách duy nhất để thêm hashtag vào danh sách này.\n\nNếu muốn đổi màu hoặc xóa một hashtag, hãy nhấn vào nó. Đừng lo, hashtag tách biệt với việc cần làm — mọi thao tác ở màn hình này sẽ không ảnh hưởng đến việc của bạn. Ừ thì, đổi màu có thể khiến việc của bạn trông ngầu hơn.",
+  "changeColor": "Đổi màu",
+  "changeColorToDefault": "Đặt lại màu",
+  "colorMode": "Chế độ màu",
+  "dark": "Tối",
+  "light": "Sáng",
+  "loadingData": "Đang tải dữ liệu...",
+  "breakdownRequest": "Có vẻ bạn đã dời việc này quá nhiều lần. Hãy chia nhỏ nó, bạn không thể dời nó sang ngày khác nữa. Tin mình đi, làm vậy sẽ giúp bạn hoàn thành việc!",
+  "breakdownButton": "Chia nhỏ",
+  "back": "Quay lại",
+  "important": "Quan trọng",
+  "rateTitle": "Bạn đã hoàn thành hơn 100 việc! 🎉🎉🎉 Todorant đã cải thiện cuộc sống của bạn đến mức nào?",
+  "rate": "Đánh giá",
+  "send": "Gửi",
+  "rateCommentPlaceholder": "Hãy viết vài dòng về điều bạn chưa thích ở Todorant",
+  "rateCommentEmptyError": "Vui lòng đừng để trống ô nhận xét",
+  "starTerrible": "Không chút nào",
+  "starBad": "Một chút",
+  "starOkay": "Kha khá",
+  "starGood": "Khá nhiều",
+  "starGreat": "Rất nhiều",
+  "rateSolicitationApple": "Bạn có thể đánh giá Todorant 5 sao trên App Store được không? Việc này giúp ích rất nhiều!",
+  "rateSolicitationGoogle": "Bạn có thể đánh giá Todorant 5 sao trên Play Store được không? Việc này giúp ích rất nhiều!",
+  "rateButton": "Đánh giá ngay!",
+  "notConnected": "Chưa kết nối",
+  "loginQR": "Đăng nhập bằng mã QR",
+  "qrDescription": "Hãy mở cửa sổ mã QR trên trang web Todorant và quét mã tại đây",
+  "cameraAuthorization": "Chưa cấp quyền camera",
+  "needCameraPermission": "Todorant dùng camera để quét mã QR",
+  "security": "Bảo mật",
+  "encryptTodo": "Mã hóa việc cần làm",
+  "infoSecurity": "Hãy hết sức cẩn thận khi dùng mục này! Mã hóa sẽ không hoạt động nếu bạn chưa đặt mật khẩu. Sẽ có hai loại việc: đã mã hóa và chưa mã hóa. Mọi việc mới sẽ được mã hóa. Các việc cũ có thể được mã hóa bằng nút bên dưới. Nếu bạn mất mật khẩu, sẽ không có cách nào khôi phục các việc.",
+  "encryptedTodos": "Việc đã mã hóa",
+  "unencryptedTodos": "Việc chưa mã hóa",
+  "encryptAllButton": "Mã hóa tất cả",
+  "decryptAllButton": "Giải mã tất cả",
+  "password": "Mật khẩu",
+  "encryptionConfirm": "Bạn có chắc muốn mã hóa việc cần làm bằng mật khẩu này? Sau này bạn có thể giải mã bằng chính mật khẩu đó. Nếu mất mật khẩu, bạn sẽ không thể giải mã việc cần làm!",
+  "encryptionDisableConfirm": "Bạn có chắc muốn xóa khóa và tắt mã hóa? Thao tác này sẽ không giải mã các việc đã được mã hóa.",
+  "disable": "Tắt",
+  "confirmEncryptAll": "Bạn có chắc muốn mã hóa tất cả việc bằng mật khẩu này? Nếu mất mật khẩu, bạn sẽ không thể giải mã các việc!",
+  "confirmDecryptAll": "Bạn có chắc muốn giải mã tất cả việc?",
+  "passwordError": "Sai mật khẩu. Có vẻ một số việc đã mã hóa của bạn không thể giải mã bằng mật khẩu này.",
+  "soundEffects": "Hiệu ứng âm thanh",
+  "missionPassed": "Nhiệm vụ hoàn thành",
+  "respect": "Uy tín +",
+  "emptyHashtags": "Danh sách hashtag hiện đang trống. Hãy tạo việc đầu tiên có #hashtag để thêm hashtag đầu tiên vào đây!",
+  "gamification": "Trò chơi hóa",
+  "heroProfileTitle": "Hồ sơ anh hùng",
+  "infoHero": "Đây là trang hồ sơ của bạn — người anh hùng! Hoàn thành việc và kiếm điểm để đạt cấp bậc ngày càng cao!\n\nBạn sẽ không biết toàn bộ danh sách cấp bậc cho đến khi đạt cấp cao nhất! Hãy nhớ: con đường duy nhất lên đỉnh là chuỗi những bước nhỏ mỗi ngày.",
+  "rank": "🔥 Cấp bậc của bạn 🔥",
+  "tasksCompleted": "Điểm đã kiếm",
+  "rank-1Title": "Thực thể vô cực từ vật chất tối 😈",
+  "rank-1Description": "Bạn đã đạt cấp bậc mà chưa con người nào từng đạt được! Chúc mừng, bánh của bạn đây: 🍰. Lần này không phải lời nói dối đâu.",
+  "rank0Title": "Độ không tuyệt đối −273,15 °C 🥶",
+  "rank0Description": "Muốn ngầu hơn nữa cũng không được đâu.",
+  "rank5Title": "V là Vnăng suất 👺",
+  "rank5Description": "Nhớ nhé các em, năng suất rơi xuống đất chưa tới 5 giây mà nhặt lên ngay thì vẫn ổn!",
+  "rank13Title": "Freddy vui vẻ 😱",
+  "rank13Description": "Bạn biết hôm nay là ngày gì rồi đấy. Là ngày Jason nướng bánh cho bạn. Giờ thì ngày nào cũng là ngày đó.",
+  "rank42Title": "Ngư dân 🐬",
+  "rank42Description": "Tạm biệt! Và cảm ơn vì tất cả số cá!",
+  "rank69Title": "Bậc thầy Nice! 😝",
+  "rank69Description": "Cấp bậc nice nhất quả đất. Hết.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Có thể nói năng suất của bạn được làm từ Sắt.",
+  "rank100Title": "Người dùng Thần lực 100% ⚡️",
+  "rank100Description": "Xong 100, còn vô cực nữa thôi! Cứ tiếp tục mỗi ngày, đáng lắm đấy!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Bạn đã phá giải vụ án năng suất, ừ thì, chúc mừng bạn!",
+  "rank256Title": "Chú thợ sửa ống nước vui vẻ 👾",
+  "rank256Description": "8 bit năng suất trôi qua mà bạn vẫn nhớ về những trò chơi xưa cũ.",
+  "rank300Title": "Chiến binh Sparta 💪",
+  "rank300Description": "Dọn sạch tâm trí, đơn giản hóa thói quen, và đi hết 100 điểm tiếp theo như một chiến binh Sparta thực thụ!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Không tìm thấy cấp bậc.",
+  "rank777Title": "Đại kiện tướng may mắn! 🍀",
+  "rank777Description": "Cấp bậc này chỉ kéo dài 23 điểm. Tận dụng nhé, hôm nay là ngày may mắn của bạn!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Bạn là kẻ hủy diệt những con ếch đáng sợ. Đi hủy diệt vài con đi nào!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Đang khởi động hack năng suất... Đang hack...",
+  "rank1338Title": "3L1T3 (Đã hack) 🧑‍💻",
+  "rank1338Description": "Hack năng suất thành công!",
+  "rank2048Title": "Kiện tướng cờ vua ♔",
+  "rank2048Description": "Bạn chọn năng suất thay vì những trò giết thời gian vô bổ bất tận, đúng không? ĐÚNG KHÔNG?",
+  "rank9000Title": "Sức mạnh trên 9000 🏋️",
+  "rank9000Description": "Bạn nâng việc nhẹ như không!",
+  "rank12800Title": "Tiến sĩ Manhattan ⚛",
+  "rank12800Description": "Bạn chia nhỏ việc như tách nguyên tử. Cứ thế phát huy nhé!",
+  "sendDataToServer": "Gửi dữ liệu lên máy chủ",
+  "encryption": {
+    "repeatPassword": "Nhập lại mật khẩu",
+    "encryptionSaved": "Mọi thứ đã sẵn sàng! Từ giờ tất cả việc mới của bạn sẽ được mã hóa",
+    "encryption": "Mã hóa"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Sao chép hashtag khi chia nhỏ",
+    "showMoreByDefault": "Mặc định hiện thêm tùy chọn khi thêm việc"
+  },
+  "level": "Cấp độ",
+  "points": "điểm",
+  "pointsTillNextLevel": "điểm nữa để mở khóa cấp độ tiếp theo",
+  "accept": "Chấp nhận",
+  "delegate": {
+    "title": "Giao việc",
+    "noDelegators": "Bạn chưa có người giao việc nào. Hãy xin đường liên kết mời để trở thành người nhận việc của ai đó.",
+    "noDelegates": "Bạn chưa có người nhận việc nào. Hãy chia sẻ đường liên kết mời với những người bạn muốn giao việc",
+    "noDelegatedTasks": "Bạn không còn việc mới nào được giao.",
+    "link": "Liên kết mời nhận việc",
+    "linkDescription": "Mọi người có thể trở thành người nhận việc của bạn qua liên kết này. Người nhận việc chỉ thấy những việc bạn giao cho họ.",
+    "resetConfirmation": "Bạn có chắc muốn đặt lại liên kết? Liên kết hiện tại sẽ không dùng được nữa!",
+    "delegators": "Người giao việc",
+    "delegates": "Người nhận việc",
+    "inviteSuccess": "Thành công! Giờ người dùng này có thể giao việc cho bạn.",
+    "inviteConfirm": "Bạn có chắc muốn trở thành người nhận việc của người dùng này?",
+    "deleteDelegateConfirmation": "Bạn có chắc muốn xóa người nhận việc này? Bạn sẽ không thể giao việc cho người này nữa.",
+    "deleteDelegatorConfirmation": "Bạn có chắc muốn xóa người giao việc này? Người này sẽ không thể giao việc cho bạn nữa.",
+    "pickDelegateField": "Người nhận việc",
+    "info": "Đây là trang chứa các việc được giao cho bạn. Bạn có thể xóa hoặc chấp nhận những việc mà người giao việc gửi đến.",
+    "signupTitle": "Ối",
+    "signupDescription": "Bạn cần đăng nhập để dùng tính năng giao việc",
+    "resetLink": "Đặt lại liên kết",
+    "delegatorExists": "Người giao việc này đã tồn tại",
+    "noDelegatedTasksTo": "Bạn chưa giao việc nào.",
+    "ByMe": "Tôi giao",
+    "to": "Cho",
+    "from": "Từ",
+    "ToMe": "Hộp thư đến"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Liên kết mời không còn hợp lệ"
+    },
+    "epic": {
+      "numberError": "Phải là một số"
+    },
+    "errorDuring": "Đã xảy ra lỗi khi: {{reason}}. Lỗi gốc: {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "cập nhật hoặc tạo mới",
+      "updatingPushedDelegates": "cập nhật hoặc tạo mới người nhận việc đã gửi lên",
+      "updatingPushedDelegators": "cập nhật hoặc tạo mới người giao việc đã gửi lên",
+      "removingDelegators": "xóa những người giao việc đã đánh dấu xóa trên thiết bị",
+      "removingDelegates": "xóa những người nhận việc đã đánh dấu xóa trên thiết bị",
+      "removingPushedDelegators": "xóa người giao việc đã gửi lên",
+      "preapringDelegationsForDeleting": "chuẩn bị xóa liên kết giao việc: id giao việc: {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Tạo Epic",
+    "epicGoal": "Mục tiêu Epic"
+  },
+  "startTimeOfDay": "Giờ bắt đầu ngày",
+  "badgeIconCurrentCount": "Số việc trên biểu tượng ứng dụng",
+  "purchaseErrorTryOnWeb": "Đăng ký trên web",
+  "planningReminderTime": "Giờ nhắc lên kế hoạch",
+  "notSet": "Chưa đặt",
+  "planningReminderText": "🎉 Đến giờ lên kế hoạch rồi!",
+  "settingsActions": {
+    "swipeActions": "Thao tác vuốt"
+  },
+  "endOfDaySoundOn": "Âm thanh khi xong mọi việc",
+  "dirtyValidSave": "Bạn có muốn lưu các việc vừa nhập không?",
+  "dirtyInvalidSave": "Bạn chưa nhập xong các việc. Bạn có muốn bỏ các việc đã nhập không?",
+  "dissmissTasks": "Bỏ các việc",
+  "saveTasks": "Lưu các việc",
+  "fixTasks": "Sửa các việc",
+  "changeTasks": "Thay đổi các việc",
+  "deleteAllHashtags": "Xóa tất cả hashtag",
+  "deleteAllHashtagsConfirm": "Bạn có chắc muốn xóa tất cả hashtag?",
+  "next": "Tiếp",
+  "letsGo": "Bắt đầu thôi!",
+  "whatWouldYouLikeToDoa": "Bạn muốn làm gì?",
+  "startUsingNow": "Dùng Todorant ngay",
+  "readRulesFirst": "Mình sẽ đọc cách dùng Todorant trước!",
+  "iAdmireYourBravery": "Mình nể sự dũng cảm của bạn!",
+  "iAdmireYourSpirit": "Mình nể tinh thần của bạn!",
+  "dirtyValidSaveSingular": "Bạn có muốn lưu việc vừa nhập không?",
+  "dirtyInvalidSaveSingular": "Bạn chưa nhập xong việc. Bạn có muốn bỏ việc đã nhập không?",
+  "dissmissTasksSingular": "Bỏ việc",
+  "saveTasksSingular": "Lưu việc",
+  "fixTasksSingular": "Sửa việc",
+  "changeTasksSingular": "Thay đổi việc",
+  "addedTask": "Đã thêm việc",
+  "edit": "Sửa",
+  "editName": "Tên hashtag mới",
+  "tutorialButton": "Hướng dẫn",
+  "onboarding": {
+    "closeButtonText": "Đóng hướng dẫn",
+    "defaultNextStepButtonText": "Tiếp tục",
+    "notAllowed": "Đã hiểu!",
+    "Close": {
+      "messageBoxBody": "Bạn có chắc muốn bỏ qua hướng dẫn này? Khó mà khai thác hết tiềm năng của Todorant nếu bạn không biết phải làm gì! Hay ít nhất bạn đọc một bài viết ngắn về các nguyên tắc chính của Todorant nhé?",
+      "changedMyMind": "Mình đổi ý rồi, tiếp tục hướng dẫn",
+      "article": "Dừng hướng dẫn, nhưng cho mình xem bài viết",
+      "closeEverything": "Mình biết mình đang làm gì, đóng hướng dẫn",
+      "toast": "Mình nể sự dũng cảm của bạn"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant không chỉ là một ứng dụng, mà là một phương pháp làm việc hiệu quả. Các giới hạn ở đây được thiết kế kỹ lưỡng để não bạn thèm hoàn thành việc như thèm đồ ngọt."
+    },
+    "AddTask": {
+      "messageBoxBody": "Hãy thêm việc đầu tiên của bạn. Nhấn vào nút dấu cộng bên dưới."
+    },
+    "AddText": {
+      "messageBoxBody": "Hãy nghĩ đến một việc bạn cần làm. Rồi gõ nó thật ngắn gọn và hành động được, như “Dắt chó đi dạo” hay “Mua sữa”. Tránh thêm những việc quá chung chung hoặc không hành động được.\n\nMình đã điền sẵn một việc để bạn thấy cách hoạt động. Sau khi xong hướng dẫn, cứ thoải mái xóa các việc mẫu nhé!"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Mỗi việc cần có một ngày hoàn thành cụ thể hoặc được gán cho một tháng.\n\nBạn không thể chọn tháng hiện tại. Bạn sẽ làm gì nếu hết tháng mà vẫn còn việc chưa xong?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Bạn có thể đánh dấu việc là ếch. Ếch là loại việc đặc biệt thật sự khó chịu. Bạn phải xử lý chúng đầu tiên vào buổi sáng, chúng luôn xuất hiện ở đầu danh sách. Mình khuyên mỗi ngày chỉ nên có tối đa 2 con ếch.",
+      "nextStepButton": "Không phải ếch"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Mình khuyến khích bạn thêm cả những việc đã hoàn thành vào Todorant ngay sau khi làm xong. Điều này giúp tạo mối liên kết tích cực giữa việc hoàn thành công việc và cảm giác thỏa mãn."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Nhấn vào nút thần kỳ này để hiện thêm tùy chọn khi tạo việc, như đặt giờ cụ thể (hữu ích cho các cuộc họp) và sắp xếp việc."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Bạn cũng có thể thêm nhiều việc cùng lúc! Lần này thì chưa, nhưng sau này cứ thoải mái thử nhé."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Tuyệt! Bạn vừa tạo xong việc đầu tiên. Giờ hãy lưu lại."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Đây là trang “Hiện tại”. Bạn sẽ dùng nó hầu hết thời gian. Trang này chỉ hiển thị một việc bạn cần làm và tiến độ của bạn — không gì hơn. Giúp bạn luôn tập trung."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Ở đây bạn chỉ có những công cụ tối thiểu: xóa, sửa hoặc hoàn thành việc hiện tại. Bạn cũng có thể vuốt sang phải hoặc trái nếu muốn (lát nữa tự thử nhé)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "Ồ, đây là nút “chia nhỏ” đặc biệt, bạn sẽ dùng nó rất nhiều. Nếu gặp một việc quá phức tạp để xong trong vòng 30 phút, hãy chia nó thành nhiều phần."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Mình đoán việc vừa tạo hơi quá chung chung! Mình biết chuyện này nghe hơi vô lý, nhưng cứ chiều mình chút nhé.\n\nBạn thấy việc gốc ở trên cùng, hãy chia nó thành các việc nhỏ hơn. Nhớ nghĩ đến mọi thứ cần làm, vì việc gốc sẽ... biến mất!"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "Có thể bạn để ý hai điều. Thứ nhất: giờ bạn thấy một trong các việc con. Thứ hai: việc gốc bạn vừa chia nhỏ giờ đã được đánh dấu là hoàn thành.\n\nĐiều này diễn ra tự động vì khi bạn chia nhỏ và tạo các việc con bao quát toàn bộ việc gốc, thì không cần việc gốc nữa.\n\nChỉ cần chia nhỏ thôi là bạn đã được thưởng một việc hoàn thành!"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "Đây là nơi bạn lên kế hoạch. Nhớ là mỗi việc đều được gán một ngày hoặc một tháng chứ? Ở đây bạn sẽ thấy các việc được sắp xếp theo đó!\n\nBạn không nên xem màn hình này quá thường xuyên. Sau khi lên kế hoạch xong, bạn chỉ nên dùng trang “Hiện tại”."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Đây là cách lên kế hoạch với Todorant. Ngay khi nghĩ ra việc gì, hãy thêm vào Todorant liền, không thì bạn sẽ quên mất.\n\nMỗi sáng và mỗi ngày đầu tháng, hãy ngồi xuống lên kế hoạch cho ngày hoặc tháng bằng cách phân bổ và sắp xếp lại việc giữa các ngày hoặc các tháng. Cứ nhấn giữ và kéo việc để sắp xếp lại."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Có thể bạn cũng để ý Todorant không có “dự án” — nơi bạn có thể giấu những việc không muốn làm để rồi quên luôn.\n\nThay vào đó, Todorant dùng hệ thống hashtag. Chỉ cần thêm #thể_thao, #nấu_ăn hay #bất_cứ_thứ_gì để nhóm các việc lại và tìm chúng bằng cách nhấn vào hashtag."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Bạn có thể xem các việc đã hoàn thành và tìm kiếm việc bằng các nút phía trên."
+    },
+    "ExplainReccuring": {
+      "article": "Đọc bài viết",
+      "messageBoxBody": "Bạn cũng sẽ thấy Todorant không có việc lặp lại hay định kỳ. Đây là chủ ý, vì việc lặp lại làm giảm năng suất về lâu dài.\n\nThay vào đó, hãy dùng tính năng chia nhỏ kèm kế thừa hashtag (một trong các cài đặt) và đặt tên việc kiểu “Tưới #cây và tạo việc tiếp theo”. Bạn có thể đọc thêm trong bài viết mình đã viết."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Đây là màn hình chứa mọi cài đặt bạn cần trong Todorant. Lát nữa cứ thoải mái khám phá nhé. Đáng chú ý là “mặc định là hôm nay” và “sao chép hashtag khi chia nhỏ”."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Bạn cũng sẽ thấy Todorant không có thông báo (trừ lời nhắc lên kế hoạch tùy chọn vào đầu ngày). Đây cũng là chủ ý.\n\nKhi có quá nhiều thông báo, người ta thường bắt đầu phớt lờ chúng. Điều đó dẫn đến bỏ lỡ những cảnh báo quan trọng."
+    },
+    "ExplainMultiplatform": {
+      "website": "Đến todorant.com",
+      "messageBoxBody": "Todorant có trên iOS, Android, Web, macOS, Windows và Linux, cùng với tiện ích mở rộng cho Chrome và Firefox, và cả bot Telegram. Xem danh sách đầy đủ các nền tảng trên todorant.com."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant miễn phí trong 30 ngày đầu, sau đó là $5/tháng.\n\nLogic rất đơn giản: nếu năng suất Todorant mang lại đáng giá một ly cà phê mỗi tháng, bạn sẽ muốn tiếp tục dùng. Nếu không đáng, bạn có thể ngừng dùng Todorant.\n\nMình tin 30 ngày là đủ để bạn biết câu trả lời."
+    },
+    "Feedback": {
+      "messageBoxBody": "Nếu có câu hỏi, góp ý hay phàn nàn, cứ thoải mái liên hệ chúng mình trong nhóm hỗ trợ Telegram chính thức hoặc qua email."
+    },
+    "Rules": {
+      "messageBoxBody": "Mình khuyến khích bạn xem qua mục “Hướng dẫn” của Todorant. Nhiều khả năng nó sẽ giải đáp mọi thắc mắc của bạn về ứng dụng và phương pháp."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Chúc mừng! Bạn đã hoàn thành phần hướng dẫn. Mình hy vọng giờ bạn đã rõ cách dùng Todorant.\n\nBắt tay vào luôn nào. Giờ bạn có thể chuyển toàn bộ việc cần làm sang Todorant. Bạn sẽ phải viết chúng thật ngắn gọn, hành động được, và gán cho chúng ngày hoặc tháng cụ thể.\n\nCó thể hơi tẻ nhạt, nhưng mình đảm bảo: về lâu dài sẽ rất đáng!",
+      "nextStepButton": "Hoan hô!"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "Từ từ đã! Mình biết có thể hơi khó, nhưng hãy thử chia việc này thành ít nhất hai việc nhỏ hơn và vẫn chưa hoàn thành."
+    },
+    "Info": {
+      "messageBoxBody": "Ngoài ra, khi có thắc mắc, hãy tìm nút “i” ở góc trên bên phải. Hầu hết thời gian, chúng sẽ cho bạn thông tin hữu ích."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Khoan đã, trong phần hướng dẫn này, chúng mình đã tạm khóa việc thêm việc ở trạng thái hoàn thành. Nhưng sau khi xong hướng dẫn, cứ thoải mái thử cài đặt này nhé!"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Khoan đã, trong phần hướng dẫn này, chúng mình đã tạm khóa việc đổi tháng và ngày của việc. Nhưng sau khi xong hướng dẫn, cứ thoải mái thử cài đặt này nhé!"
+    },
+    "Start": {
+      "closeButtonText": "Thôi, mình không đọc hướng dẫn đâu",
+      "messageBoxBody": "Chào bạn! Mình là Nikita, người tạo ra Todorant.\n\nNgười dùng hiểu Todorant hơn khi mình chỉ cho họ cách dùng. Bạn có muốn mình chỉ cách đạt năng suất đỉnh cao không tưởng không?",
+      "nextStepButton": "Có chứ! Chỉ mình cách dùng đi"
+    },
+    "todoText": "Thiền #thiền",
+    "breakdownTodo1": "Tìm video thiền có hướng dẫn dài 10 phút #thiền",
+    "breakdownTodo2": "Mở video thiền có hướng dẫn #thiền",
+    "breakdownTodo3": "Dành 10 phút để thiền #thiền",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "Ok, lần này mình đã chia nhỏ việc giúp bạn, nhưng lần sau bạn sẽ phải tự làm đấy!"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Vui lòng nhập nội dung việc trước."
+    },
+    "AddTextContinueButton": {
+      "continue": "Tiếp tục"
+    }
+  },
+  "updateVersionTitle": "Chào bạn! Đã có phiên bản Todorant mới",
+  "updateVersionMsg": "Phiên bản cũ có thể bị lỗi, vì vậy bạn hãy cập nhật càng sớm càng tốt nhé.",
+  "update": "Cập nhật",
+  "frogsAlert": {
+    "title": "Dừng lại! Phạm luật rồi",
+    "text": "Đừng phá luật. Nếu hôm nay bạn có ếch — hãy xử lý chúng trước, chia nhỏ chúng, dời sang ngày khác hoặc bỏ đánh dấu ếch. Làm ơn, đừng phớt lờ ếch!"
+  },
+  "subscriptionYear": "năm (giảm ≈40%)",
+  "editHashtag": "Sửa hashtag",
+  "addDevices": "Thêm thiết bị",
+  "unEpicConfirm": "Bạn có chắc muốn đặt lại epic",
+  "unEpic": "Đặt lại epic",
+  "breakdownMessage": {
+    "title": "Việc lặp lại",
+    "text": "Đây là việc lặp lại, bạn muốn chia nhỏ hay hoàn thành nó?",
+    "complete": "Hoàn thành"
+  },
+  "syncError": "Đã xảy ra lỗi khi đồng bộ dữ liệu",
+  "server": "Máy chủ",
+  "serverInvalid": "Đây không giống địa chỉ máy chủ. Địa chỉ nên có dạng https://todo.example.com",
+  "serverChange": "Tài khoản và việc cần làm của bạn nằm trên máy chủ hiện tại, nên đổi máy chủ sẽ đăng xuất bạn. Tiếp tục?",
+  "signIn": "Đăng nhập",
+  "signUp": "Tạo tài khoản",
+  "passwordLength": "Mật khẩu cần ít nhất 8 ký tự",
+  "addDevicesConfirm": "Đăng nhập tài khoản của bạn trên thiết bị đang hiển thị mã QR này? Chỉ tiếp tục nếu chính bạn đã mở mã này trên trang web Todorant."
+}

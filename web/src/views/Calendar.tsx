@@ -99,7 +99,9 @@ export function Calendar(p: {
   const nudge = (e: KeyboardEvent, todo: Todo, from: string, focus: string) => {
     if (!(e.key in ARROWS)) return
     e.preventDefault()
-    const d = addDays(parseTitle(from), ARROWS[e.key])
+    // Arabic lays the week out right to left, so the horizontal arrows swap
+    const rtl = document.documentElement.dir === 'rtl' && Math.abs(ARROWS[e.key]) === 1
+    const d = addDays(parseTitle(from), rtl ? -ARROWS[e.key] : ARROWS[e.key])
     const to = dateString(d)
     if (!canMove(todo, to)) return
     p.onMove(todo, to)

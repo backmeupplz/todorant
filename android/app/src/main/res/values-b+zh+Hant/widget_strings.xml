@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">Todorant 小工具</string>
+    <string name="widget_login">請登入 Todorant</string>
+    <string name="widget_loading">載入中&#8230;</string>
+</resources>

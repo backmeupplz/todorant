@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">Todorant विजेट</string>
+    <string name="widget_login">कृपया Todorant में लॉग इन करें</string>
+    <string name="widget_loading">लोड हो रहा है&#8230;</string>
+</resources>

@@ -130,7 +130,8 @@ fun DialogHost() {
             onDismissRequest = { Ui.dialogs.remove(spec) }, containerColor = Colors.cardBackground,
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         ) {
-            Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(bottom = 8.dp)) {
+            // Scrolls: the language list is taller than small phones
+            Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).navigationBarsPadding().padding(bottom = 8.dp)) {
                 spec.title?.let { Text(it, color = Colors.placeholder, fontSize = 14.sp, modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)) }
                 spec.buttons.forEachIndexed { i, (label, action) ->
                     Text(

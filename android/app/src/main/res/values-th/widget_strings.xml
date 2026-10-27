@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">วิดเจ็ต Todorant</string>
+    <string name="widget_login">โปรดเข้าสู่ระบบ Todorant</string>
+    <string name="widget_loading">กำลังโหลด&#8230;</string>
+</resources>

@@ -1,0 +1,500 @@
+{
+  "search": "Sök",
+  "support": "Är något oklart? Kontakta mig på <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "todo": {
+    "create": {
+      "text": "Uppgiftens text",
+      "placeholder": "Uppgift",
+      "frog": "Det är en groda!"
+    }
+  },
+  "cancel": "Avbryt",
+  "save": "Spara",
+  "delete": "Radera",
+  "current": "Aktuellt",
+  "planning": "Planering",
+  "skipped": "Överhoppade",
+  "name": "Svenska",
+  "language": "Välj språk.",
+  "login": "Logga in på todorant.com med knappen nedan.",
+  "settings": "Inställningar",
+  "addTodo": "Lägg till uppgift",
+  "breakdownTodo": "Dela upp",
+  "pleaseLogin": "Logga in",
+  "subscription": "Prenumeration",
+  "allDoneTitle": "Grattis!",
+  "allDoneText": "🥳 Du klarade det! Alla dagens uppgifter är gjorda – vila lite, eller varför inte dansa en stund 💃",
+  "noTodosTitle": "Mot oändligheten!",
+  "noTodosText": "Du har inga uppgifter för i dag. Vill du jobba – lägg till en ny uppgift för i dag eller ta uppgifter från kommande dagar.",
+  "addTodoDay": "Välj exakt dag",
+  "addTodoMonth": "Eller månad",
+  "addTodoTime": "Exakt tid",
+  "completed": "Klara",
+  "addTodoOnTop": "Lägg till överst",
+  "addTodoMore": "Mer...",
+  "addTodoSingular": "Lägg till uppgift!",
+  "addTodoPlural": "Lägg till uppgifter!",
+  "saveTodo": "Spara uppgift!",
+  "planningText": "Det ser ut som att du har lite planering att göra! Fördela om de kvarvarande uppgifterna nedan för att låsa upp fliken ”Aktuellt” och fortsätta vara produktiv. Heja!",
+  "editTodo": "Redigera uppgift",
+  "anonymousText": "Just nu lagras all din data på din enhet. För att börja synka med Todorants servrar behöver du logga in.",
+  "nameLabel": "Namn",
+  "email": "E-post",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "Antal",
+  "todosLastSync": "Uppgifter",
+  "tags": "Hashtaggar",
+  "tagsCount": "Hashtaggar",
+  "todoCount": "Uppgifter",
+  "notSyncedYet": "Inte synkat än",
+  "settingsLastSync": "Inställningar",
+  "accountLastSync": "Konto",
+  "syncData": "Synka data",
+  "googleTokenError": "Ingen åtkomsttoken returnerades från Google",
+  "facebookPermissionsError": "Behörigheter för Facebook beviljades inte",
+  "facebookTokenError": "Det gick inte att hämta åtkomsttoken från Facebook",
+  "loginWall": "Det ser ut som att du har använt Todorant i över en månad utan att logga in! Skydda dina uppgifter så att de inte går förlorade – logga in nu och använd Todorant tryggt!",
+  "loginGoogle": "Logga in med Google",
+  "loginFacebook": "Logga in med Facebook",
+  "loginApple": "Logga in med Apple",
+  "loginTelegram": "Logga in med Telegram",
+  "logoutText": "Vill du logga ut?",
+  "logout": "Logga ut",
+  "deleteAccount": "Radera konto",
+  "deleteAccountText": "Detta raderar ditt konto permanent från servern, tillsammans med alla dina uppgifter, hashtaggar och inställningar. Det går inte att ångra.",
+  "loginButton": "Logga in",
+  "alreadyRegistered": "(Du är redan registrerad)",
+  "purchaseError": "Hm, något verkar ha gått fel med köpet. Gå till webbplatsen, logga in och prenumerera där i stället!",
+  "purchaseThankYou": "Tack",
+  "purchaseThankYouText": "Tack för att du köpte en prenumeration!",
+  "activeText": "🎉 Stort tack för att du stöttar Todorant! Jag hoppas att Todorant redan har gjort ditt liv bättre och kommer att fortsätta göra det framöver! Ditt stöd gör att jag kan förbättra Todorant varje dag, lägga till nya funktioner och göra arbetet enklare!",
+  "inactiveText": "🐝 Det ser ut som att din provperiod för Todorant har tagit slut. Har Todorant gjort ditt liv bättre för minst $5/månad? Det hoppas jag verkligen! Jag går rakt på sak.\n\nBytesförslag. Jag får: $5 per månad, $36 per år (hela 40 % rabatt) eller $150 en gång. Du får: obegränsad produktivitet och obegränsad Todorant på köpet.\n\nVad säger du?",
+  "earlyAdopterText": "👏👏 – det här är jag som applåderar dig; dig – en av de galna som gick med på att bland de första testa Todorant, verktyget för ständigt ökande produktivitet. Man kan säga att ni är den gyllene tusenskaran vars feedback har format Todorant ända från början. Du har full rätt att använda Todorant hur mycket du vill – du kommer aldrig att stöta på några begränsningar, det har du förtjänat. Men om du märker att Todorant har gjort ditt liv drastiskt bättre kan du ändå köpa en prenumeration och på så sätt säga ”tack” på det bästa sättet. Du förlorar aldrig statusen ”Tidig användare 🦄” – och du kan alltid säga upp prenumerationen. Stort tack för att du fortfarande använder Todorant – jag kommer att fortsätta lägga till nya funktioner och förbättra produkten som gör skillnad för oss alla. Lycka till!",
+  "earlyAdopterTextBonus": "🤗 Heliga +*%$! Det verkar som att antingen Todorant eller jag personligen har hjälpt dig så mycket att du köpte en prenumeration trots att du kunde använda Todorant gratis för alltid. Jag är djupt rörd och tar gärna en kopp kaffe med dig eller bara pratar en stund. Hör gärna av dig på Telegram (@borodutch) eller via e-post – klicka bara på mitt namn nedan. Stort tack! Det är svårt att föreställa sig hur viktigt ditt bidrag är!",
+  "trialText": "💪 Välkommen till Todorant! Du har 30 dagar efter registreringen på dig att avgöra om Todorant fungerar för dig. När de 30 dagarna har gått har du fortfarande tillgång till dina gamla uppgifter, men du kan inte lägga till nya. Det går utmärkt att köpa en prenumeration innan de 30 dagarna är slut. Jag tror att Todorant kommer att ta din personliga produktivitet till nya höjder!",
+  "signature": "– Nikita, skapare av Todorant",
+  "rules": [
+    "Så fort du får en uppgift som kräver handling (du får ett mejl, ett samtal, ett sms eller ser något intressant som ska upp på din att göra-lista) – skapa en uppgift för den direkt. Vänta inte, du kommer att glömma den om du inte skriver ner den.",
+    "Uppgifter ska alltid vara konkreta handlingar och så tydliga som möjligt. Om en uppgift tar mindre än 2 minuter – gör den direkt och registrera den som klar.",
+    "När du skapar en uppgift anger du antingen ett specifikt datum eller väljer en månad. Du kan inte välja innevarande månad utan att välja ett specifikt datum. Det här är till för att din hjärna ska kunna slappna av. Om du litar på systemet och lägger allt som behöver göras på rätt datum – kommer du att stöta på det vid rätt tidpunkt. Enormt mycket viljestyrka går åt till att ständigt stressa över ”den där andra grejen jag måste ta hand om, men jag minns inte riktigt vad det var”. Lär dig att lita på systemet och slappna av.",
+    "Det första du gör varje månad är att planera framåt. Du tar alla uppgifter som tilldelats innevarande månad och sorterar in dem på rätt datum. Då kan du rensa bort inaktuella uppgifter och ha sinnesro, eftersom du vet exakt vad du behöver göra den här månaden.",
+    "Det första du gör på morgonen är att planera dagen. Ta en titt på din Planering. Hinner du med allt? Fördela de uppgifter som inte går att ta itu med i dag. Fördela om alla uppgifter som blivit liggande från tidigare dagar.",
+    "Om det inte är ett nödläge ska du inte titta på Planering när du är klar med planeringen. Psykologiskt är det mycket bättre att bara fokusera på en uppgift, så håll blicken på Aktuellt. Lita på systemet, det minns allt. Gör ditt jobb och låt hjärnan vila.",
+    "Aktuellt innehåller bara en enda uppgift som du ska fokusera på – inget annat. Du kan ha fler än en uppgift per dag; antalet uppgifter och förloppsindikatorn visas för din bekvämlighet. Du får inte hoppa mellan uppgifter – du ska ta dem i tur och ordning, en i taget.",
+    "Grodor är en särskild sorts uppgifter som du helst inte vill ta itu med. Ofta är det uppgifter som har blivit liggande i månader, till och med år. Todorant ser till att du tar dig an grodorna först av allt varje dag. På morgonen är din viljestyrka stor nog att klara även de mest motbjudande uppgifterna. Och när du äntligen har ätit en groda får du precis tillräckligt med glädje för att le hela dagen. Du blir stolt över dig själv när du tar itu med grodor.",
+    "Du får hoppa över den aktuella uppgiften – men försök att göra det så sällan som möjligt. En groda kan du inte hoppa över. Om du inte lyckades slutföra en uppgift och fick flytta den två gånger blir den en groda.",
+    "Om den aktuella uppgiften är för övergripande – dela upp den i en lista med deluppgifter. Så fort du har delat upp den markeras uppgiften som klar.",
+    "Lägg till så mycket relevant information om uppgiften som möjligt. Lägg till länkar till specifika mejl (det går i Gmail på webben), webbplatser, anteckningar (som Evernote), dokument (som Dropbox), skriv upp telefonnummer eller lägg till annan information du kan behöva för att slutföra uppgiften. Todorant är inte tänkt att vara ditt uppslagsverk – det ska i stället fungera som en katalog med länkar till den information som hör till varje uppgift.",
+    "Gå gärna med i vår flerspråkiga grupp på Telegram och dela erfarenheter och knep för att bli mer produktiv – @todorant_feedback! Din feedback om tjänsten – förslag, önskemål och klagomål – är varmt välkommen.",
+    "Använd redigeringsläget (ikonen för listordning högst upp) på sidan Planering för att ändra ordningen på uppgifterna. Om du vill lägga en uppgift på en viss vecka – lägg den på måndagen och flytta den sedan när du planerar på måndagsmorgonen.",
+    "Todorant har inte och kommer aldrig att ha återkommande uppgifter – det enda de är bra på är att skapa ångest genom att hänga över dig som ogjorda uppgifter. Om du behöver göra något återkommande – lägg till varje uppgift manuellt, din hjärna kommer att tacka dig för medvetna uppgifter.",
+    "Todorant har inget koncept med ”projekt”, eftersom det har visat sig vara demotiverande – vissa ”mappar” öppnas aldrig. Hälsningar från projekten ”Träning” och ”Självutveckling”. Använd #hashtaggar i stället.",
+    "Grodor visas alltid överst i listan.",
+    "Todorant har inga aviseringar för kommande uppgifter med exakt tid."
+  ],
+  "termsOfUse": "Användarvillkor",
+  "privacyPolicy": "Integritetspolicy",
+  "socketsInfo": "Socketinfo",
+  "dataInfo": "Datainfo",
+  "howTo": "Så funkar det",
+  "howToUse": "Så använder du Todorant",
+  "account": "Konto",
+  "todos": "Uppgifter",
+  "general": "Allmänt",
+  "info": "Info",
+  "supportLabel": "Support",
+  "sendFeedback": "Skicka feedback",
+  "supportText": "Har du frågor eller feedback? Skicka ett mejl till mig eller hör av dig på Telegram!",
+  "socketError": "Anslutningsfel: ",
+  "connected": "Ansluten",
+  "authorized": "Behörig",
+  "daysLeft": "Dagar kvar: ",
+  "buySubscription": "Köp prenumeration",
+  "defaultToToday": "I dag som standard",
+  "newTodosGoOnTop": "Nya uppgifter hamnar överst",
+  "deleteTodo": "Vill du verkligen radera",
+  "earlyAdopter": "Tidig användare 🦄",
+  "active": "Aktiv",
+  "inactive": "Inaktiv",
+  "trial": "Provperiod",
+  "error": "Fel",
+  "ok": "OK",
+  "pleaseConfirm": "Bekräfta",
+  "purchaseReceiptError": "Inget kvitto på köpet hittades",
+  "noTodosExistTitle": "Inga uppgifter än",
+  "noTodosExistText": "Sätt igång – skapa några uppgifter med plusknappen nedan!",
+  "restorePurchases": "Återställ köp",
+  "noPurchasesError": "Tyvärr har du inte gjort några köp än",
+  "appleSigninError": "Det gick inte att logga in med Apple",
+  "syncDataHard": "Fullständig synk",
+  "firstDayOfWeek": "Veckans första dag",
+  "weekday1": "Måndag",
+  "weekday2": "Tisdag",
+  "weekday3": "Onsdag",
+  "weekday4": "Torsdag",
+  "weekday5": "Fredag",
+  "weekday6": "Lördag",
+  "weekday0": "Söndag",
+  "appleUnauthorizedText": "Jag är tvungen att be dig starta provperioden genom att välja ett alternativ nedan, eftersom reglerna kräver det. Om du redan har en aktiv prenumeration kan du logga in på ditt konto under Inställningar.",
+  "appleUnauthorizedTextGoodNews": "Den goda nyheten är att du inte debiteras förrän provperioden på 30 dagar är slut.",
+  "appleUnauthorizedButtonExtra": "30 dagar gratis, därefter",
+  "introTitle": "Välkommen!",
+  "introBack": "Nu kör vi!",
+  "infoTitle": "Info",
+  "infoIntro": "Snyggt, du tryckte på ”i”-knappen! Det här är välkomstmeddelandet som förklarar vad Todorant är. Varken mer eller mindre.",
+  "infoCurrent": "Det här är sidan med den aktuella uppgiften. Den visar bara en uppgift – den du ska jobba med just nu. Håll fokus, det här är den enda sidan du behöver när du har planerat dagen.\n\nDu kan hoppa över uppgiften om den inte är en groda och inte är dagens sista uppgift.\n\nOm uppgiften är för övergripande – använd uppdelningsfunktionen. När du har delat upp uppgiften markeras den automatiskt som klar.",
+  "infoBreakdown": "Det här är skärmen för att dela upp en uppgift. Lägg gärna till flera uppgifter som visas i listan i stället för den ursprungliga uppgiften. När du har lagt till de nya, mindre uppgifterna markeras den ursprungliga uppgiften som klar.",
+  "infoAdd": "Det här är skärmen för att lägga till uppgifter. Uppgifter ska alltid vara konkreta handlingar (”Hitta de bästa flygen till Mexiko” i stället för ”Åka till Mexiko”) och så små och exakta som möjligt (”Damma av skärmarna” i stället för ”Städa huset”). Du kan lägga till flera uppgifter här.\n\nUppgifter ska ha antingen ett datum eller en månad. Du kan inte välja innevarande månad.\n\nGrodor är uppgifter som du inte vill ta itu med – de visas först i din lista. Ju tidigare du tar dig an en groda, desto större chans att du slutför den.",
+  "infoEdit": "Det här är skärmen för att redigera uppgifter. Här kan du redigera uppgiften. Japp, det var allt.",
+  "infoPlanning": "Det här är din planering. Flytta gärna runt uppgifter och datumrubriker (håll in och dra) – det är kul!\n\nGlöm inte heller att använda #hashtaggar.",
+  "infoSettings": "Det här är dina inställningar. Här kan du ställa in olika alternativ. Se till att läsa avsnittet ”Så använder du Todorant”.",
+  "infoSockets": "Todorant använder sockets för att synka data med servern. Det fungerar som magi så fort båda bockarna är på plats.",
+  "infoData": "Här ser du den senaste informationen om din lokala datalagring och synkstatistik.",
+  "infoRules": "Läs reglerna noggrant för att få ut så mycket som möjligt av Todorant.",
+  "preserveOrderByTime": "Behåll ordning efter exakt tid",
+  "subscriptionMonth": "månad",
+  "languageSelect": "Språk",
+  "languageAuto": "Automatiskt",
+  "syncExactDates": "Räkna om exakta datum",
+  "askBeforeDelete": "Bekräfta radering av uppgifter",
+  "copied": "kopierat",
+  "sync": "Synkronisering",
+  "infoTags": "Det här är listan över alla hashtaggar du har använt. Ser du ingenting – sätt igång och skapa en uppgift med en #hashtagg i texten, det är enda sättet att lägga till hashtaggar i listan.\n\nTryck på en hashtagg om du vill ändra dess färg eller radera den. Oroa dig inte, hashtaggarna är skilda från uppgifterna – inget du gör här påverkar dina uppgifter. Fast med nya färger kan dina uppgifter förstås se coolare ut.",
+  "changeColor": "Ändra färg",
+  "changeColorToDefault": "Återställ färg",
+  "colorMode": "Färgläge",
+  "dark": "Mörkt",
+  "light": "Ljust",
+  "loadingData": "Läser in din data...",
+  "breakdownRequest": "Det verkar som att du flyttar den här uppgiften alldeles för ofta. Dela upp den – du kan inte längre flytta den till ett annat datum. Tro mig, det hjälper dig att slutföra uppgiften!",
+  "breakdownButton": "Dela upp",
+  "back": "Tillbaka",
+  "important": "Viktigt",
+  "rateTitle": "Du har slutfört över 100 uppgifter! 🎉🎉🎉 Hur mycket har Todorant förbättrat ditt liv?",
+  "rate": "Betygsätt",
+  "send": "Skicka",
+  "rateCommentPlaceholder": "Skriv gärna några ord om vad du inte gillade med Todorant",
+  "rateCommentEmptyError": "Lämna inte kommentarsfältet tomt",
+  "starTerrible": "Inte alls",
+  "starBad": "Lite",
+  "starOkay": "En del",
+  "starGood": "Ganska mycket",
+  "starGreat": "Väldigt mycket",
+  "rateSolicitationApple": "Skulle du kunna ge Todorant 5 stjärnor i App Store? Det hjälper väldigt mycket!",
+  "rateSolicitationGoogle": "Skulle du kunna ge Todorant 5 stjärnor i Play Butik? Det hjälper väldigt mycket!",
+  "rateButton": "Betygsätt!",
+  "notConnected": "Inte ansluten",
+  "loginQR": "Logga in med QR",
+  "qrDescription": "Öppna QR-kodsrutan på Todorants webbplats och skanna koden här",
+  "cameraAuthorization": "Ingen kamerabehörighet",
+  "needCameraPermission": "Todorant använder kameran för att skanna QR-koder",
+  "security": "Säkerhet",
+  "encryptTodo": "Kryptera uppgifter",
+  "infoSecurity": "Använd det här avsnittet med största försiktighet! Krypteringen fungerar inte förrän du har lagt till ett lösenord. Det kommer att finnas två typer av uppgifter: krypterade och okrypterade. Alla nya uppgifter krypteras. Gamla uppgifter kan krypteras med knappen nedan. Om du tappar bort lösenordet går det inte att återställa uppgifterna.",
+  "encryptedTodos": "Krypterade uppgifter",
+  "unencryptedTodos": "Okrypterade uppgifter",
+  "encryptAllButton": "Kryptera alla",
+  "decryptAllButton": "Dekryptera alla",
+  "password": "Lösenord",
+  "encryptionConfirm": "Är du säker på att du vill kryptera uppgifterna med det här lösenordet? Du kan dekryptera dem senare med samma lösenord. Om du tappar bort lösenordet kan du inte dekryptera uppgifterna!",
+  "encryptionDisableConfirm": "Är du säker på att du vill ta bort nyckeln och stänga av krypteringen? Uppgifter som redan är krypterade dekrypteras inte.",
+  "disable": "Stäng av",
+  "confirmEncryptAll": "Är du säker på att du vill kryptera alla uppgifter med lösenordet? Om du tappar bort lösenordet kan du inte dekryptera uppgifterna!",
+  "confirmDecryptAll": "Är du säker på att du vill dekryptera alla uppgifter?",
+  "passwordError": "Fel lösenord. Det verkar som att några av dina krypterade uppgifter inte kan dekrypteras med det här lösenordet.",
+  "soundEffects": "Ljudeffekter",
+  "missionPassed": "Uppdrag slutfört",
+  "respect": "Respekt +",
+  "emptyHashtags": "Listan med hashtaggar är tom än så länge. Skapa din första uppgift med en #hashtagg så hamnar den första hashtaggen här!",
+  "gamification": "Spelifiering",
+  "heroProfileTitle": "Hjälteprofil",
+  "infoHero": "Det här är profilsidan för dig – hjälten! Slutför uppgifter och samla poäng för att nå allt högre ranger!\n\nDu får inte se hela listan med ranger förrän du har nått den högsta! Kom ihåg: den enda vägen till toppen är en daglig följd av små steg.",
+  "rank": "🔥 Din rang 🔥",
+  "tasksCompleted": "Intjänade poäng",
+  "rank-1Title": "Oändligt väsen av mörk materia 😈",
+  "rank-1Description": "Du har nått en rang som ingen människa har nått förut! Grattis, här är din tårta: 🍰. Den här gången är det ingen lögn.",
+  "rank0Title": "Under noll −273,15 °C 🥶",
+  "rank0Description": "Det hade varit mycket coolare om det gick.",
+  "rank5Title": "V som i Vroduktivitet 👺",
+  "rank5Description": "Kom ihåg, barn: tappar du produktiviteten i mindre än 5 sekunder och plockar upp den igen är det ingen fara!",
+  "rank13Title": "Glada Freddy 😱",
+  "rank13Description": "Du vet vilken dag det är. Det är dagen då Jason bakar en tårta åt dig. Nu är varje dag den dagen.",
+  "rank42Title": "Fiskaren 🐬",
+  "rank42Description": "Ajöss, och tack för all fisk!",
+  "rank69Title": "Nice-mästare! 😝",
+  "rank69Description": "Den nicaste rangen som finns. Punkt.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Man kan säga att din produktivitet är gjord av järn.",
+  "rank100Title": "Kraften till 100 % ⚡️",
+  "rank100Description": "100 klara, oändligheten kvar! Fortsätt varje dag, det är värt det!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Du har löst produktiviteten. Tja, bra för dig!",
+  "rank256Title": "Glad rörmokare 👾",
+  "rank256Description": "8 bitar produktivitet senare tänker du fortfarande på gamla goda spel.",
+  "rank300Title": "Spartan 💪",
+  "rank300Description": "Rensa tankarna, förenkla rutinerna och ta de kommande 100 poängen som en sann spartan!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rangen hittades inte.",
+  "rank777Title": "Tursam stormästare! 🍀",
+  "rank777Description": "Den här rangen varar bara i 23 poäng. Ta vara på den, det är din lyckodag!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Du är de fruktade grodornas terminator. Gå och terminera några!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Produktivitetshackning initierad... Hackar...",
+  "rank1338Title": "3L1T3 (hackad) 🧑‍💻",
+  "rank1338Description": "Produktiviteten är hackad!",
+  "rank2048Title": "Schackmästare ♔",
+  "rank2048Description": "Du föredrar väl produktivitet framför ändlösa, meningslösa tidsfördriv? VISST?",
+  "rank9000Title": "Poweruser över 9000 🏋️",
+  "rank9000Description": "Du lyfter uppgifter som om de inte vägde någonting!",
+  "rank12800Title": "Doktor Manhattan ⚛",
+  "rank12800Description": "Du delar upp uppgifter som om du klöv atomer. Fortsätt så!",
+  "sendDataToServer": "Skicka data till servern",
+  "encryption": {
+    "repeatPassword": "Upprepa lösenord",
+    "encryptionSaved": "Allt är klart! Nu krypteras alla dina nya uppgifter",
+    "encryption": "Kryptering"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Kopiera hashtaggar vid uppdelning",
+    "showMoreByDefault": "Visa fler alternativ för nya uppgifter"
+  },
+  "level": "Nivå",
+  "points": "poäng",
+  "pointsTillNextLevel": "poäng kvar till nästa nivå",
+  "accept": "Acceptera",
+  "delegate": {
+    "title": "Delegering",
+    "noDelegators": "Du har inga delegerare än. Be om en inbjudningslänk för att bli någons delegat.",
+    "noDelegates": "Du har inga delegater än. Dela inbjudningslänken med dem du vill ha som delegater",
+    "noDelegatedTasks": "Du har inga fler nya delegerade uppgifter.",
+    "link": "Inbjudningslänk för delegater",
+    "linkDescription": "Andra kan bli dina delegater genom att öppna den här länken. Delegater ser bara de uppgifter som du har delegerat till dem.",
+    "resetConfirmation": "Är du säker på att du vill återställa länken? Den nuvarande länken slutar då att fungera!",
+    "delegators": "Delegerare",
+    "delegates": "Delegater",
+    "inviteSuccess": "Klart! Nu kan den här användaren delegera uppgifter till dig.",
+    "inviteConfirm": "Är du säker på att du vill bli delegat åt den här användaren?",
+    "deleteDelegateConfirmation": "Är du säker på att du vill radera den här delegaten? Du kommer inte längre att kunna delegera uppgifter till hen.",
+    "deleteDelegatorConfirmation": "Är du säker på att du vill radera den här delegeraren? Hen kommer inte längre att kunna delegera uppgifter till dig.",
+    "pickDelegateField": "Delegat",
+    "info": "Här finns uppgifterna som har delegerats till dig. Du kan radera eller acceptera uppgifter som dina delegerare skickar till dig.",
+    "signupTitle": "Hoppsan",
+    "signupDescription": "Du behöver logga in innan du kan använda delegering",
+    "resetLink": "Återställ länken",
+    "delegatorExists": "Delegeraren finns redan",
+    "noDelegatedTasksTo": "Du har inte delegerat några uppgifter än.",
+    "ByMe": "Av mig",
+    "to": "Till",
+    "from": "Från",
+    "ToMe": "Inkorg"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Inbjudningslänken är inte längre giltig"
+    },
+    "epic": {
+      "numberError": "Måste vara ett tal"
+    },
+    "errorDuring": "Ett fel uppstod vid: {{reason}}. Ursprungligt fel: {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "uppdatering eller skapande",
+      "updatingPushedDelegates": "uppdatering eller skapande av skickade delegater",
+      "updatingPushedDelegators": "uppdatering eller skapande av skickade delegerare",
+      "removingDelegators": "borttagning av delegerare som markerats som raderade lokalt",
+      "removingDelegates": "borttagning av delegater som markerats som raderade lokalt",
+      "removingPushedDelegators": "borttagning av skickade delegerare",
+      "preapringDelegationsForDeleting": "förberedelse av delegeringar för radering: delegerings-id: {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Gör till epos",
+    "epicGoal": "Eposets mål"
+  },
+  "startTimeOfDay": "Dagens start",
+  "badgeIconCurrentCount": "Antal uppgifter på appikonen",
+  "purchaseErrorTryOnWeb": "Prenumerera på webben",
+  "planningReminderTime": "Tid för planeringspåminnelse",
+  "notSet": "Inte inställt",
+  "planningReminderText": "🎉 Dags att planera!",
+  "settingsActions": {
+    "swipeActions": "Svepåtgärder"
+  },
+  "endOfDaySoundOn": "Ljud när allt är klart",
+  "dirtyValidSave": "Vill du spara uppgifterna du har skrivit in?",
+  "dirtyInvalidSave": "Du har inte skrivit klart uppgifterna. Vill du slänga dem?",
+  "dissmissTasks": "Släng uppgifter",
+  "saveTasks": "Spara uppgifter",
+  "fixTasks": "Rätta uppgifter",
+  "changeTasks": "Ändra uppgifter",
+  "deleteAllHashtags": "Radera alla hashtaggar",
+  "deleteAllHashtagsConfirm": "Är du säker på att du vill radera alla hashtaggar?",
+  "next": "Nästa",
+  "letsGo": "Nu kör vi!",
+  "whatWouldYouLikeToDoa": "Vad vill du göra?",
+  "startUsingNow": "Börja använda Todorant nu",
+  "readRulesFirst": "Jag läser först hur Todorant fungerar!",
+  "iAdmireYourBravery": "Jag beundrar ditt mod!",
+  "iAdmireYourSpirit": "Jag beundrar din inställning!",
+  "dirtyValidSaveSingular": "Vill du spara uppgiften du har skrivit in?",
+  "dirtyInvalidSaveSingular": "Du har inte skrivit klart uppgiften. Vill du slänga den?",
+  "dissmissTasksSingular": "Släng uppgift",
+  "saveTasksSingular": "Spara uppgift",
+  "fixTasksSingular": "Rätta uppgift",
+  "changeTasksSingular": "Ändra uppgift",
+  "addedTask": "Uppgift tillagd",
+  "edit": "Redigera",
+  "editName": "Ny text för hashtaggen",
+  "tutorialButton": "Guide",
+  "onboarding": {
+    "closeButtonText": "Stäng guiden",
+    "defaultNextStepButtonText": "Fortsätt",
+    "notAllowed": "Uppfattat!",
+    "Close": {
+      "messageBoxBody": "Är du säker på att du vill hoppa över guiden? Det är ganska svårt att få ut Todorants fulla potential om du inte vet vad du ska göra! Vill du kanske åtminstone läsa en kort artikel om Todorants grundprinciper i stället?",
+      "changedMyMind": "Jag har ändrat mig, fortsätt guiden",
+      "article": "Avsluta guiden, men visa mig artikeln",
+      "closeEverything": "Jag vet vad jag gör, stäng guiden",
+      "toast": "Jag beundrar ditt mod"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant är inte bara en app, det är en produktivitetsmetod. Begränsningarna här är noga utformade för att din hjärna ska längta efter att slutföra uppgifter, ungefär som du längtar efter socker."
+    },
+    "AddTask": {
+      "messageBoxBody": "Nu lägger vi till din första uppgift. Tryck på plusknappen nedan."
+    },
+    "AddText": {
+      "messageBoxBody": "Tänk på något som du behöver göra. Skriv sedan ner det i en väldigt kort och konkret form, till exempel ”Gå ut med hunden” eller ”Köp mjölk”. Undvik uppgifter som är för övergripande eller inte är konkreta handlingar.\n\nJag har fyllt i en uppgift åt dig för att visa hur det fungerar. Ta gärna bort exempeluppgifterna efter guiden!"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Varje uppgift ska ha antingen ett exakt datum då den ska göras eller en specifik månad.\n\nDu kan inte välja innevarande månad. Vad skulle du göra om månaden tog slut och du fortfarande hade ogjorda uppgifter?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Du kan markera uppgiften som en groda. Grodor är en särskild sorts riktigt obehagliga uppgifter. Du måste göra dem först av allt på morgonen, och de visas alltid överst i listan. Jag rekommenderar högst 2 grodor om dagen.",
+      "nextStepButton": "Det är ingen groda"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Jag uppmuntrar dig att också lägga till uppgifter i Todorant som du redan har gjort, direkt efter att du har gjort dem. Det hjälper till att skapa en positiv koppling mellan att slutföra uppgifter och att känna sig nöjd."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Den här magiska knappen visar fler alternativ när du skapar en uppgift, som att ange en exakt tid (praktiskt för möten) och sortera uppgifterna."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Du kan också lägga till flera uppgifter på en gång! Inte den här gången, men experimentera gärna med det längre fram."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Snyggt! Du har precis skapat din första uppgift. Spara den nu."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Det här är sidan ”Aktuellt”. Här kommer du att vara för det mesta. Den visar bara den enda uppgift du ska jobba med och hur långt du har kommit – inget mer. Det håller dig fokuserad."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Här har du bara de allra nödvändigaste verktygen: du kan radera, redigera eller slutföra den aktuella uppgiften. Du kan också svepa åt höger eller vänster om du vill (testa det själv senare)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "Det här är en speciell knapp för att ”dela upp”, den kommer du att använda mycket. Om du stöter på en uppgift som är för komplicerad för att klara på under 30 minuter – dela upp den i flera delar."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Jag misstänker att uppgiften vi just skapade var för övergripande! Jag vet att det kan bli lite absurt, men häng med.\n\nDen ursprungliga uppgiften ser du överst – dela upp den i mindre uppgifter. Se till att du tänker på allt som behöver göras, för den ursprungliga uppgiften kommer att... försvinna!"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "Du kanske märker två saker. För det första: nu ser du en av dina deluppgifter. För det andra: den ursprungliga uppgiften som du delade upp är nu markerad som klar.\n\nDet sker automatiskt, för när du delar upp en uppgift i deluppgifter som helt täcker den ursprungliga behövs den ursprungliga uppgiften inte längre.\n\nDu belönas med en klar uppgift bara för att du delade upp den!"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "Det är här du planerar arbetet. Kommer du ihåg att varje uppgift har ett datum eller en månad? Här ser du uppgifterna sorterade!\n\nDu ska inte titta på den här skärmen alltför ofta. När du är klar med planeringen ska du bara använda sidan ”Aktuellt”."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Så här planerar du med Todorant. Så fort du kommer på en uppgift – lägg till den i Todorant direkt, annars glömmer du den.\n\nVarje morgon, och den 1:a varje månad, sätter du dig ner och planerar dagen eller månaden genom att fördela och ordna om uppgifter mellan dagar eller månader. Håll in och dra uppgifter för att ändra ordningen."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Du kanske också märker att Todorant inte har några ”projekt” där du kan gömma tråkiga uppgifter och glömma bort dem.\n\nI stället använder Todorant hashtaggar. Lägg bara till #träning, #matlagning eller #vad_som_helst för att gruppera uppgifterna och kunna söka bland dem genom att trycka på hashtaggarna."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Med knapparna ovan kan du se klara uppgifter och söka bland uppgifterna."
+    },
+    "ExplainReccuring": {
+      "article": "Läs artikeln",
+      "messageBoxBody": "Du kanske också märker att Todorant inte har återkommande uppgifter. Det är medvetet, eftersom återkommande uppgifter skadar produktiviteten i längden.\n\nAnvänd i stället uppdelningsfunktionen med ärvda hashtaggar (en av inställningarna) och uppgiftsnamn som ”Vattna #växterna och lägg till nästa uppgift”. Du kan läsa mer om det i artikeln jag skrev."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Det här är skärmen med alla inställningar du behöver i Todorant. Utforska den gärna senare. Värda att nämna är ”i dag som standard” och ”kopiera hashtaggar vid uppdelning”."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Du kanske också märker att Todorant inte har några aviseringar (förutom den valfria planeringspåminnelsen i början av dagen). Även det är medvetet.\n\nMänniskor börjar ofta ignorera aviseringar när de blir för många. Då missar man viktiga påminnelser."
+    },
+    "ExplainMultiplatform": {
+      "website": "Gå till todorant.com",
+      "messageBoxBody": "Todorant finns för iOS, Android, webben, macOS, Windows och Linux, som tillägg för Chrome och Firefox och som Telegram-bot. Se hela listan med plattformar på todorant.com."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant är gratis de första 30 dagarna, sedan kostar det $5/månad.\n\nLogiken är enkel: om Todorant ger dig produktivitet värd en kopp kaffe i månaden vill du fortsätta använda det. Om det inte är värt det kan du sluta använda Todorant.\n\nJag tror att 30 dagar räcker för att ta reda på det."
+    },
+    "Feedback": {
+      "messageBoxBody": "Om du har frågor, förslag eller klagomål är du välkommen att höra av dig till oss i den officiella supportgruppen på Telegram eller via e-post."
+    },
+    "Rules": {
+      "messageBoxBody": "Jag uppmuntrar dig att läsa avsnittet ”Så funkar det” i Todorant. Där får du troligen svar på alla frågor du har om appen och metoden."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Grattis! Du har gått igenom guiden. Jag hoppas att det nu är tydligt hur du använder Todorant.\n\nNu kör vi direkt. Du kan flytta in alla dina uppgifter i Todorant nu. Du behöver göra dem korta och konkreta och ge dem specifika datum eller månader.\n\nDet kan kännas mödosamt, men jag lovar: det lönar sig i längden!",
+      "nextStepButton": "Hurra!"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "Inte så fort! Jag vet att det kan vara svårt, men försök dela upp uppgiften i minst två mindre uppgifter som ännu inte är klara."
+    },
+    "Info": {
+      "messageBoxBody": "När du har frågor – håll också utkik efter ”i”-knapparna i övre högra hörnet. Oftast ger de dig nyttiga insikter."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Vänta lite – i den här guiden har vi begränsat möjligheten att lägga till uppgifter som klara. Men experimentera gärna med inställningen när du har gått igenom guiden!"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Vänta lite – i den här guiden har vi begränsat möjligheten att ändra uppgifternas månad och dag. Men experimentera gärna med inställningen när du har gått igenom guiden!"
+    },
+    "Start": {
+      "closeButtonText": "Nä, jag läser inte manualer",
+      "messageBoxBody": "Hej! Det är Nikita, jag har skapat Todorant.\n\nAnvändare förstår Todorant bättre när jag visar hur det fungerar. Vill du att jag visar hur du når galet hög produktivitet?",
+      "nextStepButton": "Ja! Visa hur det funkar"
+    },
+    "todoText": "Meditera #meditation",
+    "breakdownTodo1": "Hitta en guidad meditationsvideo på 10 minuter #meditation",
+    "breakdownTodo2": "Starta den guidade meditationsvideon #meditation",
+    "breakdownTodo3": "Meditera i 10 minuter #meditation",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "Okej, den här gången delade jag upp uppgiften åt dig, men framöver får du göra det själv!"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Skriv in uppgiftens text först."
+    },
+    "AddTextContinueButton": {
+      "continue": "Fortsätt"
+    }
+  },
+  "updateVersionTitle": "Hallå där! En ny version av Todorant finns tillgänglig",
+  "updateVersionMsg": "Det finns en risk att något slutar fungera i den gamla versionen, så uppdatera så snart som möjligt.",
+  "update": "Uppdatera",
+  "frogsAlert": {
+    "title": "Stopp! Det är olagligt",
+    "text": "Bryt inte mot reglerna. Om du har grodor i dag – gör dem först, dela upp dem, flytta dem till kommande dagar eller ta bort grodmarkeringen. Snälla, ignorera bara inte grodorna!"
+  },
+  "subscriptionYear": "år (≈40 % rabatt)",
+  "editHashtag": "Redigera hashtagg",
+  "addDevices": "Lägg till enheter",
+  "unEpicConfirm": "Är du säker på att du vill återställa eposet",
+  "unEpic": "Återställ epos",
+  "breakdownMessage": {
+    "title": "Återkommande uppgift",
+    "text": "Det här är en återkommande uppgift. Vill du dela upp den eller slutföra den?",
+    "complete": "Slutför"
+  },
+  "syncError": "Ett fel uppstod vid synkronisering av data",
+  "server": "Server",
+  "serverInvalid": "Det där ser inte ut som en serveradress. Den ska se ut ungefär så här: https://todo.example.com",
+  "serverChange": "Ditt konto och dina uppgifter finns på den nuvarande servern, så om du byter server loggas du ut. Fortsätta?",
+  "signIn": "Logga in",
+  "signUp": "Skapa konto",
+  "passwordLength": "Lösenordet måste ha minst 8 tecken",
+  "addDevicesConfirm": "Logga in på ditt konto på enheten som visar den här QR-koden? Fortsätt bara om du själv har öppnat den på Todorants webbplats."
+}

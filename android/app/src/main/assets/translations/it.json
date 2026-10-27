@@ -1,7 +1,9 @@
 {
   "search": "Ricerca",
+  "support": "Qualcosa non è chiaro? Scrivimi a <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
   "todo": {
     "create": {
+      "text": "Testo dell'attività",
       "placeholder": "Attività",
       "frog": "È una rana!"
     }
@@ -60,9 +62,11 @@
   "loginTelegram": "Login con Telegram",
   "logoutText": "Vuoi uscire dall'account?",
   "logout": "Esci",
+  "deleteAccount": "Elimina account",
+  "deleteAccountText": "Questa operazione elimina definitivamente dal server il tuo account con tutte le attività, gli hashtag e le impostazioni. Non si può annullare.",
   "loginButton": "Login",
   "alreadyRegistered": "(Sei già registrato)",
-  "purchaseError": "Hm, looks like something went wrong with the purchases. Please, go to the website, login and subscribe there!",
+  "purchaseError": "Mmm, sembra che qualcosa sia andato storto con gli acquisti. Vai sul sito web, accedi e abbonati da lì!",
   "purchaseThankYou": "Grazie",
   "purchaseThankYouText": "Grazie per aver acquistato l'abbonamento!",
   "activeText": "🎉 Grazie mille per sostenere Todorant! Spero che Todorant abbia già migliorato la tua vita e che continuerà a migliorarla in futuro! Il tuo supporto mi permette di migliorare Todorant ogni giorno, aggiungendo nuove funzionalità e semplificando i processi di lavoro!",
@@ -201,13 +205,296 @@
   "confirmDecryptAll": "Siete sicuri di voler decifrare tutte le attività?",
   "passwordError": "Password errata. Sembra che alcune delle attività criptate che avete non possano essere decifrate da questa password.",
   "soundEffects": "Effetti sonori",
-  "missionPassed": "Mission passed",
+  "missionPassed": "Missione compiuta",
   "respect": "Rispettare +",
   "emptyHashtags": "L'elenco degli hashtag è vuoto per ora. Create il vostro primo compito con un #hashtag per aggiungere il primo hashtag qui!",
+  "gamification": "Gamification",
+  "heroProfileTitle": "Profilo dell'eroe",
+  "infoHero": "Questa è la tua pagina profilo: sei tu l'eroe! Completa attività e guadagna punti per raggiungere ranghi sempre più alti!\n\nNon conoscerai l'elenco completo dei ranghi finché non avrai raggiunto il più alto! Ricorda: l'unica strada verso la vetta è una sequenza quotidiana di piccoli passi.",
+  "rank": "🔥 Il tuo rango 🔥",
+  "tasksCompleted": "Punti guadagnati",
+  "rank-1Title": "Entità infinita di materia oscura 😈",
+  "rank-1Description": "Hai raggiunto un rango che nessun essere umano aveva mai raggiunto prima! Congratulazioni, ecco la tua torta: 🍰. Stavolta non è una bugia.",
+  "rank0Title": "Sottozero −273.15 °C 🥶",
+  "rank0Description": "Sarebbe ancora più cool, se solo potesse.",
+  "rank5Title": "V per Vroduttività 👺",
+  "rank5Description": "Ricordate, bambini: se la produttività vi cade per terra e la raccogliete entro 5 secondi, siete salvi!",
+  "rank13Title": "Freddy felice 😱",
+  "rank13Description": "Sai che giorno è oggi. È il giorno in cui Jason ti prepara una torta. E ormai ogni giorno è quel giorno.",
+  "rank42Title": "Pescatore 🐬",
+  "rank42Description": "Addio, e grazie per tutto il pesce!",
+  "rank69Title": "Maestro del nice! 😝",
+  "rank69Description": "Il rango più nice che ci sia. Punto.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Si potrebbe dire che la tua produttività è fatta di ferro.",
+  "rank100Title": "Maestro della Forza al 100% ⚡️",
+  "rank100Description": "100 fatte, ne mancano infinite! Continua ogni giorno, ne vale la pena!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Hai risolto il caso della produttività, beh, buon per te!",
+  "rank256Title": "Idraulico felice 👾",
+  "rank256Description": "8 bit di produttività dopo, pensi ancora ai bei vecchi giochi.",
+  "rank300Title": "Spartano 💪",
+  "rank300Description": "Svuota la mente, semplifica le routine e passa i prossimi 100 punti da vero spartano!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rango non trovato.",
+  "rank777Title": "Gran maestro fortunato! 🍀",
+  "rank777Description": "Questo rango dura solo 23 punti. Sfruttali al meglio, oggi è il tuo giorno fortunato!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Sei il terminator delle rane più temibili. Vai a terminarne qualcuna!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Hacking della produttività avviato... Hacking in corso...",
+  "rank1338Title": "3L1T3 (Hackerato) 🧑‍💻",
+  "rank1338Description": "Produttività hackerata con successo!",
+  "rank2048Title": "Maestro di scacchi ♔",
+  "rank2048Description": "Preferisci la produttività agli infiniti giochini inutili ammazza-tempo, vero? VERO?",
+  "rank9000Title": "Utente con potenza oltre 9000 🏋️",
+  "rank9000Description": "Sollevi le attività come se fossero piume!",
+  "rank12800Title": "Doctor Manhattan ⚛",
+  "rank12800Description": "Suddividi le attività come se scindessi atomi. Continua così!",
+  "sendDataToServer": "Invia i dati al server",
   "encryption": {
-    "repeatPassword": "Ripetere la password"
+    "repeatPassword": "Ripetere la password",
+    "encryptionSaved": "Tutto pronto! Da ora tutte le tue nuove attività saranno cifrate",
+    "encryption": "Crittografia"
   },
-  "purchaseErrorTryOnWeb": "Subscribe on the web",
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Copia gli hashtag durante la suddivisione",
+    "showMoreByDefault": "Mostra più opzioni di default quando aggiungi attività"
+  },
+  "level": "Livello",
+  "points": "punti",
+  "pointsTillNextLevel": "punti per sbloccare il prossimo livello",
+  "accept": "Accetta",
+  "delegate": {
+    "title": "Delega",
+    "noDelegators": "Non hai ancora deleganti. Chiedi un link di invito per diventare il delegato di qualcuno.",
+    "noDelegates": "Non hai ancora delegati. Condividi il link di invito con le persone che vuoi rendere tuoi delegati",
+    "noDelegatedTasks": "Non ci sono altre attività delegate nuove.",
+    "link": "Link di invito per i delegati",
+    "linkDescription": "Le persone possono diventare tuoi delegati aprendo questo link. I delegati vedranno solo le attività che hai delegato a loro.",
+    "resetConfirmation": "Vuoi davvero reimpostare il link? Il link attuale smetterà di funzionare!",
+    "delegators": "Deleganti",
+    "delegates": "Delegati",
+    "inviteSuccess": "Fatto! Ora questo utente può delegarti attività.",
+    "inviteConfirm": "Vuoi davvero diventare un delegato di questo utente?",
+    "deleteDelegateConfirmation": "Vuoi davvero eliminare questo delegato? Non potrai più delegargli attività.",
+    "deleteDelegatorConfirmation": "Vuoi davvero eliminare questo delegante? Non potrà più delegarti attività.",
+    "pickDelegateField": "Delegato",
+    "info": "Questa è la pagina con le attività delegate a te. Puoi eliminare o accettare le attività che ti inviano i tuoi deleganti.",
+    "signupTitle": "Ops",
+    "signupDescription": "Devi accedere prima di poter usare la delega",
+    "resetLink": "Reimposta link",
+    "delegatorExists": "Il delegante esiste già",
+    "noDelegatedTasksTo": "Non hai ancora delegato nessuna attività.",
+    "ByMe": "Da me",
+    "to": "A",
+    "from": "Da",
+    "ToMe": "In arrivo"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Il link di invito non è più valido"
+    },
+    "epic": {
+      "numberError": "Deve essere un numero"
+    },
+    "errorDuring": "Si è verificato un errore durante: {{reason}}. Errore originale: {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "aggiornamento o creazione",
+      "updatingPushedDelegates": "aggiornamento o creazione dei delegati inviati",
+      "updatingPushedDelegators": "aggiornamento o creazione dei deleganti inviati",
+      "removingDelegators": "rimozione dei deleganti segnati localmente come eliminati",
+      "removingDelegates": "rimozione dei delegati segnati localmente come eliminati",
+      "removingPushedDelegators": "rimozione dei deleganti inviati",
+      "preapringDelegationsForDeleting": "preparazione delle deleghe per l'eliminazione: id delega: {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Crea un epic",
+    "epicGoal": "Obiettivo dell'epic"
+  },
+  "startTimeOfDay": "Inizio della giornata",
+  "badgeIconCurrentCount": "Numero di attività sul badge dell'app",
+  "purchaseErrorTryOnWeb": "Abbonati sul web",
+  "planningReminderTime": "Orario promemoria pianificazione",
+  "notSet": "Non impostato",
+  "planningReminderText": "🎉 È ora di pianificare!",
+  "settingsActions": {
+    "swipeActions": "Azioni di scorrimento"
+  },
+  "endOfDaySoundOn": "Suono a fine attività",
+  "dirtyValidSave": "Vuoi salvare le attività inserite?",
+  "dirtyInvalidSave": "Non hai finito di inserire le attività. Vuoi scartare quelle inserite?",
+  "dissmissTasks": "Scarta attività",
+  "saveTasks": "Salva attività",
+  "fixTasks": "Correggi attività",
+  "changeTasks": "Modifica attività",
+  "deleteAllHashtags": "Elimina tutti gli hashtag",
+  "deleteAllHashtagsConfirm": "Vuoi davvero eliminare tutti gli hashtag?",
+  "next": "Avanti",
+  "letsGo": "Andiamo!",
+  "whatWouldYouLikeToDoa": "Cosa vuoi fare?",
+  "startUsingNow": "Inizia subito a usare Todorant",
+  "readRulesFirst": "Prima leggo come si usa Todorant!",
+  "iAdmireYourBravery": "Ammiro il tuo coraggio!",
+  "iAdmireYourSpirit": "Ammiro il tuo spirito!",
+  "dirtyValidSaveSingular": "Vuoi salvare l'attività inserita?",
+  "dirtyInvalidSaveSingular": "Non hai finito di inserire l'attività. Vuoi scartarla?",
+  "dissmissTasksSingular": "Scarta attività",
+  "saveTasksSingular": "Salva attività",
+  "fixTasksSingular": "Correggi attività",
+  "changeTasksSingular": "Modifica attività",
+  "addedTask": "Attività aggiunta",
+  "edit": "Modifica",
+  "editName": "Nuovo testo dell'hashtag",
   "tutorialButton": "Messaggio di benvenuto",
-  "subscriptionYear": "anno (sconto del ≈40%)"
+  "onboarding": {
+    "closeButtonText": "Chiudi il tutorial",
+    "defaultNextStepButtonText": "Continua",
+    "notAllowed": "Capito!",
+    "Close": {
+      "messageBoxBody": "Vuoi davvero saltare il tutorial? È piuttosto difficile sfruttare tutto il potenziale di Todorant se non sai cosa fare! Magari potresti almeno leggere un breve articolo sui principi fondamentali di Todorant?",
+      "changedMyMind": "Ho cambiato idea, continua il tutorial",
+      "article": "Interrompi il tutorial, ma mostrami l'articolo",
+      "closeEverything": "So quello che faccio, chiudi il tutorial",
+      "toast": "Ammiro il tuo coraggio"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant non è solo un'app, è un metodo di produttività. I limiti che trovi qui sono studiati con cura per far sì che il tuo cervello desideri completare le attività come desidera lo zucchero."
+    },
+    "AddTask": {
+      "messageBoxBody": "Aggiungiamo la tua prima attività. Tocca il pulsante più qui sotto."
+    },
+    "AddText": {
+      "messageBoxBody": "Pensa a qualcosa che devi fare. Poi scrivilo in forma molto breve e concreta, come “Porta fuori il cane” o “Compra il latte”. Evita attività troppo generiche o non concrete.\n\nHo precompilato l'attività per mostrarti come funziona. Sentiti libero di eliminare le attività di esempio dopo il tutorial!"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Ogni attività deve avere una data esatta di completamento oppure un mese specifico.\n\nNon puoi selezionare il mese corrente. Cosa faresti se il mese finisse e avessi ancora attività da fare?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Puoi segnare l'attività come rana. Le rane sono un tipo speciale di attività davvero sgradevoli. Devi completarle come prima cosa al mattino e compaiono sempre in cima alla lista. Ti consiglio di avere al massimo 2 rane al giorno.",
+      "nextStepButton": "Non è una rana"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Ti consiglio di aggiungere a Todorant anche le attività che hai già completato, subito dopo averle finite. Questo aiuta a creare un legame positivo tra il completamento delle attività e la soddisfazione."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Toccando questo pulsante magico, quando crei un'attività compaiono altre opzioni, come impostare l'ora esatta (utile per le riunioni) e ordinare le attività."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Puoi anche aggiungere più attività in una volta! Non questa volta, però: sentiti libero di sperimentare più avanti."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Ottimo! Hai appena completato la tua prima attività. Ora salvala."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Questa è la pagina “Corrente”. La userai la maggior parte del tempo. Mostra solo l'attività su cui devi lavorare e i tuoi progressi, nient'altro. Ti aiuta a restare concentrato."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Qui hai solo gli strumenti essenziali: puoi eliminare, modificare o completare l'attività corrente. Se vuoi puoi anche scorrere a destra o a sinistra (provalo più tardi da solo)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "Ecco, questo è lo speciale pulsante di “suddivisione”: lo userai spesso. Se trovi un'attività troppo complessa per finirla in meno di 30 minuti, suddividila in più parti."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Mi sa che l'attività che abbiamo appena creato era troppo generica! Lo so, può sembrare un po' assurdo, ma abbi pazienza.\n\nIn alto vedi l'attività originale: suddividila in attività più piccole. Assicurati di pensare a tutto quello che c'è da fare, perché l'attività originale... sparirà!"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "Avrai notato due cose. Primo: ora vedi una delle tue sottoattività. Secondo: l'attività originale che hai suddiviso ora è segnata come completata.\n\nSuccede in automatico perché, quando suddividi un'attività in sottoattività che la coprono completamente, l'attività originale non serve più.\n\nVieni premiato con un'attività completata solo per averla suddivisa!"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "Qui è dove pianifichi il lavoro. Ricordi che ogni attività ha una data o un mese? Ecco, qui vedi le attività ordinate!\n\nNon dovresti guardare questa schermata troppo spesso. Finita la pianificazione, dovresti usare solo la pagina “Corrente”."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Ecco come si pianifica con Todorant. Appena ti viene in mente un'attività, aggiungila subito a Todorant, altrimenti te ne dimenticherai.\n\nE ogni mattina, così come il primo giorno di ogni mese, siediti e pianifica la giornata o il mese distribuendo e riordinando le attività tra giorni o mesi. Tieni premuto e trascina le attività per riordinarle."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Avrai anche notato che Todorant non ha “progetti” in cui nascondere le attività sgradite per dimenticarle.\n\nTodorant usa invece un sistema di hashtag. Aggiungi #sport, #cucina o #qualsiasi_cosa per raggruppare le attività e renderle ricercabili toccando gli hashtag."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Con i pulsanti in alto puoi vedere le attività completate e cercare tra le attività."
+    },
+    "ExplainReccuring": {
+      "article": "Leggi l'articolo",
+      "messageBoxBody": "Scoprirai anche che Todorant non ha attività ripetute o ricorrenti. È una scelta voluta, perché a lungo andare le attività ripetute danneggiano la produttività.\n\nUsa invece la suddivisione con l'ereditarietà degli hashtag (una delle impostazioni) e nomi di attività come “Annaffia le #piante e imposta la prossima attività”. Puoi saperne di più nell'articolo che ho scritto."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Questa è la schermata con tutte le impostazioni che ti servono in Todorant. Esplorala pure più tardi. Le più importanti sono “Predefinito ad oggi” e “Copia gli hashtag durante la suddivisione”."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Noterai anche che in Todorant non ci sono notifiche (a parte il promemoria facoltativo per la pianificazione a inizio giornata). Anche questo è voluto.\n\nQuando le notifiche sono troppe, si tende a ignorarle. E così si finisce per perdere gli avvisi importanti."
+    },
+    "ExplainMultiplatform": {
+      "website": "Vai su todorant.com",
+      "messageBoxBody": "Todorant è disponibile su iOS, Android, Web, macOS, Windows e Linux, come estensione per Chrome e Firefox e come bot di Telegram. Trovi l'elenco completo delle piattaforme su todorant.com."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant è gratuito per i primi 30 giorni, poi costa $5 al mese.\n\nIl ragionamento è semplice: se in termini di produttività Todorant vale almeno un caffè al mese, vorrai continuare a usarlo. Se non ne vale la pena, puoi smettere di usarlo.\n\nCredo che 30 giorni bastino per capirlo."
+    },
+    "Feedback": {
+      "messageBoxBody": "Se hai domande, suggerimenti o lamentele, scrivici pure nel gruppo di supporto ufficiale su Telegram o via email."
+    },
+    "Rules": {
+      "messageBoxBody": "Ti consiglio di leggere la sezione “Come fare” di Todorant. Molto probabilmente risponderà a tutte le tue domande sull'app e sul metodo."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Congratulazioni! Hai finito il tutorial. Spero che ora ti sia chiaro come usare Todorant.\n\nPassiamo subito all'azione. Ora puoi spostare tutte le tue attività su Todorant. Dovrai renderle brevi e concrete e assegnare a ciascuna una data o un mese.\n\nPotrà sembrarti noioso, ma ti assicuro che a lungo andare ne varrà la pena!",
+      "nextStepButton": "Evviva!"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "Non così in fretta! So che può essere difficile, ma prova a suddividere questa attività in almeno due attività più piccole ancora da completare."
+    },
+    "Info": {
+      "messageBoxBody": "Inoltre, quando hai qualche dubbio, cerca i pulsanti “i” nell'angolo in alto a destra. Il più delle volte ti daranno informazioni utili."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Un attimo: per questo tutorial abbiamo disattivato l'aggiunta di attività già completate. Ma sentiti libero di provare questa impostazione dopo aver finito il tutorial!"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Un attimo: per questo tutorial abbiamo disattivato la modifica del mese e del giorno delle attività. Ma sentiti libero di provare questa impostazione dopo aver finito il tutorial!"
+    },
+    "Start": {
+      "closeButtonText": "No, i manuali non li leggo",
+      "messageBoxBody": "Ciao! Sono Nikita, il creatore di Todorant.\n\nChi usa Todorant lo capisce meglio quando gli mostro come funziona. Vuoi che ti mostri come raggiungere livelli di produttività pazzeschi?",
+      "nextStepButton": "Certo! Mostrami come funziona"
+    },
+    "todoText": "Medita #meditazione",
+    "breakdownTodo1": "Trova un video di meditazione guidata da 10 minuti #meditazione",
+    "breakdownTodo2": "Avvia il video di meditazione guidata #meditazione",
+    "breakdownTodo3": "Medita per 10 minuti #meditazione",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "Ok, questa volta ho suddiviso io l'attività per te, ma in futuro dovrai farlo da solo!"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Prima inserisci il testo dell'attività, per favore."
+    },
+    "AddTextContinueButton": {
+      "continue": "Continua"
+    }
+  },
+  "updateVersionTitle": "Ehi! È disponibile una nuova versione di Todorant",
+  "updateVersionMsg": "Con la vecchia versione qualcosa potrebbe smettere di funzionare, quindi aggiorna il prima possibile.",
+  "update": "Aggiorna",
+  "frogsAlert": {
+    "title": "Alt! È vietato",
+    "text": "Non infrangere le regole. Se oggi hai delle rane, completale per prime, suddividile, spostale a giorni futuri oppure togli loro il segno di rana. Ti prego, solo non ignorare le rane!"
+  },
+  "subscriptionYear": "anno (sconto del ≈40%)",
+  "editHashtag": "Modifica hashtag",
+  "addDevices": "Aggiungi dispositivi",
+  "unEpicConfirm": "Vuoi davvero reimpostare l'epic",
+  "unEpic": "Reimposta epic",
+  "breakdownMessage": {
+    "title": "Attività ripetitiva",
+    "text": "Questa è un'attività ripetitiva: vuoi suddividerla o completarla?",
+    "complete": "Completa"
+  },
+  "syncError": "Si è verificato un errore durante la sincronizzazione dei dati",
+  "server": "Server",
+  "serverInvalid": "Non sembra l'indirizzo di un server. Dovrebbe essere simile a https://todo.example.com",
+  "serverChange": "Il tuo account e le tue attività si trovano sul server attuale, quindi cambiarlo ti farà uscire dall'account. Continuare?",
+  "signIn": "Accedi",
+  "signUp": "Crea account",
+  "passwordLength": "La password deve contenere almeno 8 caratteri",
+  "addDevicesConfirm": "Accedere al tuo account sul dispositivo che mostra questo codice QR? Continua solo se l'hai aperto tu stesso sul sito di Todorant."
 }

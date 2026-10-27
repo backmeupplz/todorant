@@ -443,8 +443,6 @@
     "dataInfo": "Data info",
     "decryptAllButton": "Decrypt all",
     "defaultToToday": "Default to today",
-    "deleteAccount": "Delete account",
-    "deleteAccountText": "This permanently deletes your account with all your todos, hashtags and settings from the server. It can't be undone.",
     "delegate": {
       "ByMe": "By me",
       "ToMe": "Inbox",
@@ -460,6 +458,8 @@
       "resetConfirmation": "Are you sure that you want to reset the link? The current link won't work anymore!",
       "resetLink": "Reset the link"
     },
+    "deleteAccount": "Delete account",
+    "deleteAccountText": "This permanently deletes your account with all your todos, hashtags and settings from the server. It can't be undone.",
     "deleteAllHashtags": "Delete all hashtags",
     "deleteAllHashtagsConfirm": "Are you sure you want to delete all hashtags?",
     "deleteTodo": "Would you really like to delete",
@@ -482,7 +482,6 @@
       "epicGoal": "Epic goal",
       "intoEpic": "Make an Epic"
     },
-    "error": "Error",
     "errors": {
       "epic": {
         "numberError": "Should be a number"

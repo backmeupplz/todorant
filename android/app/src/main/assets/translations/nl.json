@@ -1,0 +1,500 @@
+{
+  "search": "Zoeken",
+  "support": "Is iets niet duidelijk? Neem contact met me op via <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "todo": {
+    "create": {
+      "text": "Tekst van de taak",
+      "placeholder": "Taak",
+      "frog": "Het is een kikker!"
+    }
+  },
+  "cancel": "Annuleren",
+  "save": "Opslaan",
+  "delete": "Verwijderen",
+  "current": "Nu",
+  "planning": "Planning",
+  "skipped": "Overgeslagen",
+  "name": "Nederlands",
+  "language": "Kies je taal.",
+  "login": "Log in bij todorant.com met de knop hieronder.",
+  "settings": "Instellingen",
+  "addTodo": "Taak toevoegen",
+  "breakdownTodo": "Opsplitsen",
+  "pleaseLogin": "Log in",
+  "subscription": "Abonnement",
+  "allDoneTitle": "Gefeliciteerd!",
+  "allDoneText": "🥳 Het is je gelukt! Alle taken voor vandaag zijn klaar. Ga lekker uitrusten of dans misschien een rondje 💃",
+  "noTodosTitle": "Naar het oneindige!",
+  "noTodosText": "Je hebt geen taken voor vandaag. Wil je toch aan de slag? Voeg een nieuwe taak voor vandaag toe of haal taken van komende dagen naar voren.",
+  "addTodoDay": "Kies een dag",
+  "addTodoMonth": "Of een maand",
+  "addTodoTime": "Exacte tijd",
+  "completed": "Voltooid",
+  "addTodoOnTop": "Bovenaan toevoegen",
+  "addTodoMore": "Meer...",
+  "addTodoSingular": "Taak toevoegen!",
+  "addTodoPlural": "Taken toevoegen!",
+  "saveTodo": "Taak opslaan!",
+  "planningText": "Zo te zien heb je wat te plannen! Verdeel de openstaande taken hieronder opnieuw om het tabblad \"Nu\" te ontgrendelen en productief te blijven. Succes!",
+  "editTodo": "Taak bewerken",
+  "anonymousText": "Al je gegevens worden op dit moment alleen op je apparaat bewaard. Log in om te synchroniseren met de servers van Todorant.",
+  "nameLabel": "Naam",
+  "email": "E-mail",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "Aantal",
+  "todosLastSync": "Taken",
+  "tags": "Hashtags",
+  "tagsCount": "Hashtags",
+  "todoCount": "Taken",
+  "notSyncedYet": "Nog niet gesynchroniseerd",
+  "settingsLastSync": "Instellingen",
+  "accountLastSync": "Account",
+  "syncData": "Gegevens synchroniseren",
+  "googleTokenError": "Google heeft geen toegangstoken teruggegeven",
+  "facebookPermissionsError": "Geen toestemming gekregen van Facebook",
+  "facebookTokenError": "Kan geen toegangstoken van Facebook ophalen",
+  "loginWall": "Zo te zien gebruik je Todorant al meer dan een maand en ben je nog steeds niet ingelogd! Zorg dat je taken niet kwijtraken: log nu in en gebruik Todorant zonder zorgen!",
+  "loginGoogle": "Inloggen met Google",
+  "loginFacebook": "Inloggen met Facebook",
+  "loginApple": "Inloggen met Apple",
+  "loginTelegram": "Inloggen met Telegram",
+  "logoutText": "Wil je uitloggen?",
+  "logout": "Uitloggen",
+  "deleteAccount": "Account verwijderen",
+  "deleteAccountText": "Hiermee worden je account en al je taken, hashtags en instellingen definitief van de server verwijderd. Dit kan niet ongedaan worden gemaakt.",
+  "loginButton": "Inloggen",
+  "alreadyRegistered": "(Je bent al geregistreerd)",
+  "purchaseError": "Hm, er lijkt iets mis te gaan met de aankopen. Ga naar de website, log in en neem daar een abonnement!",
+  "purchaseThankYou": "Bedankt",
+  "purchaseThankYouText": "Bedankt voor het aanschaffen van een abonnement!",
+  "activeText": "🎉 Heel erg bedankt dat je Todorant steunt! Ik hoop dat Todorant je leven al beter heeft gemaakt en dat in de toekomst blijft doen! Dankzij jouw steun kan ik Todorant elke dag verbeteren, nieuwe functies toevoegen en werkprocessen eenvoudiger maken!",
+  "inactiveText": "🐝 Zo te zien is je proefperiode van Todorant afgelopen. Heeft Todorant je leven minstens $5 per maand beter gemaakt? Dat hoop ik echt! Ik val maar meteen met de deur in huis.\n\nRuilvoorstel. Ik krijg: $5 per maand, $36 per jaar (maar liefst 40% korting) of eenmalig $150. Jij krijgt: onbeperkte productiviteit en onbeperkt Todorant als bonus.\n\nWat zeg je ervan?",
+  "earlyAdopterText": "👏👏 — dit ben ik, applaudisserend voor jou: een van de gekken die Todorant, het instrument voor steeds meer productiviteit, als eersten durfden uit te proberen. Je zou kunnen zeggen dat jullie de gouden duizend zijn, wier feedback Todorant vanaf het allereerste begin heeft gevormd. Je mag Todorant zoveel gebruiken als je wilt — je zult nooit tegen limieten aanlopen, dat heb je verdiend. Merk je dat Todorant je leven flink heeft verbeterd? Dan kun je toch een abonnement nemen en zo op de beste manier \"Bedankt\" zeggen. Je verliest de status \"Early adopter 🦄\" nooit, en je kunt het abonnement altijd weer opzeggen. Heel erg bedankt dat je Todorant nog steeds gebruikt — ik blijf nieuwe functies toevoegen en het product verbeteren dat ons allemaal positief beïnvloedt. Veel succes!",
+  "earlyAdopterTextBonus": "🤗 Wat de +*%$! Zo te zien hebben Todorant of ikzelf je zo goed geholpen dat je een abonnement hebt genomen, terwijl je Todorant voor altijd gratis had kunnen gebruiken. Ik ben echt ontroerd en drink graag een kop koffie met je of klets gewoon even bij. Je kunt me bereiken op Telegram (@borodutch) of per e-mail — klik gewoon op mijn naam hieronder. Heel erg bedankt! Je kunt je haast niet voorstellen hoe belangrijk jouw bijdrage is!",
+  "trialText": "💪 Welkom bij Todorant! Je hebt na je registratie 30 dagen om uit te zoeken of Todorant goed voor je werkt. Na die 30 dagen kun je nog steeds bij je oude taken, maar kun je geen nieuwe meer toevoegen. Je kunt ook gerust al een abonnement nemen voordat de 30 dagen voorbij zijn. Ik geloof dat Todorant je persoonlijke productiviteit naar nieuwe hoogten brengt!",
+  "signature": "— Nikita, maker van Todorant",
+  "rules": [
+    "Zodra je een taak krijgt waar je iets mee moet (je ontvangt een e-mail, telefoontje of berichtje, of je ziet iets interessants dat op je takenlijst moet), maak je er meteen een taak voor aan. Wacht niet, want als je het niet opschrijft, vergeet je het.",
+    "Taken moeten altijd concreet uitvoerbaar en zo duidelijk mogelijk zijn. Kost een taak minder dan 2 minuten? Doe hem dan meteen en registreer hem als voltooid.",
+    "Bij het aanmaken van een taak kies je een specifieke datum of een maand. Je kunt de huidige maand niet kiezen zonder een specifieke datum. Dat is bedoeld om je hoofd rust te geven. Als je het systeem vertrouwt en alles wat gedaan moet worden op de juiste datum zet, kom je het op het juiste moment weer tegen. Er gaat enorm veel wilskracht verloren aan constante stress over \"dat andere ding waar ik nog iets mee moet, maar ik weet niet meer precies wat het was\". Leer vertrouwen en ontspannen.",
+    "Het eerste wat je elke maand doet, is vooruit plannen. Je neemt alle taken die aan de huidige maand zijn toegewezen en verdeelt ze over de juiste datums. Zo filter je verouderde taken eruit en heb je rust in je hoofd, omdat je precies weet wat je deze maand moet doen.",
+    "Het eerste wat je 's ochtends doet, is je dag plannen. Werp een blik op je planning. Kun je alles aan? Verdeel taken die je vandaag niet redt over andere dagen. Plan alle taken die van de vorige dagen zijn blijven liggen opnieuw in.",
+    "Kijk na het plannen niet meer naar de planning, tenzij het een noodgeval is. Psychologisch is het veel beter als je je op één taak richt, dus houd je ogen op het scherm \"Nu\". Vertrouw het systeem, het onthoudt alles. Doe je werk en geef je hoofd rust.",
+    "Het scherm \"Nu\" toont alleen de ene taak waar je je op moet richten, verder niets. Je kunt meer dan één taak per dag hebben; het aantal taken en de voortgangsbalk worden voor het gemak getoond. Je mag niet tussen taken heen en weer springen: je werkt elke taak lineair af, één voor één.",
+    "Kikkers zijn een speciaal soort taken waar je eigenlijk geen zin in hebt. Meestal zijn het taken die al maanden of zelfs jaren blijven liggen. Todorant zorgt ervoor dat je elke dag als eerste je kikkers aanpakt. 's Ochtends is je voorraad wilskracht groot genoeg voor zelfs de vervelendste taken. En als je eindelijk een kikker hebt weggewerkt, krijg je precies genoeg geluk om de hele dag te glimlachen. Je bent trots op jezelf als je kikkers aanpakt.",
+    "Je mag de huidige taak overslaan, maar probeer dat zo min mogelijk te doen. Een kikker kun je niet overslaan. Als je een taak niet hebt afgerond en hem twee keer opnieuw moest inplannen, wordt hij een kikker.",
+    "Is de huidige taak te groot of te vaag? Splits hem dan op in een lijst met subtaken. Zodra je hem hebt opgesplitst, wordt de taak als voltooid gemarkeerd.",
+    "Voeg zoveel mogelijk relevante informatie aan de taak toe. Voeg links toe naar specifieke e-mails (Gmail op het web kan dat), websites, notities (zoals Evernote) of documenten (zoals Dropbox), noteer telefoonnummers of voeg andere informatie toe die je nodig hebt om de taak af te ronden. Todorant is niet bedoeld als naslagwerk, maar als een catalogus met links naar de informatie die bij specifieke taken hoort.",
+    "Word gerust lid van onze meertalige Telegram-groep om ervaringen en trucs te delen om productiever te worden: @todorant_feedback! Je feedback over de dienst — suggesties, wensen en klachten — is meer dan welkom.",
+    "Gebruik de bewerkmodus (het lijstvolgorde-icoon bovenaan) op de pagina Planning om de volgorde van taken te wijzigen. Wil je een taak aan een bepaalde week toewijzen? Zet hem dan op maandag en plan hem maandagochtend tijdens het plannen opnieuw in.",
+    "Todorant heeft geen terugkerende taken en zal die ook nooit krijgen: het enige waar ze goed in zijn, is stress veroorzaken doordat ze als onafgemaakte taken boven je hoofd blijven hangen. Moet je terugkerende taken doen? Voeg ze dan allemaal handmatig toe; je brein zal je dankbaar zijn voor bewuste taken.",
+    "Todorant kent geen \"projecten\", omdat die demotiverend blijken te werken: sommige \"mappen\" worden nooit meer geopend. De projecten \"Fitness\" en \"Zelfontwikkeling\" laten je hartelijk groeten. Gebruik in plaats daarvan #hashtags.",
+    "Kikkers staan altijd bovenaan de lijst.",
+    "Todorant stuurt geen meldingen over komende taken met een exacte tijd."
+  ],
+  "termsOfUse": "Gebruiksvoorwaarden",
+  "privacyPolicy": "Privacybeleid",
+  "socketsInfo": "Socketinfo",
+  "dataInfo": "Gegevensinfo",
+  "howTo": "Uitleg",
+  "howToUse": "Hoe gebruik je Todorant",
+  "account": "Account",
+  "todos": "Taken",
+  "general": "Algemeen",
+  "info": "Info",
+  "supportLabel": "Support",
+  "sendFeedback": "Feedback sturen",
+  "supportText": "Heb je vragen of feedback? Stuur me een e-mail of neem contact met me op via Telegram!",
+  "socketError": "Verbindingsfout: ",
+  "connected": "Verbonden",
+  "authorized": "Geautoriseerd",
+  "daysLeft": "Dagen over: ",
+  "buySubscription": "Abonnement kopen",
+  "defaultToToday": "Standaard vandaag",
+  "newTodosGoOnTop": "Nieuwe taken bovenaan",
+  "deleteTodo": "Wil je dit echt verwijderen:",
+  "earlyAdopter": "Early adopter 🦄",
+  "active": "Actief",
+  "inactive": "Inactief",
+  "trial": "Proefperiode",
+  "error": "Fout",
+  "ok": "OK",
+  "pleaseConfirm": "Bevestigen",
+  "purchaseReceiptError": "Geen aankoopbewijs gevonden",
+  "noTodosExistTitle": "Nog geen taken",
+  "noTodosExistText": "Kom op, maak een paar taken aan met de plusknop hieronder!",
+  "restorePurchases": "Aankopen herstellen",
+  "noPurchasesError": "Sorry, je hebt nog geen aankopen gedaan",
+  "appleSigninError": "Kan niet inloggen met Apple",
+  "syncDataHard": "Volledige synchronisatie",
+  "firstDayOfWeek": "Eerste dag van de week",
+  "weekday1": "Maandag",
+  "weekday2": "Dinsdag",
+  "weekday3": "Woensdag",
+  "weekday4": "Donderdag",
+  "weekday5": "Vrijdag",
+  "weekday6": "Zaterdag",
+  "weekday0": "Zondag",
+  "appleUnauthorizedText": "Ik ben verplicht je te vragen de proefperiode te starten door hieronder een optie te kiezen, omdat de regels dat voorschrijven. Heb je al een actief abonnement? Log dan in op je account via Instellingen.",
+  "appleUnauthorizedTextGoodNews": "Goed nieuws: er wordt pas iets in rekening gebracht als de proefperiode van 30 dagen voorbij is.",
+  "appleUnauthorizedButtonExtra": "30 dagen gratis, daarna",
+  "introTitle": "Welkom!",
+  "introBack": "Aan de slag!",
+  "infoTitle": "Info",
+  "infoIntro": "Goed gedaan, je hebt op de knop \"i\" getikt! Dit is het welkomstbericht dat uitlegt wat Todorant is. Niet meer en niet minder.",
+  "infoCurrent": "Dit is de pagina met je huidige taak. Hier zie je alleen de ene taak waar je nu aan moet werken. Blijf gefocust: na het plannen van je dag is dit de enige pagina die je nodig hebt.\n\nJe kunt de taak overslaan als het geen kikker is en als het niet de laatste taak van de dag is.\n\nIs een taak te groot? Gebruik dan de functie opsplitsen. Nadat je de taak hebt opgesplitst, wordt hij automatisch als voltooid gemarkeerd.",
+  "infoBreakdown": "Dit is het scherm om een taak op te splitsen. Voeg gerust meerdere taken toe; die verschijnen in de takenlijst in plaats van de oorspronkelijke taak. Zodra je de nieuwe, kleinere taken hebt toegevoegd, wordt de oorspronkelijke taak als voltooid gemarkeerd.",
+  "infoAdd": "Dit is het scherm om taken toe te voegen. Taken moeten altijd concreet uitvoerbaar zijn (\"Goedkoopste vluchten naar Mexico zoeken\" in plaats van \"Naar Mexico gaan\") en zo klein en precies mogelijk (\"Beeldschermen afstoffen\" in plaats van \"Huis schoonmaken\"). Je kunt hier meerdere taken tegelijk toevoegen.\n\nElke taak moet een datum of een maand hebben. Je kunt de huidige maand niet kiezen.\n\nKikkers zijn taken waar je geen zin in hebt; ze komen als eerste op je lijst. Hoe eerder je aan een kikker begint, hoe groter de kans dat je hem afmaakt.",
+  "infoEdit": "Dit is het scherm om een taak te bewerken. Hier kun je de taak bewerken. Jep, dat is alles.",
+  "infoPlanning": "Dit is je planning. Verplaats gerust taken en datumkoppen (door ze lang ingedrukt te houden en te slepen) — dat is leuk!\n\nEn vergeet niet om #hashtags te gebruiken.",
+  "infoSettings": "Dit is het scherm met je instellingen. Hier kun je allerlei opties aanpassen. Lees zeker het onderdeel \"Hoe gebruik je Todorant\".",
+  "infoSockets": "Todorant gebruikt sockets om zijn gegevens met de server te synchroniseren. Zodra beide vinkjes er staan, werkt het als magie.",
+  "infoData": "Hier zie je de meest recente informatie over je lokale gegevensopslag en de synchronisatiestatistieken.",
+  "infoRules": "Lees de regels goed door om het meeste uit Todorant te halen.",
+  "preserveOrderByTime": "Volgorde op tijd behouden",
+  "subscriptionMonth": "maand",
+  "languageSelect": "Taal",
+  "languageAuto": "Automatisch",
+  "syncExactDates": "Exacte datums herberekenen",
+  "askBeforeDelete": "Bevestigen bij verwijderen",
+  "copied": "gekopieerd",
+  "sync": "Synchronisatie",
+  "infoTags": "Dit is de lijst met alle hashtags die je hebt gebruikt. Zie je niets? Maak dan een taak met een #hashtag in de tekst; dat is de enige manier om hashtags aan deze lijst toe te voegen.\n\nTik op een hashtag om de kleur te wijzigen of hem te verwijderen. Geen zorgen: hashtags staan los van taken, dus wat je hier doet, heeft geen invloed op je taken. Nou ja, met andere kleuren zien je taken er wel cooler uit.",
+  "changeColor": "Kleur wijzigen",
+  "changeColorToDefault": "Kleur resetten",
+  "colorMode": "Kleurmodus",
+  "dark": "Donker",
+  "light": "Licht",
+  "loadingData": "Je gegevens worden geladen...",
+  "breakdownRequest": "Zo te zien verplaats je deze taak wel heel vaak. Splits hem op: je kunt hem niet meer naar een andere datum verplaatsen. Geloof me, zo krijg je hem wel af!",
+  "breakdownButton": "Opsplitsen",
+  "back": "Terug",
+  "important": "Belangrijk",
+  "rateTitle": "Je hebt meer dan 100 taken voltooid! 🎉🎉🎉 Hoeveel heeft Todorant je leven verbeterd?",
+  "rate": "Beoordelen",
+  "send": "Versturen",
+  "rateCommentPlaceholder": "Schrijf in een paar woorden wat je niet goed vond aan Todorant",
+  "rateCommentEmptyError": "Laat het opmerkingenveld niet leeg",
+  "starTerrible": "Helemaal niet",
+  "starBad": "Een beetje",
+  "starOkay": "Enigszins",
+  "starGood": "Behoorlijk",
+  "starGreat": "Heel veel",
+  "rateSolicitationApple": "Zou je Todorant een beoordeling van 5 sterren willen geven in de App Store? Dat helpt enorm!",
+  "rateSolicitationGoogle": "Zou je Todorant een beoordeling van 5 sterren willen geven in de Play Store? Dat helpt enorm!",
+  "rateButton": "Beoordelen!",
+  "notConnected": "Niet verbonden",
+  "loginQR": "Inloggen met QR",
+  "qrDescription": "Open het QR-codevenster op de website van Todorant en scan de code hier",
+  "cameraAuthorization": "Geen toegang tot camera",
+  "needCameraPermission": "Todorant gebruikt de camera om QR-codes te scannen",
+  "security": "Beveiliging",
+  "encryptTodo": "Taken versleutelen",
+  "infoSecurity": "Wees uiterst voorzichtig met dit onderdeel! Versleuteling werkt pas als je een wachtwoord instelt. Er komen dan twee soorten taken: versleutelde en onversleutelde. Alle nieuwe taken worden versleuteld. Oude taken kun je met de knop hieronder alsnog versleutelen. Als je het wachtwoord kwijtraakt, kun je je taken op geen enkele manier terughalen.",
+  "encryptedTodos": "Versleutelde taken",
+  "unencryptedTodos": "Onversleutelde taken",
+  "encryptAllButton": "Alles versleutelen",
+  "decryptAllButton": "Alles ontsleutelen",
+  "password": "Wachtwoord",
+  "encryptionConfirm": "Weet je zeker dat je de taken met dit wachtwoord wilt versleutelen? Je kunt ze later met hetzelfde wachtwoord weer ontsleutelen. Als je het wachtwoord kwijtraakt, kun je de taken niet meer ontsleutelen!",
+  "encryptionDisableConfirm": "Weet je zeker dat je de sleutel wilt verwijderen en de versleuteling wilt uitschakelen? Taken die al versleuteld zijn, worden hierdoor niet ontsleuteld.",
+  "disable": "Uitschakelen",
+  "confirmEncryptAll": "Weet je zeker dat je alle taken met het wachtwoord wilt versleutelen? Als je het wachtwoord kwijtraakt, kun je de taken niet meer ontsleutelen!",
+  "confirmDecryptAll": "Weet je zeker dat je alle taken wilt ontsleutelen?",
+  "passwordError": "Onjuist wachtwoord. Zo te zien kunnen sommige van je versleutelde taken niet met dit wachtwoord worden ontsleuteld.",
+  "soundEffects": "Geluidseffecten",
+  "missionPassed": "Missie geslaagd",
+  "respect": "Respect +",
+  "emptyHashtags": "De lijst met hashtags is nog leeg. Maak je eerste taak met een #hashtag om hier de eerste hashtag toe te voegen!",
+  "gamification": "Gamificatie",
+  "heroProfileTitle": "Heldenprofiel",
+  "infoHero": "Dit is jouw profielpagina — die van de held! Voltooi taken en verdien punten om steeds hogere rangen te bereiken!\n\nJe krijgt de volledige lijst met rangen pas te zien als je de hoogste hebt bereikt! Onthoud: de enige weg naar de top is een dagelijkse reeks kleine stapjes.",
+  "rank": "🔥 Jouw rang 🔥",
+  "tasksCompleted": "Verdiende punten",
+  "rank-1Title": "Oneindig wezen van donkere materie 😈",
+  "rank-1Description": "Je hebt een rang bereikt die nog geen mens ooit heeft gehaald! Gefeliciteerd, hier is je taart: 🍰. Deze keer is het geen leugen.",
+  "rank0Title": "Subzero −273,15 °C 🥶",
+  "rank0Description": "Cooler dan dit wordt het niet.",
+  "rank5Title": "V van Vroductiviteit 👺",
+  "rank5Description": "Onthoud, kinderen: als je je productiviteit minder dan 5 seconden laat vallen en weer opraapt, is er niks aan de hand!",
+  "rank13Title": "Vrolijke Freddy 😱",
+  "rank13Description": "Je weet welke dag het is. Het is de dag dat Jason een taart voor je bakt. Elke dag is nu die dag.",
+  "rank42Title": "Visser 🐬",
+  "rank42Description": "Salut en bedankt voor de vis!",
+  "rank69Title": "Nice-meester! 😝",
+  "rank69Description": "De meest nice rang die er bestaat. Punt.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Je zou kunnen zeggen dat je productiviteit van Iron is gemaakt.",
+  "rank100Title": "100% Force-gebruiker ⚡️",
+  "rank100Description": "100 gedaan, nog oneindig te gaan! Ga elke dag door, het is het waard!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Je hebt de productiviteit opgelost. Nou, goed van je!",
+  "rank256Title": "Vrolijke loodgieter 👾",
+  "rank256Description": "8 bits aan productiviteit verder en je denkt nog steeds aan de goede oude games.",
+  "rank300Title": "Spartaan 💪",
+  "rank300Description": "Maak je hoofd leeg, vereenvoudig je routines en breng de volgende 100 punten door als een echte Spartaan!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rang niet gevonden.",
+  "rank777Title": "Geluksgrootmeester! 🍀",
+  "rank777Description": "Deze rang duurt maar 23 punten. Haal er alles uit, het is je geluksdag!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Jij bent de terminator van gevreesde kikkers. Ga er een paar termineren!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Productiviteitshack gestart... Bezig met hacken...",
+  "rank1338Title": "3L1T3 (gehackt) 🧑‍💻",
+  "rank1338Description": "Productiviteit succesvol gehackt!",
+  "rank2048Title": "Schaakmeester ♔",
+  "rank2048Description": "Je kiest liever voor productiviteit dan voor eindeloze, zinloze tijdverdrijvers, toch? TOCH?",
+  "rank9000Title": "Power user van boven de 9000 🏋️",
+  "rank9000Description": "Jij tilt taken op alsof ze niks wegen!",
+  "rank12800Title": "Doctor Manhattan ⚛",
+  "rank12800Description": "Jij splitst taken zoals je atomen splitst. Ga zo door!",
+  "sendDataToServer": "Gegevens naar de server sturen",
+  "encryption": {
+    "repeatPassword": "Herhaal wachtwoord",
+    "encryptionSaved": "Alles is klaar! Vanaf nu worden al je nieuwe taken versleuteld",
+    "encryption": "Versleuteling"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Hashtags kopiëren bij opsplitsen",
+    "showMoreByDefault": "Standaard meer opties tonen bij toevoegen"
+  },
+  "level": "Niveau",
+  "points": "punten",
+  "pointsTillNextLevel": "punten tot het volgende niveau",
+  "accept": "Accepteren",
+  "delegate": {
+    "title": "Delegeren",
+    "noDelegators": "Je hebt nog geen opdrachtgevers. Vraag om een uitnodigingslink om iemands gedelegeerde te worden.",
+    "noDelegates": "Je hebt nog geen gedelegeerden. Deel de uitnodigingslink met de mensen die je als gedelegeerde wilt toevoegen",
+    "noDelegatedTasks": "Je hebt geen nieuwe gedelegeerde taken meer.",
+    "link": "Uitnodigingslink voor gedelegeerden",
+    "linkDescription": "Via deze link kunnen mensen je gedelegeerde worden. Gedelegeerden zien alleen de taken die jij aan hen hebt gedelegeerd.",
+    "resetConfirmation": "Weet je zeker dat je de link wilt resetten? De huidige link werkt dan niet meer!",
+    "delegators": "Opdrachtgevers",
+    "delegates": "Gedelegeerden",
+    "inviteSuccess": "Gelukt! Deze gebruiker kan nu taken aan je delegeren.",
+    "inviteConfirm": "Weet je zeker dat je gedelegeerde van deze gebruiker wilt worden?",
+    "deleteDelegateConfirmation": "Weet je zeker dat je deze gedelegeerde wilt verwijderen? Je kunt dan geen taken meer aan deze persoon delegeren.",
+    "deleteDelegatorConfirmation": "Weet je zeker dat je deze opdrachtgever wilt verwijderen? Deze persoon kan dan geen taken meer aan je delegeren.",
+    "pickDelegateField": "Gedelegeerde",
+    "info": "Dit is de pagina met taken die aan jou zijn gedelegeerd. Je kunt taken die je opdrachtgevers je sturen accepteren of verwijderen.",
+    "signupTitle": "Oeps",
+    "signupDescription": "Je moet inloggen voordat je kunt delegeren",
+    "resetLink": "Link resetten",
+    "delegatorExists": "Opdrachtgever bestaat al",
+    "noDelegatedTasksTo": "Je hebt nog geen taken gedelegeerd.",
+    "ByMe": "Door mij",
+    "to": "Aan",
+    "from": "Van",
+    "ToMe": "Inbox"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Uitnodigingslink is niet meer geldig"
+    },
+    "epic": {
+      "numberError": "Moet een getal zijn"
+    },
+    "errorDuring": "Er is een fout opgetreden tijdens: {{reason}}. Oorspronkelijke fout: {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "bijwerken of aanmaken",
+      "updatingPushedDelegates": "bijwerken of aanmaken van verstuurde gedelegeerden",
+      "updatingPushedDelegators": "bijwerken of aanmaken van verstuurde opdrachtgevers",
+      "removingDelegators": "verwijderen van lokaal als verwijderd gemarkeerde opdrachtgevers",
+      "removingDelegates": "verwijderen van lokaal als verwijderd gemarkeerde gedelegeerden",
+      "removingPushedDelegators": "verwijderen van verstuurde opdrachtgevers",
+      "preapringDelegationsForDeleting": "delegaties voorbereiden op verwijderen: delegatie-id: {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Maak er een epic van",
+    "epicGoal": "Doel van de epic"
+  },
+  "startTimeOfDay": "Begin van de dag",
+  "badgeIconCurrentCount": "Aantal taken op app-badge",
+  "purchaseErrorTryOnWeb": "Abonneer je op het web",
+  "planningReminderTime": "Tijd voor planningsherinnering",
+  "notSet": "Niet ingesteld",
+  "planningReminderText": "🎉 Tijd om te plannen!",
+  "settingsActions": {
+    "swipeActions": "Veegacties"
+  },
+  "endOfDaySoundOn": "Geluid als alles klaar is",
+  "dirtyValidSave": "Wil je de ingevoerde taken opslaan?",
+  "dirtyInvalidSave": "Je bent nog niet klaar met het invoeren van taken. Wil je de ingevoerde taken weggooien?",
+  "dissmissTasks": "Taken weggooien",
+  "saveTasks": "Taken opslaan",
+  "fixTasks": "Taken aanvullen",
+  "changeTasks": "Taken wijzigen",
+  "deleteAllHashtags": "Alle hashtags verwijderen",
+  "deleteAllHashtagsConfirm": "Weet je zeker dat je alle hashtags wilt verwijderen?",
+  "next": "Volgende",
+  "letsGo": "Aan de slag!",
+  "whatWouldYouLikeToDoa": "Wat wil je doen?",
+  "startUsingNow": "Nu Todorant gebruiken",
+  "readRulesFirst": "Ik lees eerst hoe Todorant werkt!",
+  "iAdmireYourBravery": "Ik bewonder je moed!",
+  "iAdmireYourSpirit": "Ik bewonder je instelling!",
+  "dirtyValidSaveSingular": "Wil je de ingevoerde taak opslaan?",
+  "dirtyInvalidSaveSingular": "Je bent nog niet klaar met het invoeren van de taak. Wil je de ingevoerde taak weggooien?",
+  "dissmissTasksSingular": "Taak weggooien",
+  "saveTasksSingular": "Taak opslaan",
+  "fixTasksSingular": "Taak aanvullen",
+  "changeTasksSingular": "Taak wijzigen",
+  "addedTask": "Taak toegevoegd",
+  "edit": "Bewerken",
+  "editName": "Nieuwe tekst voor hashtag",
+  "tutorialButton": "Rondleiding",
+  "onboarding": {
+    "closeButtonText": "Rondleiding sluiten",
+    "defaultNextStepButtonText": "Doorgaan",
+    "notAllowed": "Begrepen!",
+    "Close": {
+      "messageBoxBody": "Weet je zeker dat je deze rondleiding wilt overslaan? Het is best lastig om het potentieel van Todorant te benutten als je niet weet wat je moet doen! Wil je misschien in plaats daarvan een kort artikel lezen over de belangrijkste principes van Todorant?",
+      "changedMyMind": "Ik heb me bedacht, ga verder met de rondleiding",
+      "article": "Stop de rondleiding, maar laat me het artikel zien",
+      "closeEverything": "Ik weet wat ik doe, sluit de rondleiding",
+      "toast": "Ik bewonder je moed"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant is niet zomaar een app, het is een productiviteitsmethode. De beperkingen hier zijn zorgvuldig ontworpen, zodat je brein net zo hunkert naar het afronden van taken als naar suiker."
+    },
+    "AddTask": {
+      "messageBoxBody": "Laten we je eerste taak toevoegen. Tik op de plusknop hieronder."
+    },
+    "AddText": {
+      "messageBoxBody": "Bedenk iets wat je moet doen. Typ het dan in een heel korte, concrete vorm, zoals “De hond uitlaten” of “Melk kopen”. Voeg geen taken toe die te groot of niet concreet uitvoerbaar zijn.\n\nIk heb de taak alvast voor je ingevuld, zodat je ziet hoe het werkt. Verwijder de voorbeeldtaken gerust na de rondleiding!"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Elke taak moet een exacte datum hebben of aan een specifieke maand zijn toegewezen.\n\nJe kunt de huidige maand niet kiezen. Wat zou je doen als de maand voorbij is en je nog onafgemaakte taken hebt?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Je kunt de taak als kikker markeren. Kikkers zijn een speciaal soort echt vervelende taken. Die moet je 's ochtends als eerste doen; ze staan altijd bovenaan de lijst. Ik raad aan om maximaal 2 kikkers per dag te hebben.",
+      "nextStepButton": "Het is geen kikker"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Ik raad je aan om ook taken die je al hebt gedaan meteen na het afronden aan Todorant toe te voegen. Zo bouw je een positieve koppeling op tussen het afronden van taken en voldoening."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Met deze magische knop krijg je meer opties bij het aanmaken van een taak, zoals een exacte tijd instellen (handig voor afspraken) en taken sorteren."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Je kunt ook meerdere taken tegelijk toevoegen! Deze keer niet, maar experimenteer er later gerust mee."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Mooi! Je hebt zojuist je eerste taak gemaakt. Sla hem nu op."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Dit is de pagina “Nu”. Die gebruik je het meest. Je ziet hier alleen de ene taak waar je aan moet werken en je voortgang — meer niet. Zo blijf je gefocust."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Je hebt hier alleen het hoognodige gereedschap: je kunt de huidige taak verwijderen, bewerken of voltooien. Je kunt ook naar rechts of links vegen als je wilt (probeer dat later zelf maar eens)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "O, dit is een speciale knop om op te splitsen, die ga je vaak gebruiken. Kom je een taak tegen die te complex is om in minder dan 30 minuten af te ronden? Splits hem dan op in meerdere delen."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Ik denk dat de taak die we net hebben gemaakt te groot was! Ik weet dat het een beetje absurd kan worden, maar heb even geduld.\n\nBovenaan zie je de oorspronkelijke taak; splits hem op in kleinere taken. Zorg dat je aan alles denkt wat er moet gebeuren, want de oorspronkelijke taak zal... verdwijnen!"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "Je ziet misschien twee dingen. Ten eerste: je ziet nu een van je subtaken. Ten tweede: de oorspronkelijke taak die je hebt opgesplitst, is nu als voltooid gemarkeerd.\n\nDat gebeurt automatisch, want als je een taak opsplitst in subtaken die de oorspronkelijke taak volledig afdekken, is die oorspronkelijke taak niet meer nodig.\n\nAlleen al voor het opsplitsen word je beloond met een voltooide taak!"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "Hier plan je het werk. Weet je nog dat elke taak een datum of een maand heeft? Nou, hier zie je de taken netjes gesorteerd!\n\nKijk niet te vaak naar dit scherm. Gebruik na het plannen alleen de pagina “Nu”."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Zo plan je met Todorant. Zodra je aan een taak denkt, voeg je hem meteen toe aan Todorant, anders vergeet je hem.\n\nEn elke ochtend en op de 1e van elke maand ga je even zitten om je dag of maand te plannen door taken over dagen of maanden te verdelen en de volgorde aan te passen. Houd taken gerust ingedrukt en sleep ze om de volgorde te wijzigen."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Misschien valt het je ook op dat Todorant geen “projecten” heeft waarin je vervelende taken kunt wegstoppen om ze te vergeten.\n\nIn plaats daarvan gebruikt Todorant hashtags. Voeg gewoon #sport, #koken of #echt_alles_wat_je_wilt toe om taken te groeperen en ze vindbaar te maken door op de hashtags te tikken."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Met de knoppen hierboven kun je voltooide taken bekijken en taken doorzoeken."
+    },
+    "ExplainReccuring": {
+      "article": "Lees het artikel",
+      "messageBoxBody": "Misschien zie je ook dat Todorant geen herhalende of terugkerende taken heeft. Dat is met opzet, want terugkerende taken schaden op de lange termijn je productiviteit.\n\nGebruik in plaats daarvan de functie opsplitsen met het overnemen van hashtags (een van de instellingen) en taaknamen als “Geef de #planten water en maak de volgende taak aan”. Je leest er meer over in het artikel dat ik heb geschreven."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Dit is het scherm met alle instellingen die je in Todorant nodig hebt. Verken het later gerust. Handig zijn vooral “standaard vandaag” en “hashtags kopiëren bij opsplitsen”."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Misschien merk je ook dat Todorant geen meldingen stuurt (behalve de optionele planningsherinnering aan het begin van de dag). Ook dat is met opzet.\n\nMensen gaan meldingen negeren als het er te veel worden. Daardoor missen ze belangrijke waarschuwingen."
+    },
+    "ExplainMultiplatform": {
+      "website": "Naar todorant.com",
+      "messageBoxBody": "Todorant is beschikbaar op iOS, Android, het web, macOS, Windows en Linux, als extensie voor Chrome en Firefox en als Telegram-bot. Bekijk de volledige lijst met platforms op todorant.com."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant is de eerste 30 dagen gratis, daarna kost het $5 per maand.\n\nDe logica is simpel: als de productiviteitswinst van Todorant je een kop koffie per maand waard is, wil je het blijven gebruiken. Is het dat niet waard, dan stop je gewoon met Todorant.\n\nIk denk dat 30 dagen genoeg is om daarachter te komen."
+    },
+    "Feedback": {
+      "messageBoxBody": "Heb je vragen, suggesties of klachten? Neem dan gerust contact met ons op in de officiële Telegram-supportgroep of per e-mail."
+    },
+    "Rules": {
+      "messageBoxBody": "Ik raad je aan het onderdeel “Uitleg” van Todorant door te nemen. Daar vind je waarschijnlijk antwoord op al je vragen over de app en de methode."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Gefeliciteerd! Je hebt de rondleiding afgerond. Ik hoop dat het nu duidelijk is hoe je Todorant gebruikt.\n\nLaten we er meteen in duiken. Je kunt nu al je taken naar Todorant overzetten. Maak ze kort en concreet en geef ze een specifieke datum of maand.\n\nHet voelt misschien als een saai klusje, maar ik beloof je: op de lange termijn betaalt het zich terug!",
+      "nextStepButton": "Hoera!"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "Niet zo snel! Ik weet dat het lastig kan zijn, maar probeer deze taak op te splitsen in minstens twee kleinere taken die nog niet af zijn."
+    },
+    "Info": {
+      "messageBoxBody": "Heb je vragen? Let dan op de knoppen “i” rechtsboven. Meestal vind je daar nuttige uitleg."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Wacht even: voor deze rondleiding kun je geen taken als voltooid toevoegen. Experimenteer er na de rondleiding gerust mee!"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Wacht even: voor deze rondleiding kun je de maand en dag van taken niet wijzigen. Experimenteer er na de rondleiding gerust mee!"
+    },
+    "Start": {
+      "closeButtonText": "Nee, ik lees geen handleidingen",
+      "messageBoxBody": "Hoi! Ik ben Nikita, de maker van Todorant.\n\nGebruikers begrijpen Todorant beter als ik ze laat zien hoe het werkt. Zal ik je laten zien hoe je een waanzinnig niveau van productiviteit bereikt?",
+      "nextStepButton": "Graag! Laat zien hoe het werkt"
+    },
+    "todoText": "Mediteren #meditatie",
+    "breakdownTodo1": "Een begeleide meditatievideo van 10 minuten zoeken #meditatie",
+    "breakdownTodo2": "De begeleide meditatievideo starten #meditatie",
+    "breakdownTodo3": "10 minuten mediteren #meditatie",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "Oké, deze keer heb ik de taak voor je opgesplitst, maar voortaan moet je het zelf doen!"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Voer eerst de tekst van de taak in."
+    },
+    "AddTextContinueButton": {
+      "continue": "Doorgaan"
+    }
+  },
+  "updateVersionTitle": "Hoi! Er is een nieuwe versie van Todorant beschikbaar",
+  "updateVersionMsg": "Er is een kans dat er iets stukgaat in de oude versie, dus update zo snel mogelijk.",
+  "update": "Updaten",
+  "frogsAlert": {
+    "title": "Stop! Dit mag niet",
+    "text": "Houd je aan de regels. Heb je vandaag kikkers? Maak ze dan eerst af, splits ze op, verplaats ze naar een latere dag of haal de kikkermarkering weg. Maar negeer de kikkers alsjeblieft niet!"
+  },
+  "subscriptionYear": "jaar (≈40% korting)",
+  "editHashtag": "Hashtag bewerken",
+  "addDevices": "Apparaten toevoegen",
+  "unEpicConfirm": "Wil je deze epic echt resetten:",
+  "unEpic": "Epic resetten",
+  "breakdownMessage": {
+    "title": "Terugkerende taak",
+    "text": "Dit is een terugkerende taak. Wil je hem opsplitsen of voltooien?",
+    "complete": "Voltooien"
+  },
+  "syncError": "Er is een fout opgetreden bij het synchroniseren van gegevens",
+  "server": "Server",
+  "serverInvalid": "Dat lijkt geen serveradres te zijn. Het moet eruitzien als https://todo.example.com",
+  "serverChange": "Je account en taken staan op de huidige server, dus als je die wijzigt, word je uitgelogd. Doorgaan?",
+  "signIn": "Inloggen",
+  "signUp": "Account maken",
+  "passwordLength": "Het wachtwoord moet minstens 8 tekens bevatten",
+  "addDevicesConfirm": "Inloggen op je account op het apparaat dat deze QR-code toont? Ga alleen door als je de code zelf op de website van Todorant hebt geopend."
+}

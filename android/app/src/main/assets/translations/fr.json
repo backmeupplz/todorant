@@ -1,0 +1,500 @@
+{
+  "search": "Rechercher",
+  "support": "Quelque chose n'est pas clair ? Écrivez-moi à <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "todo": {
+    "create": {
+      "text": "Texte de la tâche",
+      "placeholder": "Tâche",
+      "frog": "C'est une grenouille !"
+    }
+  },
+  "cancel": "Annuler",
+  "save": "Enregistrer",
+  "delete": "Supprimer",
+  "current": "En cours",
+  "planning": "Planification",
+  "skipped": "Passées",
+  "name": "Français",
+  "language": "Veuillez choisir la langue.",
+  "login": "Veuillez vous connecter à todorant.com avec le bouton ci-dessous.",
+  "settings": "Paramètres",
+  "addTodo": "Ajouter une tâche",
+  "breakdownTodo": "Décomposer",
+  "pleaseLogin": "Veuillez vous connecter",
+  "subscription": "Abonnement",
+  "allDoneTitle": "Félicitations !",
+  "allDoneText": "🥳 Bravo ! Toutes les tâches du jour sont terminées, allez vous reposer ou dansez un peu 💃",
+  "noTodosTitle": "Vers l'infini !",
+  "noTodosText": "Vous n'avez aucune tâche pour aujourd'hui. Si vous voulez travailler, ajoutez une nouvelle tâche pour aujourd'hui ou reprenez des tâches des jours à venir.",
+  "addTodoDay": "Choisir un jour précis",
+  "addTodoMonth": "Ou un mois",
+  "addTodoTime": "Heure précise",
+  "completed": "Terminées",
+  "addTodoOnTop": "Ajouter en haut",
+  "addTodoMore": "Plus...",
+  "addTodoSingular": "Ajouter la tâche !",
+  "addTodoPlural": "Ajouter les tâches !",
+  "saveTodo": "Enregistrer !",
+  "planningText": "On dirait que vous avez un peu de planification à faire ! Répartissez les tâches en attente ci-dessous pour débloquer l'onglet « En cours » et rester productif. À vous de jouer !",
+  "editTodo": "Modifier la tâche",
+  "anonymousText": "Pour le moment, toutes vos données sont stockées sur votre appareil. Pour les synchroniser avec les serveurs de Todorant, vous devez vous connecter.",
+  "nameLabel": "Nom",
+  "email": "E-mail",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "Nombre",
+  "todosLastSync": "Tâches",
+  "tags": "Hashtags",
+  "tagsCount": "Hashtags",
+  "todoCount": "Tâches",
+  "notSyncedYet": "Pas encore synchronisé",
+  "settingsLastSync": "Paramètres",
+  "accountLastSync": "Compte",
+  "syncData": "Synchroniser",
+  "googleTokenError": "Google n'a renvoyé aucun jeton d'accès",
+  "facebookPermissionsError": "Les autorisations Facebook n'ont pas été accordées",
+  "facebookTokenError": "Impossible d'obtenir le jeton d'accès Facebook",
+  "loginWall": "On dirait que vous utilisez Todorant depuis plus d'un mois sans vous être connecté ! Ne risquez pas de perdre vos tâches : connectez-vous maintenant et profitez de Todorant en toute sécurité !",
+  "loginGoogle": "Se connecter avec Google",
+  "loginFacebook": "Se connecter avec Facebook",
+  "loginApple": "Se connecter avec Apple",
+  "loginTelegram": "Se connecter avec Telegram",
+  "logoutText": "Voulez-vous vous déconnecter ?",
+  "logout": "Se déconnecter",
+  "deleteAccount": "Supprimer le compte",
+  "deleteAccountText": "Cette action supprime définitivement du serveur votre compte, avec toutes vos tâches, vos hashtags et vos paramètres. Elle est irréversible.",
+  "loginButton": "Se connecter",
+  "alreadyRegistered": "(Vous êtes déjà inscrit)",
+  "purchaseError": "Hum, on dirait qu'un problème est survenu avec les achats. Rendez-vous sur le site web, connectez-vous et abonnez-vous depuis là-bas !",
+  "purchaseThankYou": "Merci",
+  "purchaseThankYouText": "Merci d'avoir souscrit l'abonnement !",
+  "activeText": "🎉 Merci beaucoup de soutenir Todorant ! J'espère que Todorant a déjà amélioré votre vie et qu'il continuera à la rendre meilleure ! Votre soutien me permet d'améliorer Todorant chaque jour, d'ajouter de nouvelles fonctionnalités et de simplifier votre façon de travailler !",
+  "inactiveText": "🐝 On dirait que votre période d'essai de Todorant est arrivée à son terme. Todorant a-t-il amélioré votre vie d'au moins 5 $ par mois ? Je l'espère bien ! Je vais aller droit au but.\n\nJe vous propose un marché. Je reçois : 5 $ par mois, 36 $ par an (une remise de 40 %, rien que ça) ou 150 $ en une seule fois. Vous recevez : une productivité illimitée, et Todorant illimité en prime.\n\nAlors, marché conclu ?",
+  "earlyAdopterText": "👏👏 — c'est moi qui vous applaudis, vous, les fous qui avez accepté d'essayer parmi les premiers Todorant, l'outil d'une productivité toujours plus grande. On peut dire que vous êtes le millier d'or, celui dont les retours ont façonné Todorant dès le tout début. Vous avez le droit d'utiliser Todorant autant que vous le souhaitez, sans jamais rencontrer la moindre limite : vous l'avez bien mérité. Cela dit, si vous trouvez que Todorant a radicalement amélioré votre vie, vous pouvez quand même acheter l'abonnement, ce qui est la plus belle façon de dire « Merci ». Vous ne perdrez jamais le statut « Pionnier 🦄 », et vous pourrez toujours résilier l'abonnement. Merci beaucoup d'utiliser encore Todorant ; je continuerai à ajouter de nouvelles fonctionnalités pour améliorer ce produit qui nous fait du bien à tous. Bonne chance !",
+  "earlyAdopterTextBonus": "🤗 Nom d'un +*%$ ! On dirait que Todorant, ou moi personnellement, vous avons suffisamment aidé pour que vous preniez un abonnement alors que vous pouviez utiliser Todorant gratuitement pour toujours. Je suis profondément touché et je serais ravi de prendre un café avec vous ou simplement de discuter un peu. N'hésitez pas à me contacter sur Telegram (@borodutch) ou par e-mail : il suffit de cliquer sur mon nom ci-dessous. Merci infiniment ! Vous n'imaginez pas à quel point votre contribution compte !",
+  "trialText": "💪 Bienvenue sur Todorant ! Vous avez 30 jours après votre inscription pour voir si Todorant vous convient. Au bout de 30 jours, vous aurez toujours accès à vos anciennes tâches, mais vous ne pourrez plus en ajouter de nouvelles. Vous pouvez tout à fait acheter l'abonnement avant la fin des 30 jours. Je suis convaincu que Todorant vous fera atteindre de nouveaux sommets de productivité personnelle !",
+  "signature": "— Nikita, créateur de Todorant",
+  "rules": [
+    "Dès que vous avez une tâche concrète à faire (vous recevez un e-mail, un appel, un SMS, ou vous voyez quelque chose d'intéressant qui doit aller dans votre liste), créez-la immédiatement. N'attendez pas : si vous ne la notez pas, vous l'oublierez.",
+    "Les tâches doivent toujours être concrètes et aussi précises que possible. Si une tâche prend moins de 2 minutes, faites-la tout de suite et enregistrez-la comme terminée.",
+    "Quand vous créez une tâche, vous lui attribuez soit une date précise, soit un mois. Vous ne pouvez pas choisir le mois en cours sans indiquer une date précise. Le but est de vous libérer l'esprit. Si vous faites confiance au système et placez tout ce qui doit être fait à la bonne date, vous le retrouverez au bon moment. On gaspille énormément de volonté à stresser sans arrêt à propos de « cette autre chose dont je dois m'occuper, mais je ne sais plus trop ce que c'était ». Apprenez à faire confiance et à vous détendre.",
+    "Chaque mois, la première chose à faire est de planifier. Prenez toutes les tâches attribuées au mois en cours et répartissez-les aux bonnes dates. Cela vous permet d'éliminer les tâches dépassées et de garder l'esprit tranquille, en sachant exactement ce que vous avez à faire ce mois-ci.",
+    "Chaque matin, la première chose à faire est de planifier votre journée. Jetez un œil à la section Planification. Pouvez-vous tout faire ? Répartissez les tâches que vous ne pourrez pas traiter aujourd'hui. Replanifiez les tâches restées inachevées les jours précédents.",
+    "Sauf urgence, ne regardez plus la section Planification une fois la planification terminée. Psychologiquement, il est bien plus efficace de vous concentrer sur une seule tâche : gardez donc les yeux sur la section En cours. Faites confiance au système, il se souvient de tout. Faites votre travail et libérez votre esprit.",
+    "La section En cours ne contient qu'une seule tâche, celle sur laquelle vous devez vous concentrer, rien d'autre. Vous pouvez avoir plusieurs tâches par jour : leur nombre et la barre de progression sont affichés pour vous faciliter la vie. Vous n'avez pas le droit de sauter d'une tâche à l'autre : traitez-les dans l'ordre, une par une.",
+    "Les grenouilles sont un type particulier de tâches dont on n'a généralement aucune envie de s'occuper. Ce sont souvent des tâches laissées de côté pendant des mois, voire des années. Todorant fait en sorte que vous vous occupiez des grenouilles en premier, chaque jour. Le matin, votre réserve de volonté est assez grande pour venir à bout des tâches les plus pénibles. Et une fois que vous avez enfin avalé une grenouille, vous ressentez juste assez de bonheur pour sourire toute la journée. Vous êtes fier de vous quand vous vous occupez des grenouilles.",
+    "Vous pouvez passer la tâche en cours, mais essayez de le faire le moins souvent possible. Vous ne pouvez pas passer une grenouille. Si vous n'avez pas réussi à terminer une tâche et avez dû la replanifier deux fois, elle devient une grenouille.",
+    "Si la tâche en cours est trop vague, décomposez-la en une liste de sous-tâches. Dès que vous l'avez décomposée, la tâche est marquée comme terminée.",
+    "Ajoutez autant d'informations utiles que possible à la tâche. Ajoutez des liens vers des e-mails précis (Gmail sur le web le permet), des sites web, des notes (comme Evernote), des documents (comme Dropbox), notez des numéros de téléphone ou toute autre information dont vous pourriez avoir besoin pour terminer la tâche. Todorant n'est pas fait pour servir d'ouvrage de référence : il doit plutôt être un catalogue de liens vers les informations utiles à chaque tâche.",
+    "N'hésitez pas à rejoindre notre groupe multilingue sur Telegram pour partager vos expériences et vos astuces de productivité : @todorant_feedback ! Vos retours sur le service (suggestions, souhaits et réclamations) sont plus que bienvenus.",
+    "Utilisez le mode édition (l'icône d'ordre de liste en haut) de la page Planification pour changer l'ordre des tâches. Si vous voulez attribuer une tâche à une semaine précise, attribuez-la simplement au lundi et replanifiez-la lors de la planification du lundi matin.",
+    "Todorant n'a pas et n'aura jamais de tâches récurrentes : la seule chose qu'elles font bien, c'est provoquer de l'anxiété en restant suspendues au-dessus de vous comme des tâches inachevées. Si vous devez accomplir des tâches répétitives, ajoutez-les toutes manuellement : votre cerveau vous remerciera pour ces tâches conscientes.",
+    "Todorant n'a pas de notion de « projets », car elle s'est révélée démotivante : certains « dossiers » ne sont jamais ouverts. Les projets « Sport » et « Développement personnel » vous passent le bonjour. Utilisez plutôt des #hashtags.",
+    "Les grenouilles apparaissent toujours en haut de la liste.",
+    "Todorant n'envoie pas de notifications pour les tâches à venir ayant une heure précise."
+  ],
+  "termsOfUse": "Conditions d'utilisation",
+  "privacyPolicy": "Politique de confidentialité",
+  "socketsInfo": "Infos de connexion",
+  "dataInfo": "Infos sur les données",
+  "howTo": "Mode d'emploi",
+  "howToUse": "Comment utiliser Todorant",
+  "account": "Compte",
+  "todos": "Tâches",
+  "general": "Général",
+  "info": "Infos",
+  "supportLabel": "Assistance",
+  "sendFeedback": "Envoyer un avis",
+  "supportText": "Des questions ou des retours ? Envoyez-moi un e-mail ou écrivez-moi sur Telegram !",
+  "socketError": "Erreur de connexion : ",
+  "connected": "Connecté",
+  "authorized": "Autorisé",
+  "daysLeft": "Jours restants : ",
+  "buySubscription": "S'abonner",
+  "defaultToToday": "Aujourd'hui par défaut",
+  "newTodosGoOnTop": "Nouvelles tâches en haut",
+  "deleteTodo": "Voulez-vous vraiment supprimer",
+  "earlyAdopter": "Pionnier 🦄",
+  "active": "Actif",
+  "inactive": "Inactif",
+  "trial": "Essai",
+  "error": "Erreur",
+  "ok": "OK",
+  "pleaseConfirm": "Veuillez confirmer",
+  "purchaseReceiptError": "Aucun reçu d'achat trouvé",
+  "noTodosExistTitle": "Pas encore de tâches",
+  "noTodosExistText": "Allez-y : créez quelques tâches en appuyant sur le bouton plus ci-dessous !",
+  "restorePurchases": "Restaurer les achats",
+  "noPurchasesError": "Désolé, vous n'avez encore effectué aucun achat",
+  "appleSigninError": "Impossible de se connecter avec Apple",
+  "syncDataHard": "Synchro complète",
+  "firstDayOfWeek": "Premier jour de la semaine",
+  "weekday1": "Lundi",
+  "weekday2": "Mardi",
+  "weekday3": "Mercredi",
+  "weekday4": "Jeudi",
+  "weekday5": "Vendredi",
+  "weekday6": "Samedi",
+  "weekday0": "Dimanche",
+  "appleUnauthorizedText": "Je suis obligé de vous demander de commencer l'essai en choisissant une option ci-dessous, car le règlement l'exige. Si vous avez déjà un abonnement actif, connectez-vous à votre compte dans les Paramètres.",
+  "appleUnauthorizedTextGoodNews": "Bonne nouvelle quand même : vous ne serez pas débité avant la fin des 30 jours d'essai.",
+  "appleUnauthorizedButtonExtra": "30 jours d'essai gratuit, puis",
+  "introTitle": "Bienvenue !",
+  "introBack": "C'est parti !",
+  "infoTitle": "Infos",
+  "infoIntro": "Bravo, vous avez trouvé le bouton « i » ! Voici le message de bienvenue qui explique ce qu'est Todorant. Ni plus, ni moins.",
+  "infoCurrent": "Voici la page de la tâche en cours. Elle n'affiche qu'une seule tâche : celle sur laquelle vous devez travailler maintenant. Restez concentré, c'est la seule page dont vous avez besoin une fois votre journée planifiée.\n\nVous pouvez passer la tâche si ce n'est pas une grenouille et si ce n'est pas la dernière tâche de la journée.\n\nSi la tâche est trop vaste, utilisez la décomposition. Une fois décomposée, la tâche sera automatiquement marquée comme terminée.",
+  "infoBreakdown": "Voici l'écran de décomposition. Ajoutez autant de tâches que vous voulez : elles apparaîtront dans la liste à la place de la tâche d'origine. Une fois les nouvelles petites tâches ajoutées, la tâche d'origine sera marquée comme terminée.",
+  "infoAdd": "Voici l'écran d'ajout de tâches. Une tâche doit toujours être concrète (« Trouver les meilleurs vols pour le Mexique » plutôt que « Aller au Mexique ») et aussi petite et précise que possible (« Dépoussiérer les écrans » plutôt que « Faire le ménage »). Vous pouvez ajouter plusieurs tâches ici.\n\nChaque tâche doit avoir une date ou un mois. Vous ne pouvez pas choisir le mois en cours.\n\nLes grenouilles sont les tâches dont vous n'avez aucune envie de vous occuper : elles apparaîtront en tête de liste. Plus tôt vous vous attaquez à une grenouille, plus vous avez de chances d'en venir à bout.",
+  "infoEdit": "Voici l'écran de modification. Ici, vous pouvez modifier la tâche. Eh oui, c'est tout.",
+  "infoPlanning": "Voici votre section Planification. N'hésitez pas à réorganiser les tâches et les titres de dates (en appuyant longuement dessus puis en les faisant glisser) : c'est amusant !\n\nEt n'oubliez pas d'utiliser des #hashtags.",
+  "infoSettings": "Voici l'écran des paramètres. Vous pouvez y configurer différentes options. Pensez à lire la section « Comment utiliser Todorant ».",
+  "infoSockets": "Todorant utilise des sockets pour synchroniser ses données avec le serveur. Ça marche comme par magie dès que les deux coches sont là.",
+  "infoData": "Vous trouverez ici les dernières infos sur le stockage local de vos données et les statistiques de synchronisation.",
+  "infoRules": "Lisez attentivement les règles pour tirer le meilleur parti de Todorant.",
+  "preserveOrderByTime": "Respecter l'ordre des heures",
+  "subscriptionMonth": "mois",
+  "languageSelect": "Langue",
+  "languageAuto": "Auto",
+  "syncExactDates": "Recalculer les dates précises",
+  "askBeforeDelete": "Confirmer la suppression",
+  "copied": "copié",
+  "sync": "Synchronisation",
+  "infoTags": "Voici la liste de tous les hashtags que vous avez utilisés. Vous ne voyez rien ? Allez-y, créez une tâche avec un #hashtag dans son texte : c'est le seul moyen d'ajouter des hashtags à cette liste.\n\nPour changer la couleur d'un hashtag ou le supprimer, appuyez dessus. Pas d'inquiétude, les hashtags sont indépendants des tâches : rien de ce que vous faites sur cet écran n'affectera vos tâches. Bon, changer les couleurs peut rendre vos tâches plus stylées.",
+  "changeColor": "Changer la couleur",
+  "changeColorToDefault": "Couleur par défaut",
+  "colorMode": "Thème",
+  "dark": "Sombre",
+  "light": "Clair",
+  "loadingData": "Chargement de vos données...",
+  "breakdownRequest": "On dirait que vous déplacez beaucoup trop cette tâche. Décomposez-la : vous ne pouvez plus la reporter à une autre date. Croyez-moi, ça vous aidera à la terminer !",
+  "breakdownButton": "Décomposer",
+  "back": "Retour",
+  "important": "Important",
+  "rateTitle": "Vous avez terminé plus de 100 tâches ! 🎉🎉🎉 À quel point Todorant a-t-il amélioré votre vie ?",
+  "rate": "Noter",
+  "send": "Envoyer",
+  "rateCommentPlaceholder": "Dites-moi en quelques mots ce qui ne vous a pas plu dans Todorant",
+  "rateCommentEmptyError": "Merci de ne pas laisser le commentaire vide",
+  "starTerrible": "Pas du tout",
+  "starBad": "Un peu",
+  "starOkay": "Moyennement",
+  "starGood": "Pas mal",
+  "starGreat": "Énormément",
+  "rateSolicitationApple": "Pourriez-vous laisser 5 étoiles à Todorant sur l'App Store ? Ça aide énormément !",
+  "rateSolicitationGoogle": "Pourriez-vous laisser 5 étoiles à Todorant sur le Play Store ? Ça aide énormément !",
+  "rateButton": "Laisser une note !",
+  "notConnected": "Non connecté",
+  "loginQR": "Connexion par QR code",
+  "qrDescription": "Ouvrez la fenêtre du QR code sur le site de Todorant et scannez le code ici",
+  "cameraAuthorization": "Accès à la caméra refusé",
+  "needCameraPermission": "Todorant utilise la caméra pour scanner les QR codes",
+  "security": "Sécurité",
+  "encryptTodo": "Chiffrer les tâches",
+  "infoSecurity": "Utilisez cette section avec la plus grande prudence ! Le chiffrement ne fonctionne que si vous ajoutez un mot de passe. Il y aura deux types de tâches : chiffrées et non chiffrées. Toutes les nouvelles tâches seront chiffrées. Les anciennes tâches peuvent être chiffrées avec le bouton ci-dessous. Si vous perdez le mot de passe, il sera impossible de récupérer vos tâches.",
+  "encryptedTodos": "Tâches chiffrées",
+  "unencryptedTodos": "Tâches non chiffrées",
+  "encryptAllButton": "Tout chiffrer",
+  "decryptAllButton": "Tout déchiffrer",
+  "password": "Mot de passe",
+  "encryptionConfirm": "Voulez-vous vraiment chiffrer les tâches avec ce mot de passe ? Vous pourrez les déchiffrer plus tard avec le même mot de passe. Si vous perdez le mot de passe, vous ne pourrez plus déchiffrer vos tâches !",
+  "encryptionDisableConfirm": "Voulez-vous vraiment supprimer la clé et désactiver le chiffrement ? Les tâches déjà chiffrées ne seront pas déchiffrées.",
+  "disable": "Désactiver",
+  "confirmEncryptAll": "Voulez-vous vraiment chiffrer toutes les tâches avec ce mot de passe ? Si vous perdez le mot de passe, vous ne pourrez plus déchiffrer les tâches !",
+  "confirmDecryptAll": "Voulez-vous vraiment déchiffrer toutes les tâches ?",
+  "passwordError": "Mot de passe incorrect. On dirait que certaines de vos tâches chiffrées ne peuvent pas être déchiffrées avec ce mot de passe.",
+  "soundEffects": "Effets sonores",
+  "missionPassed": "Mission accomplie",
+  "respect": "Respect +",
+  "emptyHashtags": "La liste des hashtags est vide pour l'instant. Créez votre première tâche avec un #hashtag pour l'ajouter ici !",
+  "gamification": "Gamification",
+  "heroProfileTitle": "Profil du héros",
+  "infoHero": "Voici votre page de profil : celle du héros, c'est-à-dire vous ! Terminez des tâches et gagnez des points pour atteindre des rangs toujours plus élevés !\n\nVous ne connaîtrez la liste complète des rangs qu'une fois le plus élevé atteint ! N'oubliez pas : le seul chemin vers le sommet, c'est une suite quotidienne de petits pas.",
+  "rank": "🔥 Votre rang 🔥",
+  "tasksCompleted": "Points gagnés",
+  "rank-1Title": "Être infini de matière noire 😈",
+  "rank-1Description": "Vous avez atteint un rang qu'aucun humain n'avait jamais atteint ! Félicitations, voici votre gâteau : 🍰. Cette fois, ce n'est pas un mensonge.",
+  "rank0Title": "Zéro absolu −273,15 °C 🥶",
+  "rank0Description": "Ce serait bien plus cool si c'était possible.",
+  "rank5Title": "V pour Vroductivité 👺",
+  "rank5Description": "Souvenez-vous, les enfants : si vous laissez tomber votre productivité moins de 5 secondes et que vous la ramassez, elle est encore bonne !",
+  "rank13Title": "Joyeux Freddy 😱",
+  "rank13Description": "Vous savez quel jour on est. C'est le jour où Jason vous prépare un gâteau. Et désormais, c'est ce jour-là tous les jours.",
+  "rank42Title": "Pêcheur 🐬",
+  "rank42Description": "Salut, et encore merci pour le poisson !",
+  "rank69Title": "Maître coquin ! 😝",
+  "rank69Description": "Le rang le plus coquin qui soit. Point.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "On pourrait dire que votre productivité porte une armure d'Iron Man.",
+  "rank100Title": "Maître de la Force à 100 % ⚡️",
+  "rank100Description": "100 tâches faites, l'infini reste à faire ! Continuez chaque jour, ça en vaut la peine !",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Vous avez résolu l'énigme de la productivité. Eh bien, tant mieux pour vous !",
+  "rank256Title": "Plombier heureux 👾",
+  "rank256Description": "8 bits de productivité plus tard, vous pensez encore aux bons vieux jeux.",
+  "rank300Title": "Spartiate 💪",
+  "rank300Description": "Videz-vous la tête, simplifiez vos routines et passez les 100 prochains points en vrai Spartiate !",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rang introuvable.",
+  "rank777Title": "Grand maître chanceux ! 🍀",
+  "rank777Description": "Ce rang ne dure que 23 points. Profitez-en, c'est votre jour de chance !",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Vous êtes le terminator des redoutables grenouilles. Allez donc en éliminer quelques-unes !",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Piratage de la productivité lancé... Piratage en cours...",
+  "rank1338Title": "3L1T3 (piraté) 🧑‍💻",
+  "rank1338Description": "Productivité piratée avec succès !",
+  "rank2048Title": "Maître des échecs ♔",
+  "rank2048Description": "Vous préférez la productivité aux jeux interminables et inutiles pour tuer le temps, n'est-ce pas ? N'EST-CE PAS ?",
+  "rank9000Title": "Puissance de plus de 9000 🏋️",
+  "rank9000Description": "Vous soulevez les tâches comme si de rien n'était !",
+  "rank12800Title": "Docteur Manhattan ⚛",
+  "rank12800Description": "Vous décomposez les tâches comme on fissionne des atomes. Continuez comme ça !",
+  "sendDataToServer": "Envoyer les données au serveur",
+  "encryption": {
+    "repeatPassword": "Répétez le mot de passe",
+    "encryptionSaved": "Tout est prêt ! Désormais, toutes vos nouvelles tâches seront chiffrées",
+    "encryption": "Chiffrement"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Copier les hashtags lors d'une décomposition",
+    "showMoreByDefault": "Afficher plus d'options par défaut à l'ajout"
+  },
+  "level": "Niveau",
+  "points": "points",
+  "pointsTillNextLevel": "points avant le prochain niveau",
+  "accept": "Accepter",
+  "delegate": {
+    "title": "Délégation",
+    "noDelegators": "Vous n'avez encore aucun délégant. Demandez un lien d'invitation pour devenir le délégué de quelqu'un.",
+    "noDelegates": "Vous n'avez encore aucun délégué. Partagez le lien d'invitation avec les personnes dont vous voulez faire vos délégués",
+    "noDelegatedTasks": "Vous n'avez plus de nouvelles tâches déléguées.",
+    "link": "Lien d'invitation des délégués",
+    "linkDescription": "Les personnes qui suivent ce lien deviennent vos délégués. Les délégués ne voient que les tâches que vous leur avez déléguées.",
+    "resetConfirmation": "Voulez-vous vraiment réinitialiser le lien ? Le lien actuel ne fonctionnera plus !",
+    "delegators": "Délégants",
+    "delegates": "Délégués",
+    "inviteSuccess": "C'est fait ! Cet utilisateur peut maintenant vous déléguer des tâches.",
+    "inviteConfirm": "Voulez-vous vraiment devenir le délégué de cet utilisateur ?",
+    "deleteDelegateConfirmation": "Voulez-vous vraiment supprimer ce délégué ? Vous ne pourrez plus lui déléguer de tâches.",
+    "deleteDelegatorConfirmation": "Voulez-vous vraiment supprimer ce délégant ? Il ne pourra plus vous déléguer de tâches.",
+    "pickDelegateField": "Délégué",
+    "info": "Voici la page des tâches qui vous ont été déléguées. Vous pouvez supprimer ou accepter les tâches que vos délégants vous envoient.",
+    "signupTitle": "Oups",
+    "signupDescription": "Vous devez vous connecter pour utiliser la délégation",
+    "resetLink": "Réinitialiser le lien",
+    "delegatorExists": "Ce délégant existe déjà",
+    "noDelegatedTasksTo": "Vous n'avez encore délégué aucune tâche.",
+    "ByMe": "Par moi",
+    "to": "À",
+    "from": "De",
+    "ToMe": "Reçues"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Ce lien d'invitation n'est plus valide"
+    },
+    "epic": {
+      "numberError": "Doit être un nombre"
+    },
+    "errorDuring": "Une erreur s'est produite pendant : {{reason}}. Erreur d'origine : {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "la mise à jour ou la création",
+      "updatingPushedDelegates": "la mise à jour ou la création des délégués envoyés",
+      "updatingPushedDelegators": "la mise à jour ou la création des délégants envoyés",
+      "removingDelegators": "la suppression des délégants marqués comme supprimés localement",
+      "removingDelegates": "la suppression des délégués marqués comme supprimés localement",
+      "removingPushedDelegators": "la suppression des délégants envoyés",
+      "preapringDelegationsForDeleting": "la préparation des délégations à supprimer : id de délégation : {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Créer une épopée",
+    "epicGoal": "Objectif de l'épopée"
+  },
+  "startTimeOfDay": "Début de la journée",
+  "badgeIconCurrentCount": "Nombre de tâches sur l'icône",
+  "purchaseErrorTryOnWeb": "S'abonner sur le web",
+  "planningReminderTime": "Rappel de planification",
+  "notSet": "Non défini",
+  "planningReminderText": "🎉 C'est l'heure de planifier !",
+  "settingsActions": {
+    "swipeActions": "Actions de balayage"
+  },
+  "endOfDaySoundOn": "Son de fin de journée",
+  "dirtyValidSave": "Voulez-vous enregistrer les tâches saisies ?",
+  "dirtyInvalidSave": "Vous n'avez pas fini de saisir les tâches. Voulez-vous abandonner les tâches saisies ?",
+  "dissmissTasks": "Abandonner les tâches",
+  "saveTasks": "Enregistrer les tâches",
+  "fixTasks": "Corriger les tâches",
+  "changeTasks": "Modifier les tâches",
+  "deleteAllHashtags": "Supprimer tous les hashtags",
+  "deleteAllHashtagsConfirm": "Voulez-vous vraiment supprimer tous les hashtags ?",
+  "next": "Suivant",
+  "letsGo": "C'est parti !",
+  "whatWouldYouLikeToDoa": "Que voulez-vous faire ?",
+  "startUsingNow": "Commencer à utiliser Todorant",
+  "readRulesFirst": "Je vais d'abord lire comment utiliser Todorant !",
+  "iAdmireYourBravery": "J'admire votre audace !",
+  "iAdmireYourSpirit": "J'admire votre état d'esprit !",
+  "dirtyValidSaveSingular": "Voulez-vous enregistrer la tâche saisie ?",
+  "dirtyInvalidSaveSingular": "Vous n'avez pas fini de saisir la tâche. Voulez-vous abandonner la tâche saisie ?",
+  "dissmissTasksSingular": "Abandonner la tâche",
+  "saveTasksSingular": "Enregistrer la tâche",
+  "fixTasksSingular": "Corriger la tâche",
+  "changeTasksSingular": "Modifier la tâche",
+  "addedTask": "Tâche ajoutée",
+  "edit": "Modifier",
+  "editName": "Nouveau texte du hashtag",
+  "tutorialButton": "Tutoriel",
+  "onboarding": {
+    "closeButtonText": "Fermer le tutoriel",
+    "defaultNextStepButtonText": "Continuer",
+    "notAllowed": "Compris !",
+    "Close": {
+      "messageBoxBody": "Voulez-vous vraiment passer ce tutoriel ? Difficile de libérer tout le potentiel de Todorant si vous ne savez pas quoi faire ! Et si vous lisiez au moins un petit article sur les grands principes de Todorant ?",
+      "changedMyMind": "J'ai changé d'avis, continuons le tutoriel",
+      "article": "Arrêtons le tutoriel, mais montrez-moi l'article",
+      "closeEverything": "Je sais ce que je fais, fermez le tutoriel",
+      "toast": "J'admire votre audace"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant n'est pas qu'une simple appli, c'est une méthode de productivité. Ses restrictions sont soigneusement pensées pour que votre cerveau ait envie de terminer des tâches comme il a envie de sucre."
+    },
+    "AddTask": {
+      "messageBoxBody": "Ajoutons votre première tâche. Appuyez sur le bouton plus ci-dessous."
+    },
+    "AddText": {
+      "messageBoxBody": "Pensez à quelque chose que vous devez faire. Puis écrivez-le sous une forme très courte et concrète, comme « Promener le chien » ou « Acheter du lait ». Évitez les tâches trop vastes ou trop vagues.\n\nJ'ai prérempli la tâche pour vous montrer comment ça marche. N'hésitez pas à supprimer les tâches d'exemple après le tutoriel !"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Chaque tâche doit avoir soit une date précise, soit un mois.\n\nVous ne pouvez pas choisir le mois en cours. Que feriez-vous si le mois se terminait et qu'il vous restait des tâches inachevées ?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Vous pouvez marquer la tâche comme grenouille. Les grenouilles sont un type particulier de tâches vraiment désagréables. Vous devez les faire dès le matin, en premier : elles apparaissent toujours en haut de la liste. Je vous conseille de ne pas avoir plus de 2 grenouilles par jour.",
+      "nextStepButton": "Ce n'est pas une grenouille"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Je vous encourage aussi à ajouter dans Todorant les tâches que vous venez de terminer, juste après les avoir faites. Cela aide à créer un lien positif entre l'accomplissement d'une tâche et la satisfaction."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Ce bouton magique affiche plus d'options lors de la création d'une tâche, comme l'heure précise (pratique pour les réunions) et l'ordre des tâches."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Vous pouvez aussi ajouter plusieurs tâches à la fois ! Pas cette fois-ci, mais n'hésitez pas à essayer plus tard."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Parfait ! Vous venez de créer votre première tâche. Maintenant, enregistrez-la."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Voici la page « En cours ». C'est celle que vous utiliserez le plus souvent. Elle n'affiche que la tâche sur laquelle vous devez travailler et votre progression, rien de plus. De quoi rester concentré."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Vous n'avez ici que le strict minimum : vous pouvez supprimer, modifier ou terminer la tâche en cours. Vous pouvez aussi balayer vers la droite ou vers la gauche si vous voulez (essayez plus tard par vous-même)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "Oh, voici un bouton spécial : « Décomposer ». Vous allez beaucoup vous en servir. Si une tâche est trop complexe pour être terminée en moins de 30 minutes, décomposez-la en plusieurs parties."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Je crois que la tâche que nous venons de créer était trop vaste ! Je sais, ça peut paraître un peu absurde, mais suivez-moi.\n\nVous voyez la tâche d'origine en haut : décomposez-la en tâches plus petites. Pensez bien à tout ce qu'il faut faire, car la tâche d'origine va... disparaître !"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "Vous remarquerez peut-être deux choses. D'abord, vous voyez maintenant l'une de vos sous-tâches. Ensuite, la tâche d'origine que vous avez décomposée est maintenant marquée comme terminée.\n\nC'est automatique : quand vous décomposez une tâche en sous-tâches qui la couvrent entièrement, la tâche d'origine n'a plus de raison d'être.\n\nVous êtes récompensé par une tâche terminée rien qu'en la décomposant !"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "C'est ici que vous planifiez votre travail. Vous vous souvenez que chaque tâche a une date ou un mois ? Eh bien, vous voyez ici les tâches triées !\n\nVous ne devriez pas consulter cet écran trop souvent. Une fois la planification terminée, n'utilisez plus que la page « En cours »."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Voici comment planifier avec Todorant. Dès qu'une tâche vous vient à l'esprit, ajoutez-la immédiatement à Todorant, sinon vous l'oublierez.\n\nEt chaque matin, ainsi que le 1er de chaque mois, prenez le temps de planifier votre journée ou votre mois en répartissant et en réorganisant les tâches entre les jours ou les mois. Maintenez une tâche appuyée et faites-la glisser pour la déplacer."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Vous remarquerez peut-être aussi que Todorant n'a pas de « projets » où cacher les tâches indésirables pour les oublier.\n\nÀ la place, Todorant utilise un système de hashtags. Ajoutez simplement #sport, #cuisine ou #nimporte_quoi pour regrouper les tâches et les retrouver en appuyant sur les hashtags."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Les boutons ci-dessus vous permettent de voir les tâches terminées et de rechercher des tâches."
+    },
+    "ExplainReccuring": {
+      "article": "Lire l'article",
+      "messageBoxBody": "Vous constaterez aussi que Todorant n'a pas de tâches répétitives ou récurrentes. C'est voulu : à long terme, les tâches répétitives nuisent à la productivité.\n\nUtilisez plutôt la décomposition avec l'héritage des hashtags (l'un des paramètres) et des noms de tâches comme « Arroser les #plantes et créer la tâche suivante ». Pour en savoir plus, lisez l'article que j'ai écrit."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Voici l'écran avec tous les paramètres dont vous avez besoin dans Todorant. N'hésitez pas à l'explorer plus tard. Les plus notables sont « Aujourd'hui par défaut » et « Copier les hashtags lors d'une décomposition »."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Vous remarquerez aussi qu'il n'y a pas de notifications dans Todorant (à part le rappel de planification facultatif en début de journée). C'est également voulu.\n\nQuand il y a trop de notifications, on finit par les ignorer. Et on passe alors à côté des alertes importantes."
+    },
+    "ExplainMultiplatform": {
+      "website": "Aller sur todorant.com",
+      "messageBoxBody": "Todorant est disponible sur iOS, Android, le web, macOS, Windows et Linux, en extension pour Chrome et Firefox, et en bot Telegram. Retrouvez la liste complète des plateformes sur todorant.com."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant est gratuit pendant les 30 premiers jours, puis coûte 5 $/mois.\n\nLa logique est simple : si le gain de productivité de Todorant vaut bien un café par mois, vous voudrez continuer à l'utiliser. Sinon, vous pouvez arrêter.\n\nJe pense que 30 jours suffisent pour vous faire une idée."
+    },
+    "Feedback": {
+      "messageBoxBody": "Si vous avez des questions, des suggestions ou des réclamations, n'hésitez pas à nous contacter dans le groupe d'assistance officiel sur Telegram ou par e-mail."
+    },
+    "Rules": {
+      "messageBoxBody": "Je vous encourage à parcourir la section « Mode d'emploi » de Todorant. Elle répondra très probablement à toutes vos questions sur l'appli et la méthode."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Félicitations ! Vous avez terminé le tutoriel. J'espère que vous savez maintenant comment utiliser Todorant.\n\nPassons directement à l'action. Vous pouvez dès maintenant transférer toutes vos tâches dans Todorant. Il faudra les rendre courtes et concrètes, et leur attribuer une date ou un mois précis.\n\nÇa peut paraître fastidieux, mais je vous assure que ça paiera sur le long terme !",
+      "nextStepButton": "Youpi !"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "Pas si vite ! Je sais que ça peut être difficile, mais essayez de décomposer cette tâche en au moins deux tâches plus petites, encore à faire."
+    },
+    "Info": {
+      "messageBoxBody": "Et quand vous avez des questions, cherchez les boutons « i » en haut à droite. La plupart du temps, ils vous donneront des informations utiles."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Une petite seconde : pour les besoins de ce tutoriel, nous avons désactivé l'ajout de tâches déjà terminées. Mais n'hésitez pas à tester ce paramètre une fois le tutoriel terminé !"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Une petite seconde : pour les besoins de ce tutoriel, nous avons désactivé le changement du mois et du jour des tâches. Mais n'hésitez pas à tester ce paramètre une fois le tutoriel terminé !"
+    },
+    "Start": {
+      "closeButtonText": "Bof, je ne lis pas les modes d'emploi",
+      "messageBoxBody": "Bonjour ! C'est Nikita, le créateur de Todorant.\n\nLes utilisateurs comprennent mieux Todorant quand je leur montre comment s'en servir. Voulez-vous que je vous montre comment atteindre des niveaux de productivité incroyables ?",
+      "nextStepButton": "Oui ! Montrez-moi comment ça marche"
+    },
+    "todoText": "Méditer #méditation",
+    "breakdownTodo1": "Trouver une vidéo de méditation guidée de 10 minutes #méditation",
+    "breakdownTodo2": "Lancer la vidéo de méditation guidée #méditation",
+    "breakdownTodo3": "Méditer pendant 10 minutes #méditation",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "D'accord, cette fois j'ai décomposé la tâche pour vous, mais à l'avenir, vous devrez le faire vous-même !"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Saisissez d'abord le texte de la tâche."
+    },
+    "AddTextContinueButton": {
+      "continue": "Continuer"
+    }
+  },
+  "updateVersionTitle": "Bonjour ! Une nouvelle version de Todorant est disponible",
+  "updateVersionMsg": "Il est possible que quelque chose ne fonctionne plus sur l'ancienne version, alors mettez à jour dès que possible.",
+  "update": "Mettre à jour",
+  "frogsAlert": {
+    "title": "Stop ! C'est interdit",
+    "text": "N'enfreignez pas les règles. Si vous avez des grenouilles aujourd'hui, terminez-les d'abord, décomposez-les, reportez-les à plus tard ou retirez-leur le statut de grenouille. Mais par pitié, n'ignorez pas les grenouilles !"
+  },
+  "subscriptionYear": "an (≈40 % de remise)",
+  "editHashtag": "Modifier le hashtag",
+  "addDevices": "Ajouter des appareils",
+  "unEpicConfirm": "Voulez-vous vraiment réinitialiser l'épopée",
+  "unEpic": "Réinitialiser l'épopée",
+  "breakdownMessage": {
+    "title": "Tâche répétitive",
+    "text": "C'est une tâche répétitive. Voulez-vous la décomposer ou la terminer ?",
+    "complete": "Terminer"
+  },
+  "syncError": "Une erreur s'est produite lors de la synchronisation des données",
+  "server": "Serveur",
+  "serverInvalid": "Ça ne ressemble pas à une adresse de serveur. Elle doit ressembler à https://todo.example.com",
+  "serverChange": "Votre compte et vos tâches se trouvent sur le serveur actuel : le changer vous déconnectera. Continuer ?",
+  "signIn": "Se connecter",
+  "signUp": "Créer un compte",
+  "passwordLength": "Le mot de passe doit comporter au moins 8 caractères",
+  "addDevicesConfirm": "Connecter votre compte sur l'appareil qui affiche ce QR code ? Ne continuez que si vous l'avez ouvert vous-même sur le site de Todorant."
+}

@@ -1,0 +1,500 @@
+{
+  "search": "搜尋",
+  "support": "有什麼不清楚的地方嗎？歡迎寫信到 <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a> 聯絡我",
+  "todo": {
+    "create": {
+      "text": "待辦事項內容",
+      "placeholder": "待辦事項",
+      "frog": "這是一隻青蛙！"
+    }
+  },
+  "cancel": "取消",
+  "save": "儲存",
+  "delete": "刪除",
+  "current": "目前",
+  "planning": "規劃",
+  "skipped": "已略過",
+  "name": "繁體中文",
+  "language": "請選擇語言。",
+  "login": "請使用下方按鈕登入 todorant.com。",
+  "settings": "設定",
+  "addTodo": "新增待辦",
+  "breakdownTodo": "拆解",
+  "pleaseLogin": "請先登入",
+  "subscription": "訂閱",
+  "allDoneTitle": "恭喜！",
+  "allDoneText": "🥳 你做到了！今天的任務全部完成，去好好休息，或是跳支舞吧 💃",
+  "noTodosTitle": "飛向無限！",
+  "noTodosText": "你今天沒有任何待辦事項。如果還想做點事，可以為今天新增待辦，或是把之後的待辦事項提前拿來做。",
+  "addTodoDay": "選擇日期",
+  "addTodoMonth": "或選擇月份",
+  "addTodoTime": "指定時間",
+  "completed": "已完成",
+  "addTodoOnTop": "加到最上方",
+  "addTodoMore": "更多⋯",
+  "addTodoSingular": "新增待辦！",
+  "addTodoPlural": "新增待辦！",
+  "saveTodo": "儲存待辦！",
+  "planningText": "看來你有些規劃要做！請重新安排下方尚未完成的任務，就能解鎖「目前」分頁，繼續保持高效率。加油！",
+  "editTodo": "編輯待辦",
+  "anonymousText": "目前你的所有資料都只儲存在這部裝置上。登入後才能開始與 Todorant 伺服器同步。",
+  "nameLabel": "名稱",
+  "email": "電子郵件",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "數量",
+  "todosLastSync": "待辦事項",
+  "tags": "主題標籤",
+  "tagsCount": "主題標籤",
+  "todoCount": "待辦事項",
+  "notSyncedYet": "尚未同步",
+  "settingsLastSync": "設定",
+  "accountLastSync": "帳號",
+  "syncData": "同步資料",
+  "googleTokenError": "Google 未傳回存取權杖",
+  "facebookPermissionsError": "未取得 Facebook 權限",
+  "facebookTokenError": "無法取得 Facebook 存取權杖",
+  "loginWall": "看來你已經用了 Todorant 超過一個月，卻還沒登入！別讓你的待辦事項有遺失的風險，現在就登入，安心使用 Todorant 吧！",
+  "loginGoogle": "使用 Google 登入",
+  "loginFacebook": "使用 Facebook 登入",
+  "loginApple": "使用 Apple 登入",
+  "loginTelegram": "使用 Telegram 登入",
+  "logoutText": "確定要登出嗎？",
+  "logout": "登出",
+  "deleteAccount": "刪除帳號",
+  "deleteAccountText": "這會從伺服器上永久刪除你的帳號，以及所有待辦事項、主題標籤和設定，而且無法復原。",
+  "loginButton": "登入",
+  "alreadyRegistered": "（你已經註冊過了）",
+  "purchaseError": "嗯，購買過程好像出了點問題。請到網站登入後，在那裡訂閱！",
+  "purchaseThankYou": "謝謝你",
+  "purchaseThankYouText": "感謝你購買訂閱！",
+  "activeText": "🎉 非常感謝你支持 Todorant！希望 Todorant 已經讓你的生活變得更好，未來也會繼續如此！有了你的支持，我才能每天改進 Todorant，加入新功能，並讓工作流程更簡單！",
+  "inactiveText": "🐝 看來你的 Todorant 試用期已經結束了。Todorant 有沒有讓你的生活至少改善了每月 $5 的價值？我當然希望有！那我就開門見山了。\n\n來做個交易吧。我得到：每月 $5、每年 $36（足足省下 40%），或一次付清 $150。你得到：無限的生產力，外加無限使用 Todorant 當作贈品。\n\n你覺得如何？",
+  "earlyAdopterText": "👏👏 — 這是我在為你鼓掌；為你們這群瘋狂的人，願意搶先試用 Todorant 這個讓生產力不斷提升的工具。可以說，你們就是那「黃金千人」，你們的回饋從一開始就塑造了 Todorant。你有權想用多少就用多少 Todorant，永遠不會遇到任何限制，這是你應得的。不過，如果你發現 Todorant 大幅改善了你的生活，你還是可以購買訂閱，用最好的方式說聲「謝謝」。你永遠不會失去「早期使用者 🦄」的身分，而且隨時都能取消訂閱。非常感謝你一直使用 Todorant，我也會繼續加入新功能，把這個對我們大家都有正面影響的產品做得更好。祝你好運！",
+  "earlyAdopterTextBonus": "🤗 我的天 +*%$！看來不是 Todorant 就是我本人真的幫上你不少忙，讓你明明可以永久免費使用 Todorant，卻還是購買了訂閱。我真的非常感動，很樂意跟你喝杯咖啡，或只是聊聊天。歡迎在 Telegram（@borodutch）或用電子郵件聯絡我，點一下下方我的名字就行。非常感謝你！你的貢獻有多重要，真的難以想像！",
+  "trialText": "💪 歡迎使用 Todorant！註冊後你有 30 天的時間，看看 Todorant 適不適合你。30 天過後，你仍然可以存取舊的任務，但無法新增任務。在 30 天結束前就購買訂閱也完全沒問題。我相信 Todorant 會帶你的個人生產力登上新的高峰！",
+  "signature": "— Nikita，Todorant 開發者",
+  "rules": [
+    "只要一出現需要行動的任務（收到電子郵件、電話、簡訊，或看到任何值得放進待辦清單的事情），就立刻為它建立一個待辦事項。不要等，沒記下來的話你一定會忘記。",
+    "待辦事項必須是可以直接執行的，而且要盡可能具體。如果一件事花不到 2 分鐘，就馬上做完，然後把它記錄為已完成。",
+    "建立待辦事項時，你要嘛指定一個日期，要嘛選擇一個月份。你不能只選本月而不指定日期。這是為了讓你的大腦放鬆。只要你信任這個系統，把每件該做的事放在正確的日期上，它就會在對的時間出現在你面前。很多意志力都浪費在不斷擔心「還有另一件事要處理，可是我想不起來是什麼」上。學著信任，學著放鬆。",
+    "每個月的第一件事就是提前規劃。把所有排在本月的任務拿出來，分配到正確的日期。這樣能幫你篩掉過時的任務，清楚知道這個月要做什麼，讓心裡踏實。",
+    "每天早上的第一件事就是規劃你的一天。看一眼你的「規劃」區。今天的事都處理得完嗎？把今天處理不了的任務分配到其他日子，再把前幾天沒完成的任務重新安排。",
+    "除非是緊急狀況，否則規劃完之後就不要再看規劃區了。只專注在一個任務上，對心理健康好得多，所以請把目光放在「目前」區。信任這個系統，它什麼都記得。做好你的事，讓大腦放鬆。",
+    "「目前」區只會顯示一個你需要專注的任務，除此之外什麼都沒有。你一天可以有不只一個任務，任務數量和進度列只是方便你參考。你不能在任務之間跳來跳去，必須依序一個一個處理。",
+    "青蛙是一種特別的任務，通常是你不想面對的事。這類任務往往一拖就是好幾個月，甚至好幾年。Todorant 會確保你每天一開始就先處理青蛙。早上你的意志力存量最充足，連最棘手的任務都應付得來。而當你終於解決一隻青蛙，那份成就感足以讓你笑一整天。解決青蛙的時候，你會為自己感到驕傲。",
+    "你可以略過目前的任務，但請盡量少這麼做。青蛙是不能略過的。如果一個任務沒完成，被你重新安排了兩次，它就會變成青蛙。",
+    "如果目前的任務太籠統，就把它拆解成一系列子任務。拆解完成後，原本的任務就會被標記為已完成。",
+    "盡可能為待辦事項加上相關資訊。加上特定電子郵件的連結（網頁版 Gmail 可以做到）、網站、筆記（例如 Evernote）、文件（例如 Dropbox），留下電話號碼，或加上任何完成任務可能需要的資訊。Todorant 不是用來當作你的資料庫，而是一份目錄，收納和各個待辦事項相關的參考資料連結。",
+    "歡迎加入我們在 Telegram 上的多語言群組 @todorant_feedback，一起分享提升生產力的經驗和技巧！也非常歡迎你對這項服務提出回饋，無論是建議、期望還是抱怨都好。",
+    "在「規劃」頁面使用編輯模式（上方的清單排序圖示）來調整任務順序。如果想把任務排在某一週，就先把它排在星期一，等星期一早上規劃時再重新安排。",
+    "Todorant 沒有、也永遠不會有重複任務，因為重複任務唯一擅長的，就是像沒做完的事一樣懸在你頭上，讓你焦慮。如果你需要完成重複性的工作，就全部手動加進來，你的大腦會感謝你這些有意識安排的任務。",
+    "Todorant 沒有「專案」的概念，因為事實證明它很打擊士氣，有些「資料夾」根本從來沒被打開過。「健身」和「自我成長」這兩個專案向你問好。請改用 #hashtags。",
+    "青蛙永遠會出現在清單最上方。",
+    "Todorant 不會針對設定了指定時間的待辦任務發送提醒通知。"
+  ],
+  "termsOfUse": "使用條款",
+  "privacyPolicy": "隱私權政策",
+  "socketsInfo": "連線資訊",
+  "dataInfo": "資料資訊",
+  "howTo": "使用說明",
+  "howToUse": "Todorant 使用說明",
+  "account": "帳號",
+  "todos": "待辦事項",
+  "general": "一般",
+  "info": "資訊",
+  "supportLabel": "支援",
+  "sendFeedback": "傳送意見回饋",
+  "supportText": "有問題或意見嗎？寄電子郵件給我，或在 Telegram 上聯絡我！",
+  "socketError": "連線錯誤：",
+  "connected": "已連線",
+  "authorized": "已授權",
+  "daysLeft": "剩餘天數：",
+  "buySubscription": "購買訂閱",
+  "defaultToToday": "預設為今天",
+  "newTodosGoOnTop": "新待辦加到最上方",
+  "deleteTodo": "確定要刪除",
+  "earlyAdopter": "早期使用者 🦄",
+  "active": "已啟用",
+  "inactive": "未啟用",
+  "trial": "試用中",
+  "error": "錯誤",
+  "ok": "好",
+  "pleaseConfirm": "請確認",
+  "purchaseReceiptError": "找不到購買收據",
+  "noTodosExistTitle": "還沒有待辦事項",
+  "noTodosExistText": "來吧，點一下下方的加號按鈕，建立幾個待辦事項！",
+  "restorePurchases": "回復購買項目",
+  "noPurchasesError": "抱歉，你目前還沒有任何購買項目",
+  "appleSigninError": "無法使用 Apple 登入",
+  "syncDataHard": "完整同步",
+  "firstDayOfWeek": "每週的第一天",
+  "weekday1": "星期一",
+  "weekday2": "星期二",
+  "weekday3": "星期三",
+  "weekday4": "星期四",
+  "weekday5": "星期五",
+  "weekday6": "星期六",
+  "weekday0": "星期日",
+  "appleUnauthorizedText": "依照規定，我必須請你選擇下方其中一個方案來開始試用。如果你已經有有效的訂閱，請到「設定」登入你的帳號。",
+  "appleUnauthorizedTextGoodNews": "不過有個好消息：30 天試用期結束前，你都不會被收費。",
+  "appleUnauthorizedButtonExtra": "免費試用 30 天，之後",
+  "introTitle": "歡迎！",
+  "introBack": "出發吧！",
+  "infoTitle": "資訊",
+  "infoIntro": "很好，你點了「i」按鈕！這是說明 Todorant 是什麼的歡迎訊息。不多也不少。",
+  "infoCurrent": "這是目前任務頁面。它只會顯示一個你現在應該專心處理的任務。保持專注，規劃好一天之後，你只需要這個頁面。\n\n只要任務不是青蛙，也不是今天的最後一個任務，你就可以略過它。\n\n如果任務太籠統，就使用拆解功能。拆解後，原本的任務會自動標記為已完成。",
+  "infoBreakdown": "這是任務拆解畫面。你可以新增多個任務，它們會取代原本的任務出現在任務清單中。新增這些較小的任務後，原本的任務就會標記為已完成。",
+  "infoAdd": "這是新增任務畫面。任務必須是可以直接執行的（「找飛往墨西哥最划算的機票」而不是「去墨西哥」），而且要盡可能小、盡可能具體（「擦螢幕上的灰塵」而不是「打掃家裡」）。你可以在這裡一次新增多個任務。\n\n每個任務都必須指定日期或月份。你不能選擇本月。\n\n青蛙是你不想面對的任務，它們會排在清單最前面。越早開始處理青蛙，完成它的機會就越大。",
+  "infoEdit": "這是編輯任務畫面。你可以在這裡編輯任務。對，就這樣。",
+  "infoPlanning": "這是你的規劃區。你可以自由調整任務和日期標題的順序（長按後拖曳即可），很好玩喔！\n\n另外，別忘了使用 #hashtags。",
+  "infoSettings": "這是你的設定畫面。你可以在這裡調整各種選項。請務必閱讀「Todorant 使用說明」。",
+  "infoSockets": "Todorant 透過 socket 與伺服器同步資料。只要兩個勾勾都出現，一切就會像魔法一樣運作。",
+  "infoData": "這裡會顯示你本機資料儲存空間和同步狀態的最新資訊。",
+  "infoRules": "請仔細閱讀這些規則，才能充分發揮 Todorant 的效用。",
+  "preserveOrderByTime": "依指定時間排序",
+  "subscriptionMonth": "月",
+  "languageSelect": "語言",
+  "languageAuto": "自動",
+  "syncExactDates": "重新計算指定日期",
+  "askBeforeDelete": "刪除待辦前先確認",
+  "copied": "已複製",
+  "sync": "同步",
+  "infoTags": "這裡列出你用過的所有主題標籤。如果什麼都沒看到，就去建立一個內容含有 #hashtag 的任務吧，這是把主題標籤加進這份清單的唯一方法。\n\n如果想更改主題標籤的顏色或刪除它，點一下就行。別擔心，主題標籤和待辦事項是分開的，在這個畫面做任何操作都不會影響你的待辦事項。嗯，不過換個顏色能讓你的待辦事項看起來更酷。",
+  "changeColor": "更改顏色",
+  "changeColorToDefault": "重設顏色",
+  "colorMode": "外觀模式",
+  "dark": "深色",
+  "light": "淺色",
+  "loadingData": "正在載入你的資料⋯",
+  "breakdownRequest": "看來你把這個任務移動太多次了。請把它拆解開來，你已經不能再把它移到其他日期了。相信我，這會幫助你完成這個任務！",
+  "breakdownButton": "拆解",
+  "back": "返回",
+  "important": "重要",
+  "rateTitle": "你已經完成超過 100 個任務了！🎉🎉🎉 Todorant 讓你的生活改善了多少？",
+  "rate": "評分",
+  "send": "傳送",
+  "rateCommentPlaceholder": "請簡單寫下你對 Todorant 有哪些不滿意的地方",
+  "rateCommentEmptyError": "請不要讓留言欄位空白",
+  "starTerrible": "完全沒有",
+  "starBad": "一點點",
+  "starOkay": "還算有",
+  "starGood": "滿多的",
+  "starGreat": "非常多",
+  "rateSolicitationApple": "可以請你在 App Store 給 Todorant 五顆星評分嗎？這對我幫助很大！",
+  "rateSolicitationGoogle": "可以請你在 Play 商店給 Todorant 五顆星評分嗎？這對我幫助很大！",
+  "rateButton": "去評分！",
+  "notConnected": "未連線",
+  "loginQR": "使用 QR 碼登入",
+  "qrDescription": "請在 Todorant 網站上開啟 QR 碼視窗，然後在這裡掃描",
+  "cameraAuthorization": "未授權使用相機",
+  "needCameraPermission": "Todorant 需要使用相機來掃描 QR 碼",
+  "security": "安全性",
+  "encryptTodo": "加密待辦事項",
+  "infoSecurity": "使用這個區塊時請務必格外小心！必須設定密碼，加密才會生效。任務會分成兩種：已加密和未加密。所有新任務都會被加密。舊的待辦事項可以用下方按鈕轉換成加密狀態。如果你忘記密碼，將無法救回任務。",
+  "encryptedTodos": "已加密的任務",
+  "unencryptedTodos": "未加密的任務",
+  "encryptAllButton": "全部加密",
+  "decryptAllButton": "全部解密",
+  "password": "密碼",
+  "encryptionConfirm": "確定要用這組密碼加密待辦事項嗎？之後你可以用同一組密碼解密。如果你忘記密碼，就無法解密待辦事項了！",
+  "encryptionDisableConfirm": "確定要移除金鑰並停用加密嗎？已加密的任務不會因此被解密。",
+  "disable": "停用",
+  "confirmEncryptAll": "確定要用這組密碼加密所有任務嗎？如果你忘記密碼，就無法解密這些任務了！",
+  "confirmDecryptAll": "確定要解密所有任務嗎？",
+  "passwordError": "密碼錯誤。看來你有部分已加密的任務無法用這組密碼解密。",
+  "soundEffects": "音效",
+  "missionPassed": "任務完成",
+  "respect": "尊敬值 +",
+  "emptyHashtags": "目前還沒有主題標籤。建立第一個含有 #hashtag 的任務，第一個主題標籤就會出現在這裡！",
+  "gamification": "遊戲化",
+  "heroProfileTitle": "英雄檔案",
+  "infoHero": "這是你的個人檔案頁面，你就是英雄！完成任務、賺取點數，晉升到越來越高的頭銜！\n\n在登上最高頭銜之前，你都不會知道完整的頭銜清單！記住：通往頂峰的唯一道路，就是每天踏出的一小步。",
+  "rank": "🔥 你的頭銜 🔥",
+  "tasksCompleted": "已獲得點數",
+  "rank-1Title": "暗物質無限存在 😈",
+  "rank-1Description": "你達到了史上沒有任何人類達到過的頭銜！恭喜，這是你的蛋糕：🍰。這次可不是騙人的。",
+  "rank0Title": "絕對零度 −273.15 °C 🥶",
+  "rank0Description": "想再更酷？物理上已經不可能了。",
+  "rank5Title": "V 字生產力怪客 👺",
+  "rank5Description": "小朋友要記得：生產力掉到地上，只要 5 秒內撿起來就沒事！",
+  "rank13Title": "快樂佛萊迪 😱",
+  "rank13Description": "你知道今天是什麼日子。今天是傑森為你烤蛋糕的日子。從現在起，每天都是這一天。",
+  "rank42Title": "漁夫 🐬",
+  "rank42Description": "再會了！謝謝所有的魚！",
+  "rank69Title": "Nice 大師！😝",
+  "rank69Description": "最 nice 的頭銜，沒有之一。",
+  "rank85Title": "Mark-85 戰甲 🦄",
+  "rank85Description": "可以說，你的生產力是鋼鐵打造的。",
+  "rank100Title": "100% 原力使用者 ⚡️",
+  "rank100Description": "完成 100 個，還有無限多個等著你！每天繼續前進，這絕對值得！",
+  "rank221Title": "福爾摩斯 😎",
+  "rank221Description": "你破解了生產力之謎，嗯，真替你高興！",
+  "rank256Title": "快樂水管工 👾",
+  "rank256Description": "累積了 8 位元的生產力，你還是念念不忘那些經典老遊戲。",
+  "rank300Title": "斯巴達戰士 💪",
+  "rank300Description": "清空思緒、簡化日常，像真正的斯巴達戰士一樣度過接下來的 100 點！",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "找不到頭銜。",
+  "rank777Title": "幸運大宗師！🍀",
+  "rank777Description": "這個頭銜只會維持 23 點。好好把握，今天是你的幸運日！",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "你是可怕青蛙的終結者。去終結幾隻吧！",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "生產力駭客程序啟動中⋯⋯駭入中⋯⋯",
+  "rank1338Title": "3L1T3（已駭入）🧑‍💻",
+  "rank1338Description": "成功駭入生產力！",
+  "rank2048Title": "西洋棋大師 ♔",
+  "rank2048Description": "比起無止盡又毫無意義的殺時間遊戲，你更喜歡生產力，對吧？對吧？！",
+  "rank9000Title": "戰鬥力超過 9000 🏋️",
+  "rank9000Description": "你舉起任務就像它們毫無重量！",
+  "rank12800Title": "曼哈頓博士 ⚛",
+  "rank12800Description": "你拆解任務就像分裂原子一樣。繼續保持！",
+  "sendDataToServer": "將資料傳送到伺服器",
+  "encryption": {
+    "repeatPassword": "再次輸入密碼",
+    "encryptionSaved": "一切就緒！從現在起，你所有的新任務都會被加密",
+    "encryption": "加密"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "拆解時複製主題標籤",
+    "showMoreByDefault": "新增待辦時預設顯示更多選項"
+  },
+  "level": "等級",
+  "points": "點",
+  "pointsTillNextLevel": "點後解鎖下一個等級",
+  "accept": "接受",
+  "delegate": {
+    "title": "委派",
+    "noDelegators": "你目前還沒有委派者。向別人索取邀請連結，就能成為對方的受託者。",
+    "noDelegates": "你目前還沒有受託者。把邀請連結分享給你想委派任務的人吧",
+    "noDelegatedTasks": "目前沒有新的委派任務了。",
+    "link": "受託者邀請連結",
+    "linkDescription": "其他人點選這個連結就能成為你的受託者。受託者只會看到你委派給他們的任務。",
+    "resetConfirmation": "確定要重設連結嗎？目前的連結將會失效！",
+    "delegators": "委派者",
+    "delegates": "受託者",
+    "inviteSuccess": "成功！現在這位使用者可以把任務委派給你了。",
+    "inviteConfirm": "確定要成為這位使用者的受託者嗎？",
+    "deleteDelegateConfirmation": "確定要刪除這位受託者嗎？你將無法再把任務委派給他。",
+    "deleteDelegatorConfirmation": "確定要刪除這位委派者嗎？對方將無法再把任務委派給你。",
+    "pickDelegateField": "受託者",
+    "info": "這個頁面會顯示委派給你的任務。你可以刪除或接受委派者交給你的任務。",
+    "signupTitle": "哎呀",
+    "signupDescription": "你需要先登入才能使用委派功能",
+    "resetLink": "重設連結",
+    "delegatorExists": "這位委派者已經存在",
+    "noDelegatedTasksTo": "你還沒有委派任何任務。",
+    "ByMe": "我委派的",
+    "to": "給",
+    "from": "來自",
+    "ToMe": "收件匣"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "邀請連結已失效"
+    },
+    "epic": {
+      "numberError": "必須是數字"
+    },
+    "errorDuring": "執行以下作業時發生錯誤：{{reason}}。原始錯誤：{{originalError}}",
+    "sync": {
+      "updatingOrCreating": "更新或建立",
+      "updatingPushedDelegates": "更新或建立已推送的受託者",
+      "updatingPushedDelegators": "更新或建立已推送的委派者",
+      "removingDelegators": "移除本機標記為已刪除的委派者",
+      "removingDelegates": "移除本機標記為已刪除的受託者",
+      "removingPushedDelegators": "移除已推送的委派者",
+      "preapringDelegationsForDeleting": "準備刪除委派：委派 ID：{{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "設為史詩任務",
+    "epicGoal": "史詩任務目標"
+  },
+  "startTimeOfDay": "一天的開始時間",
+  "badgeIconCurrentCount": "在 App 標記顯示任務數量",
+  "purchaseErrorTryOnWeb": "在網站上訂閱",
+  "planningReminderTime": "規劃提醒時間",
+  "notSet": "未設定",
+  "planningReminderText": "🎉 該來規劃囉！",
+  "settingsActions": {
+    "swipeActions": "滑動操作"
+  },
+  "endOfDaySoundOn": "全部完成音效",
+  "dirtyValidSave": "要儲存已輸入的任務嗎？",
+  "dirtyInvalidSave": "你還沒輸入完任務。要捨棄已輸入的任務嗎？",
+  "dissmissTasks": "捨棄任務",
+  "saveTasks": "儲存任務",
+  "fixTasks": "修正任務",
+  "changeTasks": "修改任務",
+  "deleteAllHashtags": "刪除所有主題標籤",
+  "deleteAllHashtagsConfirm": "確定要刪除所有主題標籤嗎？",
+  "next": "下一步",
+  "letsGo": "出發吧！",
+  "whatWouldYouLikeToDoa": "你想做什麼？",
+  "startUsingNow": "立即開始使用 Todorant",
+  "readRulesFirst": "我要先看看 Todorant 怎麼用！",
+  "iAdmireYourBravery": "佩服你的勇氣！",
+  "iAdmireYourSpirit": "佩服你的精神！",
+  "dirtyValidSaveSingular": "要儲存已輸入的任務嗎？",
+  "dirtyInvalidSaveSingular": "你還沒輸入完這個任務。要捨棄已輸入的任務嗎？",
+  "dissmissTasksSingular": "捨棄任務",
+  "saveTasksSingular": "儲存任務",
+  "fixTasksSingular": "修正任務",
+  "changeTasksSingular": "修改任務",
+  "addedTask": "已新增任務",
+  "edit": "編輯",
+  "editName": "新的主題標籤名稱",
+  "tutorialButton": "教學",
+  "onboarding": {
+    "closeButtonText": "關閉教學",
+    "defaultNextStepButtonText": "繼續",
+    "notAllowed": "了解！",
+    "Close": {
+      "messageBoxBody": "確定要略過這份教學嗎？如果不知道該怎麼做，要發揮 Todorant 的潛力可是相當困難的！要不要至少讀一篇介紹 Todorant 核心原則的短文？",
+      "changedMyMind": "我改變主意了，繼續教學",
+      "article": "先停止教學，但讓我看看那篇文章",
+      "closeEverything": "我知道自己在做什麼，關閉教學",
+      "toast": "佩服你的勇氣"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant 不只是一個 App，更是一套生產力方法。這裡的每項限制都經過精心設計，讓你的大腦像渴望甜食一樣渴望完成任務。"
+    },
+    "AddTask": {
+      "messageBoxBody": "來新增你的第一個任務吧。點一下下方的加號按鈕。"
+    },
+    "AddText": {
+      "messageBoxBody": "想一件你需要做的事。然後用非常簡短、可以直接執行的方式寫下來，例如「遛狗」或「買牛奶」。避免新增太籠統或無法直接執行的任務。\n\n我先幫你填好了任務，讓你看看它是怎麼運作的。教學結束後，可以隨意刪除這些範例任務！"
+    },
+    "SelectDate": {
+      "messageBoxBody": "每個待辦事項都必須有明確的完成日期，或是指定一個月份。\n\n你不能選擇本月。不然到了月底，還有沒做完的待辦事項，你要怎麼辦？"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "你可以把待辦事項標記為青蛙。青蛙是一種特別的任務，是真的讓人很不想做的事。你必須在早上第一時間完成它們，它們永遠會出現在清單最上方。我建議一天最多 2 隻青蛙。",
+      "nextStepButton": "這不是青蛙"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "我也鼓勵你在完成任務後，馬上把已完成的任務加進 Todorant。這能幫你在「完成任務」和「滿足感」之間建立正向的連結。"
+    },
+    "ShowMore": {
+      "messageBoxBody": "點一下這個神奇的按鈕，建立任務時就會顯示更多選項，例如設定指定時間（開會時很好用）以及排序任務。"
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "你也可以一次新增多個任務！這次先不用，但之後歡迎多多嘗試。"
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "太好了！你剛寫好了第一個待辦事項。現在把它儲存起來吧。"
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "這是「目前」頁面，你大部分時間都會用到它。它只會顯示你現在必須處理的那一個任務，以及你的進度，除此之外什麼都沒有。讓你保持專注。"
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "這裡只有最基本的工具：你可以刪除、編輯或完成目前的任務。你也可以向左或向右滑動（之後自己試試看吧）。"
+    },
+    "Breakdown": {
+      "messageBoxBody": "喔，這是特別的「拆解」按鈕，你會很常用到它。如果遇到一個 30 分鐘內無法完成的複雜任務，就把它拆解成好幾個部分。"
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "我想我們剛剛建立的任務太籠統了！我知道這聽起來有點荒謬，但請耐心跟著我。\n\n你可以在上方看到原本的任務，把它拆解成較小的任務。務必想清楚所有需要做的事，因為原本的任務將會⋯⋯消失！"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "你可能注意到兩件事。第一：你現在看到的是其中一個子任務。第二：你拆解的原本任務已經標記為已完成。\n\n這是自動完成的，因為當你拆解任務並建立了完整涵蓋原本任務的子任務時，原本的任務就沒有存在的必要了。\n\n光是拆解任務，你就能獲得一個已完成任務當作獎勵！"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "這裡是你規劃工作的地方。還記得每個任務都有指定日期或月份嗎？你可以在這裡看到排序好的任務！\n\n你不應該太常看這個畫面。規劃完成後，你只需要使用「目前」頁面。"
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "以下是在 Todorant 中做規劃的方式。只要一想到任何任務，就立刻加進 Todorant，否則你一定會忘記。\n\n每天早上，以及每個月的 1 號，你都應該坐下來規劃這個月或這一天，把任務分配到各個日期或月份，並調整順序。你可以按住任務後拖曳來調整順序。"
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "你可能也注意到了，Todorant 沒有「專案」，讓你能把不想做的任務藏起來然後忘掉。\n\n取而代之的是，Todorant 使用主題標籤系統。只要加上 #sport、#cooking 或 #anything_really，就能把任務分組，點一下主題標籤就能搜尋相關任務。"
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "你可以用上方的按鈕查看已完成的任務和搜尋任務。"
+    },
+    "ExplainReccuring": {
+      "article": "閱讀文章",
+      "messageBoxBody": "你也會發現 Todorant 沒有重複或週期性任務。這是刻意的，因為長期下來，重複任務會傷害一個人的生產力。\n\n請改用拆解功能搭配標籤繼承（其中一項設定），並把任務命名成像「幫 #plants 澆水並設定下一個任務」這樣。你可以在我寫的文章中了解更多。"
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "這個畫面包含了 Todorant 所有你需要的設定。之後可以慢慢探索。特別值得一提的是「預設為今天」和「拆解時複製主題標籤」。"
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "你也會注意到 Todorant 沒有通知（除了可選的每日規劃提醒以外）。這同樣是刻意的。\n\n通知一多，人們就會開始忽略它們，結果就錯過了重要的提醒。"
+    },
+    "ExplainMultiplatform": {
+      "website": "前往 todorant.com",
+      "messageBoxBody": "Todorant 支援 iOS、Android、網頁版、macOS、Windows 和 Linux，還有 Chrome 和 Firefox 擴充功能，以及 Telegram 機器人。完整的平台清單請見 todorant.com。"
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant 前 30 天免費，之後每月 $5。\n\n道理很簡單：如果 Todorant 帶來的生產力提升，值得你每個月請自己喝一杯咖啡，你自然會想繼續使用。如果不值得，你可以停止使用 Todorant。\n\n我相信 30 天足夠讓你做出判斷。"
+    },
+    "Feedback": {
+      "messageBoxBody": "如果你有任何問題、建議或抱怨，歡迎在官方 Telegram 支援群組或透過電子郵件聯絡我們。"
+    },
+    "Rules": {
+      "messageBoxBody": "我建議你看看 Todorant 的「使用說明」區。它很可能會解答你對這個 App 和這套方法的所有疑問。"
+    },
+    "Congratulations": {
+      "messageBoxBody": "恭喜！你完成了教學。希望你現在已經清楚該怎麼使用 Todorant。\n\n那就直接開始吧。你現在可以把所有待辦事項都搬到 Todorant 上。你需要把它們寫得簡短、可以直接執行，並指定日期或月份。\n\n這可能有點繁瑣，但我保證：長遠來看一定值得！",
+      "nextStepButton": "太棒了！"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "別急！我知道這可能不容易，但請試著把這個任務拆解成至少兩個尚未完成的較小任務。"
+    },
+    "Info": {
+      "messageBoxBody": "另外，有問題的時候，請留意右上角的「i」按鈕。大多數時候，它們都能提供實用的說明。"
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "等一下，為了這份教學，我們暫時限制了新增已完成的任務。不過教學結束後，歡迎隨意嘗試這項設定！"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "等一下，為了這份教學，我們暫時限制了更改任務的月份和日期。不過教學結束後，歡迎隨意嘗試這項設定！"
+    },
+    "Start": {
+      "closeButtonText": "不用了，我不看說明書",
+      "messageBoxBody": "嗨！我是 Nikita，Todorant 是我做的。\n\n我發現親自示範怎麼用之後，使用者會更了解 Todorant。要不要讓我示範一下，如何達到瘋狂的生產力？",
+      "nextStepButton": "好啊！示範給我看"
+    },
+    "todoText": "冥想 #meditation",
+    "breakdownTodo1": "找一部 10 分鐘的引導式冥想影片 #mediation",
+    "breakdownTodo2": "播放引導式冥想影片 #mediation",
+    "breakdownTodo3": "花 10 分鐘冥想 #mediation",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "好，這次我幫你拆解了任務，但之後你就要自己來囉！"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "請先輸入待辦事項內容。"
+    },
+    "AddTextContinueButton": {
+      "continue": "繼續"
+    }
+  },
+  "updateVersionTitle": "嗨！Todorant 有新版本了",
+  "updateVersionMsg": "舊版本可能會出現問題，請盡快更新。",
+  "update": "更新",
+  "frogsAlert": {
+    "title": "停！這是違規的",
+    "text": "別破壞規則。如果你今天有青蛙，請先完成它們、把它們拆解、移到之後的日子，或是取消它們的青蛙標記。拜託，就是別無視青蛙！"
+  },
+  "subscriptionYear": "年（約省 40%）",
+  "editHashtag": "編輯主題標籤",
+  "addDevices": "新增裝置",
+  "unEpicConfirm": "確定要重設這個史詩任務嗎",
+  "unEpic": "重設史詩任務",
+  "breakdownMessage": {
+    "title": "重複性任務",
+    "text": "這是一個重複性任務，你想要拆解它還是完成它？",
+    "complete": "完成"
+  },
+  "syncError": "同步資料時發生錯誤",
+  "server": "伺服器",
+  "serverInvalid": "這看起來不像伺服器位址。格式應該像 https://todo.example.com",
+  "serverChange": "你的帳號和待辦事項都存放在目前的伺服器上，所以更換伺服器會讓你登出。要繼續嗎？",
+  "signIn": "登入",
+  "signUp": "建立帳號",
+  "passwordLength": "密碼至少需要 8 個字元",
+  "addDevicesConfirm": "要在顯示這個 QR 碼的裝置上登入你的帳號嗎？只有在你自己於 Todorant 網站上開啟它時才繼續。"
+}

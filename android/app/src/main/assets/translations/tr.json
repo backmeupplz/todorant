@@ -1,0 +1,500 @@
+{
+  "search": "Ara",
+  "support": "Anlaşılmayan bir şey mi var? Bana <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a> adresinden ulaş",
+  "todo": {
+    "create": {
+      "text": "Görev metni",
+      "placeholder": "Görev",
+      "frog": "Bu bir kurbağa!"
+    }
+  },
+  "cancel": "Vazgeç",
+  "save": "Kaydet",
+  "delete": "Sil",
+  "current": "Şimdi",
+  "planning": "Planlama",
+  "skipped": "Atlandı",
+  "name": "Türkçe",
+  "language": "Lütfen bir dil seç.",
+  "login": "Lütfen aşağıdaki düğmeyle todorant.com'a giriş yap.",
+  "settings": "Ayarlar",
+  "addTodo": "Görev ekle",
+  "breakdownTodo": "Parçala",
+  "pleaseLogin": "Lütfen giriş yap",
+  "subscription": "Abonelik",
+  "allDoneTitle": "Tebrikler!",
+  "allDoneText": "🥳 Başardın! Bugünün bütün görevleri bitti, git biraz dinlen ya da belki biraz dans et 💃",
+  "noTodosTitle": "Sonsuzluğa!",
+  "noTodosText": "Bugün için hiç görevin yok. Çalışmak istiyorsan bugüne yeni bir görev ekle ya da ileriki günlerden görev al.",
+  "addTodoDay": "Gün seç",
+  "addTodoMonth": "Ya da ay",
+  "addTodoTime": "Tam saat",
+  "completed": "Tamamlandı",
+  "addTodoOnTop": "En üste ekle",
+  "addTodoMore": "Daha fazla...",
+  "addTodoSingular": "Görevi ekle!",
+  "addTodoPlural": "Görevleri ekle!",
+  "saveTodo": "Görevi kaydet!",
+  "planningText": "Görünüşe göre biraz planlama yapman gerekiyor! “Şimdi” sekmesinin kilidini açmak ve üretken kalmaya devam etmek için lütfen aşağıdaki bekleyen görevleri yeniden dağıt. Kolay gelsin!",
+  "editTodo": "Görevi düzenle",
+  "anonymousText": "Şu anda bütün verilerin yalnızca cihazında saklanıyor. Todorant sunucularıyla senkronize etmeye başlamak için giriş yapman gerekiyor.",
+  "nameLabel": "Ad",
+  "email": "E-posta",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "Sayı",
+  "todosLastSync": "Görevler",
+  "tags": "Hashtag'ler",
+  "tagsCount": "Hashtag'ler",
+  "todoCount": "Görevler",
+  "notSyncedYet": "Henüz senkronize edilmedi",
+  "settingsLastSync": "Ayarlar",
+  "accountLastSync": "Hesap",
+  "syncData": "Verileri senkronize et",
+  "googleTokenError": "Google erişim anahtarı döndürmedi",
+  "facebookPermissionsError": "Facebook izinleri verilmedi",
+  "facebookTokenError": "Facebook erişim anahtarı alınamadı",
+  "loginWall": "Görünüşe göre Todorant'ı bir aydan uzun süredir kullanıyorsun ama hâlâ giriş yapmadın! Görevlerin kaybolmasın — hemen giriş yap ve Todorant'ın keyfini gönül rahatlığıyla çıkar!",
+  "loginGoogle": "Google ile giriş yap",
+  "loginFacebook": "Facebook ile giriş yap",
+  "loginApple": "Apple ile giriş yap",
+  "loginTelegram": "Telegram ile giriş yap",
+  "logoutText": "Çıkış yapmak istiyor musun?",
+  "logout": "Çıkış yap",
+  "deleteAccount": "Hesabı sil",
+  "deleteAccountText": "Bu işlem hesabını bütün görevlerin, hashtag'lerin ve ayarlarınla birlikte sunucudan kalıcı olarak siler. Geri alınamaz.",
+  "loginButton": "Giriş yap",
+  "alreadyRegistered": "(Zaten kayıtlısın)",
+  "purchaseError": "Hmm, satın alma sırasında bir şeyler ters gitmiş gibi görünüyor. Lütfen web sitesine git, giriş yap ve oradan abone ol!",
+  "purchaseThankYou": "Teşekkürler",
+  "purchaseThankYouText": "Aboneliği satın aldığın için teşekkürler!",
+  "activeText": "🎉 Todorant'ı desteklediğin için çok teşekkür ederim! Umarım Todorant hayatını şimdiden güzelleştirmiştir ve gelecekte de güzelleştirmeye devam eder! Senin desteğin sayesinde Todorant'ı her gün geliştirebiliyor, yeni özellikler ekleyip iş süreçlerini sadeleştirebiliyorum!",
+  "inactiveText": "🐝 Görünüşe göre Todorant deneme süren sona erdi. Todorant hayatını ayda en az $5 değerinde iyileştirdi mi? Kesinlikle öyle umuyorum! Lafı dolandırmadan sadede geleyim.\n\nTakas teklifi. Benim alacağım: ayda $5, yılda $36 (tam %40 indirim) ya da tek seferde $150. Senin alacağın: sınırsız verimlilik ve bonus olarak sınırsız Todorant.\n\nNe dersin?",
+  "earlyAdopterText": "👏👏 — bu ben, seni alkışlıyorum; sürekli artan verimliliğin aracı Todorant'ı ilk deneyenlerden biri olmayı göze alan o çılgınlardan birini. Todorant'ı en başından geri bildirimleriyle şekillendiren altın bin kişiden biri olduğunu söyleyebiliriz. Todorant'ı dilediğin kadar kullanma hakkına sahipsin — hiçbir zaman bir sınırla karşılaşmayacaksın, bunu hak ettin. Yine de Todorant'ın hayatını büyük ölçüde iyileştirdiğini fark ettiysen, abonelik satın alarak en güzel şekilde “Teşekkürler” diyebilirsin. “İlk kullanıcı 🦄” statünü asla kaybetmeyeceksin ve aboneliği her zaman iptal edebileceksin. Todorant'ı hâlâ kullandığın için çok teşekkür ederim — hepimizin hayatını olumlu etkileyen bu ürünü yeni özelliklerle geliştirmeye devam edeceğim. Bol şans!",
+  "earlyAdopterTextBonus": "🤗 Vay +*%$! Görünüşe göre ya Todorant ya da bizzat ben sana o kadar yardımcı olmuşuz ki, Todorant'ı sonsuza dek ücretsiz kullanabilecekken abonelik satın aldın. Çok duygulandım; seninle bir kahve içmek ya da biraz sohbet etmek beni çok mutlu eder. Bana Telegram'dan (@borodutch) ya da e-postayla ulaşmaktan çekinme — aşağıdaki ismime dokunman yeterli. Çok teşekkür ederim! Katkının ne kadar önemli olduğunu hayal etmek bile zor!",
+  "trialText": "💪 Todorant'a hoş geldin! Kayıt olduktan sonra Todorant'ın sana uygun olup olmadığını anlamak için 30 günün var. 30 gün dolduktan sonra eski görevlerine erişmeye devam edeceksin ama yenilerini ekleyemeyeceksin. 30 gün bitmeden abonelik satın almanda hiçbir sakınca yok. Todorant'ı kullanmanın kişisel verimliliğinde seni yeni zirvelere taşıyacağına inanıyorum!",
+  "signature": "— Nikita, Todorant'ın yaratıcısı",
+  "rules": [
+    "Yapılması gereken bir iş çıktığı anda (bir e-posta, telefon ya da mesaj aldığında veya yapılacaklar listene girmesi gereken ilginç bir şey gördüğünde) hemen onun için bir görev oluştur. Bekleme; not almazsan unutursun.",
+    "Görevler her zaman eyleme dönük ve olabildiğince net olmalı. Bir görev 2 dakikadan kısa sürüyorsa hemen yap ve tamamlandı olarak kaydet.",
+    "Görev oluştururken ya belirli bir tarih eklersin ya da bir ay seçersin. İçinde bulunduğun ay için mutlaka belirli bir tarih seçmelisin. Bu, zihnini rahatlatmak için böyle. Sisteme güvenir ve yapılması gereken her şeyi doğru tarihe koyarsan, her biriyle tam zamanında karşılaşırsın. “Halletmem gereken başka bir şey vardı ama ne olduğundan tam emin değilim” stresiyle sürekli boğuşmak, büyük miktarda irade gücünü boşa harcar. Güvenmeyi ve rahatlamayı öğren.",
+    "Her ay yaptığın ilk iş ileriye dönük planlama yapmak. O aya atanmış bütün görevleri alır ve doğru tarihlere yerleştirirsin. Bu sayede güncelliğini yitirmiş görevleri ayıklar, bu ay tam olarak ne yapman gerektiğini bilerek zihnini huzurlu tutarsın.",
+    "Sabah yaptığın ilk iş gününü planlamak. Planlama bölümüne bir göz at. Her şeye yetişebilir misin? Bugün halledemeyeceğin görevleri dağıt. Önceki günlerden kalan görevleri yeniden dağıt.",
+    "Acil bir durum olmadıkça, planlamayı bitirdikten sonra planlama bölümüne bakma. Yalnızca tek bir göreve odaklanmak psikolojik olarak çok daha iyidir, bu yüzden gözünü “Şimdi” bölümünden ayırma. Sisteme güven, o her şeyi hatırlar. İşini yap ve zihnini rahatlat.",
+    "“Şimdi” bölümünde yalnızca odaklanman gereken tek bir görev bulunur — başka hiçbir şey. Günde birden fazla görevin olabilir; görev sayısı ve ilerleme çubuğu kolaylık olsun diye gösterilir. Görevler arasında atlamak yok — her görevi sırayla, tek tek halletmelisin.",
+    "Kurbağalar, genellikle uğraşmak istemediğin özel türden görevlerdir. Çoğu zaman aylarca, hatta yıllarca ertelenmiş görevlerdir. Todorant, kurbağaları her gün ilk iş olarak halletmeni sağlar. Sabahları irade gücü rezervin en çileden çıkarıcı görevlerin bile üstesinden gelecek kadar büyüktür. Ve sonunda bir kurbağayı hallettiğinde, gün boyu gülümsemene yetecek kadar mutluluk kazanırsın. Kurbağaları hallettiğinde kendinle gurur duyarsın.",
+    "Şu anki görevi atlayabilirsin — ama bunu olabildiğince seyrek yapmaya çalış. Kurbağayı atlayamazsın. Bir görevi tamamlayamayıp iki kez yeniden dağıtmak zorunda kaldıysan, o görev kurbağaya dönüşür.",
+    "Şu anki görev fazla genelse, onu alt görevlerden oluşan bir listeye parçala. Parçaladığın anda görev tamamlandı olarak işaretlenir.",
+    "Görevle ilgili olabildiğince çok bilgi ekle. Belirli e-postaların (web'de Gmail bunu yapmana izin veriyor), web sitelerinin, notların (Evernote gibi) ve belgelerin (Dropbox gibi) bağlantılarını ekle, telefon numaraları bırak ya da görevi tamamlamak için ihtiyaç duyabileceğin her türlü bilgiyi ekle. Todorant'ın amacı senin için bir başvuru kaynağı olmak değil; bunun yerine, belirli görevlerle ilgili başvuru bilgilerine giden bağlantıların bir kataloğu gibi çalışmalı.",
+    "Daha üretken olmaya dair deneyim ve ipuçlarını paylaşmak için Telegram'daki çok dilli grubumuza katılmaktan çekinme — @todorant_feedback! Hizmetle ilgili geri bildirimlerini — önerilerini, isteklerini ve şikâyetlerini — duymaktan büyük memnuniyet duyarız.",
+    "Görevlerin sırasını değiştirmek için Planlama sayfasında düzenleme modunu (üstteki liste sırası simgesi) kullan. Bir görevi belirli bir haftaya atamak istiyorsan, onu o haftanın Pazartesi gününe ata ve Pazartesi sabahki planlama sırasında yeniden dağıt.",
+    "Todorant'ta tekrarlayan görevler yok ve hiçbir zaman olmayacak — iyi yaptıkları tek şey, bitmemiş görevler olarak tepende asılı kalıp kaygı yaratmak. Tekrarlayan görevleri tamamlaman gerekiyorsa hepsini elle ekle; beynin bu bilinçli görevler için sana teşekkür edecek.",
+    "Todorant'ta “Projeler” kavramı yok, çünkü motivasyonu kırdığı kanıtlandı: bazı “klasörler” hiç açılmıyor. “Spor” ve “Kişisel gelişim” projeleri selam söylüyor. Bunun yerine #hashtag'ler kullan.",
+    "Kurbağalar her zaman listenin en üstünde görünür.",
+    "Todorant'ta saati belirlenmiş yaklaşan görevler için bildirim yok."
+  ],
+  "termsOfUse": "Kullanım koşulları",
+  "privacyPolicy": "Gizlilik politikası",
+  "socketsInfo": "Soket bilgisi",
+  "dataInfo": "Veri bilgisi",
+  "howTo": "Nasıl kullanılır",
+  "howToUse": "Todorant nasıl kullanılır",
+  "account": "Hesap",
+  "todos": "Görevler",
+  "general": "Genel",
+  "info": "Bilgi",
+  "supportLabel": "Destek",
+  "sendFeedback": "Geri bildirim gönder",
+  "supportText": "Sorun ya da geri bildirimin mi var? Bana e-posta gönder ya da Telegram'dan yaz!",
+  "socketError": "Bağlantı hatası: ",
+  "connected": "Bağlı",
+  "authorized": "Yetkili",
+  "daysLeft": "Kalan gün: ",
+  "buySubscription": "Abonelik satın al",
+  "defaultToToday": "Varsayılan: bugün",
+  "newTodosGoOnTop": "Yeni görevler en üste",
+  "deleteTodo": "Gerçekten silmek istiyor musun:",
+  "earlyAdopter": "İlk kullanıcı 🦄",
+  "active": "Aktif",
+  "inactive": "Aktif değil",
+  "trial": "Deneme",
+  "error": "Hata",
+  "ok": "Tamam",
+  "pleaseConfirm": "Lütfen onayla",
+  "purchaseReceiptError": "Satın alma makbuzu bulunamadı",
+  "noTodosExistTitle": "Henüz görev yok",
+  "noTodosExistText": "Hadi — aşağıdaki artı düğmesine dokunarak birkaç görev oluştur!",
+  "restorePurchases": "Satın alımları geri yükle",
+  "noPurchasesError": "Üzgünüm, henüz hiç satın alımın yok",
+  "appleSigninError": "Apple ile giriş yapılamadı",
+  "syncDataHard": "Tam senkronizasyon",
+  "firstDayOfWeek": "Haftanın ilk günü",
+  "weekday1": "Pazartesi",
+  "weekday2": "Salı",
+  "weekday3": "Çarşamba",
+  "weekday4": "Perşembe",
+  "weekday5": "Cuma",
+  "weekday6": "Cumartesi",
+  "weekday0": "Pazar",
+  "appleUnauthorizedText": "Kurallar gereği, aşağıdaki seçeneklerden birini seçerek deneme süresini başlatmanı istemek zorundayım. Zaten aktif bir aboneliğin varsa lütfen Ayarlar'dan hesabına giriş yap.",
+  "appleUnauthorizedTextGoodNews": "Ama iyi haber: 30 günlük deneme süresi bitene kadar senden ücret alınmayacak.",
+  "appleUnauthorizedButtonExtra": "30 gün ücretsiz deneme, ardından",
+  "introTitle": "Hoş geldin!",
+  "introBack": "Hadi başlayalım!",
+  "infoTitle": "Bilgi",
+  "infoIntro": "“i” düğmesine dokunman harika! Bu, Todorant'ın ne olduğunu anlatan karşılama mesajı. Ne eksik, ne fazla.",
+  "infoCurrent": "Bu, şu anki görev sayfası. Sana yalnızca şu anda üzerinde çalışman gereken tek görevi gösterir. Odağını koru; gününü planladıktan sonra ihtiyacın olan tek sayfa bu.\n\nGörev kurbağa değilse ve günün son görevi değilse onu atlayabilirsin.\n\nGörev fazla genişse — parçalama özelliğini kullan. Görevi parçaladıktan sonra otomatik olarak tamamlandı olarak işaretlenir.",
+  "infoBreakdown": "Bu, görev parçalama ekranı. Görev listesinde orijinal görevin yerine geçecek birden fazla görev eklemekten çekinme. Yeni, daha küçük görevleri ekledikten sonra orijinal görev tamamlandı olarak işaretlenir.",
+  "infoAdd": "Bu, görev ekleme ekranı. Görevler her zaman eyleme dönük (“Meksika'ya git” değil, “Meksika'ya en uygun uçuşları bul”) ve olabildiğince küçük ve net (“Evi temizle” değil, “Ekranların tozunu al”) olmalı. Burada birden fazla görev ekleyebilirsin.\n\nGörevlere ya bir tarih ya da bir ay atanmalı. İçinde bulunduğun ayı seçemezsin.\n\nKurbağalar, uğraşmak istemediğin görevlerdir — listende ilk sırada görünürler. Bir kurbağaya ne kadar erken başlarsan onu tamamlama şansın o kadar artar.",
+  "infoEdit": "Bu, görev düzenleme ekranı. Burada görevi düzenleyebilirsin. Evet, hepsi bu.",
+  "infoPlanning": "Bu, planlama bölümün. Görevleri ve tarih başlıklarını (uzun basıp sürükleyerek) yeniden düzenlemekten çekinme — çok eğlenceli!\n\nAyrıca #hashtag'leri kullanmayı unutma.",
+  "infoSettings": "Bu, ayarlar ekranın. Burada çeşitli seçenekleri yapılandırabilirsin. Lütfen “Todorant nasıl kullanılır” bölümünü okuduğundan emin ol.",
+  "infoSockets": "Todorant, verilerini sunucuyla senkronize etmek için soketleri kullanır. İki onay işareti de yerindeyse sihir gibi çalışır.",
+  "infoData": "Burada yerel veri depolaman ve senkronizasyon istatistiklerinle ilgili en güncel bilgileri görebilirsin.",
+  "infoRules": "Todorant'tan en iyi şekilde yararlanmak için lütfen kuralları dikkatlice oku.",
+  "preserveOrderByTime": "Saat sırasını koru",
+  "subscriptionMonth": "ay",
+  "languageSelect": "Dil",
+  "languageAuto": "Otomatik",
+  "syncExactDates": "Tarihleri yeniden hesapla",
+  "askBeforeDelete": "Silmeden önce sor",
+  "copied": "kopyalandı",
+  "sync": "Senkronizasyon",
+  "infoTags": "Bu, kullandığın bütün hashtag'lerin listesi. Hiçbir şey görmüyorsan — hadi, metninde bir #hashtag geçen bir görev oluştur; bu listeye hashtag eklemenin tek yolu bu.\n\nBir hashtag'in rengini değiştirmek ya da onu silmek istiyorsan üzerine dokun. Merak etme, hashtag'ler görevlerden ayrıdır — bu ekranda yaptığın hiçbir şey görevlerini etkilemez. Yani, renkleri değiştirmek görevlerinin daha havalı görünmesini sağlayabilir, o kadar.",
+  "changeColor": "Rengi değiştir",
+  "changeColorToDefault": "Rengi sıfırla",
+  "colorMode": "Renk modu",
+  "dark": "Koyu",
+  "light": "Açık",
+  "loadingData": "Verilerin yükleniyor...",
+  "breakdownRequest": "Görünüşe göre bu görevi çok fazla erteliyorsun. Lütfen onu parçala, artık başka bir tarihe taşıyamazsın. İnan bana, görevi tamamlamana yardımcı olacak!",
+  "breakdownButton": "Parçala",
+  "back": "Geri",
+  "important": "Önemli",
+  "rateTitle": "100'den fazla görev tamamladın! 🎉🎉🎉 Todorant hayatını ne kadar iyileştirdi?",
+  "rate": "Puan ver",
+  "send": "Gönder",
+  "rateCommentPlaceholder": "Lütfen Todorant'ta neyi beğenmediğini birkaç kelimeyle yaz",
+  "rateCommentEmptyError": "Lütfen yorum alanını boş bırakma",
+  "starTerrible": "Hiç",
+  "starBad": "Biraz",
+  "starOkay": "Kısmen",
+  "starGood": "Epey",
+  "starGreat": "Çok",
+  "rateSolicitationApple": "Todorant'a App Store'da 5 yıldız verir misin? Çok büyük yardımı olur!",
+  "rateSolicitationGoogle": "Todorant'a Play Store'da 5 yıldız verir misin? Çok büyük yardımı olur!",
+  "rateButton": "Değerlendir!",
+  "notConnected": "Bağlı değil",
+  "loginQR": "QR ile giriş yap",
+  "qrDescription": "Lütfen Todorant web sitesinde QR kod penceresini aç ve kodu burada tara",
+  "cameraAuthorization": "Kamera izni verilmedi",
+  "needCameraPermission": "Todorant, QR kodları taramak için kamerayı kullanır",
+  "security": "Güvenlik",
+  "encryptTodo": "Görevleri şifrele",
+  "infoSecurity": "Bu bölümü son derece dikkatli kullan! Parola eklemediğin sürece şifreleme çalışmaz. İki tür görev olacak: şifreli ve şifresiz. Bütün yeni görevler şifrelenecek. Eski görevler aşağıdaki düğmeyle şifrelenebilir. Parolanı kaybedersen görevleri kurtarmanın hiçbir yolu olmayacak.",
+  "encryptedTodos": "Şifreli görevler",
+  "unencryptedTodos": "Şifresiz görevler",
+  "encryptAllButton": "Tümünü şifrele",
+  "decryptAllButton": "Tümünün şifresini çöz",
+  "password": "Parola",
+  "encryptionConfirm": "Görevleri bu parolayla şifrelemek istediğinden emin misin? Görevlerin şifresini daha sonra aynı parolayla çözebileceksin. Parolanı kaybedersen görevlerin şifresini çözemeyeceksin!",
+  "encryptionDisableConfirm": "Anahtarı kaldırıp şifrelemeyi kapatmak istediğinden emin misin? Bu işlem şifrelenmiş görevlerin şifresini çözmez.",
+  "disable": "Kapat",
+  "confirmEncryptAll": "Bütün görevleri bu parolayla şifrelemek istediğinden emin misin? Parolanı kaybedersen görevlerin şifresini çözemeyeceksin!",
+  "confirmDecryptAll": "Bütün görevlerin şifresini çözmek istediğinden emin misin?",
+  "passwordError": "Yanlış parola. Görünüşe göre şifreli görevlerinden bazılarının şifresi bu parolayla çözülemiyor.",
+  "soundEffects": "Ses efektleri",
+  "missionPassed": "Görev başarılı",
+  "respect": "Saygı +",
+  "emptyHashtags": "Hashtag listen şimdilik boş. İlk hashtag'i buraya eklemek için #hashtag içeren ilk görevini oluştur!",
+  "gamification": "Oyunlaştırma",
+  "heroProfileTitle": "Kahraman profili",
+  "infoHero": "Bu senin, yani kahramanın profil sayfası! Görevleri tamamla, puan kazan ve gittikçe daha yüksek rütbelere ulaş!\n\nEn yüksek rütbeye ulaşana kadar rütbelerin tam listesini öğrenemeyeceksin! Unutma: zirveye giden tek yol, her gün atılan küçük adımlardan geçer.",
+  "rank": "🔥 Rütben 🔥",
+  "tasksCompleted": "Kazanılan puan",
+  "rank-1Title": "Sonsuz karanlık madde varlığı 😈",
+  "rank-1Description": "Daha önce hiçbir insanın ulaşamadığı rütbeye ulaştın! Tebrikler, işte pastan: 🍰. Bu sefer yalan değil.",
+  "rank0Title": "Mutlak sıfır −273,15 °C 🥶",
+  "rank0Description": "Daha soğuğu olsaydı, çok daha havalı olurdu.",
+  "rank5Title": "V for Verimlilik 👺",
+  "rank5Description": "Unutmayın çocuklar: verimliliği yere düşürüp 5 saniye dolmadan geri alırsanız sorun yok!",
+  "rank13Title": "Mutlu Freddy 😱",
+  "rank13Description": "Bugün günlerden ne, biliyorsun. Jason'ın sana pasta yaptığı gün. Artık her gün o gün.",
+  "rank42Title": "Balıkçı 🐬",
+  "rank42Description": "Hoşça kal, ve bütün o balıklar için teşekkürler!",
+  "rank69Title": "Nice ustası! 😝",
+  "rank69Description": "Var olan en “nice” rütbe. Nokta.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Verimliliğin adeta demirden yapılmış.",
+  "rank100Title": "%100 Güç kullanıcısı ⚡️",
+  "rank100Description": "100 bitti, sonsuzluk kaldı! Her gün devam et, buna değer!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Verimliliğin sırrını çözdün, aferin sana!",
+  "rank256Title": "Mutlu tesisatçı 👾",
+  "rank256Description": "8 bitlik verimliliğin ardından hâlâ o eski güzel oyunları düşünüyorsun.",
+  "rank300Title": "Spartalı 💪",
+  "rank300Description": "Zihnini boşalt, rutinlerini sadeleştir, sonraki 100 puanı gerçek bir Spartalı gibi geçir!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rütbe bulunamadı.",
+  "rank777Title": "Şanslı büyükusta! 🍀",
+  "rank777Description": "Bu rütbe yalnızca 23 puan sürüyor. Hakkını ver, bugün şanslı günün!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Sen korkunç kurbağaların terminatörüsün. Git birkaçını yok et!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Verimlilik hack'leniyor... Hack'leniyor...",
+  "rank1338Title": "3L1T3 (Hack'lendi) 🧑‍💻",
+  "rank1338Description": "Verimlilik başarıyla hack'lendi!",
+  "rank2048Title": "Satranç ustası ♔",
+  "rank2048Description": "Bitmek bilmeyen, anlamsız vakit öldürme oyunları yerine verimliliği seçiyorsun, değil mi? DEĞİL Mİ?",
+  "rank9000Title": "9000'in üzerinde güç 🏋️",
+  "rank9000Description": "Görevleri tüy gibi kaldırıyorsun!",
+  "rank12800Title": "Doktor Manhattan ⚛",
+  "rank12800Description": "Görevleri atomu parçalar gibi parçalıyorsun. Böyle devam!",
+  "sendDataToServer": "Verileri sunucuya gönder",
+  "encryption": {
+    "repeatPassword": "Parolayı tekrarla",
+    "encryptionSaved": "Her şey hazır! Artık bütün yeni görevlerin şifrelenecek",
+    "encryption": "Şifreleme"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Parçalarken hashtag'leri kopyala",
+    "showMoreByDefault": "Görev eklerken ek seçenekleri hep göster"
+  },
+  "level": "Seviye",
+  "points": "puan",
+  "pointsTillNextLevel": "puan sonra yeni seviye açılır",
+  "accept": "Kabul et",
+  "delegate": {
+    "title": "Görev devri",
+    "noDelegators": "Henüz sana görev veren kimse yok. Birinden görev alabilmek için ondan davet bağlantısı iste.",
+    "noDelegates": "Henüz görev devrettiğin kimse yok. Görev devretmek istediğin kişilerle davet bağlantısını paylaş",
+    "noDelegatedTasks": "Sana devredilen yeni görev kalmadı.",
+    "link": "Görev devri davet bağlantısı",
+    "linkDescription": "Bu bağlantıyı açan kişiler senden görev alabilir. Görev alanlar yalnızca onlara devrettiğin görevleri görür.",
+    "resetConfirmation": "Bağlantıyı sıfırlamak istediğinden emin misin? Mevcut bağlantı artık çalışmayacak!",
+    "delegators": "Görev verenler",
+    "delegates": "Görev alanlar",
+    "inviteSuccess": "Başarılı! Artık bu kullanıcı sana görev devredebilir.",
+    "inviteConfirm": "Bu kullanıcıdan görev almak istediğinden emin misin?",
+    "deleteDelegateConfirmation": "Bu kişiyi görev alanlardan silmek istediğinden emin misin? Artık ona görev devredemeyeceksin.",
+    "deleteDelegatorConfirmation": "Bu kişiyi görev verenlerden silmek istediğinden emin misin? Artık sana görev devredemeyecek.",
+    "pickDelegateField": "Kime",
+    "info": "Bu sayfada sana devredilen görevler var. Görev verenlerin sana gönderdiği görevleri silebilir ya da kabul edebilirsin.",
+    "signupTitle": "Hoppala",
+    "signupDescription": "Görev devrini kullanabilmek için önce giriş yapman gerekiyor",
+    "resetLink": "Bağlantıyı sıfırla",
+    "delegatorExists": "Bu kişi zaten görev verenler arasında",
+    "noDelegatedTasksTo": "Henüz hiç görev devretmedin.",
+    "ByMe": "Benden",
+    "to": "Kime",
+    "from": "Kimden",
+    "ToMe": "Gelen kutusu"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Davet bağlantısı artık geçerli değil"
+    },
+    "epic": {
+      "numberError": "Bir sayı olmalı"
+    },
+    "errorDuring": "Şu işlem sırasında hata oluştu: {{reason}}. Asıl hata: {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "güncelleme ya da oluşturma",
+      "updatingPushedDelegates": "gönderilen görev alanları güncelleme ya da oluşturma",
+      "updatingPushedDelegators": "gönderilen görev verenleri güncelleme ya da oluşturma",
+      "removingDelegators": "yerelde silindi olarak işaretlenen görev verenleri kaldırma",
+      "removingDelegates": "yerelde silindi olarak işaretlenen görev alanları kaldırma",
+      "removingPushedDelegators": "gönderilen görev verenleri kaldırma",
+      "preapringDelegationsForDeleting": "görev devirlerini silmeye hazırlama: devir kimliği: {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Epiğe dönüştür",
+    "epicGoal": "Epik hedefi"
+  },
+  "startTimeOfDay": "Günün başlangıcı",
+  "badgeIconCurrentCount": "Simgede görev sayısı",
+  "purchaseErrorTryOnWeb": "Web'den abone ol",
+  "planningReminderTime": "Planlama hatırlatıcısı",
+  "notSet": "Ayarlanmadı",
+  "planningReminderText": "🎉 Planlama zamanı!",
+  "settingsActions": {
+    "swipeActions": "Kaydırma eylemleri"
+  },
+  "endOfDaySoundOn": "Gün bitince ses çal",
+  "dirtyValidSave": "Girdiğin görevleri kaydetmek ister misin?",
+  "dirtyInvalidSave": "Görevleri girmeyi bitirmedin. Girdiğin görevler silinsin mi?",
+  "dissmissTasks": "Görevleri sil",
+  "saveTasks": "Görevleri kaydet",
+  "fixTasks": "Görevleri düzelt",
+  "changeTasks": "Görevleri değiştir",
+  "deleteAllHashtags": "Tüm hashtag'leri sil",
+  "deleteAllHashtagsConfirm": "Bütün hashtag'leri silmek istediğinden emin misin?",
+  "next": "İleri",
+  "letsGo": "Hadi başlayalım!",
+  "whatWouldYouLikeToDoa": "Ne yapmak istersin?",
+  "startUsingNow": "Todorant'ı hemen kullanmaya başla",
+  "readRulesFirst": "Önce Todorant'ın nasıl kullanıldığını okuyacağım!",
+  "iAdmireYourBravery": "Cesaretine hayranım!",
+  "iAdmireYourSpirit": "Azmine hayranım!",
+  "dirtyValidSaveSingular": "Girdiğin görevi kaydetmek ister misin?",
+  "dirtyInvalidSaveSingular": "Görevi girmeyi bitirmedin. Girdiğin görev silinsin mi?",
+  "dissmissTasksSingular": "Görevi sil",
+  "saveTasksSingular": "Görevi kaydet",
+  "fixTasksSingular": "Görevi düzelt",
+  "changeTasksSingular": "Görevi değiştir",
+  "addedTask": "Eklenen görev",
+  "edit": "Düzenle",
+  "editName": "Yeni hashtag metni",
+  "tutorialButton": "Rehber",
+  "onboarding": {
+    "closeButtonText": "Rehberi kapat",
+    "defaultNextStepButtonText": "Devam",
+    "notAllowed": "Anladım!",
+    "Close": {
+      "messageBoxBody": "Bu rehberi atlamak istediğinden emin misin? Ne yapacağını bilmeden Todorant'ın potansiyelini ortaya çıkarmak oldukça zor! Belki bunun yerine en azından Todorant'ın temel ilkeleriyle ilgili kısa bir makale okursun?",
+      "changedMyMind": "Fikrimi değiştirdim, rehbere devam et",
+      "article": "Rehberi bırakalım, ama makaleyi göster",
+      "closeEverything": "Ne yaptığımı biliyorum, rehberi kapat",
+      "toast": "Cesaretine hayranım"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant sadece bir uygulama değil, bir verimlilik yöntemi. Buradaki kısıtlamalar, beyninin görevleri tamamlamayı tıpkı şekeri ister gibi istemesi için özenle tasarlandı."
+    },
+    "AddTask": {
+      "messageBoxBody": "Hadi ilk görevini ekleyelim. Aşağıdaki artı düğmesine dokun."
+    },
+    "AddText": {
+      "messageBoxBody": "Yapman gereken bir şey düşün. Sonra onu “Köpeği gezdir” ya da “Süt al” gibi çok kısa ve eyleme dönük bir şekilde yaz. Fazla geniş ya da eyleme dönük olmayan görevler eklemekten kaçın.\n\nNasıl çalıştığını göstermek için görevi senin yerine önceden doldurdum. Rehberden sonra örnek görevleri silmekten çekinme!"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Her görevin ya tamamlanması gereken belirli bir tarihi ya da atanmış belirli bir ayı olmalı.\n\nİçinde bulunduğun ayı seçemezsin. Ay bittiğinde hâlâ yapılmamış görevlerin olsa ne yapardın?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Görevi kurbağa olarak işaretleyebilirsin. Kurbağalar, gerçekten tatsız olan özel türden görevlerdir. Onları sabah ilk iş olarak tamamlaman gerekir; her zaman listenin en üstünde görünürler. Günde en fazla 2 kurbağa olmasını öneririm.",
+      "nextStepButton": "Kurbağa değil"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Tamamladığın görevleri de, tamamlar tamamlamaz Todorant'a eklemeni öneririm. Bu, görevleri tamamlamakla tatmin duygusu arasında olumlu bir bağ kurmana yardımcı olur."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Bu sihirli düğmeye dokunduğunda, görev oluştururken tam saat belirleme (toplantılar için kullanışlı) ve görevleri sıralama gibi ek seçenekler ortaya çıkar."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Aynı anda birden fazla görev de ekleyebilirsin! Bu sefer olmaz ama ileride bunu denemekten çekinme."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Harika! İlk görevini yazmayı bitirdin. Şimdi onu kaydet."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Bu, “Şimdi” sayfası. Zamanının çoğunu burada geçireceksin. Yalnızca üzerinde çalışman gereken tek görevi ve ilerlemeni gösterir — fazlasını değil. Böylece odağını korursun."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Burada yalnızca en temel araçlar var: şu anki görevi silebilir, düzenleyebilir ya da tamamlayabilirsin. İstersen sağa ya da sola da kaydırabilirsin (bunu daha sonra kendin dene)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "Bu da özel “parçala” düğmesi, onu çok kullanacaksın. 30 dakikadan kısa sürede bitirilemeyecek kadar karmaşık bir görevle karşılaşırsan onu birkaç parçaya böl."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Sanırım az önce oluşturduğumuz görev fazla genişti! Biraz absürt görünebileceğini biliyorum ama bana biraz sabret.\n\nOrijinal görevi en üstte görebilirsin; onu daha küçük görevlere parçala. Yapılması gereken her şeyi düşündüğünden emin ol, çünkü orijinal görev... yok olacak!"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "İki şey fark etmiş olabilirsin. Birincisi: şimdi alt görevlerinden birini görüyorsun. İkincisi: parçaladığın orijinal görev artık tamamlandı olarak işaretlendi.\n\nBu otomatik olarak yapılır, çünkü görevleri parçalayıp orijinal görevi tamamen kapsayan alt görevler oluşturduğunda orijinal göreve artık ihtiyaç kalmaz.\n\nSadece parçaladığın için tamamlanmış bir görevle ödüllendiriliyorsun!"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "Burası işini planladığın yer. Her görevin bir tarihi ya da ayı olduğunu hatırlıyor musun? İşte görevlerini burada sıralanmış hâlde görebilirsin!\n\nBu ekrana çok sık bakmamalısın. Planlamayı bitirdikten sonra yalnızca “Şimdi” sayfasını kullan."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Todorant'la planlama şöyle yapılır: aklına herhangi bir görev geldiği anda onu hemen Todorant'a ekle, yoksa unutursun.\n\nHer sabah ve her ayın ilk günü oturup görevleri günlere ya da aylara dağıtarak ve yeniden sıralayarak gününü ya da ayını planlamalısın. Görevleri yeniden sıralamak için basılı tutup sürüklemekten çekinme."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Todorant'ta, istemediğin görevleri unutmak için saklayabileceğin “projeler” olmadığını da fark etmiş olabilirsin.\n\nBunun yerine Todorant hashtag sistemini kullanır. Görevleri gruplamak ve hashtag'lere dokunarak kolayca bulmak için #spor, #yemek ya da #ne_istersen eklemen yeterli."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Yukarıdaki düğmelerle tamamlanan görevleri görebilir ve görevlerin arasında arama yapabilirsin."
+    },
+    "ExplainReccuring": {
+      "article": "Makaleyi oku",
+      "messageBoxBody": "Todorant'ta tekrarlayan görevlerin olmadığını da fark edebilirsin. Bu bilerek böyle yapıldı, çünkü tekrarlayan görevler uzun vadede verimliliğe zarar verir.\n\nBunun yerine, hashtag aktarımıyla (ayarlardan biri) parçalama özelliğini ve “#bitkileri sula ve sonraki görevi ayarla” gibi görev adlarını kullan. Bununla ilgili daha fazlasını yazdığım makalede okuyabilirsin."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Bu, Todorant'ta ihtiyacın olan bütün ayarların bulunduğu ekran. Daha sonra keşfetmekten çekinme. Öne çıkanlar: “Varsayılan: bugün” ve “Parçalarken hashtag'leri kopyala”."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Todorant'ta bildirim olmadığını da fark edebilirsin (günün başında isteğe bağlı planlama hatırlatıcısı hariç). Bu da bilerek böyle yapıldı.\n\nİnsanlar bildirimler çoğaldıkça onları görmezden gelmeye başlar. Bu da önemli uyarıların kaçırılmasına yol açar."
+    },
+    "ExplainMultiplatform": {
+      "website": "todorant.com'a git",
+      "messageBoxBody": "Todorant; iOS, Android, Web, macOS, Windows ve Linux'ta, ayrıca Chrome ve Firefox eklentisi ve Telegram botu olarak kullanılabilir. Platformların tam listesini todorant.com'da görebilirsin."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant ilk 30 gün ücretsiz, sonrasında aylık $5.\n\nMantık basit: Todorant'ın sağladığı verimlilik ayda bir fincan kahveye değiyorsa, kullanmaya devam etmek isteyeceksin. Değmiyorsa, Todorant'ı kullanmayı bırakabilirsin.\n\nBunu anlamak için 30 günün yeterli olduğuna inanıyorum."
+    },
+    "Feedback": {
+      "messageBoxBody": "Soruların, önerilerin ya da şikâyetlerin varsa resmi Telegram destek grubumuzdan ya da e-postayla bize ulaşmaktan çekinme."
+    },
+    "Rules": {
+      "messageBoxBody": "Todorant'ın “Nasıl kullanılır” bölümüne göz atmanı öneririm. Büyük ihtimalle uygulama ve yöntemle ilgili bütün sorularını yanıtlayacaktır."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Tebrikler! Rehberi bitirdin. Umarım artık Todorant'ın nasıl kullanıldığı netleşmiştir.\n\nHemen işe koyulalım. Şimdi bütün görevlerini Todorant'a taşıyabilirsin. Onları kısa ve eyleme dönük hâle getirmen, ayrıca belirli tarihlere ya da aylara ataman gerekecek.\n\nSıkıcı gelebilir ama emin ol: uzun vadede karşılığını alacaksın!",
+      "nextStepButton": "Yaşasın!"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "O kadar hızlı değil! Zor olabileceğini biliyorum ama bu görevi henüz tamamlanmamış en az iki küçük göreve parçalamayı dene."
+    },
+    "Info": {
+      "messageBoxBody": "Ayrıca bir sorun olduğunda sağ üst köşedeki “i” düğmelerine göz at. Çoğu zaman işine yarayacak bilgiler sunarlar."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Bir saniye, bu rehber boyunca görevleri tamamlanmış olarak eklemeyi kısıtladık. Ama rehberi bitirdikten sonra bu ayarla denemeler yapmaktan çekinme!"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Bir saniye, bu rehber boyunca görevlerin ayını ve gününü değiştirmeyi kısıtladık. Ama rehberi bitirdikten sonra bu ayarla denemeler yapmaktan çekinme!"
+    },
+    "Start": {
+      "closeButtonText": "Yok, ben kılavuz okumam",
+      "messageBoxBody": "Selam! Ben Nikita, Todorant'ı ben yarattım.\n\nKullanıcılar, Todorant'ı nasıl kullanacaklarını onlara gösterdiğimde çok daha iyi anlıyor. Sana inanılmaz bir verimliliğe nasıl ulaşacağını göstermemi ister misin?",
+      "nextStepButton": "Tabii! Nasıl çalıştığını göster"
+    },
+    "todoText": "Meditasyon yap #meditasyon",
+    "breakdownTodo1": "10 dakikalık rehberli meditasyon videosu bul #meditasyon",
+    "breakdownTodo2": "Rehberli meditasyon videosunu başlat #meditasyon",
+    "breakdownTodo3": "10 dakika meditasyon yap #meditasyon",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "Tamam, bu sefer görevi senin yerine ben parçaladım, ama bundan sonra bunu kendin yapman gerekecek!"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Lütfen önce görev metnini gir."
+    },
+    "AddTextContinueButton": {
+      "continue": "Devam"
+    }
+  },
+  "updateVersionTitle": "Selam! Todorant'ın yeni bir sürümü çıktı",
+  "updateVersionMsg": "Eski sürümde bir şeylerin bozulma ihtimali var, bu yüzden lütfen en kısa sürede güncelle.",
+  "update": "Güncelle",
+  "frogsAlert": {
+    "title": "Dur! Bu yasak",
+    "text": "Kuralları çiğneme. Bugün kurbağaların varsa — önce onları bitir, parçala, ileriki günlere taşı ya da kurbağa işaretini kaldır. Lütfen kurbağaları görmezden gelme!"
+  },
+  "subscriptionYear": "yıl (≈%40 indirim)",
+  "editHashtag": "Hashtag'i düzenle",
+  "addDevices": "Cihaz ekle",
+  "unEpicConfirm": "Epiği sıfırlamak istediğinden emin misin",
+  "unEpic": "Epiği sıfırla",
+  "breakdownMessage": {
+    "title": "Tekrarlayan görev",
+    "text": "Bu tekrarlayan bir görev. Parçalamak mı yoksa tamamlamak mı istersin?",
+    "complete": "Tamamla"
+  },
+  "syncError": "Veri senkronizasyonu sırasında bir hata oluştu",
+  "server": "Sunucu",
+  "serverInvalid": "Bu bir sunucu adresine benzemiyor. https://todo.example.com gibi görünmeli",
+  "serverChange": "Hesabın ve görevlerin mevcut sunucuda duruyor, bu yüzden sunucuyu değiştirmek oturumunu kapatır. Devam edilsin mi?",
+  "signIn": "Giriş yap",
+  "signUp": "Hesap oluştur",
+  "passwordLength": "Parola en az 8 karakter olmalı",
+  "addDevicesConfirm": "Bu QR kodu gösteren cihazda hesabına giriş yapılsın mı? Yalnızca kodu Todorant web sitesinde kendin açtıysan devam et."
+}

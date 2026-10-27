@@ -1,0 +1,558 @@
+{
+  "encryption": {
+    "info": "Sei in diesem Bereich äußerst vorsichtig! Die Verschlüsselung funktioniert erst, wenn du ein Passwort festlegst. Es gibt dann zwei Arten von Aufgaben: verschlüsselte und unverschlüsselte. Alle neuen Aufgaben werden verschlüsselt. Alte To-dos kannst du mit dem Button unten verschlüsseln. Wenn du das Passwort verlierst, lassen sich die Aufgaben nicht mehr wiederherstellen.",
+    "switch": "To-dos verschlüsseln",
+    "password": "Passwort",
+    "encryptAllButton": "Alle verschlüsseln",
+    "decryptAllButton": "Alle entschlüsseln",
+    "confirm": "Möchtest du die To-dos wirklich mit diesem Passwort verschlüsseln? Mit demselben Passwort kannst du sie später wieder entschlüsseln. Wenn du das Passwort verlierst, kannst du die To-dos nicht mehr entschlüsseln!",
+    "disableConfirm": "Möchtest du den Schlüssel wirklich entfernen und die Verschlüsselung deaktivieren? Bereits verschlüsselte Aufgaben werden dadurch nicht entschlüsselt.",
+    "errorDecrypting": "Falsches Passwort zum Entschlüsseln",
+    "repeatPassword": "Passwort wiederholen",
+    "title": "Verschlüsselung",
+    "encryptedTodo": "Verschlüsseltes To-do"
+  },
+  "search": "Suche",
+  "qr": {
+    "code": "QR-Code",
+    "description": {
+      "app_login": "Mit diesem QR-Code meldest du dich auf Mobilgeräten an. Dieses Bild ist ein Passwort – teile es mit niemandem!",
+      "web_login": "Melde dich in der mobilen Todorant-App an, öffne die Einstellungen, tippe im Abschnitt „Konto“ auf „Geräte hinzufügen“ und scanne dann diesen QR-Code, um die Anmeldung bei Todorant hier zu erlauben. Denk dran: Dieser QR-Code ist nur 10 Minuten gültig!"
+    }
+  },
+  "breakdown": {
+    "request": "Sieht so aus, als würdest du diese Aufgabe viel zu oft verschieben. Bitte teile sie auf – du kannst sie nicht mehr auf ein anderes Datum verschieben. Glaub mir, das hilft dir, die Aufgabe zu erledigen!",
+    "button": "Aufteilen"
+  },
+  "warning": "Achtung",
+  "hashtags": {
+    "title": "Hashtags",
+    "name": "Hashtag-Name"
+  },
+  "supportAlert": {
+    "title": "Support",
+    "text": "Wenn du Fragen oder Vorschläge hast, kannst du mir gern <a href=\"mailto:todorant@borodutch.com\">eine E-Mail schreiben</a>, <a href=\"https://t.me/borodutch\" target=\"_blank\">mich auf Telegram kontaktieren</a> oder <a href=\"https://t.me/todorant_feedback\" target=\"_blank\">unserer Telegram-Community beitreten</a>!"
+  },
+  "loginMobile": {
+    "telegram": {
+      "headline": "Bitte melde dich mit Telegram an: Gib deine Telegram-ID in das Feld unten ein und klicke auf „Anmelden“. Deine Telegram-ID bekommst du, wenn du <code>/id</code> an <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a> schickst. Oder schick einfach <code>/qr</code> an <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a> und scanne den Code im Bereich für die QR-Anmeldung!",
+      "id": "123456789",
+      "idHint": "Telegram-ID",
+      "loginButton": "Anmelden",
+      "noCredentialsError": "Bitte gib eine Telegram-ID ein",
+      "cannotSendMessageError": "Die Anmeldeanfrage konnte nicht gesendet werden. Bitte stell sicher, dass du @todorant_bot gestartet hast und die Telegram-ID stimmt.",
+      "waiting": "Warte auf die Antwort in <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a> …",
+      "notAllowedError": "Die Anmeldeanfrage wurde abgelehnt"
+    }
+  },
+  "noReport": {
+    "title": "Noch keine Daten",
+    "text": "Los, erledige dein erstes To-do und komm dann wieder!"
+  },
+  "report": {
+    "title": "Statistik",
+    "tasksCompleted": "Erledigte Aufgaben",
+    "frogsCompleted": "Erledigte Frösche",
+    "share": "Teile diesen Bericht!",
+    "hashtag": "Hashtag",
+    "shareButton": "Teilen",
+    "url": "Dauerhafter Link zu diesem Bericht",
+    "shareMessage": "Schau dir meinen Produktivitätsbericht von Todorant an!",
+    "call": "Willst du mitmachen?",
+    "callButton": "Todorant ausprobieren",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum"
+  },
+  "title": "Todorant",
+  "cookie": {
+    "button": "Verstanden!",
+    "message": "🍪 Diese Website verwendet Cookies."
+  },
+  "home": {
+    "texts": {
+      "contact": [
+        "Noch Fragen? Schreib mir direkt an ",
+        ". Danke!"
+      ]
+    },
+    "signIn": "Anmelden",
+    "facebook": "Mit Facebook anmelden",
+    "google": "Mit Google anmelden",
+    "privacy": "Datenschutzerklärung",
+    "feedback": {
+      "title": "Was sagen die Nutzer?",
+      "reviews": [
+        {
+          "name": "Sergey Romanov",
+          "username": "Gendoor",
+          "text": "Die Nachrichten im Abo-Bereich sind süß :)\n\nDanke für diesen einfachen Dienst, der nach dem Ideal strebt. Es hat sich herausgestellt, dass er nicht nur hilft, produktiv, sondern auch proaktiv zu sein. Kleine tägliche Verbesserungen machen das Leben spürbar besser, und der freie Kopf sucht ständig danach, wie er die nun leere To-do-Liste füllen kann, um die Freude am Erledigen immer wieder zu spüren – und das ist der direkte Weg, alles um mich herum zu verbessern.\n\nAlles in allem kann Todorant, so einfach es auf den ersten Blick wirkt, ein treuer Verbündeter in jeder Sache werden. Danke, Nikita, dass du die Facetten echter Produktivität freigelegt und sie in einer praktischen Lösung mit uns geteilt hast.\n\nEin dankbarer Todorant-Abonnent."
+        },
+        {
+          "name": "Dinislam Sad",
+          "username": "Azerzet",
+          "text": "Die wichtigsten Vorteile, die mir und sicher auch anderen gefallen haben:\n1. Einfache und praktische Oberfläche.\n2. Verpasste Aufgaben werden automatisch zu Fröschen, und man kann eine Aufgabe auch gleich zum Frosch machen.\n3. Der Befehl /done ist ein Muss, danke dafür, Nikita. Ich habe Todoist, Wunderlist und Bitrix24 benutzt. Die sind alle überladen.\n4. Der Telegram-Bot."
+        },
+        {
+          "name": "Aleksei Kaut",
+          "username": "aleksei_kaut",
+          "text": "Nachdem ich die ersten Aufgaben angelegt und zum Tab „Aktuell“ gewechselt hatte, war ich überrascht, dass ich nur eine Aufgabe hatte und sie erledigen musste, bevor es weiterging. Diese Idee mit einer Aufgabe und der Konzentration darauf hat mich umgehauen – sie wirkt offensichtlich, aber ich konnte sie vorher nie umsetzen.\n\nNormalerweise habe ich Aufgaben und Ideen, die bald erledigt werden sollten, in Notizen festgehalten, aber nie als System. Ich nutze den Dienst seit ein paar Wochen, noch nicht sehr intensiv, aber ich finde, das ist eine sehr wirkungsvolle Art, Angelegenheiten und Aufgaben zu ordnen.\n\nDanke für deine Arbeit!"
+        },
+        {
+          "name": "Anton",
+          "username": "mas1311",
+          "text": "Habe Todorant getestet. Anfangs war ich skeptisch (ich habe schon viele Planungsdienste ausprobiert), aber dann habe ich gemerkt, dass es wirklich funktioniert und sehr einfach zu bedienen ist.\n\nAußerdem stellt sich aus mir unerklärlichen Gründen eine große Zufriedenheit ein, wenn alle Aufgaben des Tages erledigt sind – die gab es bei anderen Planern nicht (da war es eher so: „Na, das war alles … oder doch nicht?“).\n\nDanke für deine Arbeit!"
+        },
+        {
+          "name": "Willsey Paslen",
+          "username": "WillseyPaslen",
+          "text": "Danke für den tollen Dienst. Es ist genug Zeit vergangen, dass ich sagen kann: Er hilft mir. Danke, Nikita 😁 Und viel Erfolg mit der App."
+        },
+        {
+          "name": "Igor Malinkin",
+          "username": "sxe4kilo",
+          "text": "Mit Todorant habe ich angefangen, überhaupt etwas zu tun – meine Produktivität ist also von 0 aus gestiegen."
+        },
+        {
+          "name": "Vladimir Dubenko",
+          "username": "dubenko_v",
+          "text": "Dein Dienst ist in mindestens drei Punkten großartig:\n1. Praktisch – er ist minimalistisch!\n2. Er schafft eine Gewohnheit.\n3. So seltsam es klingt: Er zwingt dich nicht, rational zu denken.\n\nIch bin von Natur aus irrational, ich kann nicht nur 1 Projekt verfolgen (ich brenne schnell aus). Mein Leben ist Multitasking! 3 Projekte parallel sind leicht, aber 3 sind nicht genug … 7 klingt schon besser. Und dein Dienst ermöglicht genau das. Gerade der Wechsel zwischen Aufgaben verhindert, dass das Gehirn in einer bestimmten Richtung ausbrennt. Und irgendwie, wie von Zauberhand, wechselt er Aufgaben von einem Projekt zum anderen."
+        },
+        {
+          "name": "Maksim Alekseyevich",
+          "username": "MMAradiology",
+          "text": "Ich kann nicht sagen, dass Todorant mein Leben verändert hat. Kann ich sagen, dass es eine sinnvolle und sehr nützliche App/Website ist? Ja, tausendmal ja.\n\nIch mag Todorant, es entlastet meinen „Arbeitsspeicher“ und lässt mich über das Lösen von Problemen nachdenken statt darüber, sie mir zu merken. Wie Nikita (der Gründer) richtig geschrieben hat: Bei konsequenter und richtiger Nutzung tauchen Aufgaben, die einem früher biblische Furcht eingejagt haben, nicht mehr auf. Und das nicht, weil keine komplexen Aufgaben mehr kommen. Dir (und mir, und allen) wird klar: „Der Weg entsteht beim Gehen“ und „Auch die längste Reise beginnt mit dem ersten Schritt“."
+        },
+        {
+          "name": "Kiku Reise",
+          "username": "Kiku_Reise",
+          "text": "Ich habe meine Arbeits-, Programmier- und Hobbyaufgaben geordnet. Sogar diese Bewertung habe ich dank Todorant geschrieben. Nur eine Aufgabe, keine Komplikationen. Genau darum geht es bei der App – sie hat mir geholfen, mich zu konzentrieren, ohne ständig meine To-dos hin- und herzuschieben.\n\nKlar, man kann Aufgaben anlegen und sie vergessen, aber für mich ist es einfacher, zu einer minimalistischen App mit einer Aufgabe zurückzukehren, als einen halben Tag lang unter hundert in Telegram oder Notion geplanten Aufgaben zu suchen, woran ich gerade arbeiten soll.\n\nBesonders gefreut hat mich das Update mit den Hashtags – jetzt habe ich alle Statistiken auf einen Blick und kann verfolgen und mit Freunden teilen, wie viele Aufgaben ich diesen Monat erledigt habe.\n\nVielen Dank für Todorant!"
+        }
+      ]
+    },
+    "act": "Leg los!",
+    "apple": "Mit Apple anmelden",
+    "crossplatform": {
+      "title": "Wirklich plattformübergreifend"
+    },
+    "mobile": "Mit der mobilen App anmelden"
+  },
+  "menu": {
+    "darkMode": {
+      "on": "Dunkelmodus: an",
+      "off": "Dunkelmodus: aus"
+    },
+    "logout": "Abmelden"
+  },
+  "support": "Ist etwas unklar? Schreib mir an <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "errors": {
+    "login": {
+      "facebook": "Anmeldung mit Facebook fehlgeschlagen",
+      "google": "Anmeldung mit Google fehlgeschlagen",
+      "telegram": "Anmeldung mit Telegram fehlgeschlagen",
+      "apple": "Anmeldung mit Apple fehlgeschlagen",
+      "mobile": "Anmeldung mit der mobilen App fehlgeschlagen"
+    },
+    "internal": "Interner Serverfehler",
+    "loadTodos": "To-dos konnten nicht geladen werden",
+    "todo": {
+      "textLenght": "To-dos brauchen einen Text",
+      "dateOrMonth": "To-dos brauchen entweder ein Datum oder einen Monat",
+      "more1500": "To-dos dürfen nicht länger als 1500 Zeichen sein."
+    },
+    "invalidForm": "Bitte fülle die Pflichtfelder aus",
+    "report": "Bericht konnte nicht geladen werden",
+    "appleFirefox": "Leider gibt es <a href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=1628361\">einen Bug</a> bei der Anmeldung mit Apple in Firefox. Bis er behoben ist, nutze bitte einen anderen Browser, um dich mit Apple anzumelden – und verknüpfe das Konto dann in Todorant mit deinen anderen Konten. Entschuldige die Unannehmlichkeiten.",
+    "delegate": {
+      "invalidToken": "Der Einladungslink ist nicht mehr gültig"
+    },
+    "epic": {
+      "numberError": "Muss eine Zahl sein",
+      "greaterThanZeroError": "Muss größer als 0 sein"
+    },
+    "tag": {
+      "whitespaces": "Hashtags dürfen keine Leerzeichen enthalten"
+    }
+  },
+  "close": "Schließen",
+  "notFound": "Seite nicht gefunden",
+  "todo": {
+    "create": {
+      "title": "To-dos hinzufügen",
+      "text": "Text des To-dos",
+      "textHint": "Du kannst einen Link zu einer E-Mail oder Website einfügen",
+      "placeholder": "To-do",
+      "frog": "Das ist ein Frosch!",
+      "date": "Genauer Tag",
+      "month": "Oder Monat",
+      "tooltip": "Aufgaben sollten immer: umsetzbar sein („Günstigste Flüge nach Mexiko suchen“ statt „Nach Mexiko reisen“); so klein und konkret wie möglich sein („Bildschirme abstauben“ statt „Wohnung putzen“).",
+      "goFirst": "Oben einfügen"
+    },
+    "list": {
+      "completed": "Erledigte anzeigen",
+      "delegated": "Von mir delegierte Aufgaben anzeigen"
+    },
+    "edit": {
+      "title": "Bearbeiten"
+    }
+  },
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "delete": "Löschen",
+  "deleteHeadline": "Möchtest du „{name}“ wirklich löschen?",
+  "current": "Aktuell",
+  "planning": "Planung",
+  "created": "Erstellt",
+  "breakdownInfo": "Teile die aktuelle Aufgabe auf, wenn sie zu grob ist",
+  "howto": {
+    "title": "So nutzt du Todorant",
+    "premise": "Hier sind die wichtigsten Prinzipien, denen du folgen solltest, um alle Funktionen von Todorant produktiv zu nutzen. Kinderleicht, nur mit ein paar Schritten mehr.",
+    "bonus": {
+      "title": "Bonusfunktionen",
+      "rules": [
+        "Nutze am Computer Tastenkürzel! Du kannst hinzufügen (a), aufteilen (b), zu „Aktuell“ wechseln (c), als erledigt markieren (d) und zu „Planung“ wechseln (p). Um beim Hinzufügen ein weiteres Aufgabenfeld zu öffnen, drück Strg+Umschalt+A."
+      ]
+    }
+  },
+  "skipped": "Übersprungen",
+  "moveUp": "Auf heute verschieben",
+  "settings": {
+    "title": "Einstellungen",
+    "showTodayOnAddTodo": "Neue To-dos standardmäßig für heute",
+    "firstDayOfWeek": "Erster Tag der Woche",
+    "newTodosGoFirst": "Neue To-dos oben in die Liste einfügen",
+    "preserveOrderByTime": "Reihenfolge nach Uhrzeit",
+    "general": "Allgemein",
+    "connected": "Verbunden",
+    "notConnected": "Nicht verbunden",
+    "account": "Konto",
+    "duplicateTagInBreakdown": "Hashtags beim Aufteilen kopieren",
+    "export": "Daten exportieren",
+    "hotkeys": "Tastenkürzel",
+    "startTimeOfDay": "Tagesbeginn",
+    "username": "Name",
+    "telegram": "Telegram",
+    "coloredCardBackgrounds": "Aufgaben in Hashtag-Farben einfärben",
+    "newLineOnReturn": "Neue Zeile mit Enter"
+  },
+  "allDoneTitle": "Glückwunsch!",
+  "allDoneText": "🥳 Geschafft! Alle Aufgaben für heute sind erledigt. Ruh dich aus oder tanz vielleicht ein bisschen 💃",
+  "noTodosTitle": "Bis zur Unendlichkeit!",
+  "noTodosText": "Für heute hast du keine To-dos. Wenn du arbeiten möchtest, füge ein neues To-do für heute hinzu oder hol dir To-dos von kommenden Tagen.",
+  "addTodoTime": "Genaue Uhrzeit",
+  "completed": "Erledigt",
+  "planningText": "Sieht so aus, als gäbe es etwas zu planen! Bitte verteile die offenen Aufgaben unten neu, um den Tab „Aktuell“ freizuschalten und weiter produktiv zu bleiben. Viel Erfolg!",
+  "rules": [
+    "Sobald du eine konkrete Aufgabe bekommst (durch eine E-Mail, einen Anruf, eine Nachricht oder wenn dir etwas begegnet, das auf deine To-do-Liste gehört), leg sofort ein To-do dafür an. Warte nicht – wenn du es nicht aufschreibst, vergisst du es.",
+    "To-dos sollten immer umsetzbar und so konkret wie möglich sein. Wenn eine Aufgabe weniger als 2 Minuten dauert, erledige sie sofort und trag sie als erledigt ein.",
+    "Beim Anlegen eines To-dos wählst du entweder ein genaues Datum oder einen Monat. Den aktuellen Monat kannst du nicht ohne genaues Datum auswählen. Das soll deinen Kopf entlasten. Wenn du dem System vertraust und alles, was zu tun ist, auf das richtige Datum legst, begegnet es dir genau zur richtigen Zeit. Unglaublich viel Willenskraft geht dafür drauf, ständig gestresst zu sein wegen „dieser einen Sache, um die ich mich noch kümmern muss, aber ich weiß nicht mehr genau, was es war“. Lerne zu vertrauen und zu entspannen.",
+    "Als Erstes planst du jeden Monat voraus. Du nimmst alle Aufgaben, die dem aktuellen Monat zugeordnet sind, und verteilst sie auf die passenden Tage. So kannst du überholte Aufgaben aussortieren und hast deinen Seelenfrieden, weil du genau weißt, was du diesen Monat zu tun hast.",
+    "Als Erstes planst du morgens deinen Tag. Wirf einen Blick in den Bereich „Planung“. Schaffst du alles? Verteile die Aufgaben, die du heute nicht erledigen kannst. Verteile alle Aufgaben neu, die an den vorherigen Tagen liegen geblieben sind.",
+    "Wenn es kein Notfall ist, schau nach dem Planen nicht mehr in den Bereich „Planung“. Psychologisch ist es viel besser, wenn du dich nur auf eine Aufgabe konzentrierst, also behalte den Bereich „Aktuell“ im Blick. Vertrau dem System, es merkt sich alles. Mach deine Arbeit und entspann deinen Kopf.",
+    "Der Bereich „Aktuell“ enthält nur eine Aufgabe, auf die du dich konzentrieren sollst – sonst nichts. Du kannst mehr als eine Aufgabe pro Tag haben; die Anzahl der Aufgaben und der Fortschrittsbalken werden dir zur Übersicht angezeigt. Zwischen Aufgaben hin- und herzuspringen ist nicht erlaubt – du arbeitest jede Aufgabe der Reihe nach ab, eine nach der anderen.",
+    "Frösche sind besondere Aufgaben, auf die du eigentlich keine Lust hast. Meist sind es Aufgaben, die seit Monaten oder sogar Jahren liegen bleiben. Todorant sorgt dafür, dass du jeden Tag zuerst die Frösche erledigst. Morgens ist deine Willenskraft groß genug, um selbst die unangenehmsten Aufgaben anzupacken. Und wenn du endlich einen Frosch erledigt hast, bekommst du genug Glücksgefühle, um den ganzen Tag zu lächeln. Du bist stolz auf dich, wenn du Frösche erledigst.",
+    "Du darfst die aktuelle Aufgabe überspringen – aber versuche, das so selten wie möglich zu tun. Einen Frosch kannst du nicht überspringen. Wenn du eine Aufgabe nicht geschafft hast und sie zweimal neu verteilen musstest, wird sie zum Frosch.",
+    "Wenn die aktuelle Aufgabe zu grob ist, teile sie in eine Liste von Teilaufgaben auf. Sobald du sie aufgeteilt hast, wird die Aufgabe als erledigt markiert.",
+    "Füge so viele relevante Infos zum To-do hinzu wie möglich. Füge Links zu bestimmten E-Mails (Gmail im Web macht das möglich), Websites, Notizen (z. B. Evernote) oder Dokumenten (z. B. Dropbox) hinzu, hinterlass Telefonnummern oder alles andere, was du zum Erledigen der Aufgabe brauchst. Todorant soll kein Nachschlagewerk für dich sein, sondern ein Katalog von Links zu den Infos, die für bestimmte To-dos wichtig sind.",
+    "Tritt gern unserer mehrsprachigen Telegram-Gruppe bei, um Erfahrungen und Tricks für mehr Produktivität auszutauschen – @todorant_feedback! Dein Feedback zum Dienst – Vorschläge, Wünsche und Beschwerden – ist herzlich willkommen.",
+    "Nutze den Bearbeitungsmodus (das Listensymbol oben) auf der Seite „Planung“, um die Reihenfolge der Aufgaben zu ändern. Wenn du eine Aufgabe einer bestimmten Woche zuordnen willst, leg sie einfach auf den Montag und verteile sie beim Planen am Montagmorgen neu.",
+    "Todorant hat keine wiederkehrenden Aufgaben und wird sie auch nie haben – das Einzige, was sie gut können, ist, als unerledigte Aufgaben über dir zu schweben und Unruhe zu stiften. Wenn du wiederkehrende Aufgaben erledigen musst, füge sie alle manuell hinzu. Dein Gehirn wird dir für bewusste Aufgaben danken.",
+    "Todorant kennt keine „Projekte“, weil sie sich als demotivierend erwiesen haben – manche „Ordner“ werden nie geöffnet. Die Projekte „Fitness“ und „Selbstoptimierung“ lassen grüßen. Nutze stattdessen #hashtags.",
+    "Frösche stehen immer ganz oben auf der Liste.",
+    "Todorant schickt keine Benachrichtigungen zu anstehenden Aufgaben mit genauer Uhrzeit."
+  ],
+  "earlyAdopter": "Early Adopter 🦄",
+  "active": "Aktiv",
+  "inactive": "Inaktiv",
+  "trial": "Testphase",
+  "weekday1": "Montag",
+  "weekday2": "Dienstag",
+  "weekday3": "Mittwoch",
+  "weekday4": "Donnerstag",
+  "weekday5": "Freitag",
+  "weekday6": "Samstag",
+  "weekday0": "Sonntag",
+  "introTitle": "Willkommen!",
+  "introButton": "Begrüßung",
+  "introBack": "Los geht's!",
+  "back": "Zurück",
+  "soundEffects": "Soundeffekte",
+  "emptyHashtags": "Deine Hashtag-Liste ist noch leer. Leg deine erste Aufgabe mit einem #hashtag an, damit hier der erste Hashtag erscheint!",
+  "refreshRequest": "Eine neue Version von Todorant ist verfügbar. Lade die Seite bitte neu, um die glänzenden neuen Sachen zu bekommen 🦄",
+  "refresh": "Neu laden",
+  "heroProfileTitle": "Heldenprofil",
+  "infoHero": "Das ist dein Profil – das Profil des Helden! Erledige Aufgaben und sammle Punkte, um immer höhere Ränge zu erreichen!\n\nDie komplette Liste der Ränge kennst du erst, wenn du den höchsten erreicht hast! Denk dran: Der einzige Weg nach oben führt über viele kleine Schritte, jeden Tag.",
+  "rank": "🔥 Dein Rang 🔥",
+  "rank-1Title": "Unendliches Wesen aus dunkler Materie 😈",
+  "rank-1Description": "Du hast einen Rang erreicht, den vor dir noch kein Mensch erreicht hat! Glückwunsch, hier ist dein Kuchen: 🍰. Diesmal ist er keine Lüge.",
+  "rank0Title": "Subzero −273,15 °C 🥶",
+  "rank0Description": "Cooler geht's nun wirklich nicht.",
+  "rank5Title": "V wie Vroduktivität 👺",
+  "rank5Description": "Merkt euch, Kinder: Wenn euch die Produktivität runterfällt und ihr sie in weniger als 5 Sekunden wieder aufhebt, ist alles gut!",
+  "rank13Title": "Fröhlicher Freddy 😱",
+  "rank13Description": "Du weißt, welcher Tag heute ist. Der Tag, an dem Jason dir einen Kuchen backt. Ab jetzt ist jeder Tag dieser Tag.",
+  "rank42Title": "Fischer 🐬",
+  "rank42Description": "Macht's gut, und danke für den Fisch!",
+  "rank69Title": "Nice-Meister! 😝",
+  "rank69Description": "Der netteste Rang, den es gibt. Punkt.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Man könnte sagen, deine Produktivität ist aus Eisen.",
+  "rank100Title": "Macht-Nutzer 100 % ⚡️",
+  "rank100Description": "100 geschafft, unendlich viele vor dir! Bleib jeden Tag dran, es lohnt sich!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Du hast den Fall Produktivität gelöst – na, schön für dich!",
+  "rank256Title": "Glücklicher Klempner 👾",
+  "rank256Description": "8 Bit Produktivität später denkst du immer noch an die guten alten Spiele.",
+  "rank300Title": "Spartaner 💪",
+  "rank300Description": "Mach den Kopf frei, vereinfache deine Routinen und verbringe die nächsten 100 Punkte wie ein echter Spartaner!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rang nicht gefunden.",
+  "rank777Title": "Glücklicher Großmeister! 🍀",
+  "rank777Description": "Dieser Rang hält nur 23 Punkte lang. Nutze ihn gut, heute ist dein Glückstag!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Du bist der Terminator der fiesen Frösche. Los, terminiere ein paar!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Produktivitäts-Hack wird eingeleitet … Hacking läuft …",
+  "rank1338Title": "3L1T3 (gehackt) 🧑‍💻",
+  "rank1338Description": "Produktivität erfolgreich gehackt!",
+  "rank2048Title": "Schachmeister ♔",
+  "rank2048Description": "Du ziehst Produktivität endlosen, sinnlosen Zeitfresser-Spielen vor, oder? ODER?",
+  "rank9000Title": "Über-9000-Power-User 🏋️",
+  "rank9000Description": "Du stemmst Aufgaben, als wären sie federleicht!",
+  "rank12800Title": "Doktor Manhattan ⚛",
+  "rank12800Description": "Du zerlegst Aufgaben, als würdest du Atome spalten. Weiter so!",
+  "homeShort": {
+    "headline": "Produktivitätssysteme scheitern.",
+    "headline2": "Todorant funktioniert.",
+    "feature1": "Konzentrier dich auf eine Aufgabe nach der anderen",
+    "feature2": "Gib jeder Aufgabe ein Datum oder einen Monat",
+    "feature3": "Erledige unangenehme Aufgaben (Frösche) zuerst",
+    "feature4": "Halte deinen Eingang leer",
+    "differenceTitle": "Was ist anders?",
+    "differenceText1": "Alle anderen Produktivitäts-Apps konzentrieren sich darauf, endlose Aufgabenlisten zu speichern, zu ordnen und zu automatisieren. Todorant konzentriert sich auf das Einzige, was zählt: dass du deine Aufgaben auch wirklich erledigst.",
+    "differenceText2": "Todorant setzt eine sorgfältig abgestimmte Mischung aus Einschränkungen und Lob ein, um schlechtes Verhalten zu bestrafen und gute Gewohnheiten zu fördern. Es spricht den primitiven Teil des Gehirns an, damit er danach giert, To-dos zu erledigen – so wie Menschen nach Zucker gieren.",
+    "differenceText3": "Ich habe über 20 Bücher und Methoden zur Produktivität gelesen und ausprobiert. Als eine nach der anderen gescheitert ist, habe ich ihre Bausteine kombiniert und das Ergebnis vereinfacht. So ist Todorant entstanden."
+  },
+  "spread": {
+    "hint": "Wähle die Aufgaben aus, die du verteilen willst, und die Tage, auf die sie verteilt werden sollen. Drück dann auf den Button und sieh zu, wie sich die ausgewählten Aufgaben gleichmäßig auf die gewählten Tage verteilen",
+    "spreading": "Verteilen",
+    "chooseTasks": "Klicke auf die Aufgaben zum Verteilen",
+    "between": "auf",
+    "chooseDates": "Klicke auf die Tage, auf die verteilt werden soll"
+  },
+  "level": "Level",
+  "points": "Punkte",
+  "pointsTillNextLevel": "Punkte bis zum nächsten Level",
+  "accept": "Annehmen",
+  "delegate": {
+    "title": "Delegation",
+    "noDelegators": "Du hast noch keine Auftraggeber. Lass dir einen Einladungslink schicken, um für jemanden Aufgaben zu übernehmen.",
+    "noDelegates": "Du hast noch keine Beauftragten. Teile den Einladungslink mit den Leuten, denen du Aufgaben übertragen möchtest",
+    "noDelegatedTasks": "Du hast keine neuen delegierten Aufgaben mehr.",
+    "link": "Einladungslink für Beauftragte",
+    "linkDescription": "Über diesen Link können andere deine Beauftragten werden. Beauftragte sehen nur die Aufgaben, die du an sie delegiert hast.",
+    "resetConfirmation": "Möchtest du den Link wirklich zurücksetzen? Der aktuelle Link funktioniert dann nicht mehr!",
+    "delegators": "Auftraggeber",
+    "delegates": "Beauftragte",
+    "inviteSuccess": "Geschafft! Diese Person kann dir jetzt Aufgaben delegieren.",
+    "inviteConfirm": "Möchtest du wirklich Aufgaben von dieser Person übernehmen?",
+    "deleteDelegateConfirmation": "Möchtest du diese beauftragte Person wirklich entfernen? Du kannst dieser Person dann keine Aufgaben mehr delegieren.",
+    "deleteDelegatorConfirmation": "Möchtest du diesen Auftraggeber wirklich entfernen? Diese Person kann dir dann keine Aufgaben mehr delegieren.",
+    "pickDelegateField": "Beauftragte",
+    "noDelegatorsShort": "Du hast noch keine Auftraggeber",
+    "noDelegatedTasksTo": "Du hast noch keine Aufgaben delegiert.",
+    "noDelegatesShort": "Du hast noch keine Beauftragten"
+  },
+  "epic": {
+    "intoEpic": "Zum Epic machen",
+    "epicGoal": "Epic-Ziel",
+    "name": "Epic-Name",
+    "epicForeword": "Wähle aus, wie viele Aufgaben mit diesem Hashtag erledigt werden müssen. Dadurch wird der Hashtag zu einem Epic. Der Fortschritt des Epics wird auf der Seite „Aktuell“ angezeigt."
+  },
+  "success": "Geschafft!",
+  "notLogginedBody": "Bitte melde dich an unter ",
+  "settingsActions": {
+    "swipeActions": "Wischgesten"
+  },
+  "cannotLoadTitle": "Oh oh!",
+  "cannotLoadText": "Deine To-dos konnten nicht geladen werden. Ist vielleicht das Internet weg?",
+  "deleteAllHashtagsConfirm": "Möchtest du wirklich alle Hashtags löschen?",
+  "deleteAll": "Alle löschen",
+  "apps": "Apps",
+  "next": "Weiter",
+  "letsGo": "Los geht's!",
+  "introText0": "Hallo! Ich bin Nikita, der Gründer von Todorant. Ich freue mich riesig, dass du Todorant heruntergeladen hast, denn das heißt, dass auch du bald von grenzenloser Produktivität profitierst.",
+  "introText1": "Die meisten, die hier landen, sind wie ich: Sie haben gefühlt alle Produktivitätstools ausprobiert, aber keins hat so richtig gepasst.",
+  "introText2": "Ich zeige dir, wie Todorant für mich zum letzten und einzigen Produktivitätstool wurde und was in den nächsten 3–4 Wochen mit dir passieren wird. Scroll einfach oder nutze die Buttons unten!",
+  "introText3": "Sobald du all deine Aufgaben in Todorant eingetragen hast, wird es für andere als Erstes so wirken, als könntest du dir alles merken. Du musst dafür nichts extra tun, das System funktioniert einfach.",
+  "introText4": "Deshalb liebt meine Frau es, dass ich Todorant nutze. Früher habe ich ständig Dinge und Verpflichtungen vergessen, die mir unwichtig vorkamen, für meine Frau aber wichtig waren.",
+  "introText5": "Jetzt trage ich jede Zusage und jedes Versprechen in Todorant ein, und wenn es so weit ist, weiß ich, was zu tun ist, und kann entsprechend planen.",
+  "introText6": "Als Zweites wirst du innere Ruhe spüren. Du hörst auf, dich wegen unerledigter Aufgaben und Dingen zu stressen, die du vielleicht vergessen hast.",
+  "introText7": "Du weißt jederzeit, woran du gerade arbeiten solltest, und bleibst länger im „Flow“, erreichst Ziele und erledigst Aufgaben.",
+  "introText8": "Obwohl ich über ein Dutzend Dienste betreue, die mehr als 20 000 000 Menschen nutzen, fühle ich mich nie mehr gestresst. Ich habe immer die aktuelle Aufgabe vor mir und weiß, dass ich das Ziel irgendwann erreiche, solange ich vorankomme.",
+  "introText9": "Als Drittes bekommst du fast übermenschliche Planungskräfte. Du kannst die Dauer und den Fertigstellungstermin jeder Aufgabe genau abschätzen.",
+  "introText10": "Jedes Mal, wenn mich jemand aus dem Team oder ein Freund fragt, wann etwas fertig ist, schaue ich in Todorant nach, wann die Aufgabe eingeplant ist. Meistens kann ich dann eine ziemlich realistische Einschätzung geben.",
+  "introText11": "Ich muss persönlich nie mehr etwas überstürzen. Keine „Crunch Time“ mehr! Ich erledige Aufgaben in einem angenehmen Tempo, und die Leute um mich herum können sich auf mich verlassen.",
+  "introText12": "Du bist in guter Gesellschaft. Tausende Nutzer vertrauen ihre Produktivität jeden Tag Todorant an – ich auch.",
+  "introText13": "Wenn du Fragen zur App hast, klick einfach auf den „i“-Button oben rechts. Findest du dort keine Antwort, findest du meine persönlichen Kontaktdaten im Bereich „Support“ in den Einstellungen – schreib mir einfach!",
+  "introText14": "Eine Sache noch! Um eine Superkraft voll zu beherrschen, musst du lernen, sie zu nutzen. Lies unbedingt „So nutzt du Todorant“ in den Einstellungen!",
+  "introText15": "Viel Erfolg mit Todorant! Ich hoffe, es verändert dein Leben genauso zum Besseren wie meins!",
+  "introText0web": "Hallo! Ich bin Nikita, der Gründer von Todorant. Ich freue mich riesig, dass du Todorant ausprobieren willst, denn das heißt, dass auch du bald von grenzenloser Produktivität profitierst.",
+  "introText2web": "Ich zeige dir, wie Todorant für mich zum letzten und einzigen Produktivitätstool wurde und was in den nächsten 3–4 Wochen mit dir passieren wird. Nutze einfach die Buttons unten, um weiterzublättern!",
+  "introText14web": "Eine Sache noch! Um eine Superkraft voll zu beherrschen, musst du lernen, sie zu nutzen. Lies unbedingt „So nutzt du Todorant“ – tipp dazu auf den Info-Button oben rechts!",
+  "edit": "Bearbeiten",
+  "settingsObject": {
+    "showMoreByDefault": "Beim Hinzufügen immer mehr Optionen zeigen"
+  },
+  "frogsAlert": {
+    "title": "Stopp! Das ist verboten",
+    "text": "Brich nicht die Regeln. Wenn du heute Frösche hast, erledige sie zuerst, teile sie auf, verschiebe sie auf spätere Tage oder entferne die Frosch-Markierung. Aber bitte ignorier die Frösche nicht!"
+  },
+  "to": "An",
+  "from": "Von",
+  "unEpicInfo": "Epic zurücksetzen",
+  "unEpicConfirm": "Möchtest du das Epic wirklich zurücksetzen?",
+  "breakdownMessage": {
+    "title": "Wiederkehrende Aufgabe",
+    "text": "Das ist eine wiederkehrende Aufgabe. Möchtest du sie aufteilen oder erledigen?",
+    "complete": "Erledigen"
+  },
+  "m": {
+    "account": "Konto",
+    "addDevices": "Geräte hinzufügen",
+    "addTodo": "To-do hinzufügen",
+    "addTodoDay": "Genauer Tag",
+    "addTodoMonth": "Oder Monat",
+    "addTodoMore": "Mehr …",
+    "addTodoOnTop": "Oben einfügen",
+    "addTodoPlural": "To-dos hinzufügen!",
+    "addTodoSingular": "To-do hinzufügen!",
+    "addTodoTime": "Genaue Uhrzeit",
+    "apple": "Apple",
+    "askBeforeDelete": "Löschen bestätigen",
+    "breakdownTodo": "Aufteilen",
+    "cancel": "Abbrechen",
+    "changeColor": "Farbe ändern",
+    "colorMode": "Farbmodus",
+    "completed": "Erledigt",
+    "confirmDecryptAll": "Möchtest du wirklich alle Aufgaben entschlüsseln?",
+    "confirmEncryptAll": "Möchtest du wirklich alle Aufgaben mit dem Passwort verschlüsseln? Wenn du das Passwort verlierst, kannst du die Aufgaben nicht mehr entschlüsseln!",
+    "connected": "Verbunden",
+    "copied": "kopiert",
+    "count": "Anzahl",
+    "dark": "Dunkel",
+    "dataInfo": "Daten-Infos",
+    "decryptAllButton": "Alle entschlüsseln",
+    "defaultToToday": "Standardmäßig heute",
+    "delegate": {
+      "ByMe": "Von mir",
+      "ToMe": "Eingang",
+      "delegates": "Beauftragte",
+      "delegators": "Auftraggeber",
+      "deleteDelegateConfirmation": "Möchtest du diese beauftragte Person wirklich entfernen? Du kannst dieser Person dann keine Aufgaben mehr delegieren.",
+      "deleteDelegatorConfirmation": "Möchtest du diesen Auftraggeber wirklich entfernen? Diese Person kann dir dann keine Aufgaben mehr delegieren.",
+      "link": "Einladungslink für Beauftragte",
+      "noDelegatedTasks": "Du hast keine neuen delegierten Aufgaben mehr.",
+      "noDelegatedTasksTo": "Du hast noch keine Aufgaben delegiert.",
+      "noDelegates": "Du hast noch keine Beauftragten. Teile den Einladungslink mit den Leuten, denen du Aufgaben übertragen möchtest",
+      "noDelegators": "Du hast noch keine Auftraggeber. Lass dir einen Einladungslink schicken, um für jemanden Aufgaben zu übernehmen.",
+      "resetConfirmation": "Möchtest du den Link wirklich zurücksetzen? Der aktuelle Link funktioniert dann nicht mehr!",
+      "resetLink": "Link zurücksetzen"
+    },
+    "deleteAccount": "Konto löschen",
+    "deleteAccountText": "Dadurch werden dein Konto und alle deine To-dos, Hashtags und Einstellungen dauerhaft vom Server gelöscht. Das lässt sich nicht rückgängig machen.",
+    "deleteAllHashtags": "Alle Hashtags löschen",
+    "deleteAllHashtagsConfirm": "Möchtest du wirklich alle Hashtags löschen?",
+    "deleteTodo": "Möchtest du wirklich löschen:",
+    "disable": "Deaktivieren",
+    "editHashtag": "Hashtag bearbeiten",
+    "editName": "Neuer Hashtag-Text",
+    "editTodo": "To-do bearbeiten",
+    "email": "E-Mail",
+    "emptyHashtags": "Deine Hashtag-Liste ist noch leer. Leg deine erste Aufgabe mit einem #hashtag an, damit hier der erste Hashtag erscheint!",
+    "encryptAllButton": "Alle verschlüsseln",
+    "encryptTodo": "To-dos verschlüsseln",
+    "encryptedTodos": "Verschlüsselte Aufgaben",
+    "encryption": {
+      "encryptionSaved": "Alles bereit! Ab jetzt werden alle deine neuen Aufgaben verschlüsselt",
+      "repeatPassword": "Passwort wiederholen"
+    },
+    "encryptionConfirm": "Möchtest du die To-dos wirklich mit diesem Passwort verschlüsseln? Mit demselben Passwort kannst du sie später wieder entschlüsseln. Wenn du das Passwort verlierst, kannst du die To-dos nicht mehr entschlüsseln!",
+    "encryptionDisableConfirm": "Möchtest du den Schlüssel wirklich entfernen und die Verschlüsselung deaktivieren? Bereits verschlüsselte Aufgaben werden dadurch nicht entschlüsselt.",
+    "epic": {
+      "epicGoal": "Epic-Ziel",
+      "intoEpic": "Zum Epic machen"
+    },
+    "errors": {
+      "epic": {
+        "numberError": "Muss eine Zahl sein"
+      }
+    },
+    "facebook": "Facebook",
+    "firstDayOfWeek": "Erster Tag der Woche",
+    "gamification": "Gamification",
+    "general": "Allgemein",
+    "heroProfileTitle": "Heldenprofil",
+    "howTo": "Anleitung",
+    "howToUse": "So nutzt du Todorant",
+    "important": "Wichtig",
+    "info": "Info",
+    "infoAdd": "Das ist der Bildschirm zum Hinzufügen von Aufgaben. Aufgaben sollten immer umsetzbar sein („Günstigste Flüge nach Mexiko suchen“ statt „Nach Mexiko reisen“) und so klein und konkret wie möglich („Bildschirme abstauben“ statt „Wohnung putzen“). Du kannst hier auch mehrere Aufgaben hinzufügen.\n\nJede Aufgabe braucht entweder ein Datum oder einen Monat. Den aktuellen Monat kannst du nicht auswählen.\n\nFrösche sind Aufgaben, auf die du keine Lust hast – sie stehen ganz oben auf deiner Liste. Je früher du einen Frosch anpackst, desto größer die Chance, dass du ihn erledigst.",
+    "infoBreakdown": "Das ist der Bildschirm zum Aufteilen von Aufgaben. Füge ruhig mehrere Aufgaben hinzu – sie erscheinen in der Aufgabenliste anstelle der ursprünglichen Aufgabe. Sobald du die neuen, kleineren Aufgaben hinzugefügt hast, wird die ursprüngliche Aufgabe als erledigt markiert.",
+    "infoCurrent": "Das ist die Seite mit der aktuellen Aufgabe. Sie zeigt dir nur die eine Aufgabe, an der du gerade arbeiten solltest. Bleib fokussiert – nachdem du deinen Tag geplant hast, ist das die einzige Seite, die du brauchst.\n\nDu kannst die Aufgabe überspringen, wenn sie kein Frosch und nicht die letzte Aufgabe des Tages ist.\n\nWenn eine Aufgabe zu grob ist, nutze die Aufteilen-Funktion. Nach dem Aufteilen wird die Aufgabe automatisch als erledigt markiert.",
+    "infoData": "Hier siehst du die neuesten Infos zu deinem lokalen Datenspeicher und zur Synchronisierung.",
+    "infoEdit": "Das ist der Bildschirm zum Bearbeiten von Aufgaben. Hier kannst du die Aufgabe bearbeiten. Ja, das war's schon.",
+    "infoHero": "Das ist dein Profil – das Profil des Helden! Erledige Aufgaben und sammle Punkte, um immer höhere Ränge zu erreichen!\n\nDie komplette Liste der Ränge kennst du erst, wenn du den höchsten erreicht hast! Denk dran: Der einzige Weg nach oben führt über viele kleine Schritte, jeden Tag.",
+    "infoPlanning": "Das ist dein Planungsbereich. Ordne Aufgaben und Datumsüberschriften ruhig neu an (lange drücken und ziehen) – das macht Spaß!\n\nUnd vergiss nicht, #hashtags zu nutzen.",
+    "infoRules": "Bitte lies die Regeln gründlich durch, um das Beste aus Todorant herauszuholen.",
+    "infoSecurity": "Sei in diesem Bereich äußerst vorsichtig! Die Verschlüsselung funktioniert erst, wenn du ein Passwort festlegst. Es gibt dann zwei Arten von Aufgaben: verschlüsselte und unverschlüsselte. Alle neuen Aufgaben werden verschlüsselt. Alte To-dos kannst du mit dem Button unten verschlüsseln. Wenn du das Passwort verlierst, lassen sich die Aufgaben nicht mehr wiederherstellen.",
+    "infoSettings": "Das sind deine Einstellungen. Hier kannst du verschiedene Optionen anpassen. Lies dir bitte unbedingt den Abschnitt „So nutzt du Todorant“ durch.",
+    "infoTags": "Das ist die Liste aller Hashtags, die du verwendet hast. Siehst du nichts? Dann leg eine Aufgabe mit einem #hashtag im Text an – nur so landen Hashtags in dieser Liste.\n\nWenn du die Farbe eines Hashtags ändern oder ihn löschen willst, tipp darauf. Keine Sorge, Hashtags sind unabhängig von To-dos – was du hier machst, wirkt sich nicht auf deine To-dos aus. Na gut, mit neuen Farben sehen deine To-dos vielleicht cooler aus.",
+    "infoTitle": "Info",
+    "languageAuto": "Automatisch",
+    "languageSelect": "Sprache",
+    "level": "Level",
+    "light": "Hell",
+    "loginTelegram": "Mit Telegram anmelden",
+    "logout": "Abmelden",
+    "logoutText": "Möchtest du dich abmelden?",
+    "nameLabel": "Name",
+    "newTodosGoOnTop": "Neue To-dos oben einfügen",
+    "noTodosExistText": "Los geht's – leg ein paar To-dos an, indem du unten auf das Plus tippst!",
+    "noTodosExistTitle": "Noch keine To-dos",
+    "notConnected": "Nicht verbunden",
+    "password": "Passwort",
+    "passwordError": "Falsches Passwort. Einige deiner verschlüsselten Aufgaben lassen sich mit diesem Passwort anscheinend nicht entschlüsseln.",
+    "planning": "Planung",
+    "points": "Punkte",
+    "pointsTillNextLevel": "Punkte bis zum nächsten Level",
+    "preserveOrderByTime": "Reihenfolge nach Uhrzeit",
+    "privacyPolicy": "Datenschutzerklärung",
+    "saveTodo": "To-do speichern!",
+    "search": "Suche",
+    "security": "Sicherheit",
+    "settingsActions": {
+      "swipeActions": "Wischgesten"
+    },
+    "settingsObject": {
+      "duplicateTagInBreakdown": "Hashtags beim Aufteilen kopieren",
+      "showMoreByDefault": "Beim Hinzufügen immer mehr Optionen zeigen"
+    },
+    "signUp": "Konto erstellen",
+    "soundEffects": "Soundeffekte",
+    "startTimeOfDay": "Tagesbeginn",
+    "supportLabel": "Support",
+    "supportText": "Fragen oder Feedback? Schreib mir eine E-Mail oder melde dich auf Telegram!",
+    "sync": "Synchronisierung",
+    "syncData": "Daten synchronisieren",
+    "syncDataHard": "Vollständig synchronisieren",
+    "tags": "Hashtags",
+    "tagsCount": "Hashtags",
+    "telegram": "Telegram",
+    "termsOfUse": "Nutzungsbedingungen",
+    "todoCount": "To-dos",
+    "todos": "To-dos",
+    "unEpic": "Epic zurücksetzen",
+    "unEpicConfirm": "Möchtest du das Epic wirklich zurücksetzen",
+    "unencryptedTodos": "Unverschlüsselte Aufgaben"
+  }
+}

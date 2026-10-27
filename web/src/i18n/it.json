@@ -4,24 +4,30 @@
     "switch": "Attività criptate",
     "password": "Password",
     "encryptAllButton": "Cripta tutto",
-    "decryptAllButton": "Decrepita tutto",
+    "decryptAllButton": "Decripta tutto",
     "confirm": "Sei sicuro di voler crittografare le attività con questa password? Sarai in grado di decifrare attività in seguito con la stessa password. Se perdi la password, non sarai in grado di decriptare le attività!",
     "disableConfirm": "Sei sicuro di voler rimuovere la password e disabilitare la crittografia? Questo non decripterà le attività che sono state criptate.",
     "errorDecrypting": "Password di decriptazione errata",
     "repeatPassword": "Ripetere la password",
-    "title": "Crittografia"
+    "title": "Crittografia",
+    "encryptedTodo": "Attività cifrata"
   },
   "search": "Ricerca",
   "qr": {
-    "code": "Codice QR"
+    "code": "Codice QR",
+    "description": {
+      "app_login": "Usa questo codice QR per accedere dai dispositivi mobili. Questa immagine è una password: non condividerla con nessuno!",
+      "web_login": "Accedi all'app mobile di Todorant, vai nelle Impostazioni, tocca il pulsante \"Aggiungi dispositivi\" nella sezione \"Account\" e scansiona questo codice QR per consentire l'accesso a Todorant qui. Ricorda: questo codice QR è valido solo per 10 minuti!"
+    }
   },
   "breakdown": {
     "request": "Sembra che tu abbia spostato troppo questo compito. Si prega di scomporlo, non è più possibile spostarlo in un'altra data. Credimi, aiuterà a completare l'attività!",
-    "button": "Arresto"
+    "button": "Suddividi"
   },
   "warning": "Avviso",
   "hashtags": {
-    "title": "Hashtags"
+    "title": "Hashtag",
+    "name": "Nome dell'hashtag"
   },
   "supportAlert": {
     "title": "Supporto",
@@ -30,6 +36,7 @@
   "loginMobile": {
     "telegram": {
       "headline": "Prego, accedi con Telegram inserendo il tuo ID Telegram e premendo il bottone \"Login\". Puoi ottenere il tuo ID Telegram inviando <code>/id</code> su <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a>. Oppure puoi anche semplicemente inviare <code>/qr</code> a <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a> e scansionare la foto nella sezione login con codice QR!",
+      "id": "123456789",
       "idHint": "ID Telegram",
       "loginButton": "Login",
       "noCredentialsError": "Per favore, inserisci un ID Telegram",
@@ -68,20 +75,165 @@
         ". Grazie."
       ]
     },
-    "act": "Agire!"
+    "signIn": "Accedi",
+    "facebook": "Accedi con Facebook",
+    "google": "Accedi con Google",
+    "privacy": "Informativa sulla privacy",
+    "feedback": {
+      "title": "Cosa dicono gli utenti?",
+      "reviews": [
+        {
+          "name": "Sergey Romanov",
+          "username": "Gendoor",
+          "text": "I messaggi nella sezione dell'abbonamento sono carinissimi :)\n\nGrazie per questo servizio semplice che punta all'ideale. Si è scoperto che non aiuta solo a essere produttivi, ma anche proattivi. I piccoli miglioramenti quotidiani rendono la vita migliore con sicurezza, e la mente libera cerca continuamente come riempire la lista delle cose da fare ormai svuotata, per provare ancora e ancora il piacere di completare le attività: ed è la via diretta per migliorare tutto ciò che mi circonda.\n\nInsomma, Todorant, per quanto semplice possa sembrare a prima vista, può diventare un fedele alleato in qualsiasi impresa. Grazie, Nikita, per aver svelato gli aspetti della vera produttività e averli condivisi con noi in una soluzione comoda.\n\nUn abbonato di Todorant riconoscente."
+        },
+        {
+          "name": "Dinislam Sad",
+          "username": "Azerzet",
+          "text": "I principali vantaggi che sono piaciuti a me e, ne sono sicuro, anche ad altri.\n1. Interfaccia semplice e comoda.\n2. Le attività mancate diventano automaticamente rane, e c'è la possibilità di rendere un'attività una rana fin dall'inizio.\n3. Il comando /done è indispensabile, grazie Nikita. Ho usato Todoist, Wunderlist, Bitrix24. Sono tutti troppo complicati.\n4. Il bot di Telegram."
+        },
+        {
+          "name": "Aleksei Kaut",
+          "username": "aleksei_kaut",
+          "text": "Dopo aver creato le prime attività e essere passato alla scheda \"Corrente\", sono rimasto sorpreso di avere una sola attività da completare prima di andare avanti. Questa idea di un'unica attività su cui concentrarsi mi ha colpito: sembra ovvia, ma prima non riuscivo a metterla in pratica.\n\nDi solito annotavo nelle Note le attività e le idee da realizzare a breve, ma non lo facevo in modo sistematico. Uso il servizio da un paio di settimane, non in modo molto attivo, ma credo che sia un modo davvero efficace per mettere ordine tra impegni e attività.\n\nGrazie per il tuo lavoro!"
+        },
+        {
+          "name": "Anton",
+          "username": "mas1311",
+          "text": "Ho provato Todorant. All'inizio ero scettico (avevo già provato un sacco di servizi di pianificazione), ma ho capito che funziona davvero ed è facilissimo da usare.\n\nIn più, per motivi a me ignoti, quando completo tutte le attività della giornata provo una forte soddisfazione, che con altri planner non avevo (c'era più una sensazione del tipo \"beh, era tutto... o no?\").\n\nGrazie per il tuo lavoro!"
+        },
+        {
+          "name": "Willsey Paslen",
+          "username": "WillseyPaslen",
+          "text": "Grazie per l'ottimo servizio. È passato abbastanza tempo per poterlo dire: mi aiuta. Grazie, Nikita 😁 E buona fortuna con l'app."
+        },
+        {
+          "name": "Igor Malinkin",
+          "username": "sxe4kilo",
+          "text": "Con Todorant ho iniziato a fare almeno qualcosa, quindi la mia produttività è salita da 0."
+        },
+        {
+          "name": "Vladimir Dubenko",
+          "username": "dubenko_v",
+          "text": "Il tuo servizio è fantastico per almeno tre motivi:\n1. È comodo: è minimalista!\n2. Crea un'abitudine.\n3. Per quanto possa sembrare strano, non ti costringe a pensare in modo razionale.\n\nSono irrazionale per natura, non riesco a portare avanti 1 solo progetto (mi esaurisco in fretta). La mia vita è multitasking! 3 progetti in parallelo sono facili, ma 3 non bastano... 7 è già meglio. E il tuo servizio permette di farlo. È proprio l'alternanza delle attività che impedisce al cervello di esaurirsi in una sola direzione. E in qualche modo, come per magia, alterna le attività da un progetto all'altro."
+        },
+        {
+          "name": "Maksim Alekseyevich",
+          "username": "MMAradiology",
+          "text": "Non posso dire che Todorant mi abbia cambiato la vita. Posso dire che è un'applicazione/sito sensato e molto utile? Sì, mille volte sì.\n\nTodorant mi piace: mi permette di liberare la mia \"memoria operativa\" e di pensare a risolvere i problemi, non a ricordarmeli. Come ha scritto giustamente Nikita (il creatore), con un uso costante e corretto smetteranno di comparire attività che prima incutevano un vero timore biblico. E non perché smetteranno di arrivare le attività complesse. Diventerà chiaro a te (a me, a tutti) che \"la strada si fa camminando\" e che \"un viaggio di mille miglia inizia con un solo passo\"."
+        },
+        {
+          "name": "Kiku Reise",
+          "username": "Kiku_Reise",
+          "text": "Ho organizzato le mie attività di lavoro, di programmazione e dei miei hobby. Anche questa recensione l'ho scritta grazie a Todorant. Una sola attività, nessuna complicazione. È questo il senso dell'app: mi ha aiutato a concentrarmi senza rimescolare continuamente le mie cose da fare.\n\nCerto, puoi impostare le attività e dimenticartene, ma per me è più facile tornare a un'applicazione minimalista con una sola attività che passare mezza giornata a cercare su cosa lavorare tra le cento pianificate su Telegram o Notion.\n\nSono stato particolarmente contento dell'aggiornamento con gli hashtag: ora ho tutte le statistiche a portata di mano, posso tenere traccia e condividere con gli amici quante attività ho completato questo mese.\n\nGrazie mille per Todorant!"
+        }
+      ]
+    },
+    "act": "Agire!",
+    "apple": "Accedi con Apple",
+    "crossplatform": {
+      "title": "Davvero multipiattaforma"
+    },
+    "mobile": "Accedi con l'app mobile"
   },
+  "menu": {
+    "darkMode": {
+      "on": "Tema scuro: attivo",
+      "off": "Tema scuro: disattivo"
+    },
+    "logout": "Esci"
+  },
+  "support": "Qualcosa non è chiaro? Scrivimi a <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "errors": {
+    "login": {
+      "facebook": "Impossibile accedere con Facebook",
+      "google": "Impossibile accedere con Google",
+      "telegram": "Impossibile accedere con Telegram",
+      "apple": "Impossibile accedere con Apple",
+      "mobile": "Impossibile accedere con l'app mobile"
+    },
+    "internal": "Errore interno del server",
+    "loadTodos": "Impossibile caricare le attività",
+    "todo": {
+      "textLenght": "Le attività devono avere un testo",
+      "dateOrMonth": "Le attività devono avere una data o un mese",
+      "more1500": "Le attività non possono superare i 1500 caratteri."
+    },
+    "invalidForm": "Compila i campi obbligatori",
+    "report": "Impossibile caricare le statistiche",
+    "appleFirefox": "Purtroppo su Firefox c'è <a href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=1628361\">un bug</a> con l'accesso tramite Apple. Finché non verrà risolto, usa un altro browser per accedere con Apple, e poi collega l'account agli altri account social su Todorant. Scusa per l'inconveniente.",
+    "delegate": {
+      "invalidToken": "Il link di invito non è più valido"
+    },
+    "epic": {
+      "numberError": "Deve essere un numero",
+      "greaterThanZeroError": "Deve essere maggiore di 0"
+    },
+    "tag": {
+      "whitespaces": "Gli hashtag non devono contenere spazi"
+    }
+  },
+  "close": "Chiudi",
+  "notFound": "Pagina non trovata",
   "todo": {
     "create": {
+      "title": "Aggiungi attività",
+      "text": "Testo dell'attività",
+      "textHint": "Puoi aggiungere un link a un'email o a un sito web",
       "placeholder": "Attività",
-      "frog": "È una rana!"
+      "frog": "È una rana!",
+      "date": "Giorno esatto",
+      "month": "O mese",
+      "tooltip": "Le attività devono sempre essere: concrete (\"Trova i voli migliori per il Messico\" invece di \"Vai in Messico\"); il più possibile piccole e precise (\"Spolvera gli schermi\" invece di \"Pulisci la casa\").",
+      "goFirst": "Aggiungi in cima"
+    },
+    "list": {
+      "completed": "Mostra completate",
+      "delegated": "Mostra le attività che ho delegato"
+    },
+    "edit": {
+      "title": "Modifica"
     }
   },
   "cancel": "Annulla",
   "save": "Salva",
   "delete": "Elimina",
+  "deleteHeadline": "Vuoi davvero eliminare \"{name}\"?",
   "current": "Corrente",
   "planning": "Pianificazione",
+  "created": "Creata",
+  "breakdownInfo": "Usa la suddivisione quando l'attività corrente è troppo ampia",
+  "howto": {
+    "title": "Come usare Todorant?",
+    "premise": "Ecco i principi fondamentali da seguire per sfruttare al meglio tutte le funzionalità di Todorant. È facile come bere un bicchier d'acqua, solo con qualche passaggio in più.",
+    "bonus": {
+      "title": "Funzioni bonus",
+      "rules": [
+        "Sul desktop usa le scorciatoie da tastiera! Puoi aggiungere (a), suddividere (b), passare a Corrente (c), segnare come fatto (d) e passare a Pianificazione (p). Per aggiungere un'altra attività mentre ne stai aggiungendo, usa Ctrl+Shift+A."
+      ]
+    }
+  },
   "skipped": "Saltato",
+  "moveUp": "Sposta a oggi",
+  "settings": {
+    "title": "Impostazioni",
+    "showTodayOnAddTodo": "Imposta oggi di default quando crei un'attività",
+    "firstDayOfWeek": "Primo giorno della settimana",
+    "newTodosGoFirst": "Le nuove attività vengono aggiunte in cima alla lista",
+    "preserveOrderByTime": "Conserva l'ordine per ora esatta",
+    "general": "Generale",
+    "connected": "Connesso",
+    "notConnected": "Non connesso",
+    "account": "Account",
+    "duplicateTagInBreakdown": "Copia gli hashtag durante la suddivisione",
+    "export": "Esporta dati",
+    "hotkeys": "Scorciatoie da tastiera",
+    "startTimeOfDay": "Inizio della giornata",
+    "username": "Nome",
+    "telegram": "Telegram",
+    "coloredCardBackgrounds": "Colora le attività con i colori degli hashtag",
+    "newLineOnReturn": "Vai a capo con Invio"
+  },
   "allDoneTitle": "Congratulazioni!",
   "allDoneText": "🥳 Ce l'hai fatta! Le attività di oggi son state completate, riposati o balla un po' 💃",
   "noTodosTitle": "Verso l'infinito!",
@@ -127,6 +279,47 @@
   "emptyHashtags": "L'elenco degli hashtag è vuoto per ora. Create il vostro primo compito con un #hashtag per aggiungere il primo hashtag qui!",
   "refreshRequest": "È disponibile una nuova versione di Todorant. Si prega di aggiornare la pagina per ottenere il nuovo materiale lucido 🦄",
   "refresh": "Aggiorna",
+  "heroProfileTitle": "Profilo dell'eroe",
+  "infoHero": "Questa è la tua pagina profilo: sei tu l'eroe! Completa attività e guadagna punti per raggiungere ranghi sempre più alti!\n\nNon conoscerai l'elenco completo dei ranghi finché non avrai raggiunto il più alto! Ricorda: l'unica strada verso la vetta è una sequenza quotidiana di piccoli passi.",
+  "rank": "🔥 Il tuo rango 🔥",
+  "rank-1Title": "Entità infinita di materia oscura 😈",
+  "rank-1Description": "Hai raggiunto un rango che nessun essere umano aveva mai raggiunto prima! Congratulazioni, ecco la tua torta: 🍰. Stavolta non è una bugia.",
+  "rank0Title": "Sottozero −273.15 °C 🥶",
+  "rank0Description": "Sarebbe ancora più cool, se solo potesse.",
+  "rank5Title": "V per Vroduttività 👺",
+  "rank5Description": "Ricordate, bambini: se la produttività vi cade per terra e la raccogliete entro 5 secondi, siete salvi!",
+  "rank13Title": "Freddy felice 😱",
+  "rank13Description": "Sai che giorno è oggi. È il giorno in cui Jason ti prepara una torta. E ormai ogni giorno è quel giorno.",
+  "rank42Title": "Pescatore 🐬",
+  "rank42Description": "Addio, e grazie per tutto il pesce!",
+  "rank69Title": "Maestro del nice! 😝",
+  "rank69Description": "Il rango più nice che ci sia. Punto.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Si potrebbe dire che la tua produttività è fatta di ferro.",
+  "rank100Title": "Maestro della Forza al 100% ⚡️",
+  "rank100Description": "100 fatte, ne mancano infinite! Continua ogni giorno, ne vale la pena!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Hai risolto il caso della produttività, beh, buon per te!",
+  "rank256Title": "Idraulico felice 👾",
+  "rank256Description": "8 bit di produttività dopo, pensi ancora ai bei vecchi giochi.",
+  "rank300Title": "Spartano 💪",
+  "rank300Description": "Svuota la mente, semplifica le routine e passa i prossimi 100 punti da vero spartano!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Rango non trovato.",
+  "rank777Title": "Gran maestro fortunato! 🍀",
+  "rank777Description": "Questo rango dura solo 23 punti. Sfruttali al meglio, oggi è il tuo giorno fortunato!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Sei il terminator delle rane più temibili. Vai a terminarne qualcuna!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Hacking della produttività avviato... Hacking in corso...",
+  "rank1338Title": "3L1T3 (Hackerato) 🧑‍💻",
+  "rank1338Description": "Produttività hackerata con successo!",
+  "rank2048Title": "Maestro di scacchi ♔",
+  "rank2048Description": "Preferisci la produttività agli infiniti giochini inutili ammazza-tempo, vero? VERO?",
+  "rank9000Title": "Utente con potenza oltre 9000 🏋️",
+  "rank9000Description": "Sollevi le attività come se fossero piume!",
+  "rank12800Title": "Doctor Manhattan ⚛",
+  "rank12800Description": "Suddividi le attività come se scindessi atomi. Continua così!",
   "homeShort": {
     "headline": "I sistemi di produttività falliscono.",
     "headline2": "Todorant funziona.",
@@ -139,8 +332,93 @@
     "differenceText2": "Todorant usa una serie di limiti e di elogi accuratamente studiati per punire i cattivi comportamenti e sostenere le buone abitudini. Colpisce la parte primitiva del cervello per fargli desiderare di completare i todos come le persone desiderano lo zucchero.",
     "differenceText3": "Ho letto e provato più di 20 libri e metodologie di produttività. Quando tutti hanno fallito uno ad uno ho combinato i loro componenti e semplificato il risultato. È così che è stato creato il Todorant."
   },
+  "spread": {
+    "hint": "Scegli le attività da distribuire e le date su cui distribuirle, premi il pulsante e guarda le attività selezionate distribuirsi in modo uniforme tra le date scelte",
+    "spreading": "Distribuzione",
+    "chooseTasks": "Clicca sulle attività da distribuire",
+    "between": "tra",
+    "chooseDates": "Clicca sulle date su cui distribuire"
+  },
+  "level": "Livello",
+  "points": "punti",
+  "pointsTillNextLevel": "punti per sbloccare il prossimo livello",
+  "accept": "Accetta",
+  "delegate": {
+    "title": "Delega",
+    "noDelegators": "Non hai ancora deleganti. Chiedi un link di invito per diventare il delegato di qualcuno.",
+    "noDelegates": "Non hai ancora delegati. Condividi il link di invito con le persone che vuoi rendere tuoi delegati",
+    "noDelegatedTasks": "Non ci sono altre attività delegate nuove.",
+    "link": "Link di invito per i delegati",
+    "linkDescription": "Le persone possono diventare tuoi delegati aprendo questo link. I delegati vedranno solo le attività che hai delegato a loro.",
+    "resetConfirmation": "Vuoi davvero reimpostare il link? Il link attuale smetterà di funzionare!",
+    "delegators": "Deleganti",
+    "delegates": "Delegati",
+    "inviteSuccess": "Fatto! Ora questo utente può delegarti attività.",
+    "inviteConfirm": "Vuoi davvero diventare un delegato di questo utente?",
+    "deleteDelegateConfirmation": "Vuoi davvero eliminare questo delegato? Non potrai più delegargli attività.",
+    "deleteDelegatorConfirmation": "Vuoi davvero eliminare questo delegante? Non potrà più delegarti attività.",
+    "pickDelegateField": "Delegato",
+    "noDelegatorsShort": "Non hai ancora deleganti",
+    "noDelegatedTasksTo": "Non hai ancora delegato nessuna attività.",
+    "noDelegatesShort": "Non hai ancora delegati"
+  },
+  "epic": {
+    "intoEpic": "Crea un epic",
+    "epicGoal": "Obiettivo dell'epic",
+    "name": "Nome dell'epic",
+    "epicForeword": "Scegli il numero di attività con questo hashtag da completare. In questo modo l'hashtag diventerà un epic. L'avanzamento dell'epic verrà mostrato nella pagina Corrente."
+  },
+  "success": "Fatto!",
+  "notLogginedBody": "Accedi su ",
+  "settingsActions": {
+    "swipeActions": "Azioni di scorrimento"
+  },
+  "cannotLoadTitle": "Oh oh!",
+  "cannotLoadText": "Impossibile caricare le tue attività: forse Internet non funziona?",
+  "deleteAllHashtagsConfirm": "Vuoi davvero eliminare tutti gli hashtag?",
+  "deleteAll": "Elimina tutto",
+  "apps": "App",
+  "next": "Avanti",
+  "letsGo": "Andiamo!",
+  "introText0": "Ciao! Sono Nikita, il creatore di Todorant. Sono felicissimo che tu abbia scaricato Todorant, perché vuol dire che presto anche tu godrai di una produttività illimitata.",
+  "introText1": "La maggior parte delle persone che arriva qui è come me: ha provato quasi tutti gli strumenti di produttività, ma nessuno era quello giusto.",
+  "introText2": "Lascia che ti mostri come Todorant è diventato l'ultimo e l'unico strumento di produttività per me e cosa ti succederà nelle prossime 3-4 settimane. Scorri o usa i pulsanti in basso!",
+  "introText3": "La prima cosa che ti succederà, dopo aver inserito tutte le tue attività in Todorant, è che agli altri sembrerà che tu ti ricordi tutto. Non dovrai fare niente di più: il sistema funzionerà da solo.",
+  "introText4": "Ecco perché a mia moglie piace tanto che io usi Todorant. Prima continuavo a dimenticare cose e impegni che a me non sembravano importanti, ma che lo erano per lei.",
+  "introText5": "Ora, ogni volta che prendo un impegno o faccio una promessa, lo aggiungo a Todorant e, quando arriva il momento, so cosa devo fare e posso organizzarmi di conseguenza.",
+  "introText6": "La seconda cosa che ti succederà è la serenità mentale. Smetterai di stressarti per le attività non fatte e per quelle che pensi di aver dimenticato.",
+  "introText7": "Saprai sempre su cosa devi lavorare in ogni momento e resterai più a lungo nello \"stato di flow\", raggiungendo obiettivi e completando attività.",
+  "introText8": "Anche se gestisco più di una dozzina di servizi usati da oltre 20 000 000 di persone, non mi sento più stressato. Ho sempre davanti l'attività corrente e so che, se faccio progressi, prima o poi raggiungerò l'obiettivo.",
+  "introText9": "La terza cosa che ti succederà sarà una capacità di pianificazione quasi sovrumana. Saprai stimare con precisione la durata e i tempi di consegna di qualsiasi attività.",
+  "introText10": "Ogni volta che un collega o un amico mi chiede quando sarà pronta una certa cosa, controllo Todorant e vedo quando è prevista quell'attività. Il più delle volte riesco a dare stime piuttosto realistiche.",
+  "introText11": "Personalmente, ora non devo più fare niente di corsa. Niente più \"crunch time\"! Completo le attività con calma e chi mi sta intorno può fidarsi di me.",
+  "introText12": "Sappi che sei in buona compagnia. Migliaia di utenti affidano ogni giorno la propria produttività a Todorant, me compreso.",
+  "introText13": "Se hai domande sull'app, clicca sul pulsante \"i\" in alto a destra. Se non trovi la risposta, cerca i miei contatti personali nella sezione \"Supporto\" delle impostazioni e scrivimi!",
+  "introText14": "C'è però un'altra cosa da sapere! Per controllare appieno un superpotere, devi imparare a usarlo. Assicurati di leggere \"Come usare Todorant\" nelle impostazioni!",
+  "introText15": "Buona fortuna con Todorant! Spero che ti cambi la vita in meglio come ha fatto con la mia!",
+  "introText0web": "Ciao! Sono Nikita, il creatore di Todorant. Sono felicissimo che tu abbia deciso di provare Todorant, perché vuol dire che presto anche tu godrai di una produttività illimitata.",
+  "introText2web": "Lascia che ti mostri come Todorant è diventato l'ultimo e l'unico strumento di produttività per me e cosa ti succederà nelle prossime 3-4 settimane. Usa i pulsanti in basso per andare avanti!",
+  "introText14web": "C'è però un'altra cosa da sapere! Per controllare appieno un superpotere, devi imparare a usarlo. Assicurati di leggere \"Come usare Todorant\" toccando il pulsante info nell'angolo in alto a destra!",
+  "edit": "Modifica",
+  "settingsObject": {
+    "showMoreByDefault": "Mostra più opzioni di default quando aggiungi attività"
+  },
+  "frogsAlert": {
+    "title": "Alt! È vietato",
+    "text": "Non infrangere le regole. Se oggi hai delle rane, completale per prime, suddividile, spostale a giorni futuri oppure togli loro il segno di rana. Ti prego, solo non ignorare le rane!"
+  },
+  "to": "A",
+  "from": "Da",
+  "unEpicInfo": "Reimposta epic",
+  "unEpicConfirm": "Vuoi davvero reimpostare l'epic?",
+  "breakdownMessage": {
+    "title": "Attività ripetitiva",
+    "text": "Questa è un'attività ripetitiva: vuoi suddividerla o completarla?",
+    "complete": "Completa"
+  },
   "m": {
     "account": "Account",
+    "addDevices": "Aggiungi dispositivi",
     "addTodo": "Aggiungi attività",
     "addTodoDay": "Seleziona un giorno",
     "addTodoMonth": "O un mese",
@@ -165,8 +443,29 @@
     "dataInfo": "Informazioni sui dati",
     "decryptAllButton": "Decodificare tutti",
     "defaultToToday": "Predefinito ad oggi",
+    "delegate": {
+      "ByMe": "Da me",
+      "ToMe": "In arrivo",
+      "delegates": "Delegati",
+      "delegators": "Deleganti",
+      "deleteDelegateConfirmation": "Vuoi davvero eliminare questo delegato? Non potrai più delegargli attività.",
+      "deleteDelegatorConfirmation": "Vuoi davvero eliminare questo delegante? Non potrà più delegarti attività.",
+      "link": "Link di invito per i delegati",
+      "noDelegatedTasks": "Non ci sono altre attività delegate nuove.",
+      "noDelegatedTasksTo": "Non hai ancora delegato nessuna attività.",
+      "noDelegates": "Non hai ancora delegati. Condividi il link di invito con le persone che vuoi rendere tuoi delegati",
+      "noDelegators": "Non hai ancora deleganti. Chiedi un link di invito per diventare il delegato di qualcuno.",
+      "resetConfirmation": "Vuoi davvero reimpostare il link? Il link attuale smetterà di funzionare!",
+      "resetLink": "Reimposta link"
+    },
+    "deleteAccount": "Elimina account",
+    "deleteAccountText": "Questa operazione elimina definitivamente dal server il tuo account con tutte le attività, gli hashtag e le impostazioni. Non si può annullare.",
+    "deleteAllHashtags": "Elimina tutti gli hashtag",
+    "deleteAllHashtagsConfirm": "Vuoi davvero eliminare tutti gli hashtag?",
     "deleteTodo": "Vuoi davvero eliminare",
     "disable": "Disattivare",
+    "editHashtag": "Modifica hashtag",
+    "editName": "Nuovo testo dell'hashtag",
     "editTodo": "Modifica attività",
     "email": "Email",
     "emptyHashtags": "L'elenco degli hashtag è vuoto per ora. Create il vostro primo compito con un #hashtag per aggiungere il primo hashtag qui!",
@@ -174,14 +473,25 @@
     "encryptTodo": "Crittografare todos",
     "encryptedTodos": "Attività cifrate",
     "encryption": {
+      "encryptionSaved": "Tutto pronto! Da ora tutte le tue nuove attività saranno cifrate",
       "repeatPassword": "Ripetere la password"
     },
     "encryptionConfirm": "Sei sicuro di voler criptare il todos con questa password? Sarete in grado di decifrare i todos in seguito con la stessa password. Se perdi la password, non sarai in grado di decifrare todos!",
     "encryptionDisableConfirm": "Sei sicuro di voler rimuovere la chiave e disattivare la crittografia? In questo modo non si decifreranno i compiti che sono criptati.",
-    "error": "Errore",
+    "epic": {
+      "epicGoal": "Obiettivo dell'epic",
+      "intoEpic": "Crea un epic"
+    },
+    "errors": {
+      "epic": {
+        "numberError": "Deve essere un numero"
+      }
+    },
     "facebook": "Facebook",
     "firstDayOfWeek": "Primo giorno della settimana",
+    "gamification": "Gamification",
     "general": "Generale",
+    "heroProfileTitle": "Profilo dell'eroe",
     "howTo": "Come fare",
     "howToUse": "Come usare Todorant",
     "important": "Importante",
@@ -191,6 +501,7 @@
     "infoCurrent": "Questa è la pagina delle attività correnti. Essa mostra solo un compito su cui si dovrebbe lavorare in questo momento. Rimanete concentrati, questa è l'unica pagina che vi serve dopo aver pianificato la vostra giornata.\n\nPotete saltare l'attività se non è una rana e se non è l'ultima attività della giornata.\n\nSe l'attività è troppo ampia — usate la funzione di ripartizione. Dopo aver interrotto l'attività, verrà automaticamente contrassegnata come completata.",
     "infoData": "Qui potete vedere le informazioni più recenti sulla memorizzazione locale dei dati e le statistiche di sincronizzazione.",
     "infoEdit": "Questa è la schermata di modifica delle attività. Qui è possibile modificare l'attività. Sì, è questa.",
+    "infoHero": "Questa è la tua pagina profilo: sei tu l'eroe! Completa attività e guadagna punti per raggiungere ranghi sempre più alti!\n\nNon conoscerai l'elenco completo dei ranghi finché non avrai raggiunto il più alto! Ricorda: l'unica strada verso la vetta è una sequenza quotidiana di piccoli passi.",
     "infoPlanning": "Questa è la vostra sezione di pianificazione. Sentitevi liberi di riorganizzare le attività e i titoli delle date (premendo a lungo e trascinandoli) — è divertente!\n\nInoltre, non dimenticate di usare gli #hashtag.",
     "infoRules": "Per favore, leggi completamente le regole per usare al meglio Todorant.",
     "infoSecurity": "Utilizzate questa sezione con la massima cautela! La crittografia non funziona se non si aggiunge una password. Ci saranno due tipi di attività: criptata e non criptata. Tutti i nuovi compiti saranno criptati. I vecchi todos possono essere convertiti per essere criptati con il pulsante qui sotto. Se si perde la password non ci sarà modo di recuperare le attività.",
@@ -199,6 +510,7 @@
     "infoTitle": "Info",
     "languageAuto": "Auto",
     "languageSelect": "Lingua",
+    "level": "Livello",
     "light": "Chiaro",
     "loginTelegram": "Login con Telegram",
     "logout": "Esci",
@@ -211,12 +523,23 @@
     "password": "Password",
     "passwordError": "Password errata. Sembra che alcune delle attività criptate che avete non possano essere decifrate da questa password.",
     "planning": "Pianificazione",
+    "points": "punti",
+    "pointsTillNextLevel": "punti per sbloccare il prossimo livello",
     "preserveOrderByTime": "Conserva l'ordine esatto del tempo",
     "privacyPolicy": "Informativa sulla privacy",
     "saveTodo": "Salva attività!",
     "search": "Ricerca",
     "security": "Sicurezza",
+    "settingsActions": {
+      "swipeActions": "Azioni di scorrimento"
+    },
+    "settingsObject": {
+      "duplicateTagInBreakdown": "Copia gli hashtag durante la suddivisione",
+      "showMoreByDefault": "Mostra più opzioni di default quando aggiungi attività"
+    },
+    "signUp": "Crea account",
     "soundEffects": "Effetti sonori",
+    "startTimeOfDay": "Inizio della giornata",
     "supportLabel": "Supporto",
     "supportText": "Avete domande o feedback? Inviatemi un'e-mail o contattatemi su Telegram!",
     "sync": "Sincronizzazione",
@@ -228,6 +551,8 @@
     "termsOfUse": "Condizioni di utilizzo",
     "todoCount": "Di attività",
     "todos": "Attività",
+    "unEpic": "Reimposta epic",
+    "unEpicConfirm": "Vuoi davvero reimpostare l'epic",
     "unencryptedTodos": "Attività non cifrate"
   }
 }

@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">Todorant 위젯</string>
+    <string name="widget_login">Todorant에 로그인해 주세요</string>
+    <string name="widget_loading">불러오는 중&#8230;</string>
+</resources>

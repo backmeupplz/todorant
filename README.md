@@ -37,7 +37,7 @@ Todorant grew out of more than twenty productivity books and methodologies. When
 - **End-to-end encryption** of your todos with a password of your choice.
 - **Delegation**, to hand todos to friends and colleagues and accept the ones they hand to you.
 - A **Telegram bot** that turns messages into todos, **hashtags and epics** to group related work, and **reports** of everything you've done.
-- **Six languages** (English, Spanish, Italian, Portuguese, Russian and Ukrainian) and a dark mode on every platform.
+- **More than twenty languages**, from German, French and Spanish to Japanese, Chinese, Arabic and Hindi, that follow your device language, and a dark mode on every platform.
 
 ## Host your own
 

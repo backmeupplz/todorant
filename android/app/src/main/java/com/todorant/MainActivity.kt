@@ -42,7 +42,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavType
@@ -164,7 +166,9 @@ private fun Root(intent: Intent?, onIntentHandled: () -> Unit) {
             handleIntent(intent)
         }
     }
-    CompositionLocalProvider(LocalTagColors provides tagColors) {
+    // The in-app language can differ from the system one, so the layout direction follows it, not the system
+    val direction = if (I18n.rtl) LayoutDirection.Rtl else LayoutDirection.Ltr
+    CompositionLocalProvider(LocalTagColors provides tagColors, LocalLayoutDirection provides direction) {
         Box(Modifier.fillMaxSize().background(Colors.background)) {
             Column(Modifier.fillMaxSize()) {
                 NavHost(nav, Route.CURRENT, Modifier.weight(1f)) {

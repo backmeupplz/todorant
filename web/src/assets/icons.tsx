@@ -102,11 +102,15 @@ const P: Record<IconName, [viewBox: string, d: string | string[], transform?: st
   person: ['0 0 24 24', 'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'],
 }
 
+/** Icons that point along the reading direction, mirrored in Arabic */
+const FLIP = new Set<IconName>(['chevron_left', 'chevron_right', 'arrow_forward'])
+
 export function Icon(p: { name: IconName; size?: number; class?: string; style?: any }) {
   const [vb, d, t] = P[p.name]
   const size = p.size ?? 24
+  const cls = FLIP.has(p.name) ? `${p.class ?? ''} flip`.trim() : p.class
   return (
-    <svg viewBox={vb} width={size} height={size} fill="currentColor" class={p.class} style={p.style} aria-hidden="true">
+    <svg viewBox={vb} width={size} height={size} fill="currentColor" class={cls} style={p.style} aria-hidden="true">
       {(Array.isArray(d) ? d : [d]).map((x) => (
         <path d={x} transform={t} />
       ))}

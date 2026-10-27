@@ -1,0 +1,500 @@
+{
+  "search": "Cari",
+  "support": "Ada yang kurang jelas? Hubungi aku di <a target=\"_blank\" href=\"mailto:n@borodutch.com\">n@borodutch.com</a>",
+  "todo": {
+    "create": {
+      "text": "Teks tugas",
+      "placeholder": "Tugas",
+      "frog": "Ini katak!"
+    }
+  },
+  "cancel": "Batal",
+  "save": "Simpan",
+  "delete": "Hapus",
+  "current": "Sekarang",
+  "planning": "Perencanaan",
+  "skipped": "Dilewati",
+  "name": "Bahasa Indonesia",
+  "language": "Silakan pilih bahasa.",
+  "login": "Silakan masuk ke todorant.com dengan tombol di bawah.",
+  "settings": "Pengaturan",
+  "addTodo": "Tambah tugas",
+  "breakdownTodo": "Pecah tugas",
+  "pleaseLogin": "Silakan masuk",
+  "subscription": "Langganan",
+  "allDoneTitle": "Selamat!",
+  "allDoneText": "🥳 Kamu berhasil! Semua tugas hari ini sudah selesai, sana istirahat atau joget sedikit 💃",
+  "noTodosTitle": "Menuju tak terhingga!",
+  "noTodosText": "Kamu tidak punya tugas untuk hari ini. Kalau mau bekerja, tambahkan tugas baru untuk hari ini atau ambil tugas dari hari-hari mendatang.",
+  "addTodoDay": "Pilih tanggal",
+  "addTodoMonth": "Atau bulan",
+  "addTodoTime": "Jam tepat",
+  "completed": "Selesai",
+  "addTodoOnTop": "Taruh paling atas",
+  "addTodoMore": "Lainnya...",
+  "addTodoSingular": "Tambah tugas!",
+  "addTodoPlural": "Tambahkan semua!",
+  "saveTodo": "Simpan tugas!",
+  "planningText": "Sepertinya ada yang perlu kamu rencanakan! Silakan atur ulang tugas-tugas yang tertunda di bawah untuk membuka tab \"Sekarang\" dan tetap produktif. Semangat!",
+  "editTodo": "Edit tugas",
+  "anonymousText": "Saat ini semua datamu tersimpan di perangkat. Untuk mulai sinkronisasi dengan server Todorant, kamu perlu masuk.",
+  "nameLabel": "Nama",
+  "email": "Email",
+  "facebook": "Facebook",
+  "telegram": "Telegram",
+  "apple": "Apple",
+  "count": "Jumlah",
+  "todosLastSync": "Tugas",
+  "tags": "Tagar",
+  "tagsCount": "Tagar",
+  "todoCount": "Tugas",
+  "notSyncedYet": "Belum disinkronkan",
+  "settingsLastSync": "Pengaturan",
+  "accountLastSync": "Akun",
+  "syncData": "Sinkronkan data",
+  "googleTokenError": "Google tidak mengembalikan token akses",
+  "facebookPermissionsError": "Izin Facebook tidak diberikan",
+  "facebookTokenError": "Token akses Facebook tidak bisa didapatkan",
+  "loginWall": "Sepertinya kamu sudah memakai Todorant lebih dari sebulan tapi masih belum masuk! Jaga tugas-tugasmu agar tidak hilang — masuk sekarang dan nikmati Todorant dengan aman!",
+  "loginGoogle": "Masuk dengan Google",
+  "loginFacebook": "Masuk dengan Facebook",
+  "loginApple": "Masuk dengan Apple",
+  "loginTelegram": "Masuk dengan Telegram",
+  "logoutText": "Kamu yakin ingin keluar?",
+  "logout": "Keluar",
+  "deleteAccount": "Hapus akun",
+  "deleteAccountText": "Ini akan menghapus akunmu secara permanen beserta semua tugas, tagar, dan pengaturan dari server. Tindakan ini tidak bisa dibatalkan.",
+  "loginButton": "Masuk",
+  "alreadyRegistered": "(Kamu sudah terdaftar)",
+  "purchaseError": "Hmm, sepertinya ada yang salah dengan pembelian. Silakan buka situs web, masuk, dan berlangganan di sana!",
+  "purchaseThankYou": "Terima kasih",
+  "purchaseThankYouText": "Terima kasih sudah membeli langganan!",
+  "activeText": "🎉 Terima kasih banyak sudah mendukung Todorant! Semoga Todorant sudah membuat hidupmu lebih baik dan akan terus begitu ke depannya! Dukunganmu memungkinkan aku memperbaiki Todorant setiap hari, menambah fitur baru, dan menyederhanakan proses kerja!",
+  "inactiveText": "🐝 Sepertinya masa uji coba Todorant-mu sudah berakhir. Apakah Todorant sudah membuat hidupmu lebih baik setidaknya senilai $5/bulan? Aku sih berharap begitu! Langsung saja ke intinya.\n\nPenawaran tukar. Aku terima: $5 per bulan, $36 per tahun (diskon besar-besaran 40%) atau $150 sekali bayar. Kamu terima: produktivitas tanpa batas dan Todorant tanpa batas sebagai bonus.\n\nGimana, deal?",
+  "earlyAdopterText": "👏👏 — ini aku yang sedang bertepuk tangan untukmu; untukmu — orang-orang nekat yang mau mencoba Todorant, alat produktivitas yang terus berkembang, di barisan paling awal. Bisa dibilang kalian adalah seribu orang emas, yang masukannya membentuk Todorant sejak awal. Kamu berhak memakai Todorant sebanyak yang kamu mau — kamu tidak akan pernah merasakan batasan apa pun, kamu sudah layak mendapatkannya. Tapi kalau kamu merasa Todorant sudah mengubah hidupmu secara drastis, kamu tetap bisa membeli langganan sebagai bentuk \"Terima kasih\" yang terbaik. Kamu tidak akan pernah kehilangan status \"Pengguna awal 🦄\" — dan selalu bisa membatalkan langganan kapan saja. Terima kasih banyak masih memakai Todorant — aku akan terus menambah fitur baru dan menyempurnakan produk yang berdampak baik bagi kita semua. Semoga sukses!",
+  "earlyAdopterTextBonus": "🤗 Astaga +*%$! Sepertinya Todorant atau aku sendiri sudah cukup membantumu sampai-sampai kamu membeli langganan, padahal kamu bisa memakai Todorant gratis selamanya. Aku sangat terharu dan dengan senang hati mau ngopi bareng atau sekadar ngobrol sebentar. Jangan ragu menghubungiku lewat Telegram (@borodutch) atau email — klik saja namaku di bawah. Terima kasih banyak! Sulit membayangkan betapa pentingnya kontribusimu!",
+  "trialText": "💪 Selamat datang di Todorant! Kamu punya waktu 30 hari setelah mendaftar untuk mencari tahu apakah Todorant cocok untukmu. Setelah 30 hari berlalu, kamu masih bisa mengakses tugas-tugas lama, tapi tidak bisa menambah yang baru. Tidak masalah kok kalau mau berlangganan sebelum 30 hari berakhir. Aku yakin Todorant akan membawa produktivitas pribadimu ke level yang baru!",
+  "signature": "— Nikita, pembuat Todorant",
+  "rules": [
+    "Begitu kamu mendapat tugas yang bisa dikerjakan (menerima email, telepon, pesan, atau melihat sesuatu menarik yang perlu masuk daftar tugasmu) — langsung buat tugasnya saat itu juga. Jangan ditunda, kamu akan lupa kalau tidak mencatatnya.",
+    "Tugas harus selalu bisa langsung dikerjakan dan sejelas mungkin. Kalau sebuah tugas butuh kurang dari 2 menit, kerjakan sekarang juga dan catat sebagai selesai.",
+    "Saat membuat tugas, kamu harus menentukan tanggal tertentu atau memilih bulan. Kamu tidak bisa memilih bulan ini tanpa menentukan tanggal. Ini supaya pikiranmu tenang. Kalau kamu percaya pada sistem dan menaruh semua yang perlu dikerjakan di tanggal yang tepat — kamu akan menemuinya di waktu yang tepat. Banyak sekali tenaga kemauan terbuang karena terus-menerus stres soal \"hal lain yang harus kuurus tapi aku lupa itu apa\". Belajarlah untuk percaya dan rileks.",
+    "Hal pertama yang kamu lakukan setiap bulan adalah merencanakan ke depan. Ambil semua tugas yang ditetapkan untuk bulan ini lalu atur ke tanggal yang tepat. Dengan begitu kamu bisa menyaring tugas yang sudah tidak relevan dan pikiranmu tetap tenang karena tahu persis apa yang harus dikerjakan bulan ini.",
+    "Hal pertama yang kamu lakukan di pagi hari adalah merencanakan harimu. Lihat sekilas bagian Perencanaan. Apakah kamu sanggup mengerjakan semuanya? Pindahkan tugas yang tidak bisa diselesaikan hari ini. Atur ulang tugas yang belum selesai dari hari-hari sebelumnya.",
+    "Kecuali darurat, jangan buka bagian perencanaan setelah selesai merencanakan. Secara psikologis jauh lebih baik kalau kamu fokus pada satu tugas saja, jadi tetap pantau bagian Sekarang. Percayai sistemnya, ia mengingat semuanya. Kerjakan tugasmu dan biarkan pikiranmu tenang.",
+    "Bagian Sekarang hanya berisi satu tugas yang perlu kamu fokuskan — tidak ada yang lain. Kamu bisa punya lebih dari satu tugas sehari; jumlah tugas dan bilah progres ditampilkan untuk memudahkanmu. Kamu tidak boleh melompat-lompat antartugas — selesaikan setiap tugas secara berurutan, satu per satu.",
+    "Katak adalah jenis tugas khusus yang biasanya malas kamu kerjakan. Umumnya ini tugas yang terbengkalai berbulan-bulan bahkan bertahun-tahun. Todorant memastikan kamu mengerjakan katak paling awal setiap hari. Di pagi hari cadangan tenaga kemauanmu cukup besar untuk menghadapi tugas paling menyebalkan sekalipun. Dan setelah akhirnya kamu membereskan seekor katak — kamu akan cukup bahagia untuk tersenyum sepanjang hari. Kamu akan bangga pada dirimu sendiri setiap kali menaklukkan katak.",
+    "Kamu boleh melewati tugas yang sedang aktif — tapi usahakan sejarang mungkin. Katak tidak bisa dilewati. Kalau kamu gagal menyelesaikan sebuah tugas dan harus memindahkannya dua kali, tugas itu berubah jadi katak.",
+    "Kalau tugas yang sedang aktif terlalu umum, pecah menjadi daftar subtugas. Begitu dipecah, tugas tersebut ditandai selesai.",
+    "Tambahkan informasi relevan sebanyak mungkin ke dalam tugas. Tambahkan tautan ke email tertentu (gmail versi web memungkinkan ini), situs web, catatan (seperti evernote), dokumen (seperti dropbox), cantumkan nomor telepon, atau informasi apa pun yang mungkin kamu perlukan untuk menyelesaikan tugas. Todorant tidak dimaksudkan sebagai sumber referensi — melainkan katalog tautan ke informasi referensi yang relevan untuk tiap tugas.",
+    "Silakan bergabung dengan grup multibahasa kami di Telegram untuk berbagi pengalaman dan trik agar lebih produktif — @todorant_feedback! Masukanmu tentang layanan ini — saran, harapan, dan keluhan — sangat kami nantikan.",
+    "Gunakan mode edit (ikon urutan daftar di atas) di halaman Perencanaan untuk mengubah urutan tugas. Kalau ingin menetapkan tugas untuk minggu tertentu, taruh saja di hari Senin lalu atur ulang saat merencanakan di Senin pagi.",
+    "Todorant tidak punya dan tidak akan pernah punya tugas berulang — satu-satunya hal yang mereka kuasai adalah bikin cemas karena terus menggantung sebagai tugas yang belum selesai. Kalau kamu perlu mengerjakan tugas berulang — tambahkan semuanya secara manual, otakmu akan berterima kasih atas tugas-tugas yang disadari.",
+    "Todorant tidak mengenal konsep \"Proyek\" karena terbukti bikin tidak termotivasi, sebagian \"folder\" tidak pernah dibuka. Salam dari proyek \"Kebugaran\" dan \"Pengembangan diri\". Sebagai gantinya, gunakan #hashtags.",
+    "Katak akan selalu muncul di paling atas daftar.",
+    "Todorant tidak punya notifikasi untuk tugas mendatang yang diberi jam tepat."
+  ],
+  "termsOfUse": "Ketentuan penggunaan",
+  "privacyPolicy": "Kebijakan privasi",
+  "socketsInfo": "Info socket",
+  "dataInfo": "Info data",
+  "howTo": "Panduan",
+  "howToUse": "Cara memakai Todorant",
+  "account": "Akun",
+  "todos": "Tugas",
+  "general": "Umum",
+  "info": "Info",
+  "supportLabel": "Dukungan",
+  "sendFeedback": "Kirim masukan",
+  "supportText": "Punya pertanyaan atau masukan? Kirimi aku email atau hubungi aku di Telegram!",
+  "socketError": "Kesalahan koneksi: ",
+  "connected": "Terhubung",
+  "authorized": "Terotorisasi",
+  "daysLeft": "Sisa hari: ",
+  "buySubscription": "Beli langganan",
+  "defaultToToday": "Default ke hari ini",
+  "newTodosGoOnTop": "Tugas baru di atas",
+  "deleteTodo": "Kamu yakin ingin menghapus",
+  "earlyAdopter": "Pengguna awal 🦄",
+  "active": "Aktif",
+  "inactive": "Tidak aktif",
+  "trial": "Uji coba",
+  "error": "Kesalahan",
+  "ok": "OK",
+  "pleaseConfirm": "Harap konfirmasi",
+  "purchaseReceiptError": "Bukti pembelian tidak ditemukan",
+  "noTodosExistTitle": "Belum ada tugas",
+  "noTodosExistText": "Ayo — buat beberapa tugas dengan menekan tombol plus di bawah!",
+  "restorePurchases": "Pulihkan pembelian",
+  "noPurchasesError": "Maaf, kamu belum punya pembelian",
+  "appleSigninError": "Tidak bisa masuk dengan Apple",
+  "syncDataHard": "Sinkronisasi penuh",
+  "firstDayOfWeek": "Hari pertama dalam seminggu",
+  "weekday1": "Senin",
+  "weekday2": "Selasa",
+  "weekday3": "Rabu",
+  "weekday4": "Kamis",
+  "weekday5": "Jumat",
+  "weekday6": "Sabtu",
+  "weekday0": "Minggu",
+  "appleUnauthorizedText": "Aku wajib memintamu memulai uji coba dengan memilih salah satu opsi di bawah karena aturannya begitu. Kalau kamu sudah punya langganan aktif, silakan masuk ke akunmu di Pengaturan.",
+  "appleUnauthorizedTextGoodNews": "Tapi ada kabar baik: kamu tidak akan ditagih sampai masa uji coba 30 hari selesai.",
+  "appleUnauthorizedButtonExtra": "Gratis 30 hari, lalu",
+  "introTitle": "Selamat datang!",
+  "introBack": "Ayo mulai!",
+  "infoTitle": "Info",
+  "infoIntro": "Mantap, kamu menekan tombol \"i\"! Ini pesan sambutan yang menjelaskan apa itu Todorant. Tidak lebih, tidak kurang.",
+  "infoCurrent": "Ini halaman tugas saat ini. Halaman ini hanya menampilkan satu tugas yang sebaiknya kamu kerjakan sekarang. Tetap fokus, ini satu-satunya halaman yang kamu butuhkan setelah merencanakan harimu.\n\nKamu bisa melewati tugas kalau itu bukan katak dan bukan tugas terakhir hari ini.\n\nKalau tugasnya terlalu luas — gunakan fitur pecah tugas. Setelah dipecah, tugas itu otomatis ditandai selesai.",
+  "infoBreakdown": "Ini layar pecah tugas. Silakan tambahkan beberapa tugas yang akan muncul di daftar tugas menggantikan tugas aslinya. Setelah kamu menambahkan tugas-tugas baru yang lebih kecil, tugas aslinya akan ditandai selesai.",
+  "infoAdd": "Ini layar tambah tugas. Tugas harus selalu bisa langsung dikerjakan (\"Cari tiket pesawat termurah ke Bali\" bukan \"Pergi ke Bali\") dan sekecil serta sejelas mungkin (\"Lap debu di layar\" bukan \"Bersihkan rumah\"). Kamu bisa menambahkan beberapa tugas sekaligus di sini.\n\nSetiap tugas harus punya tanggal atau bulan. Kamu tidak bisa memilih bulan ini.\n\nKatak adalah tugas yang malas kamu kerjakan — mereka akan muncul paling atas di daftarmu. Makin cepat kamu mulai mengerjakan katak, makin besar peluangmu menyelesaikannya.",
+  "infoEdit": "Ini layar edit tugas. Di sini kamu bisa mengedit tugas. Yap, cuma itu.",
+  "infoPlanning": "Ini bagian perencanaanmu. Silakan atur ulang tugas dan judul tanggal (tekan lama lalu seret) — seru, lho!\n\nOh ya, jangan lupa pakai #hashtags.",
+  "infoSettings": "Ini layar pengaturanmu. Di sini kamu bisa mengatur berbagai opsi. Pastikan kamu sudah membaca bagian \"Cara memakai Todorant\", ya.",
+  "infoSockets": "Todorant memakai socket untuk menyinkronkan data dengan server. Semuanya bekerja seperti sihir begitu kedua tanda centang muncul.",
+  "infoData": "Di sini kamu bisa melihat info terbaru tentang penyimpanan data lokal dan statistik sinkronisasimu.",
+  "infoRules": "Silakan baca aturannya dengan saksama agar kamu bisa memaksimalkan Todorant.",
+  "preserveOrderByTime": "Pertahankan urutan jam tepat",
+  "subscriptionMonth": "bulan",
+  "languageSelect": "Bahasa",
+  "languageAuto": "Otomatis",
+  "syncExactDates": "Hitung ulang tanggal tepat",
+  "askBeforeDelete": "Konfirmasi hapus tugas",
+  "copied": "disalin",
+  "sync": "Sinkronisasi",
+  "infoTags": "Ini daftar semua tagar yang pernah kamu pakai. Kalau belum ada apa-apa — ayo, buat tugas dengan #hashtag di teksnya, hanya itu cara menambahkan tagar ke daftar ini.\n\nKalau ingin mengubah warna tagar atau menghapusnya, ketuk tagarnya. Tenang, tagar terpisah dari tugas — apa pun yang kamu lakukan di layar ini tidak akan memengaruhi tugas-tugasmu. Yah, mengganti warna bisa bikin tugasmu tampak lebih keren sih.",
+  "changeColor": "Ganti warna",
+  "changeColorToDefault": "Reset warna",
+  "colorMode": "Mode warna",
+  "dark": "Gelap",
+  "light": "Terang",
+  "loadingData": "Memuat datamu...",
+  "breakdownRequest": "Sepertinya kamu terlalu sering memindahkan tugas ini. Silakan pecah tugasnya, kamu tidak bisa lagi memindahkannya ke tanggal lain. Percaya deh, ini akan membantumu menyelesaikannya!",
+  "breakdownButton": "Pecah",
+  "back": "Kembali",
+  "important": "Penting",
+  "rateTitle": "Kamu sudah menyelesaikan lebih dari 100 tugas! 🎉🎉🎉 Seberapa besar Todorant membuat hidupmu lebih baik?",
+  "rate": "Nilai",
+  "send": "Kirim",
+  "rateCommentPlaceholder": "Tolong tulis sedikit tentang apa yang tidak kamu sukai dari Todorant",
+  "rateCommentEmptyError": "Tolong jangan biarkan kolom komentar kosong",
+  "starTerrible": "Sama sekali tidak",
+  "starBad": "Sedikit",
+  "starOkay": "Lumayan",
+  "starGood": "Cukup besar",
+  "starGreat": "Sangat besar",
+  "rateSolicitationApple": "Maukah kamu memberi Todorant rating bintang 5 di App Store? Itu sangat membantu!",
+  "rateSolicitationGoogle": "Maukah kamu memberi Todorant rating bintang 5 di Play Store? Itu sangat membantu!",
+  "rateButton": "Beri rating!",
+  "notConnected": "Tidak terhubung",
+  "loginQR": "Masuk dengan QR",
+  "qrDescription": "Buka popup kode QR di situs web Todorant lalu pindai kodenya di sini",
+  "cameraAuthorization": "Akses kamera tidak diizinkan",
+  "needCameraPermission": "Todorant memakai kamera untuk memindai kode QR",
+  "security": "Keamanan",
+  "encryptTodo": "Enkripsi tugas",
+  "infoSecurity": "Gunakan bagian ini dengan sangat hati-hati! Enkripsi tidak akan berfungsi kecuali kamu menambahkan kata sandi. Akan ada dua jenis tugas: terenkripsi dan tidak terenkripsi. Semua tugas baru akan dienkripsi. Tugas lama bisa dienkripsi dengan tombol di bawah. Kalau kamu lupa kata sandinya, tidak ada cara untuk memulihkan tugas.",
+  "encryptedTodos": "Tugas terenkripsi",
+  "unencryptedTodos": "Tugas tidak terenkripsi",
+  "encryptAllButton": "Enkripsi semua",
+  "decryptAllButton": "Dekripsi semua",
+  "password": "Kata sandi",
+  "encryptionConfirm": "Kamu yakin ingin mengenkripsi tugas dengan kata sandi ini? Nanti kamu bisa mendekripsi tugas dengan kata sandi yang sama. Kalau kamu lupa kata sandinya, tugas tidak akan bisa didekripsi!",
+  "encryptionDisableConfirm": "Kamu yakin ingin menghapus kunci dan menonaktifkan enkripsi? Ini tidak akan mendekripsi tugas yang sudah terenkripsi.",
+  "disable": "Nonaktifkan",
+  "confirmEncryptAll": "Kamu yakin ingin mengenkripsi semua tugas dengan kata sandi ini? Kalau kamu lupa kata sandinya, tugas tidak akan bisa didekripsi!",
+  "confirmDecryptAll": "Kamu yakin ingin mendekripsi semua tugas?",
+  "passwordError": "Kata sandi salah. Sepertinya sebagian tugas terenkripsimu tidak bisa didekripsi dengan kata sandi ini.",
+  "soundEffects": "Efek suara",
+  "missionPassed": "Misi berhasil",
+  "respect": "Respek +",
+  "emptyHashtags": "Daftar tagar masih kosong. Buat tugas pertamamu dengan #hashtag untuk menambahkan tagar pertama di sini!",
+  "gamification": "Gamifikasi",
+  "heroProfileTitle": "Profil pahlawan",
+  "infoHero": "Ini halaman profilmu — sang pahlawan! Selesaikan tugas dan kumpulkan poin untuk meraih peringkat yang makin tinggi!\n\nKamu tidak akan tahu daftar lengkap peringkatnya sampai meraih yang tertinggi! Ingat: satu-satunya jalan ke puncak adalah lewat langkah-langkah kecil setiap hari.",
+  "rank": "🔥 Peringkatmu 🔥",
+  "tasksCompleted": "Poin terkumpul",
+  "rank-1Title": "Makhluk abadi materi gelap 😈",
+  "rank-1Description": "Kamu meraih peringkat yang belum pernah diraih manusia mana pun! Selamat, ini kuemu: 🍰. Kali ini bukan bohong.",
+  "rank0Title": "Di bawah nol −273,15 °C 🥶",
+  "rank0Description": "Bakal jauh lebih keren kalau bisa.",
+  "rank5Title": "V untuk Vroduktivitas 👺",
+  "rank5Description": "Ingat, anak-anak: kalau produktivitasmu jatuh kurang dari 5 detik lalu kamu pungut lagi, masih aman!",
+  "rank13Title": "Freddy Ceria 😱",
+  "rank13Description": "Kamu tahu ini hari apa. Hari ketika Jason membuatkan kue untukmu. Sekarang setiap hari adalah hari itu.",
+  "rank42Title": "Nelayan 🐬",
+  "rank42Description": "Sampai jumpa! Dan terima kasih untuk semua ikannya!",
+  "rank69Title": "Master Nice! 😝",
+  "rank69Description": "Peringkat paling nice yang ada. Titik.",
+  "rank85Title": "Mark-85 🦄",
+  "rank85Description": "Bisa dibilang produktivitasmu terbuat dari Besi.",
+  "rank100Title": "Pengguna Force 100% ⚡️",
+  "rank100Description": "100 selesai, tinggal tak terhingga lagi! Terus lanjutkan setiap hari, itu sepadan!",
+  "rank221Title": "Sherlock 😎",
+  "rank221Description": "Kamu berhasil memecahkan misteri produktivitas, yah, bagus untukmu!",
+  "rank256Title": "Tukang ledeng ceria 👾",
+  "rank256Description": "8 bit produktivitas kemudian, kamu masih teringat game-game lawas.",
+  "rank300Title": "Prajurit Sparta 💪",
+  "rank300Description": "Jernihkan pikiran, sederhanakan rutinitas, habiskan 100 poin berikutnya seperti prajurit Sparta sejati!",
+  "rank404Title": "❓❓❓",
+  "rank404Description": "Peringkat tidak ditemukan.",
+  "rank777Title": "Grandmaster beruntung! 🍀",
+  "rank777Description": "Peringkat ini cuma bertahan 23 poin. Manfaatkan baik-baik, ini hari keberuntunganmu!",
+  "rank800Title": "T-800 🤖",
+  "rank800Description": "Kamu adalah terminator katak-katak mengerikan. Ayo, musnahkan beberapa!",
+  "rank1337Title": "3L1T3 🧑‍💻",
+  "rank1337Description": "Peretasan produktivitas dimulai... Meretas...",
+  "rank1338Title": "3L1T3 (Diretas) 🧑‍💻",
+  "rank1338Description": "Produktivitas berhasil diretas!",
+  "rank2048Title": "Master catur ♔",
+  "rank2048Description": "Kamu lebih memilih produktivitas daripada game pembuang waktu yang tak ada habisnya, kan? KAN?",
+  "rank9000Title": "Power user di atas 9000 🏋️",
+  "rank9000Description": "Kamu mengangkat tugas seolah-olah tanpa beban!",
+  "rank12800Title": "Doktor Manhattan ⚛",
+  "rank12800Description": "Kamu memecah tugas seperti membelah atom. Pertahankan kerja bagusmu!",
+  "sendDataToServer": "Kirim data ke server",
+  "encryption": {
+    "repeatPassword": "Ulangi kata sandi",
+    "encryptionSaved": "Semua siap! Sekarang semua tugas barumu akan dienkripsi",
+    "encryption": "Enkripsi"
+  },
+  "settingsObject": {
+    "duplicateTagInBreakdown": "Salin tagar saat memecah tugas",
+    "showMoreByDefault": "Selalu tampilkan opsi lainnya saat menambah tugas"
+  },
+  "level": "Level",
+  "points": "poin",
+  "pointsTillNextLevel": "poin lagi untuk membuka level berikutnya",
+  "accept": "Terima",
+  "delegate": {
+    "title": "Delegasi",
+    "noDelegators": "Kamu belum punya pendelegasi. Minta tautan undangan untuk menjadi delegasi seseorang.",
+    "noDelegates": "Kamu belum punya delegasi. Bagikan tautan undangan kepada orang-orang yang ingin kamu jadikan delegasi",
+    "noDelegatedTasks": "Tidak ada lagi tugas baru yang didelegasikan kepadamu.",
+    "link": "Tautan undangan delegasi",
+    "linkDescription": "Orang-orang bisa menjadi delegasimu dengan membuka tautan ini. Delegasi hanya akan melihat tugas yang kamu delegasikan kepada mereka.",
+    "resetConfirmation": "Kamu yakin ingin mereset tautan? Tautan yang sekarang tidak akan berfungsi lagi!",
+    "delegators": "Pendelegasi",
+    "delegates": "Delegasi",
+    "inviteSuccess": "Berhasil! Sekarang pengguna ini bisa mendelegasikan tugas kepadamu.",
+    "inviteConfirm": "Kamu yakin ingin menjadi delegasi pengguna ini?",
+    "deleteDelegateConfirmation": "Kamu yakin ingin menghapus delegasi ini? Kamu tidak akan bisa lagi mendelegasikan tugas kepadanya.",
+    "deleteDelegatorConfirmation": "Kamu yakin ingin menghapus pendelegasi ini? Pendelegasi ini tidak akan bisa lagi mendelegasikan tugas kepadamu.",
+    "pickDelegateField": "Delegasi",
+    "info": "Ini halaman berisi tugas yang didelegasikan kepadamu. Kamu bisa menghapus atau menerima tugas yang dikirimkan para pendelegasimu.",
+    "signupTitle": "Ups",
+    "signupDescription": "Kamu perlu masuk dulu sebelum bisa memakai delegasi",
+    "resetLink": "Reset tautan",
+    "delegatorExists": "Pendelegasi sudah ada",
+    "noDelegatedTasksTo": "Kamu belum mendelegasikan tugas apa pun.",
+    "ByMe": "Dariku",
+    "to": "Kepada",
+    "from": "Dari",
+    "ToMe": "Kotak masuk"
+  },
+  "errors": {
+    "delegate": {
+      "invalidToken": "Tautan undangan sudah tidak berlaku"
+    },
+    "epic": {
+      "numberError": "Harus berupa angka"
+    },
+    "errorDuring": "Terjadi kesalahan saat: {{reason}}. Kesalahan asli: {{originalError}}",
+    "sync": {
+      "updatingOrCreating": "memperbarui atau membuat",
+      "updatingPushedDelegates": "memperbarui atau membuat delegasi yang dikirim",
+      "updatingPushedDelegators": "memperbarui atau membuat pendelegasi yang dikirim",
+      "removingDelegators": "menghapus pendelegasi yang ditandai terhapus secara lokal",
+      "removingDelegates": "menghapus delegasi yang ditandai terhapus secara lokal",
+      "removingPushedDelegators": "menghapus pendelegasi yang dikirim",
+      "preapringDelegationsForDeleting": "menyiapkan delegasi untuk dihapus: id delegasi: {{delegationId}}"
+    }
+  },
+  "epic": {
+    "intoEpic": "Jadikan Epik",
+    "epicGoal": "Target epik"
+  },
+  "startTimeOfDay": "Awal hari",
+  "badgeIconCurrentCount": "Jumlah tugas di badge aplikasi",
+  "purchaseErrorTryOnWeb": "Berlangganan di web",
+  "planningReminderTime": "Waktu pengingat perencanaan",
+  "notSet": "Belum diatur",
+  "planningReminderText": "🎉 Saatnya merencanakan!",
+  "settingsActions": {
+    "swipeActions": "Aksi geser"
+  },
+  "endOfDaySoundOn": "Suara semua tugas selesai",
+  "dirtyValidSave": "Mau menyimpan tugas-tugas yang sudah dimasukkan?",
+  "dirtyInvalidSave": "Kamu belum selesai memasukkan tugas. Buang tugas-tugas yang sudah dimasukkan?",
+  "dissmissTasks": "Buang tugas",
+  "saveTasks": "Simpan tugas",
+  "fixTasks": "Perbaiki tugas",
+  "changeTasks": "Ubah tugas",
+  "deleteAllHashtags": "Hapus semua tagar",
+  "deleteAllHashtagsConfirm": "Kamu yakin ingin menghapus semua tagar?",
+  "next": "Lanjut",
+  "letsGo": "Ayo mulai!",
+  "whatWouldYouLikeToDoa": "Apa yang ingin kamu lakukan?",
+  "startUsingNow": "Mulai pakai Todorant sekarang",
+  "readRulesFirst": "Aku mau baca cara memakai Todorant dulu!",
+  "iAdmireYourBravery": "Aku salut dengan keberanianmu!",
+  "iAdmireYourSpirit": "Aku salut dengan semangatmu!",
+  "dirtyValidSaveSingular": "Mau menyimpan tugas yang sudah dimasukkan?",
+  "dirtyInvalidSaveSingular": "Kamu belum selesai memasukkan tugas. Buang tugas yang sudah dimasukkan?",
+  "dissmissTasksSingular": "Buang tugas",
+  "saveTasksSingular": "Simpan tugas",
+  "fixTasksSingular": "Perbaiki tugas",
+  "changeTasksSingular": "Ubah tugas",
+  "addedTask": "Tugas ditambahkan",
+  "edit": "Edit",
+  "editName": "Teks tagar baru",
+  "tutorialButton": "Tutorial",
+  "onboarding": {
+    "closeButtonText": "Tutup tutorial",
+    "defaultNextStepButtonText": "Lanjut",
+    "notAllowed": "Oke, paham!",
+    "Close": {
+      "messageBoxBody": "Kamu yakin ingin melewati tutorial ini? Cukup sulit memaksimalkan potensi Todorant kalau kamu tidak tahu harus berbuat apa! Bagaimana kalau setidaknya baca artikel singkat tentang prinsip utama Todorant?",
+      "changedMyMind": "Aku berubah pikiran, lanjutkan tutorialnya",
+      "article": "Hentikan tutorialnya, tapi tunjukkan artikelnya",
+      "closeEverything": "Aku tahu apa yang kulakukan, tutup tutorialnya",
+      "toast": "Aku salut dengan keberanianmu"
+    },
+    "Explain": {
+      "messageBoxBody": "Todorant bukan sekadar aplikasi, tapi metodologi produktivitas. Batasan-batasan di sini dirancang dengan cermat agar otakmu ketagihan menyelesaikan tugas seperti ketagihan gula."
+    },
+    "AddTask": {
+      "messageBoxBody": "Ayo tambahkan tugas pertamamu. Ketuk tombol plus di bawah."
+    },
+    "AddText": {
+      "messageBoxBody": "Pikirkan sesuatu yang perlu kamu kerjakan. Lalu ketik dalam bentuk yang sangat singkat dan bisa langsung dikerjakan, seperti “Ajak anjing jalan-jalan” atau “Beli susu”. Hindari tugas yang terlalu luas atau tidak bisa langsung dikerjakan.\n\nAku sudah mengisi tugas contoh untuk menunjukkan cara kerjanya. Silakan hapus tugas contohnya setelah tutorial selesai!"
+    },
+    "SelectDate": {
+      "messageBoxBody": "Setiap tugas harus punya tanggal penyelesaian yang pasti atau bulan tertentu.\n\nKamu tidak bisa memilih bulan ini. Apa yang akan kamu lakukan kalau bulannya sudah habis dan masih ada tugas yang belum selesai?"
+    },
+    "SelectFrog": {
+      "messageBoxBody": "Kamu bisa menandai tugas sebagai katak. Katak adalah jenis tugas khusus yang benar-benar tidak menyenangkan. Kamu harus menyelesaikannya paling awal di pagi hari, dan katak selalu muncul di paling atas daftar. Aku sarankan maksimal 2 katak sehari.",
+      "nextStepButton": "Ini bukan katak"
+    },
+    "SelectCompleted": {
+      "messageBoxBody": "Aku juga menyarankanmu menambahkan tugas yang sudah selesai ke Todorant segera setelah kamu menyelesaikannya. Ini membantu membangun hubungan positif antara menyelesaikan tugas dan rasa puas."
+    },
+    "ShowMore": {
+      "messageBoxBody": "Mengetuk tombol ajaib ini akan menampilkan opsi lainnya saat membuat tugas, seperti mengatur jam tepat (berguna untuk rapat) dan mengurutkan tugas."
+    },
+    "AddAnotherTask": {
+      "messageBoxBody": "Kamu juga bisa menambahkan beberapa tugas sekaligus! Tapi tidak kali ini, silakan bereksperimen nanti."
+    },
+    "AddTodoComplete": {
+      "messageBoxBody": "Mantap! Kamu baru saja menyelesaikan tugas pertamamu. Sekarang simpan."
+    },
+    "ExplainCurrent": {
+      "messageBoxBody": "Ini halaman “Sekarang”. Kamu akan paling sering memakainya. Halaman ini hanya menampilkan satu tugas yang harus kamu kerjakan beserta progresmu — tidak lebih. Biar kamu tetap fokus."
+    },
+    "DeleteEditComplete": {
+      "messageBoxBody": "Di sini hanya ada alat-alat paling dasar: kamu bisa menghapus, mengedit, atau menyelesaikan tugas saat ini. Kamu juga bisa geser ke kanan atau ke kiri kalau mau (coba sendiri nanti)."
+    },
+    "Breakdown": {
+      "messageBoxBody": "Oh, ini tombol khusus “pecah tugas”, kamu akan sering memakainya. Kalau kamu menemui tugas yang terlalu rumit untuk diselesaikan dalam 30 menit, pecah menjadi beberapa bagian."
+    },
+    "BreakdownTodo": {
+      "messageBoxBody": "Sepertinya tugas yang barusan kita buat terlalu luas! Aku tahu ini bisa terasa agak absurd, tapi ikuti saja dulu.\n\nKamu bisa melihat tugas aslinya di atas, pecah menjadi tugas-tugas yang lebih kecil. Pastikan kamu memikirkan semua yang perlu dikerjakan, karena tugas aslinya akan... lenyap!"
+    },
+    "BreakdownVanish": {
+      "messageBoxBody": "Mungkin kamu memperhatikan dua hal. Pertama: sekarang kamu melihat salah satu subtugasmu. Kedua: tugas asli yang kamu pecah sekarang ditandai selesai.\n\nIni terjadi otomatis karena saat kamu memecah tugas dan membuat subtugas yang sepenuhnya mencakup tugas aslinya, tugas aslinya tidak diperlukan lagi.\n\nKamu dapat hadiah satu tugas selesai hanya dengan memecahnya!"
+    },
+    "PlanningExplain": {
+      "messageBoxBody": "Di sinilah kamu merencanakan pekerjaan. Ingat bahwa setiap tugas punya tanggal atau bulan? Nah, di sini kamu bisa melihat tugas-tugasnya terurut!\n\nJangan terlalu sering membuka layar ini. Setelah selesai merencanakan, cukup gunakan halaman “Sekarang”."
+    },
+    "PlanningExplain2": {
+      "messageBoxBody": "Begini cara merencanakan dengan Todorant. Begitu terpikir sebuah tugas, langsung tambahkan ke Todorant, atau kamu akan melupakannya.\n\nSetiap pagi dan setiap tanggal 1 tiap bulan, luangkan waktu untuk merencanakan bulan atau harimu dengan membagi dan mengurutkan ulang tugas di antara hari atau bulan. Silakan tahan dan seret tugas untuk mengubah urutannya."
+    },
+    "ExplainHashtags": {
+      "messageBoxBody": "Mungkin kamu juga menyadari bahwa Todorant tidak punya “proyek” tempat kamu bisa menyembunyikan tugas yang tidak diinginkan lalu melupakannya.\n\nSebagai gantinya, Todorant memakai sistem tagar. Cukup tambahkan #olahraga, #masak, atau #apa_saja untuk mengelompokkan tugas dan membuatnya mudah dicari dengan mengetuk tagarnya."
+    },
+    "ExplainSearchAndCompleted": {
+      "messageBoxBody": "Kamu bisa melihat tugas yang sudah selesai dan mencari tugas dengan tombol-tombol di atas."
+    },
+    "ExplainReccuring": {
+      "article": "Baca artikelnya",
+      "messageBoxBody": "Kamu juga akan menyadari bahwa Todorant tidak punya tugas berulang. Ini disengaja, karena dalam jangka panjang tugas berulang merusak produktivitas.\n\nSebagai gantinya, gunakan fitur pecah tugas dengan pewarisan tagar (salah satu pengaturan) dan nama tugas seperti “Siram #tanaman dan buat tugas berikutnya”. Kamu bisa membaca lebih lanjut di artikel yang kutulis."
+    },
+    "ExplainSettings": {
+      "messageBoxBody": "Ini layar berisi semua pengaturan yang kamu butuhkan di Todorant. Silakan jelajahi nanti. Yang patut diperhatikan adalah “default ke hari ini” dan “salin tagar saat memecah tugas”."
+    },
+    "ExplainNotifications": {
+      "messageBoxBody": "Kamu juga akan melihat bahwa Todorant tidak punya notifikasi (kecuali pengingat perencanaan opsional di awal hari). Ini juga disengaja.\n\nOrang cenderung mulai mengabaikan notifikasi kalau jumlahnya terlalu banyak. Akibatnya, peringatan penting jadi terlewat."
+    },
+    "ExplainMultiplatform": {
+      "website": "Buka todorant.com",
+      "messageBoxBody": "Todorant tersedia di iOS, Android, Web, macOS, Windows, dan Linux, juga sebagai ekstensi Chrome dan Firefox, serta bot Telegram. Lihat daftar lengkap platformnya di todorant.com."
+    },
+    "ExplainPricing": {
+      "messageBoxBody": "Todorant gratis selama 30 hari pertama, lalu $5/bulan.\n\nLogikanya sederhana: kalau peningkatan produktivitas dari Todorant sepadan dengan secangkir kopi sebulan, kamu pasti ingin terus memakainya. Kalau tidak sepadan, kamu bisa berhenti memakai Todorant.\n\nAku yakin 30 hari sudah cukup untuk mengetahuinya."
+    },
+    "Feedback": {
+      "messageBoxBody": "Kalau kamu punya pertanyaan, saran, atau keluhan, jangan ragu menghubungi kami di grup dukungan resmi Telegram atau lewat email."
+    },
+    "Rules": {
+      "messageBoxBody": "Aku sarankan kamu membaca bagian “Panduan” di Todorant. Kemungkinan besar di sana ada jawaban untuk semua pertanyaanmu tentang aplikasi dan metodologinya."
+    },
+    "Congratulations": {
+      "messageBoxBody": "Selamat! Kamu sudah menyelesaikan tutorial. Semoga sekarang sudah jelas cara memakai Todorant.\n\nAyo langsung mulai. Sekarang kamu bisa memindahkan semua tugasmu ke Todorant. Buat setiap tugas singkat dan bisa langsung dikerjakan, lalu beri tanggal atau bulan tertentu.\n\nMungkin terasa membosankan, tapi percayalah: hasilnya akan terasa dalam jangka panjang!",
+      "nextStepButton": "Hore!"
+    },
+    "BreakdownLessThanTwo": {
+      "messageBoxBody": "Eits, jangan buru-buru! Aku tahu ini bisa sulit, tapi coba pecah tugas ini menjadi setidaknya dua tugas lebih kecil yang belum selesai."
+    },
+    "Info": {
+      "messageBoxBody": "Oh ya, kalau ada pertanyaan, cari tombol “i” di pojok kanan atas. Biasanya tombol itu memberi penjelasan yang berguna."
+    },
+    "BreakDownCompletedTodo": {
+      "messageBoxBody": "Tunggu sebentar, demi tutorial ini kami membatasi penambahan tugas sebagai selesai. Tapi silakan bereksperimen dengan pengaturan ini setelah tutorial selesai!"
+    },
+    "SelectDateNotAllowed": {
+      "messageBoxBody": "Tunggu sebentar, demi tutorial ini kami membatasi perubahan bulan dan tanggal tugas. Tapi silakan bereksperimen dengan pengaturan ini setelah tutorial selesai!"
+    },
+    "Start": {
+      "closeButtonText": "Nggak deh, aku nggak baca manual",
+      "messageBoxBody": "Halo! Ini Nikita, pembuat Todorant.\n\nPengguna lebih memahami Todorant kalau aku tunjukkan cara memakainya. Mau aku tunjukkan cara mencapai level produktivitas yang luar biasa?",
+      "nextStepButton": "Boleh! Tunjukkan caranya"
+    },
+    "todoText": "Meditasi #meditasi",
+    "breakdownTodo1": "Cari video meditasi terpandu 10 menit #meditasi",
+    "breakdownTodo2": "Putar video meditasi terpandu #meditasi",
+    "breakdownTodo3": "Meditasi selama 10 menit #meditasi",
+    "BreakdownTodoAction": {
+      "messageBoxBody": "Oke, kali ini aku yang memecah tugasnya untukmu, tapi lain kali kamu harus melakukannya sendiri!"
+    },
+    "AddTextContinueTooFast": {
+      "messageBoxBody": "Silakan masukkan teks tugas dulu."
+    },
+    "AddTextContinueButton": {
+      "continue": "Lanjut"
+    }
+  },
+  "updateVersionTitle": "Halo! Versi baru Todorant sudah tersedia",
+  "updateVersionMsg": "Ada kemungkinan sesuatu tidak berfungsi di versi lama, jadi segera perbarui, ya.",
+  "update": "Perbarui",
+  "frogsAlert": {
+    "title": "Stop! Itu melanggar hukum",
+    "text": "Jangan langgar aturannya. Kalau hari ini ada katak — selesaikan dulu, pecah, pindahkan ke hari lain, atau hapus tanda kataknya. Tolong, jangan abaikan kataknya!"
+  },
+  "subscriptionYear": "tahun (diskon ≈40%)",
+  "editHashtag": "Edit tagar",
+  "addDevices": "Tambah perangkat",
+  "unEpicConfirm": "Kamu yakin ingin mereset epik",
+  "unEpic": "Reset epik",
+  "breakdownMessage": {
+    "title": "Tugas berulang",
+    "text": "Ini tugas berulang, mau dipecah atau diselesaikan?",
+    "complete": "Selesaikan"
+  },
+  "syncError": "Terjadi kesalahan saat sinkronisasi data",
+  "server": "Server",
+  "serverInvalid": "Itu sepertinya bukan alamat server. Seharusnya seperti https://todo.example.com",
+  "serverChange": "Akun dan tugasmu tersimpan di server saat ini, jadi menggantinya akan membuatmu keluar. Lanjutkan?",
+  "signIn": "Masuk",
+  "signUp": "Buat akun",
+  "passwordLength": "Kata sandi minimal 8 karakter",
+  "addDevicesConfirm": "Masuk ke akunmu di perangkat yang menampilkan kode QR ini? Lanjutkan hanya jika kamu sendiri yang membukanya di situs web Todorant."
+}

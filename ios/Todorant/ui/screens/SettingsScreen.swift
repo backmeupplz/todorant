@@ -110,6 +110,9 @@ struct TimeSetting: View {
 
 private let languageNames: [(String, String)] = [
     ("en", "English"), ("ru", "Русский"), ("uk", "Українська"), ("it", "Italiano"), ("es", "Español"), ("pt-br", "Português Brasileiro"),
+    ("pt-pt", "Português (Portugal)"), ("de", "Deutsch"), ("fr", "Français"), ("nl", "Nederlands"), ("pl", "Polski"), ("tr", "Türkçe"),
+    ("sv", "Svenska"), ("ja", "日本語"), ("ko", "한국어"), ("zh-hans", "简体中文"), ("zh-hant", "繁體中文"), ("ar", "العربية"), ("hi", "हिन्दी"),
+    ("id", "Bahasa Indonesia"), ("vi", "Tiếng Việt"), ("th", "ไทย"),
 ]
 
 struct SettingsScreen: View {
@@ -344,7 +347,7 @@ private struct DelegationSettings: View {
 
 private struct LanguageAndColorMode: View {
     var body: some View {
-        Picker(selection: Binding(get: { Settings.languageSelect == "auto" || Settings.languageSelect == nil ? "auto" : Settings.language ?? "en" }, set: { code in
+        Picker(selection: Binding(get: { Settings.languageSelect == "auto" || Settings.languageSelect == nil ? "auto" : I18n.current }, set: { code in
             Settings.languageSelect = code
             // The RN app only applied "auto" after a restart
             Settings.language = code == "auto" ? I18n.languageTag() : code

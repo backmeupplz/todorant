@@ -6,7 +6,10 @@ import Foundation
  * copied into the bundle as "translations"), so all apps share one set of files.
  */
 enum I18n {
-    static let languages = ["en", "ru", "uk", "it", "es", "pt-br"]
+    static let languages = [
+        "en", "ru", "uk", "it", "es", "pt-br", "pt-pt", "de", "fr", "nl", "pl", "tr", "sv",
+        "ja", "ko", "zh-hans", "zh-hant", "ar", "hi", "id", "vi", "th",
+    ]
     static let strings: [String: [String: String]] = {
         var all = [String: [String: String]]()
         for lang in languages {
@@ -38,20 +41,25 @@ enum I18n {
             let language = String(tag.split(separator: "-").first ?? "")
             if languages.contains(tag) { return tag }
             if languages.contains(language) { return language }
-            if language == "pt" { return "pt-br" }
+            if language == "pt" { return tag == "pt" || tag.hasPrefix("pt-br") ? "pt-br" : "pt-pt" }
+            if language == "zh" { return ["zh-hant", "zh-tw", "zh-hk", "zh-mo"].contains(where: tag.hasPrefix) ? "zh-hant" : "zh-hans" }
         }
         return "en"
     }
 
-    static func has(_ key: String) -> Bool { strings[Settings.language ?? "en"]?[key] != nil || strings["en"]?[key] != nil }
+    /// The synced language, as one of `languages` (the web stores e.g. "pt-BR")
+    static var current: String { Settings.language?.lowercased() ?? "en" }
 
-    static var locale: Locale { Locale(identifier: Settings.language ?? "en") }
+    static var rtl: Bool { current == "ar" }
+
+    static func has(_ key: String) -> Bool { strings[current]?[key] != nil || strings["en"]?[key] != nil }
+
+    static var locale: Locale { Locale(identifier: current) }
 }
 
 /// translate() from the RN app. Reads Settings.language, so views re-render on a language change.
 func t(_ key: String, _ args: (String, Any)...) -> String {
-    let lang = Settings.language ?? "en"
-    var s = I18n.strings[lang]?[key] ?? I18n.strings["en"]?[key] ?? key
+    var s = I18n.strings[I18n.current]?[key] ?? I18n.strings["en"]?[key] ?? key
     for (name, value) in args { s = s.replacingOccurrences(of: "%{\(name)}", with: "\(value)") }
     return s
 }

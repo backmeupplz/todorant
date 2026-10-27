@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_name">Widget do Todorant</string>
+    <string name="widget_login">Entre na sua conta do Todorant</string>
+    <string name="widget_loading">Carregando&#8230;</string>
+</resources>

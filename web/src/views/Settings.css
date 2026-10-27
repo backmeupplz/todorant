@@ -3,7 +3,7 @@
 .table-row .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* 40px touch targets that keep rows 48px tall */
 .table-row > .icon-btn { padding: 8px; margin: -4px 0; }
-.table-row > .icon-btn:last-child { margin-right: -8px; }
+.table-row > .icon-btn:last-child { margin-inline-end: -8px; }
 .settings-note { padding: 8px 16px; color: var(--muted); font-size: 15px; }
 .logout { padding: 8px 16px 4px; }
 .logout .btn-text { margin-top: 4px; }
@@ -14,12 +14,12 @@
 .picker:hover { background: var(--hover); }
 .picker select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; }
 .picker:has(select:focus-visible) { outline: 2px solid var(--blue); outline-offset: -2px; }
-.time-input { border: 0; background: none; color: var(--muted); font: inherit; padding: 4px 0; min-height: 32px; text-align: right; cursor: pointer; -webkit-appearance: none; appearance: none; }
-.time-input::-webkit-date-and-time-value { text-align: right; }
+.time-input { border: 0; background: none; color: var(--muted); font: inherit; padding: 4px 0; min-height: 32px; text-align: end; cursor: pointer; -webkit-appearance: none; appearance: none; }
+.time-input::-webkit-date-and-time-value { text-align: end; }
 .name-form input { flex: 1; min-width: 0; border: 0; border-bottom: 2px solid var(--orange); border-radius: 0; background: none; padding: 6px 0; font-size: 16px; color: var(--text); outline: none; }
 
 /* Rules, devices, apps */
-.rules { margin: 0; padding: 6px 16px 8px 36px; display: flex; flex-direction: column; gap: 12px; line-height: 1.45; }
+.rules { margin: 0; padding-block: 6px 8px; padding-inline: 36px 16px; display: flex; flex-direction: column; gap: 12px; line-height: 1.45; }
 .rules li::marker { color: var(--orange); font-family: var(--rounded); }
 .devices { padding-top: 8px; }
 .devices-qr { width: min(300px, 100%); align-self: center; display: block; }
@@ -35,10 +35,10 @@
 .hero-page { padding: 8px 16px 24px; }
 .rank-goal { display: flex; align-items: center; gap: 16px; font: 700 21px var(--rounded); }
 .rank-goal i { width: 20px; height: 20px; border: 6px solid currentColor; border-radius: 50%; flex: none; }
-.rank { display: flex; padding: 8px 0 8px 9px; }
+.rank { display: flex; padding-block: 8px; padding-inline: 9px 0; }
 .rank-line { width: 2px; flex: none; display: flex; align-items: flex-end; border-radius: 2px; background: color-mix(in srgb, var(--text) 20%, transparent); overflow: hidden; }
 .rank-line i { display: block; width: 100%; border-radius: 2px; }
-.rank-body { flex: 1; min-width: 0; padding-left: 25px; font-family: var(--rounded); }
+.rank-body { flex: 1; min-width: 0; padding-inline-start: 25px; font-family: var(--rounded); }
 .rank-body p { color: var(--muted); font-size: 15px; }
 .rank-card { display: flex; flex-direction: column; gap: 2px; margin: 8px 0; padding: 14px 16px; border-radius: 14px; background: var(--raised); border: 1px solid var(--divider); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); }
 .rank-card span { color: var(--muted); font-size: 16px; }
@@ -46,14 +46,14 @@
 .hero-page .section-divider { margin: 8px 0; }
 
 /* Hashtags */
-.tag-row { margin-left: 16px; padding: 2px 8px 2px 0; border-bottom: 1px solid var(--divider); }
+.tag-row { margin-inline-start: 16px; padding-block: 2px; padding-inline: 0 8px; border-bottom: 1px solid var(--divider); }
 .tag-row.dragging { user-select: none; }
 .tag-line { display: flex; align-items: center; min-height: 48px; }
 .tag-line .icon-btn { padding: 8px; }
 .tag-name { flex: 1; min-width: 0; font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.tag-handle { cursor: grab; color: var(--muted); touch-action: none; margin-left: -12px; }
-.tag-progress { display: flex; align-items: center; gap: 8px; padding: 0 8px 10px 0; font: 500 14px var(--rounded); }
-.tag-form { display: flex; flex-direction: column; gap: 10px; padding: 2px 8px 14px 0; }
+.tag-handle { cursor: grab; color: var(--muted); touch-action: none; margin-inline-start: -12px; }
+.tag-progress { display: flex; align-items: center; gap: 8px; padding-block: 0 10px; padding-inline: 0 8px; font: 500 14px var(--rounded); }
+.tag-form { display: flex; flex-direction: column; gap: 10px; padding-block: 2px 14px; padding-inline: 0 8px; }
 .swatches { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; }
 .swatch { width: 40px; height: 40px; flex: none; padding: 0; border: 5px solid transparent; border-radius: 50%; background-clip: padding-box; cursor: pointer; }
 .swatch.on { outline: 2px solid var(--text); outline-offset: -4px; }

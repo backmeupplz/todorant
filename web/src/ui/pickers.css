@@ -1,6 +1,6 @@
 /* Inline pickers that open under a form row */
-.picker-row .table-row { padding: 0 8px 0 0; }
-.picker-toggle { flex: 1; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 8px 8px 16px; border: 0; background: none; color: var(--text); font: inherit; text-align: left; }
+.picker-row .table-row { padding-block: 0; padding-inline: 0 8px; }
+.picker-toggle { flex: 1; display: flex; align-items: center; gap: 12px; min-height: 48px; padding-block: 8px; padding-inline: 16px 8px; border: 0; background: none; color: var(--text); font: inherit; text-align: start; }
 .picker-toggle .value { color: var(--muted); }
 .picker-toggle .value.set { color: var(--text); }
 .picker-row.open .picker-toggle .value { color: var(--orange); }
@@ -25,6 +25,6 @@
 .picker-grid.minutes { grid-template-columns: repeat(6, 1fr); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--divider); }
 .picker-caption { display: none; }
 .picker-list { display: flex; flex-direction: column; gap: 2px; }
-.picker-list button { border: 0; background: none; color: var(--text); font: inherit; text-align: left; padding: 10px 12px; border-radius: 10px; }
+.picker-list button { border: 0; background: none; color: var(--text); font: inherit; text-align: start; padding: 10px 12px; border-radius: 10px; }
 .picker-list button:hover { background: var(--hover); }
 .picker-list button[aria-pressed='true'] { background: var(--pill); color: var(--orange); font-weight: 600; }
