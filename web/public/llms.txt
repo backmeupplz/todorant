@@ -1,0 +1,22 @@
+# Todorant
+
+> Todorant is a todo manager that uses behavioral psychology to help you get things done. It runs on the web at todorant.com and as apps for iPhone, iPad and Android, and you can host your own server. Made by Nikita Kolmogorov.
+
+Most productivity apps are good at storing, organizing and automating endless lists of tasks. Todorant focuses on finishing what you planned, with four rules backed by limits and praise:
+
+- Focus on one task at a time: the Current screen shows only the todo you should be doing right now.
+- Always add a date or a month to a task, so nothing lingers in a list forever.
+- Complete unpleasant tasks first: todos you dread are marked as frogs and come before everything else on their day.
+- Keep your inbox empty: overdue todos have to be planned again before you get back to work.
+
+It has realtime sync between devices with offline support, optional end-to-end encryption of todos with your own password, delegation of todos to other people, a Telegram bot that turns messages into todos, hashtags and epics, reports of completed work, six languages and a dark mode. The Android and iPhone apps work without an account.
+
+## Links
+
+- [Open Todorant on the web](https://todorant.com)
+- [iPhone and iPad app (App Store)](https://apps.apple.com/app/todorant/id1482078243)
+- [Android app (Google Play)](https://play.google.com/store/apps/details?id=com.todorant)
+- [Self-hosting guide](https://github.com/backmeupplz/todorant/blob/main/docs/self-hosting.md)
+- [Source code](https://github.com/backmeupplz/todorant)
+- [Privacy policy](https://todorant.com/privacy)
+- [Terms of use](https://todorant.com/terms)
