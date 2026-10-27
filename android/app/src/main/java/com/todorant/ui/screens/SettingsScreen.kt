@@ -129,6 +129,7 @@ fun SettingsScreen() {
         }
         row(Target.SUPPORT_BUTTON) {
             TableItem(onClick = { Ui.support() }, modifier = Modifier.onboardingTarget(Target.SUPPORT_BUTTON)) { TableText(t("supportLabel")) }
+            TableItem(onClick = { Ui.sendFeedback() }) { TableText(t("sendFeedback")) }
         }
         row {
             Divider()

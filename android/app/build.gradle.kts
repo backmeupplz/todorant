@@ -21,7 +21,7 @@ android {
     buildFeatures { compose = true; buildConfig = true }
     // F-Droid rejects APKs carrying Google's encrypted dependency block, which blocks reproducible builds there. Play still gets it from the bundle.
     dependenciesInfo { includeInApk = false }
-    // play: Google sign-in and Google's QR scanner. fdroid: no Google code (ZXing scanner, no Google sign-in). See src/<flavor>/Flavor.kt.
+    // play: Google sign-in, Google's QR scanner and Play's review card. fdroid: no Google code (ZXing scanner, no Google sign-in). See src/<flavor>/Flavor.kt.
     flavorDimensions += "store"
     productFlavors {
         create("play") { dimension = "store" }
@@ -65,6 +65,7 @@ dependencies {
     "playImplementation"("androidx.credentials:credentials-play-services-auth:1.6.0")
     "playImplementation"("com.google.android.libraries.identity.googleid:googleid:1.2.1")
     "playImplementation"("com.google.android.gms:play-services-code-scanner:16.1.0")
+    "playImplementation"("com.google.android.play:review:2.0.2")
     "fdroidImplementation"("com.journeyapps:zxing-android-embedded:4.3.0")
     // Launcher badge counts, same library react-native-push-notification used
     implementation("me.leolin:ShortcutBadger:1.1.22@aar")

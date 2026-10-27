@@ -32,7 +32,10 @@ final class Ui {
 
     static func error(_ e: Error) { error(e.localizedDescription) }
 
-    static func error(_ error: String) { alert(t("error"), error) }
+    static func error(_ error: String) {
+        RatingPrompt.errored = true
+        alert(t("error"), error)
+    }
 
     /// Runs [block]; a failure shows up as an error alert
     static func attempt(_ finally: @escaping () -> Void = {}, _ block: @escaping @MainActor () async throws -> Void) {
@@ -69,6 +72,12 @@ final class Ui {
             ("n@borodutch.com", { openUrl("mailto:n@borodutch.com") }),
             ("@borodutch", { openUrl("https://t.me/borodutch") }),
         ])
+    }
+
+    static func sendFeedback() {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+        let subject = "Todorant \(version) (iOS) feedback".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        openUrl("mailto:n@borodutch.com?subject=\(subject)")
     }
 
     static func info(_ message: String) { alert(t("infoTitle"), t(message), [(t("supportLabel"), { support() }), (t("ok"), {})]) }

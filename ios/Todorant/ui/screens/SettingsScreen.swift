@@ -157,6 +157,7 @@ struct SettingsScreen: View {
                     TableItem(action: { Nav.push(.privacy) }) { TableText(t("privacyPolicy")) }
                     TableItem(action: Ui.support) { TableText(t("supportLabel")) }
                         .onboardingTarget(OnboardingTarget.supportButton).id(OnboardingTarget.supportButton)
+                    TableItem(action: Ui.sendFeedback) { TableText(t("sendFeedback")) }
                 }
                 .settingsRow()
                 Section {

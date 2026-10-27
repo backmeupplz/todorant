@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.todorant.App
+import com.todorant.BuildConfig
 import com.todorant.R
 import com.todorant.data.Settings
 import com.todorant.t
@@ -75,7 +76,7 @@ object Ui {
     fun error(error: String, confirmText: String? = null, confirm: (() -> Unit)? = null) = alert(
         t("error"), error,
         if (confirmText != null && confirm != null) listOf(confirmText to confirm, t("ok") to {}) else listOf(t("ok") to {})
-    )
+    ).also { RatingPrompt.errored = true }
 
     fun confirm(message: String, confirmText: String, title: String? = null, destructive: Boolean = false, onConfirm: () -> Unit) =
         show(DialogSpec(title ?: t("pleaseConfirm"), message, listOf(t("cancel") to {}, confirmText to onConfirm), if (destructive) setOf(1) else emptySet()))
@@ -98,6 +99,8 @@ object Ui {
             "@borodutch" to { openUrl("https://t.me/borodutch") },
         )
     )
+
+    fun sendFeedback() = openUrl("mailto:n@borodutch.com?subject=" + Uri.encode("Todorant ${BuildConfig.VERSION_NAME} (Android) feedback"))
 
     fun info(message: String) = alert(t("infoTitle"), t(message), listOf(t("supportLabel") to { support() }, t("ok") to {}))
 

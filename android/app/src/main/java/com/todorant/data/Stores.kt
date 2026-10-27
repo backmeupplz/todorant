@@ -117,7 +117,6 @@ object Session {
     var loggingOut by mutableStateOf(false)
     var isInitialSync by mutableStateOf(false)
 
-    val needsToRequestRate get() = !askedToRate && numberOfTodosCompleted > 101
     val delegateInviteLink get() = "https://todorant.com/invite/${user?.delegateInviteToken}"
 
     fun init() {

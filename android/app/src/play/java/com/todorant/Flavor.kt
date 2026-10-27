@@ -1,5 +1,6 @@
 package com.todorant
 
+import android.app.Activity
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -8,10 +9,11 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.todorant.ui.Ui
 
-// Play build: Google sign-in and Google's QR scanner, both through Play services. src/fdroid has the Google-free versions.
+// Play build: Google sign-in, Google's QR scanner and Play's review card, all through Play services. src/fdroid has the Google-free versions.
 
 private const val GOOGLE_WEB_CLIENT_ID = "167486246043-304ktl4ng8njc185ov1f7vdoafj4gke8.apps.googleusercontent.com"
 
@@ -39,4 +41,10 @@ fun rememberQrScanner(onResult: (String) -> Unit): () -> Unit {
             .addOnSuccessListener { barcode -> barcode.rawValue?.takeIf { it.isNotEmpty() }?.let(onResult) }
             .addOnFailureListener { Ui.error(it.message ?: t("cameraAuthorization")) }
     }
+}
+
+/** Play's in-app review card; Play decides whether it really shows */
+fun requestReview(activity: Activity) {
+    val manager = ReviewManagerFactory.create(activity)
+    manager.requestReviewFlow().addOnSuccessListener { manager.launchReviewFlow(activity, it) }
 }

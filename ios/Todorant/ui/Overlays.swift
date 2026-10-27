@@ -1,4 +1,3 @@
-import StoreKit
 import SwiftUI
 
 /// Confetti, "mission passed" overlay and the rating request, drawn above everything
@@ -7,7 +6,7 @@ struct EffectsLayer: View {
         ZStack {
             Confetti()
             DayCompleteOverlay()
-            RateRequest()
+            RatingRequest()
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
@@ -83,19 +82,6 @@ private struct DayCompleteOverlay: View {
                 withAnimation(.linear(duration: 1)) { opacity = 0 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) { showing = false }
             }
-        }
-    }
-}
-
-/// After 100 completed todos asks for an App Store rating once (StoreKit's prompt: custom rating dialogs aren't allowed on iOS)
-private struct RateRequest: View {
-    @Environment(\.requestReview) private var requestReview
-
-    var body: some View {
-        Color.clear.onChange(of: Session.needsToRequestRate, initial: true) { _, needed in
-            guard needed else { return }
-            Session.askedToRate = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { requestReview() }
         }
     }
 }

@@ -71,6 +71,7 @@ import com.todorant.ui.LocalTagColors
 import com.todorant.ui.Nav
 import com.todorant.ui.Onboarding
 import com.todorant.ui.OnboardingOverlay
+import com.todorant.ui.RatingPrompt
 import com.todorant.ui.Route
 import com.todorant.ui.Target
 import com.todorant.ui.TodorantTheme
@@ -126,6 +127,7 @@ class MainActivity : ComponentActivity() {
         // AppState change → globalSync in the RN app
         Sync.reconnect()
         Sync.request()
+        RatingPrompt.appOpened()
     }
 }
 

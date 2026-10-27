@@ -11,6 +11,7 @@ import com.todorant.data.Todo
 import com.todorant.t
 import com.todorant.ui.Effects
 import com.todorant.ui.Nav
+import com.todorant.ui.RatingPrompt
 import com.todorant.ui.Route
 import com.todorant.ui.Sounds
 import com.todorant.ui.Ui
@@ -187,6 +188,8 @@ object Todos {
             Effects.dayComplete()
             Sounds.dayComplete()
         }
+        val title = todayTitle()
+        if (allForDay(title).let { it.isNotEmpty() && it.all { t -> t.completed } }) RatingPrompt.dayCompleted(title)
     }
 
     // endregion

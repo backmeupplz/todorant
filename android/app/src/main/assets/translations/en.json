@@ -105,6 +105,7 @@
   "general": "General",
   "info": "Info",
   "supportLabel": "Support",
+  "sendFeedback": "Send feedback",
   "supportText": "Got questions or feedback? Send me an email or contact me on Telegram!",
   "socketError": "Connection error: ",
   "connected": "Connected",

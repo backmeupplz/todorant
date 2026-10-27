@@ -63,7 +63,6 @@ object Rest {
 
     suspend fun setQrToken(uuid: String) = call("POST", "/login/qr_token", JSONObject().put("uuid", uuid))
 
-    suspend fun sendFeedback(state: JSONObject) = call("POST", "/feedback", JSONObject().put("state", state))
 
     suspend fun sendData(data: JSONObject) = call("POST", "/data", JSONObject().put("data", data))
 

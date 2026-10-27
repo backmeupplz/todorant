@@ -1,5 +1,6 @@
 package com.todorant
 
+import android.app.Activity
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
@@ -8,9 +9,12 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import com.todorant.ui.Ui
 
-// F-Droid build: no Google code, so no Google sign-in, and QR codes go through the open-source ZXing scanner (asks for the camera).
+// F-Droid build: no Google code, so no Google sign-in or Play review card, and QR codes go through the open-source ZXing scanner (asks for the camera).
 
 val googleIdToken: (suspend (Context) -> String)? = null
+
+@Suppress("UNUSED_PARAMETER")
+fun requestReview(activity: Activity) {}
 
 /** Scans a QR code with ZXing */
 @Composable

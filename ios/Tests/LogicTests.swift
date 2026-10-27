@@ -262,4 +262,23 @@ final class LogicTests: XCTestCase {
         // Everything imported goes to the server
         XCTAssertTrue(Db.shared.outbox().contains { $0.id == todo.id && $0.field == "text" })
     }
+
+    func testRatingPromptRule() {
+        func ask(today: Int = 10, firstUse: Int = 0, activeDays: Int = 3, allDoneDays: Int = 3, requests: Int = 0, lastRequest: Int? = nil,
+                 lastVersion: Int = 0, version: Int = 1) -> Bool {
+            RatingPrompt.shouldAsk(today: today, firstUseDay: firstUse, activeDays: activeDays, allDoneDays: allDoneDays, requests: requests,
+                                   lastRequestDay: lastRequest, lastRequestVersion: lastVersion, version: version)
+        }
+        XCTAssertTrue(ask())
+        XCTAssertFalse(ask(activeDays: 2))
+        XCTAssertFalse(ask(today: 2))
+        XCTAssertTrue(ask(today: 3))
+        XCTAssertFalse(ask(allDoneDays: 2))
+        // The second request: 120 days later on a newer version
+        XCTAssertTrue(ask(today: 130, requests: 1, lastRequest: 10, lastVersion: 1, version: 2))
+        XCTAssertFalse(ask(today: 129, requests: 1, lastRequest: 10, lastVersion: 1, version: 2))
+        XCTAssertFalse(ask(today: 130, requests: 1, lastRequest: 10, lastVersion: 2, version: 2))
+        // Never a third
+        XCTAssertFalse(ask(today: 1000, requests: 2, lastRequest: 130, lastVersion: 2, version: 9))
+    }
 }

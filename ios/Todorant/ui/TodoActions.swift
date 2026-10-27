@@ -53,6 +53,9 @@ extension Todos {
             Effects.dayComplete()
             Sounds.dayComplete()
         }
+        let title = todayTitle()
+        let today = allForDay(title)
+        if !today.isEmpty && today.allSatisfy(\.completed) { RatingPrompt.dayCompleted(title) }
     }
 
     /**

@@ -146,7 +146,6 @@ enum Session {
         set { AppState.shared.isInitialSync = newValue }
     }
 
-    static var needsToRequestRate: Bool { !askedToRate && numberOfTodosCompleted > 101 }
     static var delegateInviteLink: String { "https://todorant.com/invite/\(user?.delegateInviteToken ?? "")" }
 
     /// Server profile (keeps the token)

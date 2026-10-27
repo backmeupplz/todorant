@@ -9,7 +9,6 @@ import androidx.compose.animation.core.animateRectAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,11 +33,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons as MaterialIcons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -73,25 +67,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import com.todorant.I18n
 import com.todorant.R
-import com.todorant.data.Session
-import com.todorant.sync.Rest
 import com.todorant.t
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.random.Random
 
-/** Confetti, "mission passed" overlay and the rate dialog, drawn above everything */
+/** Confetti, "mission passed" overlay and the rating request, drawn above everything */
 @Composable
 fun EffectsLayer() {
     Confetti()
     DayCompleteOverlay()
-    RateModal()
+    RatingRequest()
 }
 
 // region Confetti (react-native-confetti: 25 pieces, 20ms apart, 2s fall)
@@ -153,78 +143,6 @@ private fun DayCompleteOverlay() {
     ) {
         Text(t("missionPassed"), color = Color(153, 126, 40), fontSize = 40.sp, lineHeight = 46.sp, textAlign = TextAlign.Center)
         Text(t("respect"), color = Color.White, fontSize = 40.sp, lineHeight = 46.sp, textAlign = TextAlign.Center)
-    }
-}
-
-/** Asks for a store rating after 100 completed todos; low ratings go to feedback instead */
-@Composable
-private fun RateModal() {
-    var closed by remember { mutableStateOf(false) }
-    if (!Session.needsToRequestRate || closed) return
-    var rating by remember { mutableIntStateOf(0) }
-    var comment by remember { mutableStateOf("") }
-    var showComment by remember { mutableStateOf(false) }
-    var error by remember { mutableStateOf(false) }
-    fun close() {
-        closed = true
-        Session.askedToRate = true
-    }
-    val labels = listOf("starTerrible", "starBad", "starOkay", "starGood", "starGreat")
-    Dialog(onDismissRequest = ::close) {
-        Column(Modifier.clip(RoundedCornerShape(16.dp)).background(Colors.background).padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(t("rateTitle"), color = Colors.text, fontSize = 18.sp, textAlign = TextAlign.Center)
-            Row(Modifier.padding(vertical = 12.dp)) {
-                for (i in 1..5) MIcon(
-                    if (i <= rating) MaterialIcons.Filled.Star else MaterialIcons.Filled.StarBorder, Colors.primary, 40.dp,
-                    Modifier.padding(horizontal = 2.dp),
-                ) { rating = i }
-            }
-            if (rating > 0) Text(t(labels[rating - 1]), color = Colors.text)
-            if (showComment) {
-                OutlinedTextField(
-                    comment, { comment = it; error = false }, Modifier.fillMaxWidth().padding(top = 12.dp),
-                    placeholder = { Text(t("rateCommentPlaceholder"), color = Colors.placeholder) }, minLines = 3,
-                    colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Colors.text, unfocusedTextColor = Colors.text, focusedBorderColor = Colors.primary),
-                )
-                if (error) Text(t("rateCommentEmptyError"), color = Color(0xFFFF6347), modifier = Modifier.padding(top = 4.dp))
-            }
-            Row(Modifier.padding(top = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Box(
-                    Modifier.weight(1f).clip(RoundedCornerShape(10.dp)).border(BorderStroke(1.dp, Colors.text), RoundedCornerShape(10.dp))
-                        .clickable(onClick = ::close).padding(12.dp),
-                    contentAlignment = Alignment.Center,
-                ) { Text(t("cancel"), color = Colors.text) }
-                Box(
-                    Modifier.weight(1f).clip(RoundedCornerShape(10.dp)).background(if (rating > 0) Colors.primary else Color.Gray)
-                        .clickable(enabled = rating > 0) {
-                            when {
-                                rating >= 4 -> {
-                                    closed = true
-                                    Ui.alert(
-                                        "", t("rateSolicitationGoogle"),
-                                        listOf(
-                                            t("cancel") to { Session.askedToRate = true },
-                                            t("rateButton") to {
-                                                Ui.openUrl("market://details?id=com.todorant")
-                                                Session.askedToRate = true
-                                            },
-                                        ),
-                                    )
-                                }
-                                !showComment -> showComment = true
-                                comment.isBlank() -> error = true
-                                else -> {
-                                    close()
-                                    if (Session.user != null) Ui.launch {
-                                        runCatching { Rest.sendFeedback(JSONObject().put("rating", rating).put("review", comment)) }
-                                    }
-                                }
-                            }
-                        }.padding(12.dp),
-                    contentAlignment = Alignment.Center,
-                ) { Text(t(if (showComment) "send" else "rate"), color = Colors.background) }
-            }
-        }
     }
 }
 

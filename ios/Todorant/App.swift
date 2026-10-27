@@ -98,6 +98,7 @@ struct RootView: View {
                 Db.shared.touch()
                 Sync.shared.reconnect()
                 Sync.shared.request()
+                RatingPrompt.appOpened()
             }
         }
         .onOpenURL(perform: handleUrl)
