@@ -42,6 +42,8 @@
   margin-top: 48px; padding-top: 24px; padding-bottom: 32px; font-size: 14px; color: var(--muted);
 }
 .landing-footer p { margin: 0; max-width: 520px; }
+/* The light theme's #808080 is 3.85:1 on the page; small footer text needs 4.5:1 (dark mode already passes) */
+:root:not(.dark) .landing-footer { --muted: #737373; }
 .landing-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .landing-footer a { color: var(--muted); }
 .landing-footer select, .landing-dark {
