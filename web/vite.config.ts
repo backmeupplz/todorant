@@ -37,6 +37,7 @@ export default defineConfig({
           ['privacy', 'Privacy Policy', pages.Privacy],
           ['terms', 'Terms of Use', pages.Terms],
           ['delete-account', 'Delete your account', pages.DeleteAccount],
+          ['how-it-works', 'How Todorant works', pages.HowItWorks],
         ] as const) {
           const html = shell
             .replace(/<title>[^<]*<\/title>/, `<title>${title} — Todorant</title>`)

@@ -73,6 +73,7 @@ export function Landing() {
           {contact[1]}
         </p>
         <nav>
+          <a {...link('/how-it-works')}>How it works</a>
           <a {...link('/privacy')}>{t('home.privacy')}</a>
           <a {...link('/terms')}>Terms of use</a>
           <a {...link('/delete-account')}>{t('m.deleteAccount')}</a>

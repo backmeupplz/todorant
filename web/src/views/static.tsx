@@ -1,4 +1,6 @@
 // Plain anchors and no app imports: the build also renders these pages to static HTML (vite.config.ts)
+// (the English strings are data, so How it works reads its rules from them)
+import en from '../i18n/en.json'
 const Back = () => <p><a href="/">Back to main page</a></p>
 
 export const Privacy = () => (
@@ -87,3 +89,41 @@ export const DeleteAccount = () => (
     <Back />
   </article>
 )
+
+/** What Todorant is and how it works, as plain HTML that search engines and AI crawlers can read without running the app */
+export const HowItWorks = () => (
+  <article class="static">
+    <h1>How Todorant works</h1>
+    <p>Todorant is a todo manager that uses behavioral psychology to help you get things done. It runs on the web at todorant.com and as apps for iPhone, iPad and Android, and you can host your own server. It's made by Nikita Kolmogorov.</p>
+    <p>Most productivity apps are great at storing, organizing and automating endless lists of tasks, and that is exactly where they fail you: a list that keeps growing doesn't get anything done. Todorant cares about the one thing that matters, which is finishing what you planned. It does that with four simple ideas, backed by a carefully tuned set of limits and praise that makes the primitive part of your brain crave completed todos the way people crave sugar.</p>
+    <h2>Four ideas</h2>
+    <ul>
+      <li><b>Focus on one task at a time.</b> The Current screen shows only the todo you should be doing right now.</li>
+      <li><b>Always add a date or a month to a task.</b> Every todo gets its place in time, so nothing lingers in a list forever.</li>
+      <li><b>Complete unpleasant tasks first.</b> Todos you dread are marked as frogs and come before everything else on their day.</li>
+      <li><b>Keep your inbox empty.</b> Overdue todos have to be planned again before you can get back to work.</li>
+    </ul>
+    <p>Todorant grew out of more than twenty productivity books and methodologies. When they failed one by one, the parts that worked were combined and simplified into a single system that you can learn in a minute.</p>
+    <h2>The rules</h2>
+    <p>These are the rules the app shows when you start, and they are always in Settings under How to use.</p>
+    <ol>{(en.rules as string[]).map((rule) => <li key={rule}>{rule}</li>)}</ol>
+    <h2>What's inside</h2>
+    <ul>
+      <li><b>Realtime sync</b> between all your devices, with offline support and field-level conflict resolution, so changes made on two devices at once both survive.</li>
+      <li><b>End-to-end encryption</b> of your todos with a password of your choice.</li>
+      <li><b>Delegation</b>, to hand todos to friends and colleagues and accept the ones they hand to you.</li>
+      <li>A <b>Telegram bot</b> that turns messages into todos, <b>hashtags and epics</b> to group related work, and <b>reports</b> of everything you've done.</li>
+      <li><b>Six languages</b> (English, Spanish, Italian, Portuguese, Russian and Ukrainian) and a dark mode on every platform.</li>
+    </ul>
+    <h2>Get Todorant</h2>
+    <ul>
+      <li><a href="/">Use it on the web</a></li>
+      <li><a href="https://apps.apple.com/app/todorant/id1482078243">iPhone and iPad (App Store)</a></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.todorant">Android (Google Play)</a></li>
+      <li><a href="https://github.com/backmeupplz/todorant/blob/main/docs/self-hosting.md">Host your own server</a></li>
+      <li><a href="https://github.com/backmeupplz/todorant">Source code</a></li>
+    </ul>
+    <Back />
+  </article>
+)
+

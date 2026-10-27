@@ -7,7 +7,7 @@ import { Spinner, alert, confirm, lazy, toast } from '../ui/kit'
 import { ChartsSkeleton } from '../ui/skeletons'
 import { go } from '../ui/router'
 import { link } from './Landing'
-import { DeleteAccount, Privacy, Terms } from './static'
+import { DeleteAccount, HowItWorks, Privacy, Terms } from './static'
 import './pages.css'
 
 const PublicReport = lazy(() => import('./Report').then((m) => m.PublicReport), ChartsSkeleton)
@@ -19,6 +19,7 @@ export function Pages({ path }: { path: string }) {
   if (path === '/privacy') body = <Privacy />
   else if (path === '/terms') body = <Terms />
   else if (path === '/delete-account') body = <DeleteAccount />
+  else if (path === '/how-it-works') body = <HowItWorks />
   else if (section === 'invite' && arg) body = <Task key={path} run={() => acceptInvite(arg)} />
   else if (section === 'report' && arg) body = <PublicReport uuid={arg} />
   else if (path === '/mobile-login/telegram') body = <TelegramMobile />

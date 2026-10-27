@@ -9,4 +9,8 @@
 .static h1 { font-size: 28px; line-height: 1.25; margin-bottom: 16px; }
 .static h2 { font-size: 19px; margin: 28px 0 8px; }
 .static p, .static ul { margin: 0 0 12px; }
+.static ol { margin: 0 0 12px; padding-left: 24px; }
+.static li { margin: 4px 0; }
+/* The light theme's --link (#1e88e5) is 3.6:1 on the page; text links here need 4.5:1 */
+:root:not(.dark) .static a, :root:not(.dark) .page-center a { color: #1565c0; }
 :root.dark .page-logo { filter: invert(1) hue-rotate(180deg); }
