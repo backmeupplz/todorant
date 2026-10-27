@@ -1,3 +1,9 @@
+/* the header of the standalone pages (how it works, privacy, terms): room above the logo, and the logo lined
+   up with the text column below it (.static is 760px wide) */
+.navbar { padding-top: 40px; }
+.navbar .container { max-width: 792px; }
+.navbar .page-logo { display: block; height: 28px; width: auto; }
+@media (max-width: 600px) { .navbar { padding-top: 24px; } .navbar .page-logo { height: 26px; } }
 .page { padding-top: 24px; padding-bottom: 48px; }
 .page-center { text-align: center; padding: 32px 0; max-width: 560px; margin: 0 auto; }
 .page-center.emoji { font-size: 48px; }

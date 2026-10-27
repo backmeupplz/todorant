@@ -4,7 +4,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prerender": "node scripts/prerender.mjs dist / /privacy /terms /delete-account /how-it-works"
+    "prerender": "node scripts/prerender.mjs dist / /privacy /terms /delete-account /how-it-works",
+    "og": "node scripts/og.mjs"
   },
   "type": "module",
   "dependencies": {

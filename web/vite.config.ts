@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { copyFileSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
+import { PAGES } from './scripts/pages.mjs'
 
 // Content-Security-Policy for the built page (GitHub Pages can't send headers). Scripts only from here, the
 // page's own inline script (by hash) and Telegram's login script; network only to the backend (and Telegram's login check).
@@ -37,16 +38,18 @@ export default defineConfig({
       closeBundle() {
         copyFileSync('dist/index.html', 'dist/404.html')
         const shell = readFileSync('dist/index.html', 'utf8')
-        for (const [file, title] of [
-          ['privacy', 'Privacy Policy'],
-          ['terms', 'Terms of Use'],
-          ['delete-account', 'Delete your account'],
-          ['how-it-works', 'How Todorant works'],
-        ]) {
-          const html = shell
-            .replace(/<title>[^<]*<\/title>/, `<title>${title} — Todorant</title>`)
-            .replaceAll('"https://todorant.com/"', `"https://todorant.com/${file}"`)
-          writeFileSync(`dist/${file}.html`, html)
+        // each page's own title, description and share card (scripts/pages.mjs; the cards come from scripts/og.mjs)
+        const meta = (html: string, key: string, value: string) =>
+          html.replace(new RegExp(`(<meta (?:name|property)="${key}" content=")[^"]*"`), `$1${value.replace(/"/g, '&quot;')}"`)
+        for (const p of PAGES) {
+          let html = shell
+            .replace(/<title>[^<]*<\/title>/, `<title>${p.title}</title>`)
+            .replaceAll('"https://todorant.com/"', `"https://todorant.com/${p.file}"`)
+          const image = `https://todorant.com/img/og-${p.file}.jpg`
+          for (const [key, value] of [['description', p.description], ['og:title', p.title], ['og:description', p.description],
+            ['og:image', image], ['og:image:type', 'image/jpeg'], ['og:image:alt', p.alt], ['twitter:title', p.title], ['twitter:description', p.description],
+            ['twitter:image', image], ['twitter:image:alt', p.alt]]) html = meta(html, key, value)
+          writeFileSync(`dist/${p.file}.html`, html)
         }
         // Local QA helpers (a test session, phone frame) live in public/ but must never ship
         for (const f of readdirSync('dist')) if (f.startsWith('qa-')) rmSync(`dist/${f}`)
