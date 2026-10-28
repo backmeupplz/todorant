@@ -139,7 +139,7 @@ jobs:
   ios:
     needs: version
     runs-on: macos-26
-    # The first release with every locale's 120 screenshots waits for the build, then uploads them all
+    # The first release with every locale's 120 iPhone and 120 iPad screenshots waits for the build, then uploads them
     timeout-minutes: 180
     env:
       VERSION: ${{ needs.version.outputs.name }}
@@ -171,11 +171,11 @@ jobs:
         run: ios/release.sh "$VERSION" "$CODE" ${{ env.MODE == 'dry-run' && '--no-upload' || '' }}
       # Every locale's name, texts and screenshots from appstore/ go on the version first, so What's New finds them all;
       # --release waits for the build, then cancels a submission still waiting or in review (as appstore.py would), so
-      # they go on this version. Out of time, it stops before cancelling (build still processing) or before a locale's
-      # screenshots (--until: the job's LISTING_UNTIL or 15 minutes before this step's timeout, whichever comes first, so
-      # the step timeout only catches a hang). Either way the step fails and the job goes on, since a job timeout would skip
-      # App Review after the review was cancelled, and running the release again can't recover: altool refuses the same
-      # build number twice.
+      # they go on this version. Out of time, it stops before cancelling (build still processing) or before a screenshot
+      # set, the iPhone ones going first (--until: the job's LISTING_UNTIL or 15 minutes before this step's timeout,
+      # whichever comes first, so the step timeout only catches a hang). Either way the step fails and the job goes on,
+      # since a job timeout would skip App Review after the review was cancelled, and running the release again can't
+      # recover: altool refuses the same build number twice.
       - name: App Store listing
         if: env.IOS && env.MODE != 'testflight-only'
         timeout-minutes: 120

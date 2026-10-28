@@ -1,8 +1,8 @@
 # Sends the store listings in the repo to both stores, every language (.github/scripts/listings.py): Google Play gets each
 # language's title, descriptions, feature graphic and screenshots from fastlane/metadata/android/, which go to review
 # when committed; the App Store gets each locale's name, subtitle, description, keywords, promotional text and 6.9"
-# screenshots from appstore/ on the version being prepared, so they ship with the next release (release.yml sends them
-# too, right before it submits). Only what differs from the store is sent.
+# iPhone and 13" iPad screenshots from appstore/ on the version being prepared, so they ship with the next release
+# (release.yml sends them too, right before it submits). Only what differs from the store is sent.
 # Run by hand (Actions → Listings → Run workflow): dry-run shows what would change and sends nothing.
 name: Listings
 on:
