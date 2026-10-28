@@ -48,6 +48,7 @@ import com.todorant.data.Todo
 import com.todorant.data.TodoSection
 import com.todorant.logic.Todos
 import com.todorant.logic.dateString
+import com.todorant.logic.isolate
 import com.todorant.t
 import com.todorant.ui.CardType
 import com.todorant.ui.Colors
@@ -190,7 +191,7 @@ private fun PlanningHeader(completed: Boolean) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
             when {
                 AppState.hash.isNotEmpty() -> Text(
-                    AppState.hash.joinToString(" "), color = Colors.text, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    AppState.hash.joinToString(" ") { isolate(it) }, color = Colors.text, maxLines = 1, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(end = 24.dp)
                 )
                 AppState.searchEnabled -> PlanningSearchField()

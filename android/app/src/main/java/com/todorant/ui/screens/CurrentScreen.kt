@@ -28,6 +28,7 @@ import com.todorant.data.Session
 import com.todorant.data.Tag
 import com.todorant.logic.Tags
 import com.todorant.logic.Todos
+import com.todorant.logic.isolate
 import com.todorant.logic.todayTitle
 import com.todorant.t
 import com.todorant.ui.CardType
@@ -138,7 +139,7 @@ private fun EpicProgress(epic: Tag, modifier: Modifier) {
     Row(modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         EpicText("$points", color)
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-            EpicText("#${epic.tag}", color) {
+            EpicText(isolate("#${epic.tag}"), color) {
                 if ("#${epic.tag}" !in AppState.hash) AppState.hash.add("#${epic.tag}")
                 Nav.go(Route.PLANNING)
             }

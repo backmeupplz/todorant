@@ -40,6 +40,31 @@ class LogicTest {
     }
 
     @Test
+    fun isolatesHashtagsForRightToLeft() {
+        assertEquals("⁨#work⁩", isolate("#work"))
+        // Links stay as typed, a#b is no tag
+        assertEquals("اشتر ⁨#work⁩ https://x.com/#a a#b ⁨#дом⁩", isolateHashtags("اشتر #work https://x.com/#a a#b #дом"))
+        assertEquals("no tags", isolateHashtags("no tags"))
+        assertEquals("", isolateHashtags(""))
+
+        val shown = isolateHashtagsMapped("اشتر #work الآن")
+        assertEquals("اشتر ⁨#work⁩ الآن", shown.text)
+        // The cursor before a tag stays outside it, the one after its last letter inside
+        assertEquals(5, shown.toShown[5])
+        assertEquals(11, shown.toShown[10])
+        assertEquals(13, shown.toShown[11])
+        assertEquals(listOf(5, 5, 10, 10), listOf(5, 6, 11, 12).map { shown.toOriginal[it] })
+        for (text in listOf("اشتر #work الآن", "#a #b", "a #x", "#", "plain", "")) {
+            val mapped = isolateHashtagsMapped(text)
+            assertEquals(text.length + 1, mapped.toShown.size)
+            assertEquals(mapped.text.length + 1, mapped.toOriginal.size)
+            for (i in 0..text.length) assertEquals(i, mapped.toOriginal[mapped.toShown[i]])
+            assertTrue(mapped.toOriginal.all { it in 0..text.length })
+            assertEquals(text, mapped.text.replace("⁨", "").replace("⁩", ""))
+        }
+    }
+
+    @Test
     fun dates() {
         assertEquals(LocalDate.of(2026, 10, 12), todayWithStartOfDay(LocalDateTime.of(2026, 10, 13, 3, 0), "04:00"))
         assertEquals(LocalDate.of(2026, 10, 13), todayWithStartOfDay(LocalDateTime.of(2026, 10, 13, 5, 0), "04:00"))

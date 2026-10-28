@@ -48,6 +48,7 @@ import com.todorant.data.Todo
 import com.todorant.logic.TextPart
 import com.todorant.logic.Todos
 import com.todorant.logic.isTodoOld
+import com.todorant.logic.isolate
 import com.todorant.logic.linkify
 import com.todorant.logic.todayTitle
 import com.todorant.t
@@ -143,7 +144,7 @@ private fun TodoCardText(todo: Todo, isOld: Boolean, type: CardType, dragModifie
                 is TextPart.Link, is TextPart.Hash -> {
                     val color = (p as? TextPart.Hash)?.let { tagColors[it.value.substring(1)]?.let(::hex) } ?: Colors.link
                     pushStringAnnotation("part", "$i")
-                    withStyle(SpanStyle(color = color)) { append(p.value) }
+                    withStyle(SpanStyle(color = color)) { append(isolate(p.value)) }
                     pop()
                 }
             }

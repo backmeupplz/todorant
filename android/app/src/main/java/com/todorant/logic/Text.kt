@@ -153,6 +153,38 @@ private fun displayUrl(raw: String): String = runCatching {
 /** Hashtags in a text, without '#' */
 fun hashtags(text: String) = linkify(text).filterIsInstance<TextPart.Hash>().map { it.value.substring(1) }
 
+private const val FSI = '⁨'
+private const val PDI = '⁩'
+
+/**
+ * Wraps a #tag or link in an invisible first-strong isolate, so inside right-to-left text it keeps
+ * its own direction: Arabic shows "#work", not "work#"
+ */
+fun isolate(value: String) = "$FSI$value$PDI"
+
+/** A text shown with its #hashtags isolated, with cursor offset maps both ways */
+class IsolatedText(val text: String, val toShown: IntArray, val toOriginal: IntArray)
+
+/** Isolates every #hashtag linkify finds; a cursor at a tag's start stays outside it, at its end inside */
+fun isolateHashtagsMapped(text: String): IsolatedText {
+    val ranges = linkRegex.findAll(text).filter { it.value.startsWith("#") }.map { it.range }.toList()
+    val shown = StringBuilder(text.length + ranges.size * 2)
+    val toShown = IntArray(text.length + 1)
+    val toOriginal = ArrayList<Int>(text.length + ranges.size * 2 + 1)
+    var r = 0
+    for (i in 0..text.length) {
+        toShown[i] = shown.length
+        if (r < ranges.size && ranges[r].last + 1 == i) { toOriginal.add(i); shown.append(PDI); r++ }
+        if (r < ranges.size && ranges[r].first == i) { toOriginal.add(i); shown.append(FSI) }
+        if (i < text.length) { toOriginal.add(i); shown.append(text[i]) }
+    }
+    toOriginal.add(text.length)
+    return IsolatedText(shown.toString(), toShown, toOriginal.toIntArray())
+}
+
+/** The text with every #hashtag isolated, for display */
+fun isolateHashtags(text: String) = isolateHashtagsMapped(text).text
+
 /** Q.sanitizeLikeString used for search */
 fun sanitizeLike(value: String) = value.replace(Regex("[^а-яА-Яa-zA-Z0-9]"), "_")
 

@@ -60,6 +60,7 @@ import com.todorant.data.Tag
 import com.todorant.data.Todo
 import com.todorant.logic.Crypto
 import com.todorant.logic.ellipsize
+import com.todorant.logic.isolate
 import com.todorant.logic.Todos
 import com.todorant.sync.Rest
 import com.todorant.sync.Sync
@@ -265,13 +266,13 @@ fun TagsScreen() {
             items(tags, key = { it.id }) { tag ->
                 Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("#${tag.tag}", color = tag.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link, fontFamily = com.todorant.ui.Fonts.textRegular, modifier = Modifier.weight(1f))
+                        Text(isolate("#${tag.tag}"), color = tag.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link, fontFamily = com.todorant.ui.Fonts.textRegular, modifier = Modifier.weight(1f))
                         IconBtn("target_outline_28", if (tag.epic == true) Color.Gray else null) {
                             if (tag.epic == true) unEpic(tag) else Nav.go(Route.addEpic(tag.id))
                         }
                         IconBtn("edit_outline_28") { Nav.go(Route.changeText(tag.id)) }
                         IconBtn("delete_outline_28-iOS", Colors.destruct) {
-                            Ui.confirm("${t("deleteTodo")} \"#${tag.tag.ellipsize(50)}\"?", t("delete")) {
+                            Ui.confirm("${t("deleteTodo")} \"${isolate("#${tag.tag.ellipsize(50)}")}\"?", t("delete")) {
                                 Db.updateTag(tag) { it.deleted = true }
                             }
                         }
@@ -284,13 +285,13 @@ fun TagsScreen() {
 }
 
 
-private fun unEpic(tag: Tag) = Ui.confirm("${t("unEpicConfirm")} \"#${tag.tag.ellipsize(50)}\"?", t("unEpic")) {
+private fun unEpic(tag: Tag) = Ui.confirm("${t("unEpicConfirm")} \"${isolate("#${tag.tag.ellipsize(50)}")}\"?", t("unEpic")) {
     Db.updateTag(tag) { it.epicCompleted = false; it.epicGoal = 0; it.epicOrder = 0; it.epicPoints = 0; it.epic = false }
 }
 
 @Composable
 private fun TagTitle(tag: Tag?, color: Color?, big: Boolean = false) = Text(
-    "#${tag?.tag ?: ""}", color = color ?: tag?.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link,
+    isolate("#${tag?.tag ?: ""}"), color = color ?: tag?.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link,
     fontSize = if (big) 32.sp else 17.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(0.8f),
 )
 

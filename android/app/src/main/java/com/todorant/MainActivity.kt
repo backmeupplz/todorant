@@ -60,6 +60,7 @@ import com.todorant.data.Settings
 import com.todorant.data.Todo
 import com.todorant.logic.Tags
 import com.todorant.logic.Todos
+import com.todorant.logic.isolateHashtags
 import com.todorant.logic.monthAndYear
 import com.todorant.logic.day
 import com.todorant.sync.Sync
@@ -298,6 +299,6 @@ private fun addTodoFromLink(text: String) {
     Ui.launch {
         val newFirst = Settings.newTodosGoFirst == true
         Todos.fixOrder(listOf(todo.title), if (newFirst) listOf(todo) else emptyList(), if (newFirst) emptyList() else listOf(todo))
-        Ui.toast("${t("addedTask")}: $text")
+        Ui.toast("${t("addedTask")}: ${isolateHashtags(text)}")
     }
 }

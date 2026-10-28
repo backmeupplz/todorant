@@ -119,7 +119,7 @@ object Todos {
             Db.updateTodo(todo) { it.deleted = true }
         }
         if (Settings.askBeforeDelete) {
-            Ui.confirm("${t("deleteTodo")} \"${todo.text.ellipsize(50)}\"?", t("delete")) { doDelete() }
+            Ui.confirm("${t("deleteTodo")} \"${isolateHashtags(todo.text.ellipsize(50))}\"?", t("delete")) { doDelete() }
         } else doDelete()
     }
 

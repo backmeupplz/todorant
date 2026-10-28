@@ -24,6 +24,7 @@ import com.todorant.data.Db
 import com.todorant.data.Session
 import com.todorant.data.Todo
 import com.todorant.logic.Todos
+import com.todorant.logic.isolateHashtags
 import com.todorant.logic.todayTitle
 import com.todorant.sync.Sync
 import com.todorant.t
@@ -90,7 +91,7 @@ object Widget {
                 setOnClickPendingIntent(R.id.rl_message, broadcast(context, ACTION_REFRESH))
                 return@apply
             }
-            var text = clean(todo.text)
+            var text = isolateHashtags(clean(todo.text))
             if (!todo.time.isNullOrEmpty()) text = "${todo.time} $text"
             if (todo.frog) text = "🐸 $text"
             setTextViewText(R.id.tv_text, formatLinks(text))

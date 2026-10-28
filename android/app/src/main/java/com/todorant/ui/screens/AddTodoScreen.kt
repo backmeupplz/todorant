@@ -59,10 +59,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
@@ -87,6 +91,9 @@ import com.todorant.logic.hashtags
 import com.todorant.logic.hhmm
 import com.todorant.logic.isToday
 import com.todorant.logic.isTodoOld
+import com.todorant.logic.isolate
+import com.todorant.logic.isolateHashtags
+import com.todorant.logic.isolateHashtagsMapped
 import com.todorant.logic.monthAndYear
 import com.todorant.logic.parseTime
 import com.todorant.logic.parseTitle
@@ -550,7 +557,7 @@ private fun CollapsedTodo(vm: TodoVM, delete: (() -> Unit)?, dragModifier: Modif
         if (delete != null) IconBtn("delete_outline_28-iOS", Colors.destruct, onClick = delete)
         Column(Modifier.weight(1f).padding(horizontal = 8.dp)) {
             Text(
-                (if (vm.frog) "🐸 " else "") + (vm.time?.let { "$it " } ?: "") + vm.text.ifEmpty { t("todo.create.placeholder") },
+                (if (vm.frog) "🐸 " else "") + (vm.time?.let { "$it " } ?: "") + isolateHashtags(vm.text).ifEmpty { t("todo.create.placeholder") },
                 color = Colors.text, fontFamily = Fonts.displayMedium, fontSize = FONT_SIZE.sp, maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
             vm.monthAndYear?.let {
@@ -735,6 +742,7 @@ private fun TextRow(vm: TodoVM, showCross: Boolean) {
                 enabled = !locked,
                 singleLine = tutorial,
                 textStyle = rowStyle.copy(color = Colors.text),
+                visualTransformation = IsolateHashtags,
                 cursorBrush = SolidColor(Colors.primary),
                 keyboardOptions = KeyboardOptions(imeAction = if (tutorial) ImeAction.Done else ImeAction.Default),
                 keyboardActions = KeyboardActions(onDone = {
@@ -754,6 +762,18 @@ private fun TextRow(vm: TodoVM, showCross: Boolean) {
     }
 }
 
+/** Shows the typed #hashtags isolated without putting the marks into the saved text */
+private object IsolateHashtags : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
+        val shown = isolateHashtagsMapped(text.text)
+        if (shown.text.length == text.length) return TransformedText(text, OffsetMapping.Identity)
+        return TransformedText(AnnotatedString(shown.text), object : OffsetMapping {
+            override fun originalToTransformed(offset: Int) = shown.toShown[offset]
+            override fun transformedToOriginal(offset: Int) = shown.toOriginal[offset]
+        })
+    }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TagsRow(vm: TodoVM) {
@@ -762,7 +782,7 @@ private fun TagsRow(vm: TodoVM) {
     FlowRow(Modifier.fillMaxWidth().padding(bottom = verticalSpacing / 2)) {
         for (tag in tags) {
             Text(
-                "#${tag.tag}", color = tag.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link,
+                isolate("#${tag.tag}"), color = tag.color?.takeIf { it.isNotEmpty() }?.let(::hex) ?: Colors.link,
                 modifier = Modifier.clickable { vm.applyTag(tag.tag); runCatching { vm.focus.requestFocus() } }.padding(horizontal = 4.dp, vertical = 2.dp),
             )
         }
