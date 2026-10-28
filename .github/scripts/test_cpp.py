@@ -2,6 +2,7 @@
 import contextlib, io, os, sys, unittest
 from unittest import mock
 
+# release.yml runs these with its real APP_STORE_APP_ID, so the fake paths use appstore.APP
 os.environ.setdefault("APP_STORE_APP_ID", "1")
 os.environ.setdefault("ASC_KEY_ID", "KEY")
 os.environ.setdefault("ASC_ISSUER_ID", "issuer")
@@ -53,7 +54,7 @@ class FakeASC:
         query, parts = query or {}, path.strip("/").split("/")
         if method != "GET":
             self.writes.append((method, path, body))
-        if path == "/v1/apps/1/appCustomProductPages":
+        if path == f"/v1/apps/{appstore.APP}/appCustomProductPages":
             if method == "POST":
                 p = self.page(body["data"]["attributes"]["name"])
                 v = self.version(p, "PREPARE_FOR_SUBMISSION")
@@ -64,10 +65,10 @@ class FakeASC:
             self.pages[parts[2]]["attributes"].update(body["data"]["attributes"])
             return {"data": self.pages[parts[2]]}
         if path == "/v1/appCustomProductPages" and method == "POST":
-            return self.api("POST", "/v1/apps/1/appCustomProductPages", body=body)
+            return self.api("POST", f"/v1/apps/{appstore.APP}/appCustomProductPages", body=body)
         if path == "/v1/appStoreVersions/live/appStoreVersionLocalizations":
             return {"data": [{"attributes": {"locale": x}} for x in self.live]}
-        if path == "/v1/apps/1/searchKeywords":
+        if path == f"/v1/apps/{appstore.APP}/searchKeywords":
             return {"data": [{"id": k, "type": "appKeywords"} for k in self.keywords.get(query["filter[locale]"], [])]}
         if parts[1] == "appCustomProductPages" and parts[-1] == "appCustomProductPageVersions":
             return {"data": [v for v in self.versions.values() if v["page"] == parts[2]]}
