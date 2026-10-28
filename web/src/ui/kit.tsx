@@ -173,19 +173,22 @@ export const SkeletonBlock = ({ width, height }: { width: number | string; heigh
 /** Inline loading value (rows, buttons) */
 export const Spinner = () => <i class="sk-inline" aria-busy="true" aria-label="Loading" />
 
-/** A component loaded on first render (code splitting); shows its skeleton meanwhile */
+/** A component loaded on first render (code splitting); shows its skeleton meanwhile. `preload()` loads it
+ * ahead, so a render after it resolves draws the component right away (no skeleton) */
 export function lazy<P>(load: () => Promise<ComponentType<P>>, Fallback: () => JSX.Element = () => <Skeleton />) {
   let loaded: ComponentType<P> | undefined
   let loading: Promise<unknown> | undefined
-  return (props: P & JSX.IntrinsicAttributes) => {
+  const preload = () => (loading ??= load().then((c) => (loaded = c)))
+  const Lazy = (props: P & JSX.IntrinsicAttributes) => {
     const [, setReady] = useState(false)
     if (loaded) {
       const C = loaded as ComponentType<any>
       return <C {...props} />
     }
-    ;(loading ??= load().then((c) => (loaded = c))).then(() => setReady(true))
+    preload().then(() => setReady(true))
     return <Fallback />
   }
+  return Object.assign(Lazy, { preload })
 }
 
 // endregion

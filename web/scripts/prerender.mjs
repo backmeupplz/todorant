@@ -51,8 +51,11 @@ try {
     const errors = []
     page.on('pageerror', (e) => errors.push(e.message))
     await page.goto(origin + route, { waitUntil: 'networkidle0' })
-    // Links the app added while loading (like Vite's preloads of lazy chunks) are absolute; make them root-relative
-    const html = (await page.content()).replaceAll(`${origin}/`, '/')
+    // Links the app added while loading (like Vite's preloads of lazy chunks) are absolute; make them root-relative.
+    // The stylesheets go inline, so the first paint doesn't wait for a request per file (they're a few KB gzipped)
+    const html = (await page.content())
+      .replaceAll(`${origin}/`, '/')
+      .replace(/<link\b[^>]*\brel="stylesheet"[^>]*>/g, (tag) => `<style>${readFileSync(join(dir, tag.match(/\bhref="\/([^"]+\.css)"/)[1]), 'utf8').trim()}</style>`)
     if (errors.length) throw new Error(`${route}: ${errors.join('; ')}`)
     if (html.includes(origin)) throw new Error(`${route}: the page wrote ${origin} into its HTML`)
     const out = fileFor(route) ?? join(dir, `${route}.html`)

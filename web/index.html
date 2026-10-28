@@ -37,7 +37,8 @@
         if (localStorage.getItem('session') && location.pathname === '/') document.documentElement.classList.add('signed-in')
       } catch (e) {}
     </script>
-    <script src="/config.js"></script>
+    <!-- Deferred, it still runs before the app's module script (both run in document order once the page is parsed) -->
+    <script src="/config.js" defer></script>
     <script type="application/ld+json">
     {
      "@context": "https://schema.org",

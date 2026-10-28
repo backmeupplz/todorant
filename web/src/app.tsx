@@ -10,6 +10,9 @@ const Pages = lazy(() => import('./views/pages').then((m) => m.Pages), PageSkele
 /** OAuth providers return to these with the token in the hash */
 const LANDING = ['/', '/facebook_login_result', '/google_login_result', '/apple_login_result']
 
+/** Loads the code of a page that isn't the landing or the app, so the first render draws it instead of its skeleton */
+export const preloadPage = () => (LANDING.includes(path.value) || appRoute() ? undefined : Pages.preload())
+
 export function App() {
   const p = path.value
   const signedIn = !!session.value
