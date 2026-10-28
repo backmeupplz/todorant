@@ -1,7 +1,7 @@
 import XCTest
 
 /// App Store screenshots of a seeded account (see ../tour.sh). Env: TOKEN, LANG, FROG (a seeded text to wait for), ADD_TEXT,
-/// FROG_LABEL (the add sheet's frog switch), SHOTS, DUO_INNER (see unfold).
+/// FROG_LABEL (the add sheet's frog switch), HOW_TO_USE (Settings' row to the rules), SHOTS, DUO_INNER (see unfold).
 final class Tour: TodorantUITest {
     private func start(_ mode: String) {
         let lang = env["LANG"] ?? "en"
@@ -72,5 +72,11 @@ final class Tour: TodorantUITest {
         shot("05-dark", delay: 2)
         app.terminate()
         start("light")
+
+        // the 17 rules, for the "Eat the frog" custom product page (../../appstore/cpp/frog.md)
+        tabAt(3)
+        tap(containing(env["HOW_TO_USE"] ?? "How to use Todorant"))
+        wait(containing("2. "))
+        shot("06-rules", delay: 2)
     }
 }

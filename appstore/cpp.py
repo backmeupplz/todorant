@@ -6,12 +6,22 @@ One spec per page: appstore/cpp/<id>.md, with sections "## Name" (the page's nam
 "## Promotional text" and "## Screenshots", one "<screenshot>: <caption>" line per screenshot in order, where
 <screenshot> is a raw screenshot in appstore/cpp/shots/iphone-6.9 (and ipad-13), taken by ios/tour.sh. The screenshots
 are rendered here, on the fly: the caption on Todorant's orange, above the whole, unclipped screenshot.
+Optional: "## Locales", English locales besides en-US that get the same texts and screenshots (each one once the live
+app version has it), and "## Keywords", comma-separated search keywords that make App Store search show this page
+instead of the default one (prime-radiant experiments/2026-10-28-todorant-keyword-cpp.md). Apple takes them only from
+the keywords of the latest approved app version, so each localization gets those of them its locale has there; the
+daily run assigns the rest once a release adds them.
 
   cpp.py render <spec.md> <out dir>     renders iphone-*.png (1320x2868) and ipad-*.png (2064x2752)
   cpp.py sync [--dry-run]               for every spec: creates the page in App Store Connect if it's missing (en-US
                                         promotional text and both screenshot sets), then sends it to App Review; prints
                                         each page's state. Safe to run again: done steps are skipped, and a page whose
                                         review couldn't start (another submission is open) is sent on the next run.
+                                        A locale that the approved page lacks gets a new page version, sent to review;
+                                        keywords are assigned to a version's localizations before it goes to review,
+                                        and again to every current version's (refusals fail the run only on the newest
+                                        approved version); a page with keywords is made visible (search shows only
+                                        visible ones).
   env (sync): as for .github/scripts/appstore.py (APP_STORE_APP_ID, ASC_KEY_ID, ASC_ISSUER_ID, API_PRIVATE_KEYS_DIR)
 """
 import glob, hashlib, json, os, re, sys, tempfile, time, urllib.request
@@ -35,8 +45,11 @@ def spec(path):
         elif name and line.strip():
             out[name].append(line.strip())
     s = {"id": os.path.basename(path)[:-3], "name": " ".join(out["Name"]), "promo": " ".join(out["Promotional text"]),
-         "shots": [tuple(x.strip() for x in line.split(":", 1)) for line in out["Screenshots"]]}
+         "shots": [tuple(x.strip() for x in line.split(":", 1)) for line in out["Screenshots"]],
+         "locales": ["en-US"] + [x for line in out.get("Locales", []) for x in re.split(r"[,\s]+", line) if x and x != "en-US"],
+         "keywords": [x.strip() for line in out.get("Keywords", []) for x in line.split(",") if x.strip()]}
     assert len(s["promo"]) <= 170 and len(s["name"]) <= 70 and s["shots"], f"{path}: name, promotional text or screenshots"
+    assert all(x.startswith("en-") for x in s["locales"]), f"{path}: its screenshots and texts are English, so are its locales"
     return s
 
 
@@ -150,16 +163,92 @@ def submit(a, version):
     return bool(a.api("PATCH", f"/v1/reviewSubmissions/{sub}", body=a.resource("reviewSubmissions", sub, {"submitted": True}), ok=(409,)))
 
 
+def latest(a, page):
+    """The page's newest version (they're numbered "1", "2", …)"""
+    versions = a.data("GET", f"/v1/appCustomProductPages/{page}/appCustomProductPageVersions") or [{}]
+    return max(versions, key=lambda v: int(v.get("attributes", {}).get("version") or 0))
+
+
+def localizations(a, version):
+    """locale -> the version's localization"""
+    if not version.get("id"):
+        return {}
+    return {x["attributes"]["locale"]: x for x in a.data("GET", f"/v1/appCustomProductPageVersions/{version['id']}/appCustomProductPageLocalizations") or []}
+
+
+def available(a, s, locale, offered):
+    """The spec's keywords that the app's latest approved version has in this locale (Apple's ids), and the others"""
+    if locale not in offered:
+        offered[locale] = {k["id"].lower(): k["id"] for k in a.data("GET", f"/v1/apps/{a.APP}/searchKeywords",
+                           {"filter[locale]": locale, "filter[platform]": "IOS", "limit": 200}) or []}
+    out = {"assignable": [offered[locale][k.lower()] for k in s["keywords"] if k.lower() in offered[locale]]}
+    if len(out["assignable"]) < len(s["keywords"]):
+        out["not in the app's keywords"] = [k for k in s["keywords"] if k.lower() not in offered[locale]]
+    return out
+
+
+def assign(a, s, loc, dry, offered):
+    """Assigns the spec's keywords to a page localization, as far as its locale offers them: (what the locale offers,
+    those of them it still lacks; dry, those it would get)"""
+    want = available(a, s, loc["attributes"]["locale"], offered)
+    path = f"/v1/appCustomProductPageLocalizations/{loc['id']}/relationships/searchKeywords"
+    have = lambda: {k["id"] for k in a.data("GET", path, {"limit": 200}) or []}
+    new = [k for k in want["assignable"] if k not in have()]
+    if new and not dry:
+        # Apple documents 400/403/409/422 refusals: carry on to the other pages, the read-back reports them
+        a.api("POST", path, body={"data": [{"type": "appKeywords", "id": k} for k in new]}, ok=(400, 403, 409, 422))
+        new = [k for k in want["assignable"] if k not in have()]  # read back: Apple can refuse or answer 204
+    return want, new
+
+
+def assign_all(a, s, page, dry, offered):
+    """Assigns the spec's keywords to the localizations of each of the page's current versions (the live one and any
+    newer one in review): "<locale> v<version>" -> assigned (or, dry, would be), and those its locale doesn't offer yet.
+    Only refusals on the newest version, once approved, count as "Apple refused": an older approved version is
+    replaced by the newer one, which has its own keywords"""
+    versions = [v for v in a.data("GET", f"/v1/appCustomProductPages/{page}/appCustomProductPageVersions") or []
+                if v["attributes"].get("state") not in ("REPLACED_WITH_NEW_VERSION", "REJECTED")]
+    newest = max(versions, key=lambda v: int(v["attributes"].get("version") or 0), default=None)
+    out = {}
+    for version in versions:
+        approved = version["attributes"].get("state") in ("ACCEPTED", "APPROVED")
+        for locale, loc in localizations(a, version).items():
+            want, new = assign(a, s, loc, dry, offered)
+            entry = {"assigned": [k for k in want["assignable"] if k not in new]}
+            if new and dry:
+                entry["would assign"] = new
+            elif new and approved and version is newest:
+                entry["Apple refused"] = new
+            elif new and approved:
+                entry["refused on this older version (the newer one in progress replaces it)"] = new
+            elif new:  # a version that isn't approved yet may not take them: the next run tries again
+                entry["refused before approval (the next run retries)"] = new
+            if "not in the app's keywords" in want:
+                entry["not in the app's keywords"] = want["not in the app's keywords"]
+            out[f"{locale} v{version['attributes'].get('version')}"] = entry
+    return out
+
+
 def sync(dry):
     sys.path.insert(0, os.path.join(ROOT, ".github", "scripts"))
     import appstore as a
     pages = {p["attributes"]["name"]: p for p in a.data("GET", f"/v1/apps/{a.APP}/appCustomProductPages", {"limit": 200}) or []}
+    live = [v for v in a.versions() if v["attributes"]["appStoreState"] == "READY_FOR_SALE"]
+    live = {x["attributes"]["locale"] for x in a.data("GET", f"/v1/appStoreVersions/{live[0]['id']}/appStoreVersionLocalizations", {"limit": 50})} if live else set()
+    offered = {}  # locale -> {lowercase keyword: Apple's id} from the latest approved app version
     report = []
     for path in sorted(glob.glob(os.path.join(HERE, "cpp", "*.md"))):
         s = spec(path)
         page = pages.get(s["name"])
+        locales = [x for x in s["locales"] if x == "en-US" or x in live]  # a page can only have the app's own locales
+        waiting = [x for x in s["locales"] if x not in locales]
         if not page and dry:
-            report.append({"id": s["id"], "name": s["name"], "state": "would create"})
+            entry = {"id": s["id"], "name": s["name"], "state": "would create", "locales": locales}
+            if waiting:
+                entry["locales waiting for an app release"] = waiting
+            if s["keywords"]:
+                entry["keywords"] = {x: available(a, s, x, offered) for x in locales}
+            report.append(entry)
             continue
         if not page:
             page = a.data("POST", "/v1/appCustomProductPages", body={
@@ -171,22 +260,60 @@ def sync(dry):
                         "appCustomProductPageLocalizations": {"data": [{"type": "appCustomProductPageLocalizations", "id": "${l}"}]}}},
                     {"type": "appCustomProductPageLocalizations", "id": "${l}", "attributes": {"locale": "en-US", "promotionalText": s["promo"]}}]})
             print(f"{s['id']}: created page {page['id']}")
-        version = (a.data("GET", f"/v1/appCustomProductPages/{page['id']}/appCustomProductPageVersions") or [{}])[-1]
+        version = latest(a, page["id"])
         state = version.get("attributes", {}).get("state")
+        missing = [x for x in locales if x not in localizations(a, version)]
+        new_version = state in ("ACCEPTED", "APPROVED") and missing
+        if new_version and not dry:
+            # an approved page doesn't take a new localization: its next version does, and goes to review
+            version = a.data("POST", "/v1/appCustomProductPageVersions", body=a.resource("appCustomProductPageVersions",
+                             appCustomProductPage={"type": "appCustomProductPages", "id": page["id"]}))
+            state = version["attributes"].get("state")
+            print(f"{s['id']}: new version {version['id']} for {', '.join(missing)}")
         if state not in REVIEWED and not dry:
-            loc = a.data("GET", f"/v1/appCustomProductPageVersions/{version['id']}/appCustomProductPageLocalizations")[0]
-            if loc["attributes"].get("promotionalText") != s["promo"]:
-                a.data("PATCH", f"/v1/appCustomProductPageLocalizations/{loc['id']}", body=a.resource("appCustomProductPageLocalizations", loc["id"], {"promotionalText": s["promo"]}))
+            have = localizations(a, version)
             with tempfile.TemporaryDirectory() as tmp:
-                ready = all([upload(a, loc["id"], display, files) for display, files in render(s, tmp).items()])
+                files = render(s, tmp)
+                ready, locs = True, []
+                for locale in locales:
+                    loc = have.get(locale) or a.data("POST", "/v1/appCustomProductPageLocalizations", body=a.resource(
+                        "appCustomProductPageLocalizations", attributes={"locale": locale, "promotionalText": s["promo"]},
+                        appCustomProductPageVersion={"type": "appCustomProductPageVersions", "id": version["id"]}))
+                    if loc["attributes"].get("promotionalText") != s["promo"]:
+                        a.data("PATCH", f"/v1/appCustomProductPageLocalizations/{loc['id']}", body=a.resource("appCustomProductPageLocalizations", loc["id"], {"promotionalText": s["promo"]}))
+                    ready = all([upload(a, loc["id"], display, shots) for display, shots in files.items()]) and ready
+                    locs.append(loc)
+            for loc in locs if s["keywords"] else []:
+                # before the review: a version in review most likely doesn't take keyword edits (assign_all reports them)
+                assign(a, s, loc, False, offered)
             if not ready:
                 state = f"{state} (screenshots still processing; the next run sends it to review)"
             elif submit(a, version["id"]):
                 state = "WAITING_FOR_REVIEW"
             else:
                 state = f"{state} (review not started: another submission is open; the next run sends it)"
-        report.append({"id": s["id"], "name": s["name"], "page": page["id"], "url": page["attributes"].get("url"), "state": state})
-    print(json.dumps(report, indent=1))
+        entry = {"id": s["id"], "name": s["name"], "page": page["id"], "url": page["attributes"].get("url"), "state": state}
+        if new_version and dry:
+            entry["would make a new version, sent to review, for"] = missing
+        if waiting:
+            entry["locales waiting for an app release"] = waiting
+        visible = page["attributes"].get("visible")
+        if s["keywords"] and visible is False:
+            # App Store search shows a page for its keywords only once it's approved and visible
+            if dry:
+                visible = "no (would make it visible)"
+            else:
+                done = a.api("PATCH", f"/v1/appCustomProductPages/{page['id']}", ok=(400, 403, 409, 422),
+                             body=a.resource("appCustomProductPages", page["id"], {"visible": True}))
+                visible = (done.get("data") or {}).get("attributes", {}).get("visible") or "no (Apple refused; the next run retries)"
+        if visible is not None:
+            entry["visible"] = visible
+        if s["keywords"]:
+            entry["keywords"] = assign_all(a, s, page["id"], dry, offered)
+        report.append(entry)
+    print(json.dumps(report, indent=1, ensure_ascii=False))
+    if any("Apple refused" in x for entry in report for x in entry.get("keywords", {}).values()):
+        sys.exit("Apple refused some keywords (above)")
 
 
 if __name__ == "__main__":

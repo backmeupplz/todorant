@@ -58,22 +58,22 @@ for lang in $LANGS; do
       # the test runner won't start on an unfolded Duo: fold it, and unfold it when the test asks (Tour.unfold)
       [ -z "$UNFOLD" ] || "$UNFOLD" -d "$sim" closed > /dev/null
       TEST_RUNNER_API="$API" TEST_RUNNER_TOKEN="$token" TEST_RUNNER_LANG="$lang" TEST_RUNNER_TABS="$(t "$lang" current planning delegate.title settings)" \
-      TEST_RUNNER_FROG="$(./seed.py "$API" "$lang" --frog)" TEST_RUNNER_FROG_LABEL="$(t "$lang" todo.create.frog)" \
+      TEST_RUNNER_FROG="$(./seed.py "$API" "$lang" --frog)" TEST_RUNNER_FROG_LABEL="$(t "$lang" todo.create.frog)" TEST_RUNNER_HOW_TO_USE="$(t "$lang" howToUse)" \
       TEST_RUNNER_ADD_TEXT="$(./seed.py "$API" "$lang" --add)" TEST_RUNNER_PLANNED="$(seeded "$lang" "['tomorrow'][0]")" TEST_RUNNER_TO_ME="$(seeded "$lang" "['to_me']")" \
       TEST_RUNNER_SHOTS="$tmp" TEST_RUNNER_DUO_INNER="${UNFOLD:+1}" \
         xcodebuild test-without-building -scheme Todorant -configuration Release -destination "platform=iOS Simulator,$destination" -derivedDataPath "$DERIVED" \
         -collect-test-diagnostics never -only-testing:UITests/Tour > "$tmp.log" 2>&1 &
-      # xcodebuild now and then hangs after the test is done: five shots or 15 minutes end it
+      # xcodebuild now and then hangs after the test is done: six shots or 15 minutes end it
       pid=$! waited=0
       while kill -0 $pid 2>/dev/null && [ $waited -lt 900 ]; do
-        [ "$(ls "$tmp" 2>/dev/null | grep -c '^0[1-5]-')" = 5 ] && { sleep 10; break; }
+        [ "$(ls "$tmp" 2>/dev/null | grep -c '^0[1-6]-')" = 6 ] && { sleep 10; break; }
         [ -e "$tmp/unfold" ] && "$UNFOLD" -d "$sim" flat > /dev/null && rm "$tmp/unfold"
         sleep 3; waited=$((waited + 3))
       done
       kill $pid 2>/dev/null || true
       grep -E 'error:|TEST EXECUTE SUCC|TEST EXECUTE FAIL|TEST SUCC|TEST FAIL' "$tmp.log" || true
       cp "$tmp"/0*.png "$out/" 2>/dev/null || true
-      [ "$(ls "$out" | grep -c '^0[1-5]-')" = 5 ] && break
+      [ "$(ls "$out" | grep -c '^0[1-6]-')" = 6 ] && break
       echo "$lang $device attempt $attempt FAILED"
     done
     echo "$lang $device: $(ls "$out" | tr '\n' ' ')"
