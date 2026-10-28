@@ -104,12 +104,15 @@ def wrap(text, font, width):
 
 
 def upload(a, localization, display, files):
-    """Makes the page's set for this display exactly these files (same steps as listings.py upload_screenshots)."""
+    """Makes the page's set for this display exactly these files (same steps as listings.py upload_screenshots).
+    Returns whether Apple has processed them all; one still processing is left for the next run."""
     sets = {x["attributes"]["screenshotDisplayType"]: x for x in a.data("GET", f"/v1/appCustomProductPageLocalizations/{localization}/appScreenshotSets")}
     if display in sets:
         old = a.data("GET", f"/v1/appScreenshotSets/{sets[display]['id']}/appScreenshots")
         if [x["attributes"].get("sourceFileChecksum") for x in old] == [hashlib.md5(open(f, "rb").read()).hexdigest() for f in files]:
-            return
+            states = [(x["attributes"].get("assetDeliveryState") or {}).get("state") for x in old]
+            if "FAILED" not in states:
+                return all(x == "COMPLETE" for x in states)
         for x in old:
             a.api("DELETE", f"/v1/appScreenshots/{x['id']}")
         shot_set = sets[display]["id"]
@@ -124,14 +127,15 @@ def upload(a, localization, display, files):
             urllib.request.urlopen(urllib.request.Request(op["url"], raw[op["offset"]:op["offset"] + op["length"]], method=op["method"],
                                    headers={x["name"]: x["value"] for x in op.get("requestHeaders", [])}), timeout=300).read()
         a.data("PATCH", f"/v1/appScreenshots/{shot['id']}", body=a.resource("appScreenshots", shot["id"], {"uploaded": True, "sourceFileChecksum": hashlib.md5(raw).hexdigest()}))
-    for _ in range(60):
+    for _ in range(90):
         states = [(x["attributes"].get("assetDeliveryState") or {}).get("state") for x in a.data("GET", f"/v1/appScreenshotSets/{shot_set}/appScreenshots")]
         if "FAILED" in states:
             sys.exit(f"Apple couldn't process a screenshot: {states}")
         if all(x == "COMPLETE" for x in states):
-            return
+            return True
         time.sleep(10)
-    sys.exit("The screenshots weren't processed within 10 minutes")
+    print(f"  {display}: Apple is still processing the screenshots ({states}); the next run submits the page")
+    return False
 
 
 def submit(a, version):
@@ -174,9 +178,13 @@ def sync(dry):
             if loc["attributes"].get("promotionalText") != s["promo"]:
                 a.data("PATCH", f"/v1/appCustomProductPageLocalizations/{loc['id']}", body=a.resource("appCustomProductPageLocalizations", loc["id"], {"promotionalText": s["promo"]}))
             with tempfile.TemporaryDirectory() as tmp:
-                for display, files in render(s, tmp).items():
-                    upload(a, loc["id"], display, files)
-            state = "WAITING_FOR_REVIEW" if submit(a, version["id"]) else f"{state} (review not started: another submission is open; the next run sends it)"
+                ready = all([upload(a, loc["id"], display, files) for display, files in render(s, tmp).items()])
+            if not ready:
+                state = f"{state} (screenshots still processing; the next run sends it to review)"
+            elif submit(a, version["id"]):
+                state = "WAITING_FOR_REVIEW"
+            else:
+                state = f"{state} (review not started: another submission is open; the next run sends it)"
         report.append({"id": s["id"], "name": s["name"], "page": page["id"], "url": page["attributes"].get("url"), "state": state})
     print(json.dumps(report, indent=1))
 
