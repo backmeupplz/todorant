@@ -10,7 +10,7 @@ Beat procrastination for good
 Give every todo a date, do one task at a time and eat the frog first. Todorant speaks 22 languages and syncs in real time between your iPhone, iPad and the web.
 
 ## Keywords (max 100)
-todo,tasks,eat the frog,focus,productivity,adhd,daily,organiser,checklist,reminder,schedule,widget
+todo,task,eat,frog,focus,productivity,adhd,daily,organiser,checklist,reminder,schedule,widget,sync
 
 ## Description (max 4000)
 Productivity systems fail. Todorant works.

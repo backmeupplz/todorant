@@ -10,7 +10,7 @@ Agenda dan jadwal anti menunda
 Beri setiap tugas tanggal, kerjakan satu per satu, dan makan kataknya lebih dulu. Todorant hadir dalam 22 bahasa dan sinkron real-time antara iPhone, iPad, dan web.
 
 ## Keywords (max 100)
-pengingat,catatan,rencana,produktivitas,fokus,manajemen waktu,kerja,kuliah,sekolah,katak,gratis
+pengingat,catatan,rencana,produktivitas,fokus,manajemen waktu,kerja,kuliah,sekolah,katak,prioritas
 
 ## Description (max 4000)
 Sistem produktivitas sering gagal, tapi Todorant berhasil.

@@ -10,7 +10,7 @@ Danh sách và quản lý công việc
 Gắn ngày cho mọi việc, làm từng việc một và ăn con ếch trước tiên. Todorant có 22 ngôn ngữ và đồng bộ theo thời gian thực giữa iPhone, iPad và web.
 
 ## Keywords (max 100)
-trì hoãn,kế hoạch,hàng ngày,nhắc,ghi chú,năng suất,tập trung,lịch,ếch,học tập,thời gian,miễn phí
+trì hoãn,kế hoạch,hàng ngày,nhắc,ghi chú,năng suất,tập trung,lịch,ếch,học tập,thời gian,nhở,bài
 
 ## Description (max 4000)
 Các hệ thống năng suất thường thất bại, còn Todorant thì hiệu quả.

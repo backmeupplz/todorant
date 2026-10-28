@@ -10,7 +10,7 @@ Planering utan prokrastinering
 Ge varje uppgift ett datum, gör en sak i taget och ät grodan först. Todorant finns på 22 språk och synkar i realtid mellan din iPhone, iPad och webben.
 
 ## Keywords (max 100)
-uppgifter,planerare,påminnelser,checklista,produktivitet,fokus,schema,daglig,kalender,groda,gratis
+uppgifter,planerare,påminnelser,checklista,produktivitet,fokus,schema,daglig,kalender,groda,svenska
 
 ## Description (max 4000)
 Produktivitetssystem misslyckas, men Todorant fungerar.
