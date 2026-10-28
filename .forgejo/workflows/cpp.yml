@@ -1,0 +1,46 @@
+# Custom product pages for ad variants (appstore/cpp.py): each appstore/cpp/<id>.md is one page with its own captioned
+# screenshots, rendered here from ios/screenshots/en. A push that adds or changes a spec creates the missing pages and
+# sends them to App Review; the daily run sends any page whose review couldn't start earlier (another submission was
+# open). Radiant (prime-radiant) adds a page as an ad in Apple Search Ads once Apple approves it, and queues new
+# challengers as pull requests that add a spec here. Run by hand (Actions → Ad pages) in dry-run to see the state.
+name: Ad pages
+on:
+  push:
+    branches: [main]
+    paths: ['appstore/cpp/**', 'appstore/cpp.py', '.forgejo/workflows/cpp.yml']
+  schedule:
+    - cron: '40 6 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: dry-run or send
+        type: choice
+        options: [dry-run, send]
+        default: dry-run
+permissions:
+  contents: read
+concurrency:
+  group: cpp  # not `release`: a queued run there replaces the waiting one, and this must never drop a release
+  cancel-in-progress: false
+env:
+  DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.mode != 'send' && '--dry-run' || '' }}
+  APP_STORE_APP_ID: '1482078243'
+  ASC_KEY_ID: 3FT23S9NSM
+  ASC_ISSUER_ID: a18f42ff-6c44-410c-badf-50b11de8dbb8
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Render and send
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          [ -n "$ASC_KEY_P8" ] || { echo "::error::No ASC_KEY_P8 secret"; exit 1; }
+          python3 -m venv /tmp/venv && /tmp/venv/bin/pip -q install 'pillow>=10,<14'
+          for spec in appstore/cpp/*.md; do /tmp/venv/bin/python appstore/cpp.py render "$spec" "/tmp/render/$(basename "$spec" .md)" >/dev/null; done
+          keys=$(mktemp -d)
+          trap 'rm -rf "$keys"' EXIT
+          printf '%s\n' "$ASC_KEY_P8" > "$keys/AuthKey_$ASC_KEY_ID.p8"
+          API_PRIVATE_KEYS_DIR="$keys" /tmp/venv/bin/python appstore/cpp.py sync $DRY
