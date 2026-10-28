@@ -4,8 +4,8 @@ page's, so each angle Radiant tests (prime-radiant experiments/2026-10-28-todora
 
 One spec per page: appstore/cpp/<id>.md, with sections "## Name" (the page's name in App Store Connect),
 "## Promotional text" and "## Screenshots", one "<screenshot>: <caption>" line per screenshot in order, where
-<screenshot> is a file in ios/screenshots/en/iphone-6.9 (and ipad-13). The screenshots are rendered here, on the fly:
-the caption on Todorant's orange, above the whole, unclipped screenshot.
+<screenshot> is a raw screenshot in appstore/cpp/shots/iphone-6.9 (and ipad-13), taken by ios/tour.sh. The screenshots
+are rendered here, on the fly: the caption on Todorant's orange, above the whole, unclipped screenshot.
 
   cpp.py render <spec.md> <out dir>     renders iphone-*.png (1320x2868) and ipad-*.png (2064x2752)
   cpp.py sync [--dry-run]               for every spec: creates the page in App Store Connect if it's missing (en-US
@@ -18,9 +18,9 @@ import glob, hashlib, json, os, re, sys, tempfile, time, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-SHOTS = os.path.join(ROOT, "ios", "screenshots", "en")
+SHOTS = os.path.join(HERE, "cpp", "shots")  # the raw English screenshots from ios/tour.sh, kept here since the store set is framed
 FONT = os.path.join(HERE, "cpp", "Inter-ExtraBold.ttf")
-# display type -> (folder in ios/screenshots/en, canvas size)
+# display type -> (folder in appstore/cpp/shots, canvas size)
 DISPLAYS = {"APP_IPHONE_67": ("iphone-6.9", (1320, 2868)), "APP_IPAD_PRO_3GEN_129": ("ipad-13", (2064, 2752))}
 ORANGE = ((255, 95, 19), (255, 138, 83))  # todorant.com's gradient, top to bottom
 REVIEWED = {"WAITING_FOR_REVIEW", "IN_REVIEW", "ACCEPTED", "APPROVED", "REPLACED_WITH_NEW_VERSION"}
