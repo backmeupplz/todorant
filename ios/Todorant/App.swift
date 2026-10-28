@@ -52,7 +52,7 @@ final class Clock {
 
 /// Narrowest window that gets the add screen as a column next to the tabs: an unfolded iPhone Duo (669 pt) or any iPad
 private let INLINE_EDITOR_MIN_WIDTH: CGFloat = 600
-/// The column takes half the window up to this width, so on the Duo it ends at the hinge in the middle
+/// The column takes half the window up to this width, so on the Duo it starts at the middle, where a hinge would be
 private let INLINE_EDITOR_MAX_WIDTH: CGFloat = 440
 
 struct RootView: View {
@@ -99,7 +99,8 @@ struct RootView: View {
             .ignoresSafeArea(.keyboard)
             if nav.editorInline, let draft = nav.draft {
                 Rectangle().fill(Colors.border).frame(width: 1).ignoresSafeArea()
-                // TODO(#212): on iOS 27.1, UIView.reservedRegions(kind: .division) gives the hinge; the half-width column already ends there
+                // A fold's hinge is iOS 27.1's UIView.reservedRegions(kind: .division), not probed on the unfolded Duo (its cover display,
+                // too narrow for this column, reports only occlusions the safe area clears). A hinge down the middle falls on the divider
                 AddTodoScreen(draft: draft, inline: true)
                     .frame(width: min(width / 2, INLINE_EDITOR_MAX_WIDTH))
                     .id(ObjectIdentifier(draft))

@@ -1,0 +1,1 @@
+Todorant now speaks 22 languages, including Arabic laid out right to left, and follows your device's language unless you pick another one in Settings.
