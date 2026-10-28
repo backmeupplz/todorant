@@ -30,7 +30,7 @@ env:
 jobs:
   pages:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120  # Apple's screenshot uploads and processing can take a while; a cut-off run resumes the next day
     steps:
       - uses: actions/checkout@v7
       - name: Render and send
@@ -43,4 +43,4 @@ jobs:
           keys=$(mktemp -d)
           trap 'rm -rf "$keys"' EXIT
           printf '%s\n' "$ASC_KEY_P8" > "$keys/AuthKey_$ASC_KEY_ID.p8"
-          API_PRIVATE_KEYS_DIR="$keys" /tmp/venv/bin/python appstore/cpp.py sync $DRY
+          API_PRIVATE_KEYS_DIR="$keys" /tmp/venv/bin/python -u appstore/cpp.py sync $DRY
