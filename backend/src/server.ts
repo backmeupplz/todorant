@@ -13,6 +13,7 @@ import { app } from '@/app'
 import { attachWebSocket } from '@/v2/ws'
 import { bot } from '@/helpers/telegram'
 import { ensureIndexes } from '@/v2/indexes'
+import { promo } from '@/helpers/telegram/helpers/promo'
 import { runMongo } from '@/models/index'
 import { socketServer } from '@/sockets/io'
 
@@ -55,9 +56,17 @@ socketServer.listen(3000).on('listening', () => {
 })
 // Start telegram bot
 if (process.env.TELEGRAM_LOGIN_TOKEN) {
-  bot.launch().then(() => {
-    console.log('@todorant_bot launched')
-  })
+  // my_chat_member listed explicitly: blocks count as harm for promos
+  bot
+    .launch({
+      polling: {
+        allowedUpdates: ['message', 'callback_query', 'my_chat_member'],
+      },
+    } as Parameters<typeof bot.launch>[0])
+    .then(() => {
+      console.log('@todorant_bot launched')
+    })
+  promo.start()
 } else {
   console.log('Telegram bot disabled: set TELEGRAM_LOGIN_TOKEN')
 }
@@ -66,6 +75,7 @@ if (process.env.TELEGRAM_LOGIN_TOKEN) {
 GracefulShutdown(app, {
   onShutdown: async () => {
     await bot.stop()
+    await promo.stop()
     return new Promise((res) => {
       socketServer.close(() => {
         res()

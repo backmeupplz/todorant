@@ -74,5 +74,5 @@ jobs:
             kill -0 $mongod 2>/dev/null || { cat "$RUNNER_TEMP/mongod.log"; exit 1; }
             sleep 0.1
           done
-          TEST_MONGO=mongodb://127.0.0.1:$port yarn -s jest --forceExit src/__tests__/v2.ts src/__tests__/appleAuthKey.ts & jest=$!
+          TEST_MONGO=mongodb://127.0.0.1:$port yarn -s jest --forceExit src/__tests__/v2.ts src/__tests__/appleAuthKey.ts src/__tests__/promo.ts & jest=$!
           for job in $prettier $eslint $tsc $jest; do wait $job || exit 1; done

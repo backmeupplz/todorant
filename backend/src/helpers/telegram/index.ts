@@ -19,6 +19,7 @@ import { handleText } from '@/helpers/telegram/helpers/handleText'
 import { handleTimezone } from '@/helpers/telegram/commands/timezone'
 import { handleVoice } from '@/helpers/telegram/helpers/handleVoice'
 import { handleZen } from '@/helpers/telegram/commands/zen'
+import { promoUpdates, promoUse } from '@/helpers/telegram/helpers/promo'
 import { sendHelp } from '@/helpers/telegram/commands/help'
 import { sendLogin } from '@/helpers/telegram/commands/login'
 import { sendQR } from '@/helpers/telegram/commands/qr'
@@ -27,10 +28,13 @@ import Telegraf from 'telegraf'
 
 // Create bot
 export const bot = new Telegraf(process.env.TELEGRAM_LOGIN_TOKEN)
+// Promo reports: blocks and campaign arrivals (helpers/promo.ts)
+bot.use(promoUpdates)
 // Check if the message needs to be handled
 bot.use(checkIfPrivate)
 bot.use(checkTime)
 bot.use(checkAndAttachUser)
+bot.use(promoUse)
 // Setup i18n
 setupI18N(bot)
 // Check if the language keyboard is pressed
