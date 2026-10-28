@@ -37,4 +37,10 @@ class TranslationsTest {
             }
         }
     }
+
+    /** A double-escaped line break ("\\n" in the JSON) shows up on screen as a literal backslash-n */
+    @Test
+    fun noLiteralLineBreaks() {
+        for (lang in I18n.languages) for ((key, value) in load(lang)) assertTrue("$lang $key has a literal \\n", "\\n" !in value)
+    }
 }

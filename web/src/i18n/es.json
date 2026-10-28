@@ -35,7 +35,7 @@
   },
   "loginMobile": {
     "telegram": {
-      "headline": "Por favor inicia sesión con Telegram introduciendo tu ID de Telegram en el campo que se encuentra debajo y haciendo clic en el botón de \"Iniciar sesión\". Puedes obtener tu ID de Telegram enviando <code>/id</code> al bot <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a>.",
+      "headline": "Por favor inicia sesión con Telegram introduciendo tu ID de Telegram en el campo que se encuentra debajo y haciendo clic en el botón de \"Iniciar sesión\". Puedes obtener tu ID de Telegram enviando <code>/id</code> al bot <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a>. O simplemente envía <code>/qr</code> a <a href=\"https://t.me/todorant_bot\" target=\"_blank\">@todorant_bot</a> y escanéalo en la sección de inicio de sesión con QR.",
       "id": "123456789",
       "idHint": "ID de Telegram",
       "loginButton": "Iniciar sesión",
