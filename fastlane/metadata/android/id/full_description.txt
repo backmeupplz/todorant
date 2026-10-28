@@ -1,0 +1,16 @@
+Todorant adalah daftar tugas, pengelola tugas, dan perencana harian yang memakai psikologi perilaku untuk membantumu menyelesaikan pekerjaan. Sebagian besar aplikasi produktivitas jago menyimpan, mengatur, dan mengotomatiskan daftar tugas yang tak ada habisnya, dan justru di situlah mereka mengecewakanmu, karena daftar yang terus memanjang tidak menyelesaikan apa pun. Todorant hanya peduli pada satu hal yang penting, yaitu menuntaskan apa yang sudah kamu rencanakan.
+
+Caranya dengan empat aturan sederhana, didukung perpaduan batasan dan pujian yang ditakar dengan cermat sehingga setiap tugas yang selesai terasa memuaskan:
+
+<ul>
+<li><b>Fokus pada satu tugas dalam satu waktu.</b> Layar Sekarang hanya menampilkan tugas yang harus kamu kerjakan saat ini.</li>
+<li><b>Selalu beri tugas tanggal atau bulan.</b> Setiap tugas punya tempatnya dalam waktu, jadi tidak ada yang terbengkalai di daftar selamanya.</li>
+<li><b>Selesaikan tugas yang tidak menyenangkan lebih dulu.</b> Tugas yang kamu hindari ditandai sebagai katak dan didahulukan dari semua tugas lain di harinya, jadi kamu memakan katak itu selagi tekadmu masih segar dan kebiasaan menunda-nunda tidak sempat muncul.</li>
+<li><b>Jaga kotak masuk tetap kosong.</b> Tugas yang terlambat harus direncanakan ulang sebelum kamu bisa kembali bekerja.</li>
+</ul>
+
+Tugas-tugasmu tersinkron secara real-time antara perangkatmu dan todorant.com, tetap berjalan saat offline, dan bisa dienkripsi end-to-end dengan kata sandi pilihanmu. Dengan delegasi, kamu bisa menyerahkan tugas kepada teman dan rekan kerja serta menerima tugas yang mereka serahkan kepadamu, tagar dan epik mengelompokkan pekerjaan yang saling berkaitan, dan laporan menampilkan semua yang sudah kamu selesaikan. Widget layar utama menjaga tugasmu saat ini tetap terlihat, pengingat harian memberi tahu kapan saatnya merencanakan, dan aplikasi ini tersedia dalam 22 bahasa, mengikuti bahasa perangkatmu, serta punya mode gelap.
+
+Kamu bisa memakai Todorant tanpa akun dan menyimpan semuanya di ponselmu, atau masuk dengan email dan kata sandi, dengan Apple, dengan Telegram, atau dengan kode QR dari todorant.com. Kalau kamu lebih suka menyimpan datamu di mesinmu sendiri, kamu bisa menjalankan server Todorant sendiri dalam beberapa menit dan mengarahkan aplikasi ke server itu dari pengaturan.
+
+Todorant gratis, tanpa iklan dan tanpa langganan.

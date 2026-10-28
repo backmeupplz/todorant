@@ -1,0 +1,16 @@
+Todorant est une liste de tâches, un gestionnaire de tâches et un planificateur quotidien qui s'appuie sur la psychologie comportementale pour vous aider à aller au bout de ce que vous entreprenez. La plupart des applis de productivité excellent à stocker, organiser et automatiser des listes de tâches sans fin, et c'est précisément là qu'elles vous lâchent, car une liste qui ne cesse de s'allonger ne fait rien avancer. Todorant se concentre sur la seule chose qui compte : terminer ce que vous avez prévu.
+
+Pour cela, il repose sur quatre règles simples, soutenues par un savant dosage de limites et d'encouragements qui rend chaque tâche terminée gratifiante :
+
+<ul>
+<li><b>Faites une seule tâche à la fois.</b> L'écran « En cours » n'affiche que la tâche sur laquelle vous devriez travailler maintenant.</li>
+<li><b>Donnez toujours une date ou un mois à une tâche.</b> Chaque tâche trouve sa place dans le temps, et rien ne traîne éternellement dans une liste.</li>
+<li><b>Faites d'abord les tâches désagréables.</b> Les tâches que vous redoutez sont marquées comme grenouilles et passent avant tout le reste ce jour-là, pour que vous mangiez la grenouille pendant que votre volonté est intacte et que la procrastination n'ait aucune prise.</li>
+<li><b>Gardez votre boîte de réception vide.</b> Les tâches en retard doivent être replanifiées avant que vous puissiez reprendre le travail.</li>
+</ul>
+
+Vos tâches se synchronisent en temps réel entre vos appareils et todorant.com, fonctionnent hors ligne et peuvent être chiffrées de bout en bout avec le mot de passe de votre choix. La délégation vous permet de confier des tâches à vos amis et collègues et d'accepter celles qu'ils vous confient, les hashtags et les épopées regroupent le travail lié, et les rapports montrent tout ce que vous avez accompli. Un widget d'écran d'accueil garde votre tâche en cours sous les yeux, un rappel quotidien vous dit quand il est temps de planifier, et l'appli parle 22 langues, suit la langue de votre appareil et propose un mode sombre.
+
+Vous pouvez utiliser Todorant sans compte et tout garder sur votre téléphone, ou vous connecter avec une adresse e-mail et un mot de passe, avec Apple, avec Telegram ou avec un QR code depuis todorant.com. Si vous préférez garder vos données sur votre propre machine, vous pouvez lancer votre propre serveur Todorant en quelques minutes et y connecter l'appli depuis les réglages.
+
+Todorant est gratuit, sans publicité ni abonnement.

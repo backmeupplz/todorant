@@ -1,0 +1,14 @@
+O Todorant é uma lista de tarefas, um gerenciador de tarefas e um planner diário que usa a psicologia comportamental para ajudar você a fazer o que precisa ser feito. A maioria dos apps de produtividade é ótima para guardar, organizar e automatizar listas intermináveis de tarefas, e é justamente aí que eles deixam você na mão, porque uma lista que só cresce não resolve nada. O Todorant se preocupa com a única coisa que importa, que é terminar o que você planejou.
+
+Ele faz isso com quatro regras simples, apoiadas por um conjunto bem calibrado de limites e elogios que torna gostoso concluir cada tarefa:
+
+<ul>
+<li><b>Foque em uma tarefa de cada vez.</b> A tela Atual mostra só a tarefa que você deve fazer agora.</li>
+<li><b>Sempre dê uma data ou um mês para cada tarefa.</b> Toda tarefa ganha seu lugar no tempo, e nada fica parado numa lista para sempre.</li>
+<li><b>Faça primeiro as tarefas desagradáveis.</b> As tarefas que você vive adiando são marcadas como sapos e vêm antes de todo o resto no dia delas, para você engolir o sapo enquanto a força de vontade ainda está em alta e a procrastinação não ganhe espaço.</li>
+<li><b>Mantenha a caixa de entrada vazia.</b> Tarefas atrasadas precisam ser replanejadas antes de você voltar ao trabalho.</li>
+</ul>
+
+Suas tarefas são sincronizadas em tempo real entre seus aparelhos e o todorant.com, continuam funcionando offline e podem ter criptografia de ponta a ponta com uma senha que você escolhe. Com a atribuição, você passa tarefas para amigos e colegas e aceita as que eles passam para você; hashtags e épicos agrupam trabalhos relacionados, e os relatórios mostram tudo o que você já fez. Um widget na tela inicial deixa a tarefa atual sempre à vista, um lembrete diário avisa quando é hora de planejar o dia, e o app fala 22 idiomas, acompanha o idioma do seu aparelho e tem modo escuro.
+
+Você pode usar o Todorant sem conta e manter tudo no celular, ou entrar com e-mail e senha, com a Apple, com o Telegram ou com um QR code do todorant.com. Se preferir guardar seus dados na sua própria máquina, dá para rodar seu próprio servidor do Todorant em poucos minutos e apontar o app para ele nas configurações. O Todorant é gratuito, sem anúncios e sem assinaturas, e também funciona no iPhone, no iPad e na web.

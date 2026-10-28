@@ -1,0 +1,16 @@
+Todorant là ứng dụng danh sách việc cần làm, quản lý công việc và lập kế hoạch hằng ngày, dựa trên tâm lý học hành vi để giúp bạn hoàn thành công việc. Phần lớn ứng dụng năng suất rất giỏi lưu trữ, sắp xếp và tự động hóa những danh sách việc dài vô tận, và đó chính là chỗ chúng làm bạn thất vọng, vì một danh sách cứ dài thêm mãi thì chẳng giúp việc gì xong cả. Todorant chỉ quan tâm đến một điều quan trọng duy nhất, đó là hoàn thành những gì bạn đã lên kế hoạch.
+
+Todorant làm điều đó bằng bốn quy tắc đơn giản, cùng sự kết hợp được cân chỉnh kỹ lưỡng giữa giới hạn và lời khen khiến mỗi việc làm xong đều thật đáng công:
+
+<ul>
+<li><b>Tập trung vào từng việc một.</b> Màn hình Hiện tại chỉ hiển thị việc bạn nên làm ngay lúc này.</li>
+<li><b>Luôn gắn ngày hoặc tháng cho mỗi việc.</b> Việc nào cũng có chỗ của nó trên dòng thời gian, nên không có gì nằm mãi trong danh sách.</li>
+<li><b>Làm những việc khó chịu trước.</b> Những việc bạn ngại được đánh dấu là ếch và luôn đứng trước mọi việc khác trong ngày, để bạn ăn con ếch khi ý chí còn sung mãn và thói trì hoãn không có chỗ bám rễ.</li>
+<li><b>Giữ hộp thư đến luôn trống.</b> Những việc quá hạn phải được lên kế hoạch lại trước khi bạn tiếp tục làm việc.</li>
+</ul>
+
+Các việc của bạn được đồng bộ theo thời gian thực giữa các thiết bị và todorant.com, vẫn dùng được khi ngoại tuyến và có thể được mã hóa đầu cuối bằng mật khẩu do bạn chọn. Tính năng giao việc cho phép bạn chuyển việc cho bạn bè, đồng nghiệp và nhận những việc họ giao cho bạn, hashtag và epic gom các việc liên quan lại với nhau, còn báo cáo cho bạn thấy mọi việc đã làm xong. Tiện ích màn hình chính giúp việc hiện tại luôn trong tầm mắt, lời nhắc hằng ngày báo cho bạn khi đến giờ lên kế hoạch, và ứng dụng có 22 ngôn ngữ, theo ngôn ngữ của thiết bị và có chế độ tối.
+
+Bạn có thể dùng Todorant mà không cần tài khoản và giữ mọi thứ trên điện thoại, hoặc đăng nhập bằng email và mật khẩu, bằng Apple, bằng Telegram hoặc bằng mã QR từ todorant.com. Nếu muốn giữ dữ liệu trên máy của riêng mình, bạn có thể tự chạy máy chủ Todorant trong vài phút rồi trỏ ứng dụng về máy chủ đó trong phần cài đặt.
+
+Todorant miễn phí, không quảng cáo và không có gói thuê bao.

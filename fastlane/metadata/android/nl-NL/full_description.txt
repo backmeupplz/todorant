@@ -1,0 +1,14 @@
+Todorant is een takenlijst, taakbeheerder en dagplanner die gedragspsychologie gebruikt om je te helpen dingen echt af te krijgen. De meeste productiviteitsapps zijn heel goed in het bewaren, ordenen en automatiseren van eindeloze lijsten met taken, en precies daar laten ze je in de steek, want een lijst die alleen maar groeit krijgt niets gedaan. Todorant geeft om het enige dat ertoe doet, en dat is afmaken wat je hebt gepland.
+
+Dat doet de app met vier eenvoudige regels, ondersteund door een zorgvuldig afgestemde mix van grenzen en complimenten die het afvinken van taken echt belonend maakt:
+
+<ul>
+<li><b>Focus op één taak tegelijk.</b> Het scherm Nu laat alleen de taak zien die je op dit moment hoort te doen.</li>
+<li><b>Geef elke taak een datum of een maand.</b> Elke taak krijgt zijn plek in de tijd, zodat niets eindeloos op een lijst blijft staan.</li>
+<li><b>Doe onaangename taken eerst.</b> Taken waar je tegen opziet, markeer je als kikker en die komen op hun dag vóór al het andere, zodat je de kikker opeet terwijl je wilskracht nog vers is en uitstelgedrag geen kans krijgt.</li>
+<li><b>Houd je inbox leeg.</b> Verlopen taken moet je opnieuw plannen voordat je weer aan het werk kunt.</li>
+</ul>
+
+Je taken synchroniseren in realtime tussen je apparaten en todorant.com, blijven offline werken en kunnen end-to-end versleuteld worden met een wachtwoord dat je zelf kiest. Met delegeren geef je taken aan vrienden en collega's en neem je de taken aan die zij aan jou geven, hashtags en epics groeperen werk dat bij elkaar hoort en rapporten laten zien wat je allemaal hebt gedaan. Een widget op je beginscherm houdt je huidige taak in beeld, een dagelijkse herinnering laat weten wanneer het tijd is om je dag te plannen, en de app spreekt 22 talen, volgt de taal van je apparaat en heeft een donkere modus.
+
+Je kunt Todorant zonder account gebruiken en alles op je telefoon houden, of inloggen met e-mail en wachtwoord, met Apple, met Telegram of met een QR-code van todorant.com. Wil je je gegevens liever op je eigen machine bewaren, dan draai je in een paar minuten je eigen Todorant-server en wijs je de app daar in de instellingen naartoe. Todorant is gratis, zonder advertenties en zonder abonnementen, en werkt ook op iPhone, iPad en het web.

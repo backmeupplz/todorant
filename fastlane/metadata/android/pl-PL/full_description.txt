@@ -1,0 +1,14 @@
+Todorant to lista zadań, menedżer zadań i planer dnia, który wykorzystuje psychologię behawioralną, żeby pomóc ci doprowadzać sprawy do końca. Większość aplikacji do produktywności świetnie przechowuje, porządkuje i automatyzuje niekończące się listy zadań, i właśnie w tym miejscu cię zawodzi, bo lista, która ciągle rośnie, niczego za ciebie nie zrobi. Todorant dba o jedyną rzecz, która naprawdę się liczy: żeby to, co zaplanowane, zostało zrobione.
+
+Pomagają w tym cztery proste zasady, a starannie dobrane ograniczenia i pochwały sprawiają, że kończenie zadań daje satysfakcję:
+
+<ul>
+<li><b>Skup się na jednym zadaniu naraz.</b> Ekran Bieżące pokazuje tylko to zadanie, którym warto zająć się teraz.</li>
+<li><b>Zawsze dodawaj do zadania datę albo miesiąc.</b> Każde zadanie dostaje swoje miejsce w czasie, więc nic nie leży na liście w nieskończoność.</li>
+<li><b>Najpierw rób nieprzyjemne zadania.</b> Zadania, których się boisz, oznaczasz jako żaby, a one trafiają w swoim dniu przed wszystko inne, więc zjadasz żabę, póki siła woli jest świeża, a prokrastynacja nie ma się czego uczepić.</li>
+<li><b>Utrzymuj skrzynkę odbiorczą pustą.</b> Zaległe zadania trzeba zaplanować na nowo, zanim wrócisz do pracy.</li>
+</ul>
+
+Zadania synchronizują się w czasie rzeczywistym między twoimi urządzeniami i todorant.com, działają offline i mogą być szyfrowane end-to-end hasłem, które wybierasz. Delegowanie pozwala przekazywać zadania znajomym i współpracownikom oraz przyjmować te, które oni przekazują tobie, hashtagi i epiki grupują powiązane zadania, a raporty pokazują wszystko, co udało ci się zrobić. Widżet na ekranie głównym trzyma bieżące zadanie na widoku, codzienne przypomnienie mówi, kiedy czas zaplanować dzień, a aplikacja mówi w 22 językach, dopasowuje się do języka urządzenia i ma tryb ciemny.
+
+Z Todoranta możesz korzystać bez konta i trzymać wszystko w telefonie albo zalogować się adresem e-mail i hasłem, przez Apple, przez Telegram lub kodem QR z todorant.com. Jeśli wolisz trzymać dane na własnym sprzęcie, w kilka minut postawisz własny serwer Todoranta i wskażesz go aplikacji w ustawieniach. Todorant działa też na iPhonie, iPadzie i w przeglądarce, jest darmowy, bez reklam i subskrypcji, a jego kod jest otwarty.

@@ -1,0 +1,16 @@
+Todorant är en att göra-lista, uppgiftshanterare och dagsplanerare som använder beteendepsykologi för att hjälpa dig att få saker gjorda. De flesta produktivitetsappar är bra på att lagra, sortera och automatisera oändliga listor med uppgifter, och det är precis där de sviker dig, eftersom en lista som bara växer inte får något gjort. Todorant bryr sig om det enda som spelar roll, nämligen att du gör klart det du har planerat.
+
+Det gör den med fyra enkla regler, med stöd av en noga avvägd blandning av begränsningar och beröm som gör det belönande att bocka av uppgifter:
+
+<ul>
+<li><b>Fokusera på en uppgift i taget.</b> Skärmen Aktuellt visar bara den uppgift du ska göra just nu.</li>
+<li><b>Ge alltid uppgiften ett datum eller en månad.</b> Varje uppgift får sin plats i tiden, så ingenting blir liggande på en lista för evigt.</li>
+<li><b>Gör de obehagliga uppgifterna först.</b> Uppgifter du drar dig för markeras som grodor och kommer före allt annat på sin dag, så att du äter grodan medan viljestyrkan är på topp och prokrastineringen aldrig får fäste.</li>
+<li><b>Håll inkorgen tom.</b> Försenade uppgifter måste planeras om innan du kan fortsätta arbeta.</li>
+</ul>
+
+Dina uppgifter synkas i realtid mellan dina enheter och todorant.com, fungerar offline och kan end-to-end-krypteras med ett lösenord som du väljer. Med delegering kan du lämna över uppgifter till vänner och kollegor och ta emot dem som de lämnar till dig, hashtaggar och epos samlar det som hör ihop, och rapporter visar allt du har gjort. En widget på hemskärmen håller din aktuella uppgift i sikte, en daglig påminnelse säger till när det är dags att planera, och appen finns på 22 språk, följer enhetens språk och har ett mörkt läge.
+
+Du kan använda Todorant utan konto och ha allt kvar i telefonen, eller logga in med e-post och lösenord, med Apple, med Telegram eller med en QR-kod från todorant.com. Om du hellre vill ha dina data på din egen maskin kan du köra en egen Todorant-server på ett par minuter och peka appen mot den i inställningarna.
+
+Todorant är gratis, utan reklam och utan prenumerationer.

@@ -160,6 +160,10 @@ jobs:
       - name: Archive, sign and upload
         if: env.IOS
         run: ios/release.sh "$VERSION" "$CODE" ${{ env.MODE == 'dry-run' && '--no-upload' || '' }}
+      # Every locale's name, texts and screenshots from appstore/ go on the version first, so What's New finds them all
+      - name: App Store listing
+        if: env.IOS && env.MODE != 'testflight-only'
+        run: python3 .github/scripts/listings.py appstore --version "$VERSION" ${{ env.MODE == 'dry-run' && '--dry-run' || '' }}
       - name: App Review
         if: env.IOS && env.MODE != 'testflight-only'
         run: python3 .github/scripts/appstore.py "$VERSION" "$CODE" "$NOTES_DIR/$CODE.txt" ${{ env.MODE == 'dry-run' && '--dry-run' || '' }}

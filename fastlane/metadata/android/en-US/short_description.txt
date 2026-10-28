@@ -1,1 +1,1 @@
-A todo app built on behavioral psychology: one task at a time, frogs first.
+A to-do list and daily planner that beats procrastination, one task at a time.

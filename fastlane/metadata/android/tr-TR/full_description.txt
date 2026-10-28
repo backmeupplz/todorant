@@ -1,0 +1,14 @@
+Todorant, işlerini bitirmene yardım etmek için davranış psikolojisinden yararlanan bir yapılacaklar listesi, görev yöneticisi ve günlük planlayıcıdır. Çoğu verimlilik uygulaması sonu gelmeyen görev listelerini saklamakta, düzenlemekte ve otomatikleştirmekte çok başarılıdır ve seni tam da burada yüzüstü bırakır, çünkü sürekli büyüyen bir liste hiçbir işi bitirmez. Todorant önemli olan tek şeyle, yani planladıklarını bitirmenle ilgilenir.
+
+Bunu dört basit kuralla yapar; özenle ayarlanmış sınırlar ve övgüler de görev bitirmeyi keyifli hale getirir:
+
+<ul>
+<li><b>Aynı anda tek bir göreve odaklan.</b> Şimdi ekranı yalnızca şu anda yapman gereken görevi gösterir.</li>
+<li><b>Her göreve bir tarih ya da ay ver.</b> Her görev zamanda kendi yerini alır, böylece hiçbir şey bir listede sonsuza dek beklemez.</li>
+<li><b>Hoş olmayan görevleri önce yap.</b> Gözünün korktuğu görevler kurbağa olarak işaretlenir ve o gün her şeyden önce gelir; böylece kurbağayı irade gücün henüz tazeyken yersin ve erteleme alışkanlığına yer kalmaz.</li>
+<li><b>Gelen kutunu boş tut.</b> Süresi geçmiş görevleri işe dönmeden önce yeniden planlaman gerekir.</li>
+</ul>
+
+Görevlerin cihazların ve todorant.com arasında gerçek zamanlı olarak eşitlenir, çevrimdışı çalışır ve seçtiğin bir parolayla uçtan uca şifrelenebilir. Görev devri sayesinde görevleri arkadaşlarına ve iş arkadaşlarına devredebilir, sana devredilenleri kabul edebilirsin; hashtag'ler ve epikler birbiriyle ilgili işleri gruplar, raporlar da yaptığın her şeyi gösterir. Ana ekran widget'ı şimdiki görevini gözünün önünde tutar, günlük hatırlatıcı plan yapma zamanının geldiğini söyler; uygulama 22 dil konuşur, cihazının dilini izler ve karanlık moda sahiptir.
+
+Todorant'ı hesap açmadan kullanıp her şeyi telefonunda tutabilir ya da e-posta ve parolayla, Apple ile, Telegram ile veya todorant.com'daki QR kodla giriş yapabilirsin. Verilerini kendi makinende tutmayı tercih edersen birkaç dakikada kendi Todorant sunucunu kurabilir ve uygulamayı ayarlardan ona yönlendirebilirsin. Todorant iPhone, iPad ve web tarayıcısında da çalışır; ücretsizdir, reklam ve abonelik içermez ve kaynak kodu açıktır.

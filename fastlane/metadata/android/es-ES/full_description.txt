@@ -1,0 +1,16 @@
+Todorant es una lista de tareas, un organizador de tareas y un planificador diario que se apoya en la psicología del comportamiento para ayudarte a sacar adelante lo que te propones. La mayoría de las apps de productividad son estupendas para guardar, ordenar y automatizar listas de tareas interminables, y justo ahí es donde te fallan, porque una lista que no para de crecer no saca nada adelante. A Todorant le importa lo único que cuenta, que es terminar lo que habías planificado.
+
+Lo consigue con cuatro reglas sencillas, respaldadas por una combinación bien medida de límites y elogios que hace que terminar cada tarea resulte gratificante:
+
+<ul>
+<li><b>Céntrate en una sola tarea cada vez.</b> La pantalla «Actual» solo muestra la tarea que deberías estar haciendo ahora mismo.</li>
+<li><b>Ponle siempre una fecha o un mes a cada tarea.</b> Cada tarea tiene su sitio en el tiempo, y nada se queda para siempre en una lista.</li>
+<li><b>Haz primero las tareas desagradables.</b> Las tareas que te dan pereza se marcan como sapos y van antes que todo lo demás en su día, para que te comas el sapo mientras tu fuerza de voluntad sigue fresca y la procrastinación no tenga por dónde entrar.</li>
+<li><b>Mantén la bandeja de entrada vacía.</b> Las tareas atrasadas hay que volver a planificarlas antes de seguir trabajando.</li>
+</ul>
+
+Tus tareas se sincronizan en tiempo real entre tus dispositivos y todorant.com, funcionan sin conexión y puedes cifrarlas de extremo a extremo con la contraseña que elijas. La delegación te permite pasar tareas a amigos y compañeros de trabajo y aceptar las que ellos te pasan, los hashtags y las épicas agrupan el trabajo relacionado, y los informes muestran todo lo que has completado. Un widget en la pantalla de inicio te deja ver siempre tu tarea actual, un recordatorio diario te avisa cuando toca planificar, y la app habla 22 idiomas, sigue el idioma de tu dispositivo y tiene modo oscuro.
+
+Puedes usar Todorant sin cuenta y guardarlo todo en tu móvil, o iniciar sesión con un correo y una contraseña, con Apple, con Telegram o con un código QR de todorant.com. Si prefieres tener tus datos en tu propio ordenador, puedes montar tu propio servidor de Todorant en un par de minutos y conectar la app a él desde los ajustes.
+
+Todorant es gratis, sin anuncios y sin suscripciones.

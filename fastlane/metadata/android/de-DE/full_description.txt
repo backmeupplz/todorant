@@ -1,0 +1,16 @@
+Todorant ist eine To-do-Liste, ein Aufgabenplaner und ein Tagesplaner, der dir mit Verhaltenspsychologie hilft, Dinge wirklich zu erledigen. Die meisten Produktivitäts-Apps sind großartig darin, endlose Aufgabenlisten zu speichern, zu ordnen und zu automatisieren, und genau dort lassen sie dich im Stich, denn eine Liste, die immer länger wird, erledigt nichts. Todorant kümmert sich um das Einzige, was zählt: dass du schaffst, was du dir vorgenommen hast.
+
+Dafür gibt es vier einfache Regeln, unterstützt von einem fein abgestimmten Zusammenspiel aus Grenzen und Lob, das jedes erledigte To-do zu einem kleinen Erfolg macht:
+
+<ul>
+<li><b>Konzentriere dich auf eine Aufgabe nach der anderen.</b> Der Bildschirm „Aktuell“ zeigt nur das To-do, an dem du gerade arbeiten solltest.</li>
+<li><b>Gib jeder Aufgabe ein Datum oder einen Monat.</b> Jedes To-do bekommt seinen Platz in der Zeit, damit nichts für immer auf einer Liste liegen bleibt.</li>
+<li><b>Erledige unangenehme Aufgaben zuerst.</b> To-dos, vor denen dir graut, markierst du als Frösche, und sie kommen an ihrem Tag vor allem anderen, damit du den Frosch isst, solange deine Willenskraft frisch ist, und das Aufschieben gar nicht erst anfängt.</li>
+<li><b>Lass nichts Überfälliges liegen.</b> Überfällige To-dos musst du neu planen, bevor du weiterarbeiten kannst.</li>
+</ul>
+
+Deine To-dos synchronisieren sich in Echtzeit zwischen deinen Geräten und todorant.com, funktionieren auch offline und lassen sich mit einem Passwort deiner Wahl Ende-zu-Ende verschlüsseln. Mit der Delegation gibst du To-dos an Freunde und Kollegen weiter und nimmst die an, die sie dir geben, Hashtags und Epics bündeln zusammengehörige Arbeit, und Berichte zeigen alles, was du erledigt hast. Ein Widget auf dem Startbildschirm hält dein aktuelles To-do im Blick, eine tägliche Erinnerung sagt dir, wann es Zeit zum Planen ist, und die App spricht 22 Sprachen, richtet sich nach der Sprache deines Geräts und hat ein dunkles Design.
+
+Du kannst Todorant ohne Konto nutzen und alles auf deinem Handy behalten, oder du meldest dich mit E-Mail und Passwort, mit Apple, mit Telegram oder mit einem QR-Code von todorant.com an. Wenn du deine Daten lieber auf deinem eigenen Rechner behältst, kannst du in wenigen Minuten deinen eigenen Todorant-Server starten und die App in den Einstellungen darauf umstellen.
+
+Todorant ist kostenlos, ohne Werbung und ohne Abo.

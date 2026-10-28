@@ -1,0 +1,14 @@
+Todorant è una lista di cose da fare, un gestore di attività e un'agenda giornaliera che usa la psicologia comportamentale per aiutarti a portare a termine le cose. Quasi tutte le app di produttività sono bravissime a conservare, organizzare e automatizzare liste infinite di attività, ed è proprio lì che ti deludono, perché una lista che continua a crescere non porta a termine niente. A Todorant importa una sola cosa, cioè che tu finisca quello che hai pianificato.
+
+Ci riesce con quattro regole semplici, sostenute da un insieme ben calibrato di limiti e lodi che rende piacevole completare ogni attività:
+
+<ul>
+<li><b>Concentrati su un'attività alla volta.</b> La schermata Corrente mostra solo l'attività che dovresti fare adesso.</li>
+<li><b>Dai sempre una data o un mese a ogni attività.</b> Ogni attività trova il suo posto nel tempo, così niente resta per sempre in una lista.</li>
+<li><b>Fai prima le attività sgradevoli.</b> Le attività che continui a rimandare sono segnate come rane e vengono prima di tutto il resto nel loro giorno, così mangi la rana finché hai ancora la forza di volontà e la procrastinazione non trova spazio.</li>
+<li><b>Tieni vuota la posta in arrivo.</b> Le attività scadute vanno ripianificate prima di poter tornare al lavoro.</li>
+</ul>
+
+Le tue attività si sincronizzano in tempo reale tra i tuoi dispositivi e todorant.com, funzionano anche offline e possono essere crittografate end-to-end con una password scelta da te. Con la delega passi attività ad amici e colleghi e accetti quelle che passano a te, gli hashtag e gli epic raggruppano il lavoro collegato e i report mostrano tutto quello che hai fatto. Un widget nella schermata Home tiene sempre in vista l'attività corrente, un promemoria quotidiano ti ricorda quando è ora di pianificare la giornata, e l'app parla 22 lingue, segue la lingua del tuo dispositivo e ha la modalità scura.
+
+Puoi usare Todorant senza account e tenere tutto sul telefono, oppure accedere con email e password, con Apple, con Telegram o con un codice QR da todorant.com. Se preferisci tenere i tuoi dati sul tuo computer, puoi avviare un tuo server Todorant in un paio di minuti e collegarci l'app dalle impostazioni. Todorant è gratuito, senza pubblicità e senza abbonamenti, e funziona anche su iPhone, iPad e sul web.
