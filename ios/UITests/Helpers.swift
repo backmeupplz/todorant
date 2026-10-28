@@ -19,7 +19,10 @@ class TodorantUITest: XCTestCase {
         sleep(delay)
         let out = env["SHOTS"] ?? "/tmp/todorant-shots"
         try? FileManager.default.createDirectory(atPath: out, withIntermediateDirectories: true)
-        try? XCUIScreen.main.screenshot().pngRepresentation.write(to: URL(fileURLWithPath: "\(out)/\(name).png"))
+        // XCUIScreen.main stays an iPhone Duo's cover display after unfolding (DUO_INNER, see Tour): the inner one is the larger
+        let screens = env["DUO_INNER"] == "1" ? XCUIScreen.screens : [XCUIScreen.main]
+        let screenshot = screens.map { $0.screenshot() }.max { $0.image.size.width * $0.image.size.height < $1.image.size.width * $1.image.size.height }!
+        try? screenshot.pngRepresentation.write(to: URL(fileURLWithPath: "\(out)/\(name).png"))
     }
 
     func wait(_ e: XCUIElement, timeout: Double = 15, line: UInt = #line) {

@@ -13,7 +13,7 @@ struct TodorantApp: App {
         Sync.shared.start()
         Migration.run()
         Reminders.restore()
-        #if DEBUG
+        #if DEBUG || QA
         QA.apply()
         #endif
     }
@@ -64,7 +64,7 @@ struct RootView: View {
     private var layoutDirection: LayoutDirection { I18n.rtl ? .rightToLeft : .leftToRight }
 
     private var sizeClass: UserInterfaceSizeClass? {
-        #if DEBUG
+        #if DEBUG || QA
         if let forced = QA.Layout.shared.sizeClass { return forced }
         #endif
         return systemSizeClass
@@ -209,7 +209,7 @@ struct RouteScreen: View {
 private func handleUrl(_ url: URL) {
     let c = URLComponents(url: url, resolvingAgainstBaseURL: false)
     func query(_ name: String) -> String? { c?.queryItems?.first { $0.name == name }?.value }
-    #if DEBUG
+    #if DEBUG || QA
     if url.scheme == "todorant" && url.host == "qa-size-class" { return QA.overrideSizeClass(query("value")) }
     #endif
     if url.scheme == "todorant" && url.host == "create-todo" {
@@ -239,8 +239,9 @@ private func addTodoFromLink(_ text: String) {
     Ui.toast("\(t("addedTask")): \(text)")
 }
 
-#if DEBUG
-/// QA launch arguments (debug builds only): -qaToken <token> signs in, -qaSkipTutorial YES, -qaLanguage ru, -qaColorMode dark,
+#if DEBUG || QA
+/// QA launch arguments (debug builds, and the store screenshots' release build with the QA condition, see ios/tour.sh):
+/// -qaToken <token> signs in, -qaSkipTutorial YES, -qaLanguage ru, -qaColorMode dark,
 /// -qaSizeClass compact
 enum QA {
     static func apply() {

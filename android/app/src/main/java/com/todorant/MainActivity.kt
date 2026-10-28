@@ -249,9 +249,9 @@ private fun handleIntent(intent: Intent) {
         }
         intent.getBooleanExtra("widget", false) -> Nav.go(Route.add())
         // QA: adb shell am start -n com.todorant.debug/com.todorant.MainActivity --es route tags
-        BuildConfig.DEBUG && intent.getStringExtra("route") != null -> Nav.go(intent.getStringExtra("route")!!)
+        (BuildConfig.DEBUG || BuildConfig.QA) && intent.getStringExtra("route") != null -> Nav.go(intent.getStringExtra("route")!!)
         // QA: --es login <token> logs in without typing it
-        BuildConfig.DEBUG && intent.getStringExtra("login") != null -> Ui.launch {
+        (BuildConfig.DEBUG || BuildConfig.QA) && intent.getStringExtra("login") != null -> Ui.launch {
             runCatching { Account.login(Rest.loginToken(intent.getStringExtra("login")!!)) }.onFailure(Ui::error)
         }
         // QA: --es reminder 09:30 schedules it and posts the notification right away

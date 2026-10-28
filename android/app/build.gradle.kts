@@ -5,6 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+// `-Pqa` (not `-Pqa=false`): a release build for the store screenshots and device QA, see the QA field and the release type
+val qa = (project.findProperty("qa") as String?)?.let { it != "false" } ?: false
+
 android {
     namespace = "com.todorant"
     compileSdk = 37
@@ -17,6 +20,8 @@ android {
         versionName = "2.2.11"
         // Backend (REST + /v2/ws sync); `./gradlew -Papi=http://localhost:1337 ...` for a local one
         buildConfigField("String", "API", "\"${project.findProperty("api") ?: "https://backend.todorant.com"}\"")
+        // `-Pqa`: the QA intent extras (MainActivity.handleIntent) work in a release build too, for the store screenshots
+        buildConfigField("boolean", "QA", "$qa")
     }
     buildFeatures { compose = true; buildConfig = true }
     // F-Droid rejects APKs carrying Google's encrypted dependency block, which blocks reproducible builds there. Play still gets it from the bundle.
@@ -46,9 +51,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.findByName("upload")
+            // a QA build never carries the upload key's signature
+            signingConfig = if (qa) signingConfigs.getByName("debug") else signingConfigs.findByName("upload")
             // `-Pqa` makes a release build inspectable with run-as for device QA
-            isDebuggable = project.hasProperty("qa")
+            isDebuggable = qa
         }
     }
 }

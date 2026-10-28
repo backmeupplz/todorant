@@ -4,3 +4,6 @@
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Raw store screenshots (ios/tour.sh, scripts/shots/android.py), framed by scripts/shots/compose.py
+/shots/
