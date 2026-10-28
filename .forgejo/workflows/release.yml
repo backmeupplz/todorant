@@ -45,6 +45,7 @@ env:
   FDROID_APP_ID: com.todorant
   FDROID_FORK: backmeupplz/fdroiddata
   FDROID_BRANCH: com.todorant
+  FDROID_GRADLE: fdroid # the flavor whose APK the release attaches (assembleFdroidRelease)
   # Releases were tagged android-vX.Y.Z before: the first v* release moves the merge request to v* tags
   FDROID_UPDATE_CHECK_MODE: Tags ^v
   FDROID_BINARIES: https://github.com/backmeupplz/todorant/releases/download/v%v/todorant-fdroid-%v.apk
