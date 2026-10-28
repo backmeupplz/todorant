@@ -33,6 +33,7 @@ permissions:
 # Each store holds one pending submission, so releases go one at a time
 concurrency:
   group: release
+  cancel-in-progress: false  # queue behind a running Listings or release, never cancel it
 env:
   TAG: ${{ github.event.release.tag_name || inputs.tag }}
   MODE: ${{ inputs.mode || 'full' }}
