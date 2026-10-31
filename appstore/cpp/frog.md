@@ -5,7 +5,9 @@ A custom product page that App Store search shows instead of the default page fo
 screenshots, assigns its keywords and sends it to App Review. The live keywords are per locale: 2.2.11 has
 "eat the frog" in en-US, while appstore/listing.md and en-GB/listing.md split it into "eat" and "frog" from the next
 release, so each localization gets the ones its locale has: "eat the frog" now, "frog" from the next release (not
-"eat", which would show this page for every "eat" search).
+"eat", which would show this page for every "eat" search). The 22 storefronts of #262 with their own language reach
+the page through their en-GB index, so frog/<locale>.md gives it their texts and screenshots (agentboard #264); the
+keywords stay English.
 
 ## Name
 Eat the frog

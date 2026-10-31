@@ -1,5 +1,5 @@
 # Custom product pages for ad variants (appstore/cpp.py): each appstore/cpp/<id>.md is one page with its own captioned
-# screenshots, rendered here from ios/screenshots/en. A push that adds or changes a spec creates the missing pages and
+# screenshots, rendered here from the raw ones in appstore/cpp/shots (localized versions: appstore/cpp/<id>/<locale>.md). A push that adds or changes a spec creates the missing pages and
 # sends them to App Review; the daily run sends any page whose review couldn't start earlier (another submission was
 # open). Radiant (prime-radiant) adds a page as an ad in Apple Search Ads once Apple approves it, and queues new
 # challengers as pull requests that add a spec here. Run by hand (Actions → Ad pages) in dry-run to see the state.
@@ -38,6 +38,8 @@ jobs:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
           [ -n "$ASC_KEY_P8" ] || { echo "::error::No ASC_KEY_P8 secret"; exit 1; }
+          # libfribidi: Pillow's text shaping (raqm) for the Arabic, Hindi and Thai captions
+          sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libfribidi0 > /dev/null
           python3 -m venv /tmp/venv && /tmp/venv/bin/pip -q install 'pillow>=10,<14'
           for spec in appstore/cpp/*.md; do /tmp/venv/bin/python appstore/cpp.py render "$spec" "/tmp/render/$(basename "$spec" .md)" >/dev/null; done
           keys=$(mktemp -d)

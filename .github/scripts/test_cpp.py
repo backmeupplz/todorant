@@ -1,5 +1,5 @@
 """Checks for appstore/cpp.py sync (custom product pages): python3 -m unittest discover -s .github/scripts"""
-import contextlib, io, os, sys, unittest
+import contextlib, io, os, sys, tempfile, unittest
 from unittest import mock
 
 # release.yml runs these with its real APP_STORE_APP_ID, so the fake paths use appstore.APP
@@ -21,6 +21,7 @@ class FakeASC:
     `locks_review` moves submitted versions to WAITING_FOR_REVIEW and refuses keyword edits on versions in review (409)"""
     def __init__(self, live, keywords, pages=(), refuse=None, visible=None, locks_review=False):
         self.live, self.keywords, self.refuse, self.locks_review, self.queued = live, keywords, refuse, locks_review, []
+        self.processing = False  # the screenshot sets uploaded still wait for Apple
         self.pages, self.versions, self.locs, self.writes, self.n = {}, {}, {}, [], 0
         for name, versions in pages:  # [(state, {locale: [keywords]})]
             page = self.page(name, visible)
@@ -108,8 +109,8 @@ class FakeASC:
              mock.patch.object(appstore, "versions", lambda: [{"id": "live", "attributes": {"appStoreState": "READY_FOR_SALE"}}]), \
              mock.patch.object(cpp, "glob", mock.MagicMock(glob=lambda _: ["frog.md"])), \
              mock.patch.object(cpp, "spec", lambda _: spec), \
-             mock.patch.object(cpp, "render", lambda s, tmp: {"APP_IPHONE_67": ["iphone-1.png"]}), \
-             mock.patch.object(cpp, "upload", lambda a, loc, display, files: self.writes.append(("UPLOAD", loc, files)) or True), \
+             mock.patch.object(cpp, "render", lambda s, tmp, locale=None: {"APP_IPHONE_67": [os.path.join(tmp, "iphone-1.png")]}), \
+             mock.patch.object(cpp, "upload", lambda a, loc, display, files: self.writes.append(("UPLOAD", loc, files)) or (f"set-{loc}" if self.processing else None)), \
              contextlib.redirect_stdout(out):
             cpp.sync(dry)
         return out.getvalue()
@@ -202,6 +203,36 @@ class Sync(unittest.TestCase):
         self.assertIn('"visible": "no (would make it visible)"', asc.run(dry=True))
         self.assertEqual(asc.writes, [])
 
+    def test_localized_versions_get_their_own_texts_and_no_english_keywords(self):
+        de = {"promo": "Iss den Frosch zuerst.", "shots": [("frog/de-DE/01-current", "Eine Aufgabe")], "keywords": []}
+        spec = dict(SPEC, locales=["en-US", "en-GB", "de-DE"], localized={"de-DE": de})
+        # "frog" is in de-DE's keywords too: the English spec keywords still don't go there
+        asc = FakeASC(["en-US", "en-GB", "de-DE"], {"en-US": ["frog"], "en-GB": ["frog"], "de-DE": ["frog", "frosch"]},
+                      pages=[("Eat the frog", [("APPROVED", {"en-US": ["frog"], "en-GB": ["frog"]})])])
+        out = asc.run(spec=spec)
+        v2 = next(v for v, x in asc.versions.items() if x["attributes"]["version"] == "2")
+        locs = {x["attributes"]["locale"]: x for x in asc.locs.values() if x["version"] == v2}
+        self.assertEqual(sorted(locs), ["de-DE", "en-GB", "en-US"])
+        self.assertEqual(locs["de-DE"]["attributes"]["promotionalText"], "Iss den Frosch zuerst.")
+        self.assertEqual(locs["en-GB"]["attributes"]["promotionalText"], "Eat the frog first.")
+        uploads = {asc.locs[w[1]]["attributes"]["locale"]: w[2] for w in asc.writes if w[0] == "UPLOAD"}
+        self.assertEqual({k: os.path.basename(os.path.dirname(v[0])) for k, v in uploads.items()}, {"en-US": "en", "en-GB": "en", "de-DE": "de-DE"})
+        self.assertEqual(asc.keywords_of("de-DE"), {"2": []})
+        self.assertEqual(asc.keywords_of("en-GB"), {"1": ["frog"], "2": ["frog"]})
+        self.assertNotIn("de-DE v", out)
+        self.assertIn('"en-GB v2"', out)
+
+    def test_screenshots_are_awaited_once_for_every_set(self):
+        de = {"promo": "Iss den Frosch zuerst.", "shots": [("frog/de-DE/01-current", "Eine Aufgabe")], "keywords": []}
+        asc = FakeASC(["en-US", "en-GB", "de-DE"], {"en-US": ["frog"]})
+        asc.processing, polls = True, []
+        with mock.patch.object(cpp, "processed", lambda a, sets: polls.append(list(sets)) or False):
+            out = asc.run(spec=dict(SPEC, locales=["en-US", "en-GB", "de-DE"], localized={"de-DE": de}))
+        self.assertEqual(polls, [["set-loc-3", "set-loc-4", "set-loc-5"]])
+        self.assertIn("screenshots still processing", out)
+        self.assertNotIn(("PATCH", "/v1/reviewSubmissions/sub"), [w[:2] for w in asc.writes])
+        self.assertEqual(asc.keywords_of("en-US"), {"1": ["frog"]}, "keywords still land while the screenshots process")
+
     def test_pages_without_keywords_or_locales_work_as_before(self):
         asc = FakeASC(["en-US"], {}, pages=[("Ads: one task at a time", [("PREPARE_FOR_SUBMISSION", {"en-US": []})])], visible=False)
         spec = dict(SPEC, name="Ads: one task at a time", locales=["en-US"], keywords=[], promo="New text.")
@@ -214,15 +245,84 @@ class Sync(unittest.TestCase):
 class Spec(unittest.TestCase):
     def test_frog_spec(self):
         s = cpp.spec(os.path.join(cpp.HERE, "cpp", "frog.md"))
-        self.assertEqual((s["name"], s["locales"], s["keywords"]), ("Eat the frog", ["en-US", "en-GB"], ["eat the frog", "frog"]))
+        self.assertEqual((s["name"], s["locales"][:2], s["keywords"]), ("Eat the frog", ["en-US", "en-GB"], ["eat the frog", "frog"]))
         self.assertEqual([x for x, _ in s["shots"]][:3], ["frog/02-planning", "frog/01-current", "frog/06-rules"])
         for shot, _ in s["shots"]:
             for folder, _ in cpp.DISPLAYS.values():
                 self.assertTrue(os.path.exists(os.path.join(cpp.SHOTS, folder, shot + ".png")), f"{folder}/{shot}")
 
+    def test_frog_localized_versions(self):
+        s = cpp.spec(os.path.join(cpp.HERE, "cpp", "frog.md"))
+        storefronts = "pt-BR zh-Hans de-DE es-ES fr-FR id hi it ja ko es-MX nl-NL pl pt-PT ru ar-SA sv th tr zh-Hant uk vi"  # #262's 22
+        self.assertEqual(sorted(s["localized"]), sorted(storefronts.split()))
+        self.assertEqual(s["locales"][:2], ["en-US", "en-GB"])
+        english = [os.path.basename(x) for x, _ in s["shots"]]
+        for locale, t in s["localized"].items():
+            self.assertEqual(t["keywords"], [], f"{locale}: the frog keywords are English, en-US and en-GB only")
+            self.assertEqual([os.path.basename(x) for x, _ in t["shots"]], english, locale)
+            self.assertNotEqual(t["promo"], s["promo"], locale)
+            for shot, caption in t["shots"]:
+                self.assertTrue(shot.startswith("frog/") and shot.count("/") == 2, shot)
+                self.assertNotIn(caption, [c for _, c in s["shots"]], f"{locale}: an English caption")
+                for folder, _ in cpp.DISPLAYS.values():
+                    self.assertTrue(os.path.exists(cpp.raw(folder, shot)), f"{folder}/{shot}")
+
+    def test_a_localized_version_needs_a_listing_locale(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "page"))
+            open(os.path.join(tmp, "page.md"), "w").write("## Name\nPage\n## Promotional text\nText.\n## Screenshots\na: b\n")
+            open(os.path.join(tmp, "page", "xx-XX.md"), "w").write("## Promotional text\nText.\n## Screenshots\na: b\n")
+            with self.assertRaises(AssertionError):
+                cpp.spec(os.path.join(tmp, "page.md"))
+
     def test_specs_without_the_new_sections(self):
         s = cpp.spec(os.path.join(cpp.HERE, "cpp", "one-task.md"))
-        self.assertEqual((s["locales"], s["keywords"]), (["en-US"], []))
+        self.assertEqual((s["locales"], s["keywords"], s["localized"]), (["en-US"], [], {}))
+
+
+class Processed(unittest.TestCase):
+    def check(self, answers, minutes=30):
+        """answers: per GET, the states of the set's screenshots, or None for a 429"""
+        asked, answers = [], list(answers)
+
+        def data(method, path, query=None, ok=()):
+            asked.append(path.split("/")[3])
+            states = answers.pop(0)
+            return None if states is None else [{"attributes": {"assetDeliveryState": {"state": x}}} for x in states]
+        with mock.patch.object(cpp.time, "sleep", lambda _: None), contextlib.redirect_stdout(io.StringIO()):
+            return cpp.processed(mock.Mock(data=data), ["a", "b"], minutes), asked
+
+    def test_one_set_at_a_time_through_rate_limits(self):
+        done, asked = self.check([["COMPLETE", "UPLOAD_COMPLETE"], None, ["COMPLETE", "COMPLETE"], ["COMPLETE"]])
+        self.assertEqual((done, asked), (True, ["a", "a", "a", "b"]))
+
+    def test_a_set_still_processing_waits_for_the_next_run(self):
+        self.assertEqual(self.check([["COMPLETE"], ["UPLOAD_COMPLETE"]], minutes=0), (False, ["a", "b"]))
+
+    def test_a_failed_screenshot_fails_the_run(self):
+        with self.assertRaises(SystemExit):
+            self.check([["FAILED"]])
+
+
+class Wrap(unittest.TestCase):
+    class Font:  # every character 10 wide
+        def getlength(self, text):
+            return 10 * len(text)
+
+    def test_english_breaks_between_words(self):
+        self.assertEqual(cpp.wrap("Eat the frog first", self.Font(), 100), ["Eat the", "frog first"])
+
+    def test_chinese_and_japanese_break_between_characters_but_not_before_punctuation(self):
+        self.assertEqual(cpp.wrap("先吃青蛙：最难的任务", self.Font(), 50, unspaced=True), ["先吃青蛙：", "最难的任务"])
+        self.assertEqual(cpp.wrap("战胜拖延的 17 条规则", self.Font(), 60, unspaced=True), ["战胜拖延的", "17 条规则"])
+        self.assertEqual(cpp.wrap("ルールです。いちばん", self.Font(), 60, unspaced=True), ["ルールです。", "いちばん"])
+
+    def test_zero_width_spaces_make_the_only_chinese_breaks(self):
+        self.assertEqual(cpp.wrap("先吃青蛙：\u200b最难的任务\u200b永远排在\u200b最前面", self.Font(), 80, unspaced=True), ["先吃青蛙：", "最难的任务", "永远排在最前面"])
+
+    def test_zero_width_spaces_mark_thai_breaks_and_disappear(self):
+        self.assertEqual(cpp.wrap("กินกบ\u200bก่อน\u200bเสมอ", self.Font(), 50), ["กินกบ", "ก่อน", "เสมอ"])
+        self.assertEqual(cpp.wrap("กินกบ\u200bก่อน", self.Font(), 100), ["กินกบก่อน"])
 
 
 if __name__ == "__main__":

@@ -7,3 +7,6 @@ __pycache__/
 
 # Raw store screenshots (ios/tour.sh, scripts/shots/android.py), framed by scripts/shots/compose.py
 /shots/
+
+# Caption fonts appstore/cpp.py downloads (pinned and checked there)
+/appstore/cpp/fonts/
