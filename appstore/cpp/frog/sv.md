@@ -11,3 +11,6 @@ frog/sv/01-current: Se bara uppgiften du ska göra nu
 frog/sv/06-rules: 17 enkla regler mot prokrastinering
 frog/sv/03-add: Markera jobbiga uppgifter som grodor
 frog/sv/05-dark: Planera dagen i mörkt läge också
+
+## Keywords
+groda

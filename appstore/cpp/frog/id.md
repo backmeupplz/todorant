@@ -11,3 +11,6 @@ frog/id/01-current: Lihat hanya tugas untuk saat ini
 frog/id/06-rules: 17 aturan sederhana untuk melawan prokrastinasi
 frog/id/03-add: Tandai tugas yang berat sebagai katak
 frog/id/05-dark: Rencanakan harimu di mode gelap juga
+
+## Keywords
+katak

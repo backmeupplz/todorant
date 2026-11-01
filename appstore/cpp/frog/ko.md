@@ -11,3 +11,6 @@ frog/ko/01-current: 지금 해야 할 일 하나만 보여 줘요
 frog/ko/06-rules: 미루는 습관을 이기는 17가지 간단한 규칙
 frog/ko/03-add: 하기 싫은 일은 개구리로 표시해요
 frog/ko/05-dark: 다크 모드에서도 하루를 계획해요
+
+## Keywords
+개구리

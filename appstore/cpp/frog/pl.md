@@ -11,3 +11,6 @@ frog/pl/01-current: Widzisz tylko to, co masz zrobić teraz
 frog/pl/06-rules: 17 prostych zasad przeciw prokrastynacji
 frog/pl/03-add: Oznacz nieprzyjemne zadania jako żaby
 frog/pl/05-dark: Planuj dzień także w trybie ciemnym
+
+## Keywords
+żaba

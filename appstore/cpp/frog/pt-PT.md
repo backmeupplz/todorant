@@ -11,3 +11,6 @@ frog/pt-pt/01-current: Vê apenas a tarefa que deves fazer agora
 frog/pt-pt/06-rules: 17 regras simples para vencer a procrastinação
 frog/pt-pt/03-add: Marca como sapo o que andas a adiar
 frog/pt-pt/05-dark: Planeia o teu dia também no modo escuro
+
+## Keywords
+sapo

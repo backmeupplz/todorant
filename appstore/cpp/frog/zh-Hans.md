@@ -11,3 +11,6 @@ frog/zh-hans/01-current: 只显示​你现在​该做的​那件事
 frog/zh-hans/06-rules: 战胜拖延的 17 条​简单规则
 frog/zh-hans/03-add: 把最不想做的事​标记为青蛙
 frog/zh-hans/05-dark: 在深色模式下​也能规划一天
+
+## Keywords
+吃掉那只青蛙

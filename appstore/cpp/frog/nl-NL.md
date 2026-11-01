@@ -11,3 +11,6 @@ frog/nl/01-current: Zie alleen de taak die je nu moet doen
 frog/nl/06-rules: 17 simpele regels tegen uitstelgedrag
 frog/nl/03-add: Markeer wat je uitstelt als kikker
 frog/nl/05-dark: Plan je dag ook in de donkere modus
+
+## Keywords
+kikker

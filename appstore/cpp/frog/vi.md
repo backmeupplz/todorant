@@ -11,3 +11,6 @@ frog/vi/01-current: Chỉ thấy việc cần làm ngay lúc này
 frog/vi/06-rules: 17 quy tắc đơn giản để đánh bại sự trì hoãn
 frog/vi/03-add: Đánh dấu việc bạn ngại là ếch
 frog/vi/05-dark: Lên kế hoạch cả trong chế độ tối
+
+## Keywords
+ếch

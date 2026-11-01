@@ -11,3 +11,6 @@ frog/tr/01-current: Yalnızca şimdi yapacağın görevi gör
 frog/tr/06-rules: Ertelemeyi yenen 17 basit kural
 frog/tr/03-add: Zor görevleri kurbağa olarak işaretle
 frog/tr/05-dark: Gününü karanlık modda da planla
+
+## Keywords
+kurbağa

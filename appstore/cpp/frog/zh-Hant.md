@@ -11,3 +11,6 @@ frog/zh-hant/01-current: 只顯示​你現在​該做的​那件事
 frog/zh-hant/06-rules: 戰勝拖延的 17 條​簡單規則
 frog/zh-hant/03-add: 把最不想做的事​標記為青蛙
 frog/zh-hant/05-dark: 在深色模式下​也能規劃一天
+
+## Keywords
+吃掉那隻青蛙

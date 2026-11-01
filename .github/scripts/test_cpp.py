@@ -1,5 +1,5 @@
 """Checks for appstore/cpp.py sync (custom product pages): python3 -m unittest discover -s .github/scripts"""
-import contextlib, io, os, sys, tempfile, unittest
+import contextlib, glob, io, os, sys, tempfile, unittest
 from unittest import mock
 
 # release.yml runs these with its real APP_STORE_APP_ID, so the fake paths use appstore.APP
@@ -222,6 +222,16 @@ class Sync(unittest.TestCase):
         self.assertNotIn("de-DE v", out)
         self.assertIn('"en-GB v2"', out)
 
+    def test_a_localized_version_gets_its_own_keywords_on_the_approved_page(self):
+        de = {"promo": "Iss den Frosch zuerst.", "shots": [("frog/de-DE/01-current", "Eine Aufgabe")], "keywords": ["frosch", "iss den frosch"]}
+        spec = dict(SPEC, locales=["en-US", "en-GB", "de-DE"], localized={"de-DE": de})
+        asc = FakeASC(["en-US", "en-GB", "de-DE"], {"en-US": ["frog"], "en-GB": ["frog"], "de-DE": ["frog", "frosch"]},
+                      pages=[("Eat the frog", [("APPROVED", {"en-US": ["frog"], "en-GB": ["frog"], "de-DE": []})])])
+        out = asc.run(spec=spec)
+        self.assertEqual(asc.keywords_of("de-DE"), {"1": ["frosch"]}, "not English \"frog\", and no new version")
+        self.assertEqual(len(asc.versions), 1)
+        self.assertIn('"not in the app\'s keywords": [\n     "iss den frosch"\n', out)
+
     def test_screenshots_are_awaited_once_for_every_set(self):
         de = {"promo": "Iss den Frosch zuerst.", "shots": [("frog/de-DE/01-current", "Eine Aufgabe")], "keywords": []}
         asc = FakeASC(["en-US", "en-GB", "de-DE"], {"en-US": ["frog"]})
@@ -258,7 +268,8 @@ class Spec(unittest.TestCase):
         self.assertEqual(s["locales"][:2], ["en-US", "en-GB"])
         english = [os.path.basename(x) for x, _ in s["shots"]]
         for locale, t in s["localized"].items():
-            self.assertEqual(t["keywords"], [], f"{locale}: the frog keywords are English, en-US and en-GB only")
+            self.assertLessEqual(len(t["keywords"]), 1, f"{locale}: one frog keyword in the locale's own language")
+            self.assertFalse(set(t["keywords"]) & set(s["keywords"]), f"{locale}: the English keywords are en-GB's")
             self.assertEqual([os.path.basename(x) for x, _ in t["shots"]], english, locale)
             self.assertNotEqual(t["promo"], s["promo"], locale)
             for shot, caption in t["shots"]:
@@ -266,6 +277,22 @@ class Spec(unittest.TestCase):
                 self.assertNotIn(caption, [c for _, c in s["shots"]], f"{locale}: an English caption")
                 for folder, _ in cpp.DISPLAYS.values():
                     self.assertTrue(os.path.exists(cpp.raw(folder, shot)), f"{folder}/{shot}")
+
+    def test_page_keywords_are_in_the_listings_keyword_fields(self):
+        # Apple offers a page only the terms of its locale's keyword field, so a keyword missing from the listing that
+        # the next release uploads would never be assigned (agentboard #358)
+        def field(locale):
+            out = cpp.sections(os.path.join(cpp.HERE, *(["listing.md"] if locale == "en-US" else [locale, "listing.md"])))
+            return out["Keywords"][0].split(",")
+        for path in glob.glob(os.path.join(cpp.HERE, "cpp", "*.md")):
+            s = cpp.spec(path)
+            for locale in s["locales"]:
+                for k in cpp.texts(s, locale)["keywords"]:
+                    self.assertIn(k, field(locale), f"{s['id']} {locale}: {k}")
+        s = cpp.spec(os.path.join(cpp.HERE, "cpp", "frog.md"))
+        self.assertEqual({x: s["localized"][x]["keywords"] for x in ["ja", "pt-BR", "de-DE"]},
+                         {"ja": ["カエルを食べろ"], "pt-BR": ["sapo"], "de-DE": []})
+        self.assertEqual(sum(bool(t["keywords"]) for t in s["localized"].values()), 17)
 
     def test_a_localized_version_needs_a_listing_locale(self):
         with tempfile.TemporaryDirectory() as tmp:
