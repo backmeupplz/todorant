@@ -48,7 +48,11 @@
 :root:not(.dark) .landing-footer { --muted: #737373; }
 .landing-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .landing-footer a { color: var(--muted); }
-.landing-footer select, .landing-dark {
+/* The language links: every language of the page, in its own name, on its own row */
+.landing-footer nav.langs { flex: 0 0 100%; gap: 4px 4px; font-size: 16px; }
+.landing-footer nav.langs a { display: inline-block; padding: 4px 8px; min-height: 32px; }
+.landing-footer nav.langs a[aria-current] { font-weight: 700; text-decoration: none; color: var(--text); }
+.landing-dark {
   border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); padding: 6px 10px; font-size: 14px; cursor: pointer;
 }
 

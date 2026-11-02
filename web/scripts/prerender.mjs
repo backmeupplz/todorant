@@ -2,14 +2,17 @@
 // build the way GitHub Pages does, opens each route in headless Chrome and saves the page it settles on as
 // that route's HTML file. Requests to other origins are blocked, so the saved page is the app's own first
 // render rather than live data, and the app boots over it without a flash.
-// Usage: node scripts/prerender.mjs <build dir> <route>...   (Chrome from CHROME_PATH or the usual places)
+// Chrome comes from CHROME_PATH or the usual places
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { extname, join } from 'node:path'
 import { createServer } from 'node:http'
 import puppeteer from 'puppeteer-core'
+import { routes as allRoutes } from './pages.mjs'
 
-const [dir, ...routes] = process.argv.slice(2)
-if (!dir || !routes.length) throw new Error('usage: prerender.mjs <dir> <route>...')
+// Usage: node scripts/prerender.mjs <build dir> [<route>...]   (without routes: every page of every language, scripts/pages.mjs)
+const [dir, ...given] = process.argv.slice(2)
+if (!dir) throw new Error('usage: prerender.mjs <dir> [<route>...]')
+const routes = given.length ? given : allRoutes()
 const chrome = [
   process.env.CHROME_PATH,
   '/usr/bin/google-chrome',
@@ -41,8 +44,10 @@ await new Promise((resolve) => server.once('listening', resolve))
 const origin = `http://127.0.0.1:${server.address().port}`
 
 const browser = await puppeteer.launch({ executablePath: chrome, args: ['--no-sandbox'] })
-try {
-  for (const route of routes) {
+// Pages render in parallel (a hundred of them: every page in every language)
+const queue = [...routes]
+async function worker() {
+  for (let route; (route = queue.shift()); ) {
     const page = await browser.newPage()
     await page.setViewport({ width: 1280, height: 800 })
     await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'light' }])
@@ -63,6 +68,9 @@ try {
     console.log(`prerendered ${route} → ${out} (${Math.round(html.length / 1024)} KB)`)
     await page.close()
   }
+}
+try {
+  await Promise.all(Array.from({ length: 6 }, worker))
 } finally {
   await browser.close()
   server.close()

@@ -25,6 +25,17 @@ export function match(tag?: string): Language | undefined {
   return base in LANGUAGES ? (base as Language) : undefined
 }
 
+/** The language in the first segment of an address, the way the translated pages are served (/de/privacy), and the route behind it */
+export function splitPath(p: string): { lang?: Language; rest: string } {
+  const [, segment, rest] = p.match(/^\/([\w-]+)(\/.*)?$/) ?? []
+  const lang = (Object.keys(LANGUAGES) as Language[]).find((l) => l !== 'en' && l.toLowerCase() === segment)
+  return lang ? { lang, rest: rest ?? '/' } : { rest: p }
+}
+/** The address folder of a language ("/de", "" for English) */
+export const folder = (lang: Language) => (lang === 'en' ? '' : `/${lang.toLowerCase()}`)
+/** The language the address asks for; it wins over the saved and the device language, and is never saved */
+export const urlLanguage = () => splitPath(location.pathname).lang
+
 function pick(): Language {
   const saved = match(prefs.value.language)
   if (saved) return saved
@@ -36,14 +47,17 @@ function pick(): Language {
 }
 
 /** Switches the UI language (the caller syncs it to settings) */
-export async function setLanguage(lang: Language) {
+export async function setLanguage(lang: Language, save = true) {
   messages.value = lang === 'en' ? {} : (await loaders[`./${lang}.json`]?.())?.default ?? {}
   language.value = lang
   document.documentElement.lang = lang
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
-  if (prefs.value.language !== lang) setPref('language', lang)
+  if (save && prefs.value.language !== lang) setPref('language', lang)
 }
-export const initLanguage = () => setLanguage(pick())
+export const initLanguage = () => {
+  const fromUrl = urlLanguage()
+  return setLanguage(fromUrl ?? pick(), !fromUrl)
+}
 
 const get = (root: any, key: string) => key.split('.').reduce((o, k) => o?.[k], root)
 

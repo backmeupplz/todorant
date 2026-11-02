@@ -6,10 +6,12 @@ import { t } from '../i18n'
 import { Spinner, alert, confirm, lazy, toast } from '../ui/kit'
 import { ChartsSkeleton } from '../ui/skeletons'
 import { go } from '../ui/router'
+import { LangNav } from '../ui/LangNav'
 import { link } from './Landing'
 import { DeleteAccount, HowItWorks, Privacy, Terms } from './static'
 import './pages.css'
 
+const FILES = ['/how-it-works', '/privacy', '/terms', '/delete-account']
 const PublicReport = lazy(() => import('./Report').then((m) => m.PublicReport), ChartsSkeleton)
 
 /** Everything that isn't the landing or the app: static pages, invite/report links, login and OAuth callbacks */
@@ -40,6 +42,7 @@ export function Pages({ path }: { path: string }) {
         </div>
       </header>
       <main class="container page">{body}</main>
+      {FILES.includes(path) && <footer class="container page"><LangNav file={path.slice(1)} /></footer>}
     </>
   )
 }

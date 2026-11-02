@@ -4,10 +4,12 @@ import { signIn } from '../data/account'
 import { call } from '../data/rest'
 import { API } from '../data/sync'
 import { isDark, prefs, session, setPref } from '../data/store'
-import { language, LANGUAGES, setLanguage, t, tRaw, type Language } from '../i18n'
+import { language, t, tRaw } from '../i18n'
+import { ui } from '../site'
+import { LangNav } from '../ui/LangNav'
 import { qr } from '../lib/qr'
 import { DialogCard, Button, Spinner, open, showError } from '../ui/kit'
-import { go, path, query } from '../ui/router'
+import { base, go, path, query } from '../ui/router'
 import './Landing.css'
 
 const APP_STORE = 'https://apps.apple.com/app/todorant/id1482078243'
@@ -17,11 +19,11 @@ const SHOTS = ['en', 'es', 'it', 'ru', 'uk']
 
 /** Props for an in-app link: a real href for new tabs, client-side navigation on a plain click */
 export const link = (to: string) => ({
-  href: to,
+  href: base.value + to,
   onClick: (e: MouseEvent) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey) return
     e.preventDefault()
-    go(to)
+    go(base.value + to)
   },
 })
 
@@ -73,17 +75,15 @@ export function Landing() {
           {contact[1]}
         </p>
         <nav>
-          <a {...link('/how-it-works')}>How it works</a>
+          <a {...link('/how-it-works')}>{ui.value.howItWorks}</a>
           <a {...link('/privacy')}>{t('home.privacy')}</a>
-          <a {...link('/terms')}>Terms of use</a>
+          <a {...link('/terms')}>{ui.value.terms}</a>
           <a {...link('/delete-account')}>{t('m.deleteAccount')}</a>
-          <select aria-label="Language" title="Language" value={language.value} onChange={(e) => setLanguage(e.currentTarget.value as Language)}>
-            {Object.entries(LANGUAGES).map(([code, name]) => <option key={code} value={code}>{name}</option>)}
-          </select>
           <button type="button" class="landing-dark" aria-pressed={isDark()} onClick={() => setPref('colorMode', isDark() ? 'light' : 'dark')}>
             {t(`menu.darkMode.${isDark() ? 'on' : 'off'}`)}
           </button>
         </nav>
+        <LangNav file="" />
       </footer>
     </div>
   )

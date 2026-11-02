@@ -1,12 +1,17 @@
 import { signal } from '../lib/state'
+import { folder, splitPath } from '../i18n'
 
-/** The current location; history API routing (GitHub Pages serves 404.html = index.html for deep links) */
-export const path = signal(location.pathname)
+/** The current location, without the language folder of the translated pages; history API routing (GitHub Pages serves 404.html = index.html for deep links) */
+export const path = signal(splitPath(location.pathname).rest)
+/** The language folder of the page being shown ("/de" on the German pages, "" elsewhere); routes are the same behind it */
+export const base = signal(folder(splitPath(location.pathname).lang ?? 'en'))
 export const query = signal(new URLSearchParams(location.search))
 export const hash = signal(decodeURIComponent(location.hash.slice(1)))
 
 function read() {
-  path.value = location.pathname
+  const { lang, rest } = splitPath(location.pathname)
+  path.value = rest
+  base.value = folder(lang ?? 'en')
   query.value = new URLSearchParams(location.search)
   hash.value = decodeURIComponent(location.hash.slice(1))
 }
