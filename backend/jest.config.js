@@ -10,5 +10,5 @@ module.exports = {
   globals: { 'ts-jest': { isolatedModules: true } },
   testEnvironment: 'node',
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
-  testPathIgnorePatterns: ['testUtils'],
+  testPathIgnorePatterns: ['testUtils', 'v2Harness'],
 }

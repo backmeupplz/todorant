@@ -13,7 +13,7 @@ concurrency:
 jobs:
   check:
     # Our own PRs and pushes run on the Mac runners; outsiders' PRs (AGit via the github bot) on Linux
-    runs-on: ${{ (github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude"]'), github.event.pull_request.user.login)) && 'macos-latest' || 'ubuntu-latest' }}
+    runs-on: ${{ (github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude","radiant"]'), github.event.pull_request.user.login)) && 'macos-latest' || 'ubuntu-latest' }}
     timeout-minutes: 15
     defaults:
       run:
@@ -24,21 +24,63 @@ jobs:
       # Production's MongoDB version
       MONGO_VERSION: 8.0.34
     steps:
-      - uses: actions/checkout@v4
+      # The Mac runners give every job a new, empty workspace. Instead each runner instance keeps one
+      # sparse (backend/ only: the whole tree is ~450 MB of blobs, store screenshots), blobless clone in its
+      # own tool cache (it runs one job at a time) and the job workspace links to it: fetches are
+      # incremental and node_modules stays installed.
+      - name: Check out (persistent Mac workspace)
+        if: runner.os == 'macOS'
+        working-directory: .
+        env:
+          TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          ws="$RUNNER_TOOL_CACHE/todorant-backend-workspace"
+          export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader"
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$TOKEN" | base64 | tr -d '\n')"
+          if [ ! -d "$ws/.git" ]; then
+            rm -rf "$ws" && git init -q "$ws"
+            git -C "$ws" remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+            git -C "$ws" config remote.origin.promisor true
+            git -C "$ws" config remote.origin.partialclonefilter blob:none
+            git -C "$ws" sparse-checkout set backend
+          fi
+          cd "$ws"
+          rm -f .git/index.lock
+          git fetch -q --no-tags --depth=1 --filter=blob:none origin "+$SHA:refs/ci/head"
+          git checkout -q --force --detach "$SHA"
+          git clean -ffdq
+          git log -1 --format='%H %s'
+          rm -rf "$GITHUB_WORKSPACE" && ln -s "$ws" "$GITHUB_WORKSPACE"
+      # Other runners (outsiders' PRs) start from a fresh workspace, with backend/ only
+      - if: runner.os != 'macOS'
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: backend
       # The Mac runners keep their tool cache, so only a runner's first run downloads Node
       - uses: actions/setup-node@v4
         with:
           node-version-file: backend/.nvmrc
-      # On Linux node_modules itself is cached (a hit skips the install); on the Mac each runner keeps
-      # its own yarn cache (yarn 1's shared global cache corrupts when two runners install at once)
+      # On Linux node_modules itself is cached (a hit skips the install)
       - id: modules
         if: runner.os == 'Linux'
         uses: actions/cache@v4
         with:
           path: backend/node_modules
           key: backend-modules-${{ runner.os }}-${{ hashFiles('backend/yarn.lock', 'backend/.nvmrc') }}
-      - if: steps.modules.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile --ignore-engines ${{ runner.os == 'macOS' && '--cache-folder "$RUNNER_TOOL_CACHE/yarn"' || '' }}
+      - if: runner.os == 'Linux' && steps.modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --ignore-engines
+      # On the Mac node_modules stays in the persistent workspace and is reinstalled for a new lockfile only
+      # (yarn's linking took ~5 s a run). Each runner's yarn cache is its own (yarn 1's shared global cache
+      # corrupts when two runners install at once).
+      - if: runner.os == 'macOS'
+        run: |
+          hash="${{ hashFiles('backend/yarn.lock', 'backend/.nvmrc') }}"
+          if [ "$(cat node_modules/.ci-hash 2>/dev/null)" != "$hash" ]; then
+            yarn install --frozen-lockfile --ignore-engines --cache-folder "$RUNNER_TOOL_CACHE/yarn"
+            echo "$hash" > node_modules/.ci-hash
+          fi
       # A native mongod (the Mac runners have no Docker for a service container), installed once
       # per runner tool cache and checked against MongoDB's published SHA-256
       - name: MongoDB
@@ -74,5 +116,5 @@ jobs:
             kill -0 $mongod 2>/dev/null || { cat "$RUNNER_TEMP/mongod.log"; exit 1; }
             sleep 0.1
           done
-          TEST_MONGO=mongodb://127.0.0.1:$port yarn -s jest --forceExit src/__tests__/v2.ts src/__tests__/appleAuthKey.ts src/__tests__/promo.ts & jest=$!
+          TEST_MONGO=mongodb://127.0.0.1:$port yarn -s jest --forceExit & jest=$!
           for job in $prettier $eslint $tsc $jest; do wait $job || exit 1; done

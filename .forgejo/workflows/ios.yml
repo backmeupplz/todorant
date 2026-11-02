@@ -13,17 +13,57 @@ concurrency:
 jobs:
   check:
     # Xcode needs the Mac runners, which run our own PRs and pushes only; outsiders' PRs (AGit via the github bot) skip it
-    if: github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude"]'), github.event.pull_request.user.login)
+    if: github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude","radiant"]'), github.event.pull_request.user.login)
     runs-on: macos-latest
     timeout-minutes: 30
     defaults:
       run:
         working-directory: ios
     steps:
-      - uses: actions/checkout@v4
+      # The Mac runners give every job a new, empty workspace, so every file got a new mtime and each run was
+      # a full Xcode build. Instead each runner instance keeps one sparse, blobless clone (ios/ and the
+      # translations it shares with Android) in its own tool cache (it runs one job at a time) and the job
+      # workspace links to it: fetches are incremental, unchanged files keep their mtimes, and DerivedData
+      # in the tool cache stays warm, so a build compiles what changed.
+      - name: Check out (persistent Mac workspace)
+        working-directory: .
+        env:
+          TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          ws="$RUNNER_TOOL_CACHE/todorant-ios-workspace"
+          export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader"
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$TOKEN" | base64 | tr -d '\n')"
+          if [ ! -d "$ws/.git" ]; then
+            rm -rf "$ws" && git init -q "$ws"
+            git -C "$ws" remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+            git -C "$ws" config remote.origin.promisor true
+            git -C "$ws" config remote.origin.partialclonefilter blob:none
+            git -C "$ws" sparse-checkout set ios android/app/src/main/assets/translations
+          fi
+          cd "$ws"
+          rm -f .git/index.lock
+          git fetch -q --no-tags --depth=1 --filter=blob:none origin "+$SHA:refs/ci/head"
+          git checkout -q --force --detach "$SHA"
+          git clean -ffdq
+          git log -1 --format='%H %s'
+          rm -rf "$GITHUB_WORKSPACE" && ln -s "$ws" "$GITHUB_WORKSPACE"
+      # PRs: the app and its unit tests compile (booting a simulator to run them took ~80 s); pushes to main
+      # also run the unit tests on a simulator.
+      - name: Build app and unit tests
+        if: github.event_name == 'pull_request'
+        run: |
+          xcodebuild -scheme Todorant -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TOOL_CACHE/todorant-ios-build" \
+            build-for-testing > "$RUNNER_TEMP/xcodebuild.log" 2>&1 || {
+            grep -E 'error:|failed|BUILD FAIL' "$RUNNER_TEMP/xcodebuild.log" | head -50
+            exit 1
+          }
+          grep -E 'BUILD SUCC' "$RUNNER_TEMP/xcodebuild.log" | tail -1
       # A simulator of its own on the shared Mac (the newest runtime that has the device), removed at the end. Ones that a
       # cancelled run left behind are removed once they're older than any run could be.
       - name: Simulator
+        if: github.event_name != 'pull_request'
         run: |
           for udid in $(xcrun simctl list devices | sed -nE 's/^ *ci-todorant-[0-9]+ \(([0-9A-F-]{36})\).*/\1/p'); do
             if [ -n "$(find "$HOME/Library/Developer/CoreSimulator/Devices/$udid/device.plist" -mmin +120 2>/dev/null)" ]; then
@@ -34,8 +74,9 @@ jobs:
           SIM=$(xcrun simctl create "ci-todorant-$GITHUB_RUN_ID" com.apple.CoreSimulator.SimDeviceType.iPhone-17)
           echo "SIM=$SIM" >> "$GITHUB_ENV"
       - name: Build and unit tests
+        if: github.event_name != 'pull_request'
         run: |
-          xcodebuild -scheme Todorant -destination "platform=iOS Simulator,id=$SIM" -derivedDataPath "$RUNNER_TEMP/ios-build" \
+          xcodebuild -scheme Todorant -destination "platform=iOS Simulator,id=$SIM" -derivedDataPath "$RUNNER_TOOL_CACHE/todorant-ios-build" \
             -collect-test-diagnostics never test -only-testing:Tests > "$RUNNER_TEMP/xcodebuild.log" 2>&1 || {
             grep -E 'error:|failed|TEST FAIL' "$RUNNER_TEMP/xcodebuild.log" | head -50
             exit 1

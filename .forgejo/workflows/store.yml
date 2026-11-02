@@ -15,16 +15,48 @@ concurrency:
 jobs:
   check:
     # Our own PRs and pushes run on the Mac runners; outsiders' PRs (AGit via the github bot) on Linux
-    runs-on: ${{ (github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude"]'), github.event.pull_request.user.login)) && 'macos-latest' || 'ubuntu-latest' }}
+    runs-on: ${{ (github.event_name != 'pull_request' || contains(fromJSON('["backmeupplz","renovate","claude","radiant"]'), github.event.pull_request.user.login)) && 'macos-latest' || 'ubuntu-latest' }}
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      # The texts and the raw CPP screenshots (appstore/cpp/shots, whose files the tests look for), not the
+      # ~140 MB of framed store screenshots, which nothing here reads. On the Mac each runner instance keeps
+      # this sparse, blobless clone in its own tool cache (it runs one job at a time) and the job workspace
+      # links to it, so a run fetches only what changed (the shots alone took ~10 s).
+      - name: Check out (persistent Mac workspace)
+        if: runner.os == 'macOS'
+        env:
+          TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          ws="$RUNNER_TOOL_CACHE/todorant-store-workspace"
+          export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader"
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$TOKEN" | base64 | tr -d '\n')"
+          if [ ! -d "$ws/.git" ]; then
+            rm -rf "$ws" && git init -q "$ws"
+            git -C "$ws" remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+            git -C "$ws" config remote.origin.promisor true
+            git -C "$ws" config remote.origin.partialclonefilter blob:none
+            git -C "$ws" sparse-checkout set --no-cone '/.github/scripts/' '/appstore/' '/fastlane/' '/scripts/' '!/appstore/screenshots/' '!/fastlane/**/*.jpg'
+          fi
+          cd "$ws"
+          rm -f .git/index.lock
+          git fetch -q --no-tags --depth=1 --filter=blob:none origin "+$SHA:refs/ci/head"
+          git checkout -q --force --detach "$SHA"
+          git clean -ffdq
+          git log -1 --format='%H %s'
+          rm -rf "$GITHUB_WORKSPACE" && ln -s "$ws" "$GITHUB_WORKSPACE"
+      - if: runner.os != 'macOS'
+        uses: actions/checkout@v4
         with:
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            .github/scripts
-            appstore
-            fastlane
-            scripts
+            /.github/scripts/
+            /appstore/
+            /fastlane/
+            /scripts/
+            !/appstore/screenshots/
+            !/fastlane/**/*.jpg
       - if: runner.os == 'Linux'
         uses: actions/setup-node@v4
         with:

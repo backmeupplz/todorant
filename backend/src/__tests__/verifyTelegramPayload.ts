@@ -1,26 +1,18 @@
-import { MongoMemoryServer } from 'mongodb-memory-server'
-import { Server } from 'http'
-import { app } from '@/app'
-import { dropMongo, startKoa, stopServer } from '@/__tests__/testUtils'
-import { runMongo, stopMongo } from '@/models/index'
-import { verifyTelegramPayload } from '@/helpers/verifyTelegramPayload'
-import MockAdapter from 'axios-mock-adapter'
-import axios from 'axios'
+import {
+  TelegramLoginPayload,
+  verifyTelegramPayload,
+} from '@/helpers/verifyTelegramPayload'
 
-describe('Testing delegate controller', () => {
-  new MockAdapter(axios)
-  let server: Server
-  let TelegramPayload
+describe('verifyTelegramPayload', () => {
+  let payload: TelegramLoginPayload
+  const token = process.env.TELEGRAM_LOGIN_TOKEN
 
-  beforeAll(async () => {
-    const mongoServer = new MongoMemoryServer()
-    await runMongo(await mongoServer.getUri())
-    server = await startKoa(app)
+  beforeAll(() => {
+    process.env.TELEGRAM_LOGIN_TOKEN = 'test'
   })
 
-  beforeEach(async () => {
-    await dropMongo()
-    TelegramPayload = {
+  beforeEach(() => {
+    payload = {
       id: 123124125,
       hash: 'hash at string',
       auth_date: '14.07.2020',
@@ -31,21 +23,27 @@ describe('Testing delegate controller', () => {
     }
   })
 
-  afterAll(async () => {
-    await stopMongo()
-    await stopServer(server)
+  afterAll(() => {
+    if (token === undefined) delete process.env.TELEGRAM_LOGIN_TOKEN
+    else process.env.TELEGRAM_LOGIN_TOKEN = token
   })
 
-  it('should to return false', async () => {
-    const checkPayload = verifyTelegramPayload(TelegramPayload)
-    expect(checkPayload).toBe(false)
+  it('refuses a wrong hash', () => {
+    expect(verifyTelegramPayload(payload)).toBe(false)
   })
 
-  it('should to return TelegramLoginPayload', async () => {
-    const hashedUser =
-      'a6ffdc7b30edc0f808ccbf78f6b7fe9aaaf4ffeff51a1038011a35789c9602e6'
-    TelegramPayload.hash = hashedUser
-    const checkPayload = verifyTelegramPayload(TelegramPayload)
-    expect(checkPayload).toBe(TelegramPayload)
+  it('returns a payload signed with the bot token', () => {
+    // HMAC-SHA256 of the sorted fields, keyed with SHA-256("test") (Telegram's login widget check)
+    payload.hash =
+      '856fe2cc76e4812c2abc89970f18c65ee72eafa175d3202bd43b797747abee93'
+    expect(verifyTelegramPayload(payload)).toBe(payload)
+  })
+
+  it('refuses every payload without a bot token', () => {
+    delete process.env.TELEGRAM_LOGIN_TOKEN
+    payload.hash =
+      '5e41f9240978ccea45d970077ea2e71c74db89624cd307739137ab6e33766d57' // keyed with SHA-256("")
+    expect(verifyTelegramPayload(payload)).toBe(false)
+    process.env.TELEGRAM_LOGIN_TOKEN = 'test'
   })
 })
