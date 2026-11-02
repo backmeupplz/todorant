@@ -17,6 +17,7 @@ It has realtime sync between devices with offline support, optional end-to-end e
 - [How Todorant works: the ideas and all 17 rules](https://todorant.com/how-it-works)
 - [iPhone and iPad app (App Store)](https://apps.apple.com/app/todorant/id1482078243)
 - [Android app (Google Play)](https://play.google.com/store/apps/details?id=com.todorant)
+- [Todorant Notes: how the Android app reached Google Play in four days](https://blog.todorant.com/todorant-android-google-play-four-days/)
 - [Self-hosting guide](https://github.com/backmeupplz/todorant/blob/main/docs/self-hosting.md)
 - [Source code](https://github.com/backmeupplz/todorant)
 - [Privacy policy](https://todorant.com/privacy)
