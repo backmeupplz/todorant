@@ -13,6 +13,7 @@ import {
 } from '@/helpers/wmdb'
 import { hint } from '@/v2/hub'
 import { io } from '@/sockets/io'
+import { isObjectId } from '@/v2/schema'
 import { setupAuthorization } from '@/sockets/setupAuthorization'
 import { setupSync } from '@/sockets/setupSync'
 
@@ -251,6 +252,9 @@ io.on('connection', (socket) => {
       } as any
     },
     async (objects) => {
+      const userId = socket.user._id
+      // Whether this user's own delegation lists changed, so its devices pull them in full
+      let changed = false
       await Promise.all(
         objects.delegators.map(async (delegator, index) => {
           // Only a string: an object would be a query operator matching some other account
@@ -264,51 +268,81 @@ io.on('connection', (socket) => {
             })
             if (
               !dbDelegator ||
-              dbDelegator._id.toString() === socket.user._id.toString()
+              dbDelegator._id.toString() === userId.toString()
             ) {
               delegator.invalid = true
             } else {
-              dbDelegator.delegates.push(socket.user._id)
+              // Accepting the same invite again (or twice in one push) doesn't list the user twice
+              const { modifiedCount } = await UserModel.updateOne(
+                { _id: dbDelegator._id, delegates: { $ne: userId } },
+                {
+                  $push: { delegates: userId },
+                  $set: { delegatesUpdatedAt: new Date() },
+                }
+              )
+              // Like REST useToken: the accepting user pulls its delegators in full either way
+              changed = true
               objects.delegators[index] = Object.assign(
                 delegator,
                 dbDelegator.counterpart()
               )
-              await dbDelegator.save()
-              requestSync(dbDelegator._id)
+              if (modifiedCount) {
+                requestSync(dbDelegator._id)
+              }
             }
           }
         })
       )
 
-      const delegatorsToRemove = objects.delegators.filter(
-        (delegator) => delegator.deleted
-      )
-      const delegatesToRemove = objects.delegates.filter(
-        (delegate) => delegate.deleted
-      )
-      // Remove delegators
-      await Promise.all(
-        delegatorsToRemove.map(async (delegator) => {
-          await UserModel.updateOne(
-            { _id: delegator._id },
-            { $pull: { delegates: socket.user._id } }
+      // Only real ids: anything else would be a query operator, and anyone can name anyone's id here,
+      // so only actual removals notify the other user
+      const delegatorIdsToRemove = objects.delegators
+        .filter((delegator) => delegator.deleted)
+        .map((delegator) => delegator._id as unknown)
+        .filter(isObjectId)
+      const delegateIdsToRemove = objects.delegates
+        .filter((delegate) => delegate.deleted)
+        .map((delegate) => delegate._id as unknown)
+        .filter(isObjectId)
+      await Promise.all([
+        // Remove delegators
+        ...delegatorIdsToRemove.map(async (delegatorId) => {
+          const { modifiedCount } = await UserModel.updateOne(
+            { _id: delegatorId, delegates: userId },
+            {
+              $pull: { delegates: userId },
+              $set: { delegatesUpdatedAt: new Date() },
+            }
           )
-          requestSync(delegator._id)
-        })
-      )
-      const delegatesIds = delegatesToRemove.map((delegate) => delegate._id)
-      // Remove delegates
-      await UserModel.updateOne(
-        { _id: socket.user._id },
-        {
-          $pullAll: {
-            delegates: delegatesIds,
-          },
-        }
-      )
-      delegatesIds.forEach((delegateId) => {
-        requestSync(delegateId)
-      })
+          if (modifiedCount) {
+            changed = true
+            requestSync(delegatorId)
+          }
+        }),
+        // Remove delegates
+        ...delegateIdsToRemove.map(async (delegateId) => {
+          const { modifiedCount } = await UserModel.updateOne(
+            { _id: userId, delegates: delegateId },
+            { $pull: { delegates: delegateId } }
+          )
+          if (modifiedCount) {
+            changed = true
+            await UserModel.updateOne(
+              { _id: delegateId },
+              { $set: { delegatesUpdatedAt: new Date() } }
+            )
+            requestSync(delegateId)
+          }
+        }),
+      ])
+      if (changed) {
+        await UserModel.updateOne(
+          { _id: userId },
+          { $set: { delegatesUpdatedAt: new Date() } }
+        )
+        // setupSync asks this user's other v1 sockets to pull; its v2 devices need a hint
+        hint(userId)
+      }
       return {
         objectsToPushBack: objects,
         needsSync: true,
