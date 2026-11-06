@@ -15,7 +15,7 @@ todo,task,eat the frog,frog,focus,productivity,adhd,daily,organiser,checklist,re
 ## Description (max 4000)
 Productivity systems fail. Todorant works.
 
-Todorant is a to-do list and daily planner that uses behavioural psychology to help you get things done. A carefully tuned set of limits and praise teaches the primitive part of your brain to crave completed tasks the way people crave sugar. Most productivity apps are great at storing, organising and automating endless lists of tasks, and that is exactly where they fail you, because a list that keeps growing doesn't get anything done. Todorant cares about the one thing that matters, which is finishing what you planned.
+Todorant is a to-do list and daily planner built on eat-the-frog prioritisation: you do the task you dread first, while your willpower is fresh, and then focus on one task at a time. It uses behavioural psychology to help you get things done. A carefully tuned set of limits and praise teaches the primitive part of your brain to crave completed tasks the way people crave sugar. Most productivity apps are great at storing, organising and automating endless lists of tasks, and that is exactly where they fail you, because a list that keeps growing doesn't get anything done. Todorant cares about the one thing that matters, which is finishing what you planned.
 
 It does that with four simple rules:
 
