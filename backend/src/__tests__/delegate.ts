@@ -93,6 +93,59 @@ describe('Testing delegate controller', () => {
       .expect(404)
   })
 
+  it('/useToken should not match an account without a token', async () => {
+    // Accounts from before invites have no token
+    const tokenless = await UserModel.create({ name: 'Old', token: 'old' })
+    await UserModel.collection.updateOne(
+      { _id: tokenless._id },
+      { $unset: { delegateInviteToken: 1 } }
+    )
+    for (const body of [{}, { token: null }]) {
+      await request(server)
+        .post('/delegate/useToken')
+        .set('token', user.token)
+        .set('Accept', 'application/json')
+        .send(body)
+        .expect(404)
+    }
+    expect((await UserModel.findById(tokenless._id)).delegates).toHaveLength(0)
+  })
+
+  it('shows an account without a token one that is stored', async () => {
+    // Accounts from before invites have no token, and v1 pushes may write null
+    for (const delegateInviteToken of [undefined, null]) {
+      await UserModel.deleteMany({ name: 'Old' })
+      const old = { name: 'Old', email: 'old@example.com' }
+      const token = await sign(old)
+      const { insertedId } = await UserModel.collection.insertOne({
+        ...old,
+        token,
+        ...(delegateInviteToken === null ? { delegateInviteToken } : {}),
+      })
+      const shown = []
+      for (let i = 0; i < 2; i++) {
+        const res = await request(server)
+          .get('/delegate')
+          .set('token', token)
+          .set('Accept', 'application/json')
+          .expect(200)
+        shown.push(JSON.parse(res.text).token)
+      }
+      expect(shown[0]).toMatch(/^[a-zA-Z0-9]{16}$/)
+      expect(shown[1]).toBe(shown[0])
+      // The shared link reaches this account
+      await request(server)
+        .post('/delegate/useToken')
+        .set('token', user.token)
+        .set('Accept', 'application/json')
+        .send({ token: shown[0] })
+        .expect(204)
+      const stored = await UserModel.findById(insertedId)
+      expect(stored.delegateInviteToken).toBe(shown[0])
+      expect(stored.delegates.map(String)).toEqual([String(user._id)])
+    }
+  })
+
   it('should return delegate info', async () => {
     await request(server)
       .post('/delegate/useToken')

@@ -21,6 +21,12 @@ export enum TelegramLanguage {
   ua = 'ua',
 }
 
+/**
+ * The invite tokens the unique index covers: non-empty strings. `$gt: ''` rather than `$type`, so
+ * an equality lookup by token can use the index (it leaves out missing and null tokens either way)
+ */
+export const inviteTokenIndexFilter = { delegateInviteToken: { $gt: '' } }
+
 export class User {
   @prop({ index: true, lowercase: true })
   email?: string
@@ -56,11 +62,23 @@ export class User {
   @prop({ enum: TelegramLanguage, index: true })
   telegramLanguage?: TelegramLanguage
 
-  @prop({ index: true, unique: true, default: randToken.generate(16) })
+  // Defaults are functions so each new document gets its own value: a plain value is computed once
+  // when this file loads and every account created by the process would share it. The token is
+  // only made up for a new account: mongoose also applies defaults to a loaded document that lacks
+  // the field, and a token invented there is shown but never stored (storedInviteToken stores one).
+  // Unique among real tokens only: accounts from before invites had none (and v1 pushes may write
+  // null). ensureIndexes builds this same index in production
+  @prop({
+    index: { unique: true, partialFilterExpression: inviteTokenIndexFilter },
+    // No document for an upsert's insert defaults: that's a new account too
+    default: function (this: { isNew?: boolean } | null) {
+      return !this || this.isNew ? randToken.generate(16) : undefined
+    },
+  })
   delegateInviteToken?: string
   @prop({ ref: User, required: true, default: [], index: true })
   delegates: Ref<User>[]
-  @prop({ default: new Date() })
+  @prop({ default: () => new Date() })
   delegatesUpdatedAt: Date
 
   stripped(withExtra = false, withToken = true) {

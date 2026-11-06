@@ -1,12 +1,36 @@
 import * as randToken from 'rand-token'
 import { DocumentType, getModelForClass } from '@typegoose/typegoose'
+import { ObjectId } from 'mongodb'
 import { Todo } from '@/models/todo'
-import { User } from '@/models/user/User'
+import { User, inviteTokenIndexFilter } from '@/models/user/User'
 import { sign } from '@/helpers/jwt'
 
 export const UserModel = getModelForClass(User, {
   schemaOptions: { timestamps: true },
 })
+
+/**
+ * The account's stored invite token, storing a new one when it has none (an account from before
+ * invites, or a v1 push that wrote null). Only sets it while there is none, so concurrent callers
+ * all return the one token that got stored. updatedAt so clients pull it
+ */
+export async function storedInviteToken(id: unknown) {
+  const _id = new ObjectId(String(id))
+  const token = randToken.generate(16)
+  const { modifiedCount } = await UserModel.collection.updateOne(
+    {
+      _id,
+      delegateInviteToken: { $not: inviteTokenIndexFilter.delegateInviteToken },
+    },
+    { $set: { delegateInviteToken: token, updatedAt: new Date() } }
+  )
+  if (modifiedCount) return token
+  const stored = await UserModel.collection.findOne(
+    { _id },
+    { projection: { delegateInviteToken: 1 } }
+  )
+  return stored?.delegateInviteToken as string | undefined
+}
 
 interface LoginOptions {
   email?: string

@@ -3,7 +3,7 @@ import { Context } from 'koa'
 import { Controller, Ctx, Delete, Flow, Get, Post } from 'koa-ts-controllers'
 import { DocumentType } from '@typegoose/typegoose'
 import { TodoModel, getTitle } from '@/models/todo'
-import { User, UserModel } from '@/models/user'
+import { User, UserModel, storedInviteToken } from '@/models/user'
 import { authenticate } from '@/middlewares/authenticate'
 import { errors } from '@/helpers/errors'
 import { fixOrder } from '@/helpers/fixOrder'
@@ -25,7 +25,11 @@ export default class DelegateController {
   async useToken(@Ctx() ctx: Context) {
     const user = ctx.state.user as DocumentType<User>
     const token = ctx.request.body.token
-    const delegator = await UserModel.findOne({ delegateInviteToken: token })
+    // A missing or null token would match an account from before invites, which has none
+    const delegator =
+      typeof token === 'string' &&
+      token &&
+      (await UserModel.findOne({ delegateInviteToken: token }))
     if (!delegator) {
       return ctx.throw(404)
     }
@@ -58,11 +62,10 @@ export default class DelegateController {
     const delegators = (
       await UserModel.find({ delegates: ctx.state.user._id })
     ).map((d: User) => d.stripped(false, false))
-    if (!ctx.state.user.delegateInviteToken) {
-      ctx.state.user.delegateInviteToken = randToken.generate(16)
-      await ctx.state.user.save()
-    }
-    const token = ctx.state.user.delegateInviteToken
+    // Only a stored token: a link with one that isn't stored finds nobody
+    const token =
+      ctx.state.user.delegateInviteToken ||
+      (await storedInviteToken(ctx.state.user._id))
     return {
       delegates,
       delegators,

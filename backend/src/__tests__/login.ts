@@ -207,6 +207,40 @@ describe('Login endpoint', () => {
     expect(response2.body).toStrictEqual(transformToBeEqual(strippedUser))
   })
 
+  it('should give each nameless /apple account its own delegate invite token', async () => {
+    accessTokenSpy.mockImplementation(async () => ({
+      expires_in: 31415,
+      access_token: 'berry',
+      refresh_token: 'cute',
+      id_token: 'sweet',
+      token_type: 'bearer',
+    }))
+    // No `user` in the body: the branch that saves a bare 'Unidentified Apple' account without
+    // an explicit delegateInviteToken, so the schema default has to differ per document
+    const bodies = []
+    for (const sub of ['apple-one', 'apple-two']) {
+      decodeSpy.mockImplementation(() => ({ sub }))
+      const response = await request(server)
+        .post('/login/apple')
+        .send({
+          code: { _config: { redirect_uri: 'a.a', client_id: 'b.b' } },
+          client: 'ios',
+        })
+      expect(response.status).toBe(200)
+      bodies.push(response.body)
+    }
+    const users = await UserModel.find({
+      appleSubId: { $in: ['apple-one', 'apple-two'] },
+    })
+    expect(users).toHaveLength(2)
+    const tokens = users.map((user) => user.delegateInviteToken)
+    expect(tokens.every((token) => /^[a-zA-Z0-9]{16}$/.test(token))).toBe(true)
+    expect(new Set(tokens).size).toBe(2)
+    expect(new Set(bodies.map((body) => body.delegateInviteToken))).toEqual(
+      new Set(tokens)
+    )
+  })
+
   it('should return user for valid /apple-firebase request', async () => {
     verifyAppleTokenSpy.mockImplementation(async () => {
       return {

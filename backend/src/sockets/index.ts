@@ -1,7 +1,7 @@
 import { DocumentType, Ref } from '@typegoose/typegoose'
 import { FilterQuery } from 'mongoose'
 import { Hero, HeroModel, getOrCreateHero } from '@/models/hero'
-import { Settings, User, UserModel } from '@/models/user'
+import { Settings, User, UserModel, storedInviteToken } from '@/models/user'
 import { Tag, TagModel, createWMDBTag, updateWMDBTag } from '@/models/tag'
 import { Todo, TodoModel, createWMDBTodo, updateWMDBTodo } from '@/models/todo'
 import {
@@ -199,6 +199,8 @@ io.on('connection', (socket) => {
           'anonymousToken',
           'createdAt',
           'updatedAt',
+          // The server owns it: clients push back cached, possibly shared or rotated, tokens
+          'delegateInviteToken',
         ])
       )
       await dbuser.save()
@@ -221,7 +223,9 @@ io.on('connection', (socket) => {
       if (!dbuser) {
         throw new Error('User not found')
       }
-      const token = dbuser.delegateInviteToken
+      // Only a stored token: a link with one that isn't stored finds nobody
+      const token =
+        dbuser.delegateInviteToken || (await storedInviteToken(dbuser._id))
       const dbUserDelegators = await UserModel.find({ delegates: dbuser._id })
       const dbUserDelegates = dbuser.delegates as DocumentType<User>[]
       let delegates: StrippedDelegationUser[] | undefined
@@ -262,7 +266,12 @@ io.on('connection', (socket) => {
     async (objects) => {
       await Promise.all(
         objects.delegators.map(async (delegator, index) => {
-          if (!delegator._id && delegator.delegateInviteToken) {
+          // Only a string: an object would be a query operator matching some other account
+          if (
+            !delegator._id &&
+            typeof delegator.delegateInviteToken === 'string' &&
+            delegator.delegateInviteToken
+          ) {
             const dbDelegator = await UserModel.findOne({
               delegateInviteToken: delegator.delegateInviteToken,
             })
