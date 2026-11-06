@@ -4,8 +4,9 @@
 
 ### Productivity systems fail. Todorant works.
 
-Todorant is a todo manager that uses behavioral psychology to help you get things done.<br>
-It runs on the web, Android and iOS, and you can host your own server in a couple of minutes.
+Todorant is an open-source todo app built on behavioral psychology to stop procrastination: it shows you one task at a time,<br>
+puts the task you dread first (eat the frog) and makes you give every todo a date or a month.<br>
+It's free, runs on the web, Android and iOS, and you can host your own server in a couple of minutes.
 
 **[Open todorant.com](https://todorant.com)** · [iOS](https://apps.apple.com/app/todorant/id1482078243) · [Android](https://play.google.com/store/apps/details?id=com.todorant) · [Self-hosting](docs/self-hosting.md) · [Blog](https://blog.todorant.com)<br>
 <sub>iOS 2.2.0 for iPhone and iPad (iOS 17 or later) · Android 2.2.1</sub>
@@ -38,6 +39,26 @@ Todorant grew out of more than twenty productivity books and methodologies. When
 - **Delegation**, to hand todos to friends and colleagues and accept the ones they hand to you.
 - A **Telegram bot** that turns messages into todos, **hashtags and epics** to group related work, and **reports** of everything you've done.
 - **More than twenty languages**, from German, French and Spanish to Japanese, Chinese, Arabic and Hindi, that follow your device language, and a dark mode on every platform.
+
+## How it compares
+
+Compared as of November 2026, from each app's own site:
+
+- **Todoist** is a closed-source cloud service with a free plan and paid plans. It is built to hold and organize as many tasks as you like, with projects, labels, filters, priorities and recurring tasks, and it can't be self-hosted. Todorant deliberately does less: one current task, frogs first, a date or month on every todo, and no recurring tasks at all, because a repeating task that is never finished mostly causes anxiety.
+- **Sunsama** is a closed-source daily planner, paid after a 14-day trial, that pulls tasks from your calendar and other tools and walks you through planning each day. Todorant also asks you to plan every morning and every month, but it has no calendar or third-party integrations apart from its own Telegram bot.
+- **TickTick** is a closed-source task manager with calendar views, a habit tracker and a Pomodoro timer. Todorant has none of those, and is meant for people who want fewer choices rather than more tools.
+
+Todorant is free with no ads and no subscriptions, it is open source under the MPL-2.0, and its server and web app run on your own hardware from two Docker images, with the Android and iOS apps pointed at that server.
+
+## FAQ
+
+**What's a todo app that stops me from procrastinating?** Todorant's Current screen shows only the one task you should do now. You can skip an ordinary task now and then, but never a frog, and a task you've had to plan again twice becomes a frog. Overdue todos have to be planned again before you can get back to work, so nothing silently piles up.
+
+**Is Todorant built on behavioral psychology, like eating the frog?** Yes. Tasks you dread are marked as frogs and come before everything else on their day, and the app's limits and praise are tuned to make finishing todos feel rewarding. [How Todorant works](https://todorant.com/how-it-works) explains every rule.
+
+**Can I self-host it with iOS and Android apps?** Yes. Start the server with the compose file below, then choose **Settings → Server** in the Android or iOS app. The [self-hosting guide](docs/self-hosting.md) covers HTTPS, backups and every setting.
+
+**Is it free?** Yes, on todorant.com and on your own server alike.
 
 ## Host your own
 
