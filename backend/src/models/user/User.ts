@@ -107,6 +107,11 @@ export class User {
     return omit(this._doc, stripFields) as unknown
   }
 
+  /** All a delegate or delegator may see of this account: never its tokens, logins or settings */
+  counterpart(): Pick<User, '_id' | 'name' | 'updatedAt'> {
+    return { _id: this._id, name: this.name, updatedAt: this.updatedAt }
+  }
+
   // Mongo property
   updatedAt: Date
   _id: string

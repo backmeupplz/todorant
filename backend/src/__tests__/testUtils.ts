@@ -51,6 +51,7 @@ export const createdCompleteUser = {
   createdOnApple: false,
   delegates: [],
   stripped: new User().stripped,
+  counterpart: new User().counterpart,
   isPerpetualLicense: false,
   updatedAt: new Date(),
   delegatesUpdatedAt: new Date(),

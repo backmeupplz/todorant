@@ -58,10 +58,10 @@ export default class DelegateController {
   async getDelegateInfo(@Ctx() ctx: Context) {
     const delegates = (
       await UserModel.findById(ctx.state.user._id).populate('delegates')
-    ).delegates.map((d: User) => d.stripped(false, false))
+    ).delegates.map((d: User) => d.counterpart())
     const delegators = (
       await UserModel.find({ delegates: ctx.state.user._id })
-    ).map((d: User) => d.stripped(false, false))
+    ).map((d: User) => d.counterpart())
     // Only a stored token: a link with one that isn't stored finds nobody
     const token =
       ctx.state.user.delegateInviteToken ||

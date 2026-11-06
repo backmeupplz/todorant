@@ -13,7 +13,6 @@ import {
 } from '@/helpers/wmdb'
 import { hint } from '@/v2/hub'
 import { io } from '@/sockets/io'
-import { omit } from 'lodash'
 import { setupAuthorization } from '@/sockets/setupAuthorization'
 import { setupSync } from '@/sockets/setupSync'
 
@@ -189,21 +188,13 @@ io.on('connection', (socket) => {
       if (!dbuser) {
         throw new Error('User not found')
       }
-      Object.assign(
-        dbuser,
-        omit(user, [
-          'settings',
-          'id',
-          '_id',
-          'token',
-          'anonymousToken',
-          'createdAt',
-          'updatedAt',
-          // The server owns it: clients push back cached, possibly shared or rotated, tokens
-          'delegateInviteToken',
-        ])
-      )
-      await dbuser.save()
+      // Only the name, like v2: everything else is the server's, and copying the client's object onto the
+      // document let it set mongoose internals (a new _doc with isNew inserted an account of its choosing)
+      const name = user?.name
+      if (typeof name === 'string' && name.trim()) {
+        dbuser.name = name.trim().slice(0, 250)
+        await dbuser.save()
+      }
       return {
         objectsToPushBack: dbuser.stripped(true, false),
         needsSync: true,
@@ -240,20 +231,16 @@ io.on('connection', (socket) => {
         // Get delegates
         delegates = dbUserDelegates
           .filter((delegate) => delegate.updatedAt > lastSyncDate)
-          .map((delegate) => delegate.stripped(false) as StrippedDelegationUser)
+          .map((delegate) => delegate.counterpart())
         // Get delegators
         delegators = dbUserDelegators
           .filter((delegator) => delegator.updatedAt > lastSyncDate)
-          .map(
-            (delegator) => delegator.stripped(false) as StrippedDelegationUser
-          )
+          .map((delegator) => delegator.counterpart())
       } else {
         delegateUpdated = true
-        delegates = dbUserDelegates.map(
-          (delegate) => delegate.stripped(false) as StrippedDelegationUser
-        )
-        delegators = dbUserDelegators.map(
-          (delegate) => delegate.stripped(false) as StrippedDelegationUser
+        delegates = dbUserDelegates.map((delegate) => delegate.counterpart())
+        delegators = dbUserDelegators.map((delegator) =>
+          delegator.counterpart()
         )
       }
       return {
@@ -284,7 +271,7 @@ io.on('connection', (socket) => {
               dbDelegator.delegates.push(socket.user._id)
               objects.delegators[index] = Object.assign(
                 delegator,
-                dbDelegator.stripped()
+                dbDelegator.counterpart()
               )
               await dbDelegator.save()
               requestSync(dbDelegator._id)
@@ -346,7 +333,4 @@ export function requestLegacySync(userId: string) {
   io.to(userId).emit('wmdb')
 }
 
-type StrippedDelegationUser = Pick<
-  User,
-  'name' | 'delegateInviteToken' | '_id' | 'updatedAt'
->
+type StrippedDelegationUser = ReturnType<User['counterpart']>
