@@ -9,6 +9,7 @@ import {
 } from '@typegoose/typegoose'
 import { URLSearchParams } from 'url'
 import { User, UserModel } from '@/models/user'
+import { campaignOf, countSignup } from '@/models/campaignSignup'
 import { createHash, randomBytes, scrypt, timingSafeEqual } from 'crypto'
 import { createTransport } from 'nodemailer'
 import { sign } from '@/helpers/jwt'
@@ -145,7 +146,7 @@ export function passwordRoutes(router: Router) {
     if (process.env.PASSWORD_SIGNUP === 'false')
       ctx.throw(403, 'Signing up with a password is disabled on this server')
     const { login, password } = credentials(ctx)
-    const name = (ctx.request.body as Record<string, unknown>).name
+    const { name, campaign } = ctx.request.body as Record<string, unknown>
     if (await UserModel.exists({ passwordLogin: login }))
       ctx.throw(409, 'This email is already registered')
     const displayName =
@@ -159,6 +160,7 @@ export function passwordRoutes(router: Router) {
         await hashPassword(password),
         displayName
       )
+      await countSignup(campaign)
       ctx.body = user.stripped(true)
       return
     }
@@ -180,7 +182,11 @@ export function passwordRoutes(router: Router) {
     const base = process.env.BACKEND_URL || process.env.TODORANT_API
     if (!base)
       throw new Error('Set BACKEND_URL for the links in sign-up emails')
-    const link = `${base.replace(/\/$/, '')}/v2/auth/verify?token=${token}`
+    // The campaign rides in the link, never next to the email: it's counted when the link creates the account
+    const valid = campaignOf(campaign)
+    const link =
+      `${base.replace(/\/$/, '')}/v2/auth/verify?token=${token}` +
+      (valid ? `&c=${valid}` : '')
     await transport.sendMail({
       to: login,
       subject: 'Confirm your Todorant account',
@@ -206,8 +212,10 @@ export function passwordRoutes(router: Router) {
       )
       return
     }
-    if (!(await UserModel.exists({ passwordLogin: pending.login })))
+    if (!(await UserModel.exists({ passwordLogin: pending.login }))) {
       await createUser(pending.login, pending.passwordHash, pending.name)
+      await countSignup(ctx.query.c)
+    }
     ctx.body = page('Your email is confirmed. Go back to Todorant and sign in.')
   })
 

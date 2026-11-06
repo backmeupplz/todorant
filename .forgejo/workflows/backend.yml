@@ -106,6 +106,9 @@ jobs:
           # A cancelled run can't clean up after itself on the Mac: stop this runner's old mongod
           pkill -f "^$MONGOD " || true
           port=$(node -e 's=require("net").createServer().listen(0,"127.0.0.1",()=>{console.log(s.address().port);s.close()})')
+          # macOS starts a job at 256 open files: the test databases' collections, indexes and connections
+          # outgrow that and mongod aborts mid-run (WiredTiger errno 24)
+          ulimit -n 8192 || ulimit -n "$(ulimit -Hn)"
           "$MONGOD" --dbpath "$(mktemp -d "$RUNNER_TEMP/mongo.XXXXXX")" --bind_ip 127.0.0.1 --port $port --quiet > "$RUNNER_TEMP/mongod.log" 2>&1 &
           mongod=$!
           trap 'kill $mongod' EXIT

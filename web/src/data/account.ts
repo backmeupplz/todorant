@@ -1,5 +1,6 @@
 import { encryptionKey, load, pending, reset, session, type Profile } from './store'
 import { call, login } from './rest'
+import { forgetCampaign } from './campaign'
 import * as sync from './sync'
 import { go } from '../ui/router'
 import { closeDialogs, showError } from '../ui/kit'
@@ -8,6 +9,7 @@ import { closeDialogs, showError } from '../ui/kit'
 export async function signIn(provider: string, body: unknown) {
   try {
     const profile = await login(provider, body)
+    forgetCampaign()
     await start(profile)
   } catch (e) {
     showError(e)

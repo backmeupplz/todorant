@@ -1,3 +1,4 @@
+import { CampaignSignupModel } from '@/models/campaignSignup'
 import { HeroModel } from '@/models/hero'
 import { TagModel } from '@/models/tag'
 import { TodoModel } from '@/models/todo'
@@ -39,5 +40,10 @@ export function ensureIndexes() {
     ),
     HeroModel.collection.createIndex({ user: 1 }, background),
     UserModel.collection.createIndex({ delegates: 1 }, background),
+    // One counter per day and campaign
+    CampaignSignupModel.collection.createIndex(
+      { day: 1, campaign: 1 },
+      { ...background, unique: true }
+    ),
   ])
 }

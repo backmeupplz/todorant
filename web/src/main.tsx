@@ -7,6 +7,7 @@ import { hydrate, render } from 'preact'
 import './styles.css'
 import { App, preloadPage } from './app'
 import { boot } from './data/account'
+import { keepCampaign } from './data/campaign'
 import { isDark, onSystemTheme, prefs, session } from './data/store'
 import { initLanguage, language } from './i18n'
 import { loadSite } from './site'
@@ -14,6 +15,7 @@ import { onRerender } from './lib/state'
 import { appRoute } from './ui/router'
 import { TAB_SKELETONS } from './ui/skeletons'
 
+keepCampaign()
 const theme = () => document.documentElement.classList.toggle('dark', isDark())
 prefs.subscribe(theme)
 onSystemTheme(theme)

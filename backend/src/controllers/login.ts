@@ -13,6 +13,7 @@ import { verifyTelegramPayload } from '@/helpers/verifyTelegramPayload'
 import axios from 'axios'
 import Facebook = require('facebook-node-sdk')
 import { QrLoginModel } from '@/models/QrLoginModel'
+import { countSignup } from '@/models/campaignSignup'
 import { createHash, createHmac } from 'crypto'
 import { v4 as uuid } from 'uuid'
 
@@ -34,18 +35,20 @@ export default class LoginController {
       ctx,
       getFBUser(ctx.request.body.accessToken)
     )
-    const { user } = await getOrCreateUser({
+    const { user, created } = await getOrCreateUser({
       name: fbProfile.name,
 
       email: fbProfile.email,
       facebookId: fbProfile.id,
     })
+    if (created) await countSignup(ctx.request.body.campaign)
     return user.stripped(true)
   }
 
   @Post('/telegram')
   async telegram(@Ctx() ctx: Context) {
-    const data = ctx.request.body
+    // Telegram signs every field it sent: our own campaign isn't one of them
+    const { campaign, ...data } = ctx.request.body
     // verify the data, and that it's fresh: a signed payload is a password that never expires
     if (
       !verifyTelegramPayload(data) ||
@@ -54,10 +57,11 @@ export default class LoginController {
       return ctx.throw(403)
     }
 
-    const { user } = await getOrCreateUser({
+    const { user, created } = await getOrCreateUser({
       name: `${data.first_name}${data.last_name ? ` ${data.last_name}` : ''}`,
       telegramId: data.id,
     })
+    if (created) await countSignup(campaign)
     return user.stripped(true)
   }
 
@@ -79,11 +83,12 @@ export default class LoginController {
       return ctx.throw(403)
     }
 
-    const { user } = await getOrCreateUser({
+    const { user, created } = await getOrCreateUser({
       name: userData.name,
 
       email: userData.email,
     })
+    if (created) await countSignup(ctx.request.body.campaign)
     return user.stripped(true)
   }
 
@@ -115,11 +120,12 @@ export default class LoginController {
       return ctx.throw(403)
     }
 
-    const { user } = await getOrCreateUser({
+    const { user, created } = await getOrCreateUser({
       name: userData.name,
 
       email: userData.email,
     })
+    if (created) await countSignup(ctx.request.body.campaign)
     return user.stripped(true)
   }
 
@@ -196,6 +202,7 @@ export default class LoginController {
         ...params,
         token: await sign(params),
       }).save()) as DocumentType<User>
+      await countSignup(ctx.request.body.campaign)
       return user.stripped(true)
     } else {
       let user = await UserModel.findOne({ appleSubId })
@@ -208,6 +215,7 @@ export default class LoginController {
           ...params,
           token: await sign(params),
         }).save()) as DocumentType<User>
+        await countSignup(ctx.request.body.campaign)
       }
       return user.stripped(true)
     }
@@ -249,6 +257,7 @@ export default class LoginController {
       ...params,
       token: await sign(params),
     }).save()) as DocumentType<User>
+    await countSignup(ctx.request.body.campaign)
 
     return user.stripped(true)
   }

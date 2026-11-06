@@ -1,3 +1,4 @@
+import * as randToken from 'rand-token'
 import * as request from 'supertest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { Server } from 'http'
@@ -32,9 +33,12 @@ describe('Testing delegate controller', () => {
   beforeEach(async () => {
     await dropMongo()
     const tokenDelegator = await sign(completeUser)
+    // Own invite tokens: User's default is one value computed at load, and it's a unique index (which a
+    // database a jest worker reuses from an earlier file already has)
     userDelegator = await UserModel.create({
       ...completeUser,
       token: tokenDelegator,
+      delegateInviteToken: randToken.generate(16),
     })
     await request(server)
       .post('/delegate/generateToken')
@@ -48,6 +52,7 @@ describe('Testing delegate controller', () => {
     user = await UserModel.create({
       ...baseUser,
       token: tokenUser,
+      delegateInviteToken: randToken.generate(16),
     })
     completeTodo.user = user._id
     completeTodo.delegator = userDelegator._id
