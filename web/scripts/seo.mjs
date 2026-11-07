@@ -3,7 +3,7 @@
 // plus sitemap.xml with the alternates and llms.txt with the translations
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
-import { FILES, LANGS, ORIGIN, folder, site, translated, urlOf } from './pages.mjs'
+import { FILES, LANGS, ORIGIN, TOOLS, folder, site, translated, urlOf } from './pages.mjs'
 
 const attr = (v) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
 const text = (v) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -58,6 +58,8 @@ export function buildPages(dist) {
   const urls = ['home', ...FILES.filter((f) => f !== 'delete-account')].flatMap((file) =>
     translated().map((code) => `  <url>\n    <loc>${urlOf(code, file)}</loc>\n${[...translated().map((c) => [c, urlOf(c, file)]), ['x-default', urlOf('en', file)]]
       .map(([hreflang, href]) => `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}"/>`).join('\n')}\n  </url>`))
+  // Tools are single English pages (public/tools/<name>/index.html), listed without alternates
+  urls.push(...TOOLS.map((tool) => `  <url>\n    <loc>${ORIGIN}/tools/${tool}/</loc>\n  </url>`))
   write(`${dist}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`)
   // llms.txt: the English file, then every translation
   const others = translated().filter((c) => c !== 'en')
@@ -67,3 +69,4 @@ export function buildPages(dist) {
   })
   write(`${dist}/llms.txt`, `${readFileSync('public/llms.txt', 'utf8').trimEnd()}\n\n## Translations\n\nThe landing page, the explanation of how Todorant works, the privacy policy, the terms and the account deletion page in each language of the apps. In a translated policy, the English text is the binding one.\n\n${lines.join('\n')}\n`)
 }
+

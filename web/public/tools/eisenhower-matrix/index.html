@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eisenhower matrix online: sort your tasks and find what to do first</title>
+<meta name="description" content="A free online Eisenhower matrix. Type your tasks into four boxes, move them as things change, and see which one to do first. It runs in your browser and saves nothing on a server.">
+<link rel="canonical" href="https://todorant.com/tools/eisenhower-matrix/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Todorant">
+<meta property="og:url" content="https://todorant.com/tools/eisenhower-matrix/">
+<meta property="og:title" content="Eisenhower matrix online: sort your tasks and find what to do first">
+<meta property="og:description" content="A free online Eisenhower matrix. Type your tasks into four boxes, move them as things change, and see which one to do first. It runs in your browser and saves nothing on a server.">
+<meta property="og:image" content="https://todorant.com/img/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Todorant on two phones, in light and dark mode, next to the words: Productivity systems fail. Todorant works.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eisenhower matrix online: sort your tasks and find what to do first">
+<meta name="twitter:description" content="A free online Eisenhower matrix. Type your tasks into four boxes, move them as things change, and see which one to do first. It runs in your browser and saves nothing on a server.">
+<meta name="twitter:image" content="https://todorant.com/img/og.png">
+<meta name="twitter:image:alt" content="Todorant on two phones, in light and dark mode, next to the words: Productivity systems fail. Todorant works.">
+<meta name="theme-color" content="#fcfcfe" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Eisenhower matrix", "url": "https://todorant.com/tools/eisenhower-matrix/", "description": "A free online Eisenhower matrix. Type your tasks into four boxes, move them as things change, and see which one to do first. It runs in your browser and saves nothing on a server.", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Person", "name": "Nikita Kolmogorov", "url": "https://borodutch.com"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the Eisenhower matrix?", "acceptedAnswer": {"@type": "Answer", "text": "It is a way to sort tasks by two questions: is it urgent, and is it important? Urgent and important tasks you do now. Important but not urgent ones you schedule. Urgent but not important ones you hand to someone else if you can. Tasks that are neither you drop. It is named after Dwight D. Eisenhower, who is quoted as saying that what is important is seldom urgent and what is urgent is seldom important; the matrix itself was popularised later by Stephen Covey's book The 7 Habits of Highly Effective People."}}, {"@type": "Question", "name": "How do I decide if a task is urgent or important?", "acceptedAnswer": {"@type": "Answer", "text": "Urgent means there is a deadline soon or someone is waiting on you now. Important means it moves forward something you care about, whether or not anyone is asking for it. A quick test: if you skipped it, would you regret it in a month? If yes, it is probably important."}}, {"@type": "Question", "name": "What does the tool mean by the one to do first?", "acceptedAnswer": {"@type": "Answer", "text": "Inside the Do first box it picks the task you marked as the hardest, and if several are equally hard, the one you added first. Doing the task you dread most before the others is the idea behind the \"eat the frog\" advice, which is also how Todorant orders each day. The tool is a suggestion, not a ranking of your life."}}, {"@type": "Question", "name": "Are my tasks saved anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "Only in this browser, in its local storage, so they are still here when you come back on the same device. Nothing is sent to a server, and clearing your browser data removes them. Use \"Copy as text\" if you want to keep a list somewhere else."}}, {"@type": "Question", "name": "Is it free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, with no sign-up and no ads."}}]}]}</script>
+<style>
+:root{--bg:#fcfcfe;--surface:#fff;--text:#060606;--muted:#5c5c60;--border:#d7d8d9;--accent:#c2410c;--accent-text:#fff;--soft:#fff0e8;color-scheme:light dark}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--surface:#141414;--text:#f9f9f9;--muted:#a1a1a6;--border:#3a3a3e;--accent:#ff8a53;--accent-text:#060606;--soft:#26160d}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:24px 16px 48px}
+nav.top{max-width:920px;margin:0 auto;padding:16px 16px 0;font-size:.95rem}
+a{color:var(--accent)}
+h1{font-size:clamp(1.7rem,5vw,2.4rem);line-height:1.2;margin:8px 0 12px}
+h2{font-size:1.4rem;margin:36px 0 8px}
+h3{font-size:1.05rem;margin:22px 0 4px}
+p{margin:0 0 14px;max-width:70ch}
+form#add{display:grid;grid-template-columns:1fr;gap:10px;margin:20px 0}
+@media(min-width:720px){form#add{grid-template-columns:1fr 170px 130px auto;align-items:end}}
+label{display:block;font-size:.85rem;color:var(--muted)}
+input,select,button{font:inherit;color:var(--text)}
+input[type=text],select{display:block;width:100%;margin-top:4px;min-height:44px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button.primary{min-height:44px;padding:8px 20px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-text);font-weight:600;cursor:pointer}
+button.plain{min-height:44px;padding:8px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface);cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+.box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;min-height:150px}
+.box h2{margin:0;font-size:1.1rem}
+.box .sub{margin:0 0 8px;font-size:.85rem;color:var(--muted)}
+.box ul{list-style:none;margin:0;padding:0}
+.task{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;padding:8px 0;border-top:1px solid var(--border)}
+.task-text{overflow-wrap:anywhere}
+.effort{font-size:.78rem;color:var(--muted);justify-self:end}
+.task .move{margin:0;min-height:36px;padding:2px 8px;font-size:.9rem}
+.task .remove{min-width:36px;min-height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);cursor:pointer;font-size:1.2rem;line-height:1}
+.task .move,.task .remove{grid-row:2}
+.task .remove{justify-self:end}
+.task .move{justify-self:start;width:auto}
+.empty{color:var(--muted);font-size:.9rem;padding:6px 0}
+#frog{background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:14px 16px;margin:16px 0}
+#frog .hint{color:var(--muted)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+#status{min-height:1.5em;color:var(--muted);font-size:.9rem}
+.cta{border:1px solid var(--accent);background:var(--soft);border-radius:14px;padding:16px 20px;margin:32px 0}
+.cta p{margin:0 0 10px}
+footer{max-width:920px;margin:0 auto;padding:0 16px 32px;color:var(--muted);font-size:.9rem}
+noscript{display:block;margin:16px 0}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Breadcrumb"><a href="/">Todorant</a> › Tools</nav>
+<main>
+<h1>Eisenhower matrix online</h1>
+<p>Type your tasks, put each in one of four boxes by how urgent and how important it is, and the page tells you which one to do first. Everything stays in your browser.</p>
+<noscript><p>This tool needs JavaScript to run. Nothing is sent anywhere either way.</p></noscript>
+<form id="add">
+<div><label for="text">Task</label><input id="text" type="text" maxlength="200" autocomplete="off" placeholder="Reply to the landlord"></div>
+<div><label for="box">Box</label><select id="box"><option value="do">Do first</option><option value="schedule">Schedule</option><option value="delegate">Delegate</option><option value="drop">Drop</option></select></div>
+<div><label for="effort">How hard is it?</label><select id="effort"><option value="1">Easy</option><option value="2" selected>Medium</option><option value="3">Hard</option></select></div>
+<button class="primary" type="submit">Add task</button>
+</form>
+<div id="frog" role="status" aria-live="polite"></div>
+<div class="grid">
+<section class="box" aria-labelledby="t-do"><h2 id="t-do">Do first <span id="count-do">0</span></h2><p class="sub">Urgent and important</p><ul id="list-do"></ul></section>
+<section class="box" aria-labelledby="t-schedule"><h2 id="t-schedule">Schedule <span id="count-schedule">0</span></h2><p class="sub">Important, not urgent</p><ul id="list-schedule"></ul></section>
+<section class="box" aria-labelledby="t-delegate"><h2 id="t-delegate">Delegate <span id="count-delegate">0</span></h2><p class="sub">Urgent, not important</p><ul id="list-delegate"></ul></section>
+<section class="box" aria-labelledby="t-drop"><h2 id="t-drop">Drop <span id="count-drop">0</span></h2><p class="sub">Neither</p><ul id="list-drop"></ul></section>
+</div>
+<div class="tools"><button class="plain" id="copy" type="button">Copy as text</button><button class="plain" id="clear" type="button">Clear all</button></div>
+<div id="status" role="status" aria-live="polite"></div>
+
+<h2>How to use the matrix</h2>
+<p>Write down everything on your mind, one task at a time. For each, ask two questions. Is it urgent: is there a deadline soon, or is someone waiting on you? Is it important: does it move forward something you care about? The answers pick the box.</p>
+<ul>
+<li><strong>Do first</strong> is for urgent and important tasks. Do them today.</li>
+<li><strong>Schedule</strong> is for important tasks without a deadline pressing on you. These are the ones that get lost, so give each a date.</li>
+<li><strong>Delegate</strong> is for urgent tasks that don't need you. Hand them over, or do the quickest ones and move on.</li>
+<li><strong>Drop</strong> is for tasks that are neither. Deleting them is allowed.</li>
+</ul>
+<p>The tool suggests a task to do first: the hardest one in the first box, and the earliest added if several tie. Mark each task Easy, Medium or Hard honestly and the suggestion will be a useful one. It is a rule of thumb, not an oracle; you know your day better than a four-box page does.</p>
+
+<h2>Common questions</h2>
+<h3>What is the Eisenhower matrix?</h3>
+<p>It is a way to sort tasks by two questions: is it urgent, and is it important? Urgent and important tasks you do now. Important but not urgent ones you schedule. Urgent but not important ones you hand to someone else if you can. Tasks that are neither you drop. It is named after Dwight D. Eisenhower, who is quoted as saying that what is important is seldom urgent and what is urgent is seldom important; the matrix itself was popularised later by Stephen Covey&#x27;s book The 7 Habits of Highly Effective People.</p>
+<h3>How do I decide if a task is urgent or important?</h3>
+<p>Urgent means there is a deadline soon or someone is waiting on you now. Important means it moves forward something you care about, whether or not anyone is asking for it. A quick test: if you skipped it, would you regret it in a month? If yes, it is probably important.</p>
+<h3>What does the tool mean by the one to do first?</h3>
+<p>Inside the Do first box it picks the task you marked as the hardest, and if several are equally hard, the one you added first. Doing the task you dread most before the others is the idea behind the &quot;eat the frog&quot; advice, which is also how Todorant orders each day. The tool is a suggestion, not a ranking of your life.</p>
+<h3>Are my tasks saved anywhere?</h3>
+<p>Only in this browser, in its local storage, so they are still here when you come back on the same device. Nothing is sent to a server, and clearing your browser data removes them. Use &quot;Copy as text&quot; if you want to keep a list somewhere else.</p>
+<h3>Is it free?</h3>
+<p>Yes, with no sign-up and no ads.</p>
+
+<aside class="cta" aria-label="About Todorant">
+<p><strong>Todorant keeps the habit going after today.</strong> Todorant is a free, open-source todo manager on the web, Android and iPhone. It doesn't use four boxes. It asks for a date on every task, marks the ones you dread as frogs so they come first on their day, and shows only the one todo to do now.</p>
+<p><a href="https://todorant.com/?utm_source=tool&amp;utm_campaign=eisenhower-matrix">Try Todorant</a> · <a href="https://todorant.com/how-it-works">How it works</a></p>
+</aside>
+</main>
+<footer>Made by <a href="https://borodutch.com">Nikita Kolmogorov</a>. Your tasks never leave this page.</footer>
+<script src="matrix.js" defer></script>
+</body>
+</html>

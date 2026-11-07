@@ -7,6 +7,8 @@ export const ORIGIN = 'https://todorant.com'
 const GLYPHS = { privacy: '🔒', terms: '📜', 'delete-account': '🗑️' }
 /** The pages of the site besides the landing, in sitemap order */
 export const FILES = ['how-it-works', 'privacy', 'terms', 'delete-account']
+/** Standalone tool pages (public/tools/<name>/index.html), English only, listed in the sitemap by seo.mjs */
+export const TOOLS = ['eisenhower-matrix']
 /** Every language of the apps: native name, og:locale and direction (the folder is the lower-cased code) */
 export const LANGS = {
   en: ['English', 'en_US', 'ltr'], ru: ['Русский', 'ru_RU', 'ltr'], uk: ['Українська', 'uk_UA', 'ltr'], es: ['Español', 'es_ES', 'ltr'],
@@ -32,3 +34,4 @@ export const PAGES = FILES.map((file) => ({ file, ...site('en').meta[file], glyp
 
 /** Every address that gets a prerendered HTML file, as a route: the landing and the pages of each language that has strings */
 export const routes = () => translated().flatMap((code) => ['home', ...FILES].map((file) => new URL(urlOf(code, file)).pathname))
+

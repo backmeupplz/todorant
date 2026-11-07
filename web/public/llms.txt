@@ -15,6 +15,7 @@ It has realtime sync between devices with offline support, optional end-to-end e
 
 - [Open Todorant on the web](https://todorant.com)
 - [How Todorant works: the ideas and all 17 rules](https://todorant.com/how-it-works)
+- [Eisenhower matrix online: a free tool that sorts your tasks into four boxes and suggests what to do first](https://todorant.com/tools/eisenhower-matrix/)
 - [iPhone and iPad app (App Store)](https://apps.apple.com/app/todorant/id1482078243)
 - [Android app (Google Play)](https://play.google.com/store/apps/details?id=com.todorant)
 - [Todorant Notes: how the Android app reached Google Play in four days](https://blog.todorant.com/todorant-android-google-play-four-days/)
@@ -22,3 +23,4 @@ It has realtime sync between devices with offline support, optional end-to-end e
 - [Source code](https://github.com/backmeupplz/todorant)
 - [Privacy policy](https://todorant.com/privacy)
 - [Terms of use](https://todorant.com/terms)
+
