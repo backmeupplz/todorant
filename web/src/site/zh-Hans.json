@@ -4,7 +4,8 @@
   "howItWorks": "运作方式",
   "terms": "使用条款",
   "language": "语言",
-  "binding": "本页是<a href=\"{en}\">英文原文</a>的译文。如两者有出入，以英文原文为准。"
+  "binding": "本页是<a href=\"{en}\">英文原文</a>的译文。如两者有出入，以英文原文为准。",
+  "eisenhower": "艾森豪威尔矩阵"
  },
  "meta": {
   "home": {

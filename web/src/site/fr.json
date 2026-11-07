@@ -4,7 +4,8 @@
   "howItWorks": "Comment ça marche",
   "terms": "Conditions d'utilisation",
   "language": "Langue",
-  "binding": "Cette page est une traduction du <a href=\"{en}\">texte anglais</a>. En cas de divergence entre les deux, le texte anglais fait foi."
+  "binding": "Cette page est une traduction du <a href=\"{en}\">texte anglais</a>. En cas de divergence entre les deux, le texte anglais fait foi.",
+  "eisenhower": "Matrice d'Eisenhower"
  },
  "meta": {
   "home": {

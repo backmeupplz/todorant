@@ -4,7 +4,8 @@
   "howItWorks": "Nasıl çalışır",
   "terms": "Kullanım koşulları",
   "language": "Dil",
-  "binding": "Bu sayfa, <a href=\"{en}\">İngilizce metnin</a> çevirisidir. İkisi arasında fark olursa İngilizce metin esas alınır."
+  "binding": "Bu sayfa, <a href=\"{en}\">İngilizce metnin</a> çevirisidir. İkisi arasında fark olursa İngilizce metin esas alınır.",
+  "eisenhower": "Eisenhower matrisi"
  },
  "meta": {
   "home": {

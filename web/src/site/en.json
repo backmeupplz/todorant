@@ -4,7 +4,8 @@
   "howItWorks": "How it works",
   "terms": "Terms of use",
   "language": "Language",
-  "binding": "This page is a translation of the <a href=\"{en}\">English text</a>. If the two differ, the English text is the binding one."
+  "binding": "This page is a translation of the <a href=\"{en}\">English text</a>. If the two differ, the English text is the binding one.",
+  "eisenhower": "Eisenhower matrix"
  },
  "meta": {
   "home": {

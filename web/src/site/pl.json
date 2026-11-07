@@ -4,7 +4,8 @@
   "howItWorks": "Jak to działa",
   "terms": "Warunki korzystania",
   "language": "Język",
-  "binding": "Ta strona jest tłumaczeniem <a href=\"{en}\">tekstu angielskiego</a>. W razie rozbieżności wiążący jest tekst angielski."
+  "binding": "Ta strona jest tłumaczeniem <a href=\"{en}\">tekstu angielskiego</a>. W razie rozbieżności wiążący jest tekst angielski.",
+  "eisenhower": "Macierz Eisenhowera"
  },
  "meta": {
   "home": {

@@ -4,7 +4,8 @@
   "howItWorks": "Hoe het werkt",
   "terms": "Gebruiksvoorwaarden",
   "language": "Taal",
-  "binding": "Deze pagina is een vertaling van de <a href=\"{en}\">Engelse tekst</a>. Als de twee van elkaar verschillen, is de Engelse tekst bindend."
+  "binding": "Deze pagina is een vertaling van de <a href=\"{en}\">Engelse tekst</a>. Als de twee van elkaar verschillen, is de Engelse tekst bindend.",
+  "eisenhower": "Eisenhower-matrix"
  },
  "meta": {
   "home": {

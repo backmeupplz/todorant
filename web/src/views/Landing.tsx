@@ -76,7 +76,7 @@ export function Landing() {
         </p>
         <nav>
           <a {...link('/how-it-works')}>{ui.value.howItWorks}</a>
-          {base.value === '' && <a href="/tools/eisenhower-matrix/">Eisenhower matrix</a>}
+          <a href={`${base.value}/tools/eisenhower-matrix/`}>{ui.value.eisenhower}</a>
           <a {...link('/privacy')}>{t('home.privacy')}</a>
           <a {...link('/terms')}>{ui.value.terms}</a>
           <a {...link('/delete-account')}>{t('m.deleteAccount')}</a>

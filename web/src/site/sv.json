@@ -4,7 +4,8 @@
   "howItWorks": "Så fungerar det",
   "terms": "Användarvillkor",
   "language": "Språk",
-  "binding": "Den här sidan är en översättning av den <a href=\"{en}\">engelska texten</a>. Om de två versionerna skiljer sig åt är det den engelska texten som gäller."
+  "binding": "Den här sidan är en översättning av den <a href=\"{en}\">engelska texten</a>. Om de två versionerna skiljer sig åt är det den engelska texten som gäller.",
+  "eisenhower": "Eisenhowermatris"
  },
  "meta": {
   "home": {

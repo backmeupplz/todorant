@@ -4,7 +4,8 @@
   "howItWorks": "So funktioniert’s",
   "terms": "Nutzungsbedingungen",
   "language": "Sprache",
-  "binding": "Diese Seite ist eine Übersetzung des <a href=\"{en}\">englischen Textes</a>. Weichen die beiden Fassungen voneinander ab, ist der englische Text maßgeblich."
+  "binding": "Diese Seite ist eine Übersetzung des <a href=\"{en}\">englischen Textes</a>. Weichen die beiden Fassungen voneinander ab, ist der englische Text maßgeblich.",
+  "eisenhower": "Eisenhower-Matrix"
  },
  "meta": {
   "home": {

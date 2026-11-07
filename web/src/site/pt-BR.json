@@ -4,7 +4,8 @@
   "howItWorks": "Como funciona",
   "terms": "Termos de uso",
   "language": "Idioma",
-  "binding": "Esta página é uma tradução do <a href=\"{en}\">texto em inglês</a>. Se houver divergência entre os dois, prevalece o texto em inglês."
+  "binding": "Esta página é uma tradução do <a href=\"{en}\">texto em inglês</a>. Se houver divergência entre os dois, prevalece o texto em inglês.",
+  "eisenhower": "Matriz de Eisenhower"
  },
  "meta": {
   "home": {

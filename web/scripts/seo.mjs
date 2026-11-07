@@ -58,15 +58,18 @@ export function buildPages(dist) {
   const urls = ['home', ...FILES.filter((f) => f !== 'delete-account')].flatMap((file) =>
     translated().map((code) => `  <url>\n    <loc>${urlOf(code, file)}</loc>\n${[...translated().map((c) => [c, urlOf(c, file)]), ['x-default', urlOf('en', file)]]
       .map(([hreflang, href]) => `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}"/>`).join('\n')}\n  </url>`))
-  // Tools are single English pages (public/tools/<name>/index.html), listed without alternates
-  urls.push(...TOOLS.map((tool) => `  <url>\n    <loc>${ORIGIN}/tools/${tool}/</loc>\n  </url>`))
+  // Tools are static pages (public/tools/<name>/index.html, and public/<lang>/tools/<name>/index.html for each language), each with its alternates
+  const toolUrl = (code, tool) => `${ORIGIN}/${folder(code) && folder(code) + '/'}tools/${tool}/`
+  urls.push(...TOOLS.flatMap((tool) => translated().map((code) => `  <url>\n    <loc>${toolUrl(code, tool)}</loc>\n${[...translated().map((c) => [c, toolUrl(c, tool)]), ['x-default', toolUrl('en', tool)]]
+    .map(([hreflang, href]) => `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}"/>`).join('\n')}\n  </url>`)))
   write(`${dist}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`)
   // llms.txt: the English file, then every translation
   const others = translated().filter((c) => c !== 'en')
   const lines = others.map((code) => {
     const m = site(code).meta
-    return `- [${LANGS[code][0]}](${urlOf(code, 'home')}): ${FILES.map((f) => `[${m[f].card ?? m[f].title}](${urlOf(code, f)})`).join(', ')}`
+    const tools = TOOLS.map((tool) => `[${/<title>([^<]*)<\/title>/.exec(readFileSync(`public/${folder(code)}/tools/${tool}/index.html`, 'utf8'))[1]}](${toolUrl(code, tool)})`)
+    return `- [${LANGS[code][0]}](${urlOf(code, 'home')}): ${[...FILES.map((f) => `[${m[f].card ?? m[f].title}](${urlOf(code, f)})`), ...tools].join(', ')}`
   })
-  write(`${dist}/llms.txt`, `${readFileSync('public/llms.txt', 'utf8').trimEnd()}\n\n## Translations\n\nThe landing page, the explanation of how Todorant works, the privacy policy, the terms and the account deletion page in each language of the apps. In a translated policy, the English text is the binding one.\n\n${lines.join('\n')}\n`)
+  write(`${dist}/llms.txt`, `${readFileSync('public/llms.txt', 'utf8').trimEnd()}\n\n## Translations\n\nThe landing page, the explanation of how Todorant works, the privacy policy, the terms, the account deletion page and the Eisenhower matrix tool in each language of the apps. In a translated policy, the English text is the binding one.\n\n${lines.join('\n')}\n`)
 }
 
