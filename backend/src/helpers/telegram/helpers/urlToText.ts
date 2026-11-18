@@ -4,13 +4,12 @@ import { getDuration } from '@/helpers/telegram/helpers/flac'
 import { getText } from '@/helpers/telegram/helpers/speechApi'
 import { report } from '@/helpers/report'
 import { tryDeletingFile } from '@/helpers/telegram/helpers/deleteFile'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const download = require('download')
+import axios from 'axios'
 
 export async function urlToText(url, witLanguage) {
   const ogaPath = temp.path({ suffix: '.oga' })
   try {
-    const data = await download(url)
+    const { data } = await axios.get(url, { responseType: 'arraybuffer' })
     fs.writeFileSync(ogaPath, data)
   } catch (err) {
     tryDeletingFile(ogaPath)
