@@ -6,7 +6,7 @@
 # pure-JS node_modules with no native addons, static docs) is the same for amd64 and arm64,
 # so a multi-arch build does this work once instead of again under qemu emulation.
 # If a dependency with a native addon is ever added, drop --platform from prod-deps.
-FROM --platform=$BUILDPLATFORM node:22.23.5-bookworm-slim AS deps
+FROM --platform=$BUILDPLATFORM node:22.23.5-bookworm-slim@sha256:e9f565d32859f0cbfb52125eafe8be39390f24dac302dc3cdf566e8ba3ab21ee AS deps
 WORKDIR /app
 # mongodb-memory-server (tests only) would download a MongoDB binary on install
 ENV MONGOMS_DISABLE_POSTINSTALL=1
@@ -19,18 +19,18 @@ COPY src src
 RUN yarn build-ts
 
 # Independent of deps, so both installs run in parallel
-FROM --platform=$BUILDPLATFORM node:22.23.5-bookworm-slim AS prod-deps
+FROM --platform=$BUILDPLATFORM node:22.23.5-bookworm-slim@sha256:e9f565d32859f0cbfb52125eafe8be39390f24dac302dc3cdf566e8ba3ab21ee AS prod-deps
 WORKDIR /app
 ENV MONGOMS_DISABLE_POSTINSTALL=1
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,target=/usr/local/share/.cache/yarn,sharing=locked yarn install --frozen-lockfile --ignore-engines --production --network-timeout 600000
 
-FROM --platform=$BUILDPLATFORM python:3.12-slim AS docs
+FROM --platform=$BUILDPLATFORM python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b AS docs
 RUN pip install --no-cache-dir mkdocs-material==9.5.50
 COPY docs /docs
 RUN cd /docs && mkdocs build --quiet
 
-FROM node:22.23.5-bookworm-slim
+FROM node:22.23.5-bookworm-slim@sha256:e9f565d32859f0cbfb52125eafe8be39390f24dac302dc3cdf566e8ba3ab21ee
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=prod-deps /app/node_modules node_modules
