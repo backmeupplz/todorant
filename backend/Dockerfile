@@ -33,6 +33,8 @@ RUN cd /docs && mkdocs build --quiet
 FROM node:22.23.5-bookworm-slim@sha256:e9f565d32859f0cbfb52125eafe8be39390f24dac302dc3cdf566e8ba3ab21ee
 WORKDIR /app
 ENV NODE_ENV=production
+# The server only runs `node`; the bundled npm (and its own vulnerable deps) is dead weight in prod
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 COPY --from=prod-deps /app/node_modules node_modules
 COPY package.json ./
 COPY locales locales
