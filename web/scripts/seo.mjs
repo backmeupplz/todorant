@@ -3,7 +3,7 @@
 // plus sitemap.xml with the alternates and llms.txt with the translations
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
-import { FILES, LANGS, ORIGIN, TOOLS, folder, site, translated, urlOf } from './pages.mjs'
+import { ENGLISH_ONLY, FILES, LANGS, ORIGIN, TOOLS, TRANSLATED_FILES, folder, site, translated, urlOf } from './pages.mjs'
 
 const attr = (v) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
 const text = (v) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -33,10 +33,14 @@ function page(shell, code, file) {
   for (const [key, value] of [['description', m.description], ['og:url', url], ['og:title', title], ['og:description', description], ['og:image', image],
     ['og:image:type', image.endsWith('.png') ? 'image/png' : 'image/jpeg'], ['og:image:alt', imageAlt], ['twitter:title', title], ['twitter:description', description],
     ['twitter:image', image], ['twitter:image:alt', imageAlt]]) html = meta(html, key, value)
-  // og:locale and its alternates, then the hreflang set, which lists every language including this one
-  const locales = translated().filter((c) => c !== code).map((c) => `<meta property="og:locale:alternate" content="${LANGS[c][1]}">`)
-  html = html.replace(/(<meta property="og:site_name"[^>]*>)/, `$1\n    <meta property="og:locale" content="${locale}">\n    ${locales.join('\n    ')}`)
-  html = html.replace(/(<link rel="canonical"[^>]*>)/, `$1\n    ${alternates(file)}`)
+  // og:locale and its alternates, then the hreflang set (omitted on English-only legal pages)
+  if (ENGLISH_ONLY.has(file)) {
+    html = html.replace(/(<meta property="og:site_name"[^>]*>)/, `$1\n    <meta property="og:locale" content="${locale}">`)
+  } else {
+    const locales = translated().filter((c) => c !== code).map((c) => `<meta property="og:locale:alternate" content="${LANGS[c][1]}">`)
+    html = html.replace(/(<meta property="og:site_name"[^>]*>)/, `$1\n    <meta property="og:locale" content="${locale}">\n    ${locales.join('\n    ')}`)
+    html = html.replace(/(<link rel="canonical"[^>]*>)/, `$1\n    ${alternates(file)}`)
+  }
   // The structured data says what the page says, in its language
   html = html.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/, (_, open, json, close) => {
     const ld = JSON.parse(json)
@@ -52,12 +56,13 @@ export function buildPages(dist) {
   for (const code of translated()) {
     const dir = code === 'en' ? dist : `${dist}/${folder(code)}`
     write(`${dir}/index.html`, page(shell, code, 'home'))
-    for (const file of FILES) write(`${dir}/${file}.html`, page(shell, code, file))
+    for (const file of code === 'en' ? FILES : TRANSLATED_FILES) write(`${dir}/${file}.html`, page(shell, code, file))
   }
-  // sitemap.xml: the pages worth finding (not the account deletion page) with each one's alternates
-  const urls = ['home', ...FILES.filter((f) => f !== 'delete-account')].flatMap((file) =>
+  // sitemap.xml: translated pages with alternates, plus English-only legal pages with no alternates (delete-account stays out)
+  const urls = ['home', ...TRANSLATED_FILES.filter((f) => f !== 'delete-account')].flatMap((file) =>
     translated().map((code) => `  <url>\n    <loc>${urlOf(code, file)}</loc>\n${[...translated().map((c) => [c, urlOf(c, file)]), ['x-default', urlOf('en', file)]]
       .map(([hreflang, href]) => `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}"/>`).join('\n')}\n  </url>`))
+  urls.push(...[...ENGLISH_ONLY].map((file) => `  <url>\n    <loc>${urlOf('en', file)}</loc>\n  </url>`))
   // Tools are static pages (public/tools/<name>/index.html, and public/<lang>/tools/<name>/index.html for each language), each with its alternates
   const toolUrl = (code, tool) => `${ORIGIN}/${folder(code) && folder(code) + '/'}tools/${tool}/`
   urls.push(...TOOLS.flatMap((tool) => translated().map((code) => `  <url>\n    <loc>${toolUrl(code, tool)}</loc>\n${[...translated().map((c) => [c, toolUrl(c, tool)]), ['x-default', toolUrl('en', tool)]]
@@ -68,8 +73,8 @@ export function buildPages(dist) {
   const lines = others.map((code) => {
     const m = site(code).meta
     const tools = TOOLS.map((tool) => `[${/<title>([^<]*)<\/title>/.exec(readFileSync(`public/${folder(code)}/tools/${tool}/index.html`, 'utf8'))[1]}](${toolUrl(code, tool)})`)
-    return `- [${LANGS[code][0]}](${urlOf(code, 'home')}): ${[...FILES.map((f) => `[${m[f].card ?? m[f].title}](${urlOf(code, f)})`), ...tools].join(', ')}`
+    return `- [${LANGS[code][0]}](${urlOf(code, 'home')}): ${[...TRANSLATED_FILES.map((f) => `[${m[f].card ?? m[f].title}](${urlOf(code, f)})`), ...tools].join(', ')}`
   })
-  write(`${dist}/llms.txt`, `${readFileSync('public/llms.txt', 'utf8').trimEnd()}\n\n## Translations\n\nThe landing page, the explanation of how Todorant works, the privacy policy, the terms, the account deletion page and the Eisenhower matrix tool in each language of the apps. In a translated policy, the English text is the binding one.\n\n${lines.join('\n')}\n`)
+  write(`${dist}/llms.txt`, `${readFileSync('public/llms.txt', 'utf8').trimEnd()}\n\n## Translations\n\nThe landing page, the explanation of how Todorant works, the account deletion page and the Eisenhower matrix tool in each language of the apps. The privacy policy and terms of use are in English only.\n\n${lines.join('\n')}\n`)
 }
 

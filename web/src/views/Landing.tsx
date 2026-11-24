@@ -77,8 +77,8 @@ export function Landing() {
         <nav>
           <a {...link('/how-it-works')}>{ui.value.howItWorks}</a>
           <a href={`${base.value}/tools/eisenhower-matrix/`}>{ui.value.eisenhower}</a>
-          <a {...link('/privacy')}>{t('home.privacy')}</a>
-          <a {...link('/terms')}>{ui.value.terms}</a>
+          <a href="/privacy">{t('home.privacy')}</a>
+          <a href="/terms">{ui.value.terms}</a>
           <a {...link('/delete-account')}>{t('m.deleteAccount')}</a>
           <button type="button" class="landing-dark" aria-pressed={isDark()} onClick={() => setPref('colorMode', isDark() ? 'light' : 'dark')}>
             {t(`menu.darkMode.${isDark() ? 'on' : 'off'}`)}

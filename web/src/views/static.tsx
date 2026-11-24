@@ -7,18 +7,21 @@ import { html as enHtml, ui as enUi } from '../site/en.json'
 import { rules as enRules } from '../i18n/en.json'
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-const LEGAL = ['privacy', 'terms', 'delete-account']
+const ENGLISH_ONLY = ['privacy', 'terms']
+const LEGAL = ['delete-account']
 
 /** A standalone page: its HTML, with the app's own rules where it lists them and its links pointing into the page's language */
 function Page({ file }: { file: string }) {
-  const translation = html.value
+  const englishOnly = ENGLISH_ONLY.includes(file)
+  const translation = englishOnly ? undefined : html.value
   const rules: string[] = translation ? tRaw('rules') : enRules
   const words = translation ? ui.value : enUi
   let text = ((translation ?? enHtml) as Record<string, string>)[file].replace('<!--rules-->', rules.map((rule) => `<li>${esc(rule)}</li>`).join(''))
   // A translated policy says that the English text is the binding one
   if (translation && LEGAL.includes(file)) text = text.replace('</h1>', `</h1>\n<p>${words.binding.replace('{en}', `https://todorant.com/${file}`)}</p>`)
   text += `\n<p><a href="/">${words.back}</a></p>`
-  return <article class="static" dangerouslySetInnerHTML={{ __html: text.replaceAll('href="/', `href="${base.value}/`) }} />
+  const prefix = englishOnly ? '' : base.value
+  return <article class="static" dangerouslySetInnerHTML={{ __html: text.replace(/href="\/(?!privacy(?:["#?])|terms(?:["#?]))/g, `href="${prefix}/`) }} />
 }
 
 export const Privacy = () => <Page file="privacy" />

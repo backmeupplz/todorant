@@ -7,6 +7,9 @@ export const ORIGIN = 'https://todorant.com'
 const GLYPHS = { privacy: '🔒', terms: '📜', 'delete-account': '🗑️' }
 /** The pages of the site besides the landing, in sitemap order */
 export const FILES = ['how-it-works', 'privacy', 'terms', 'delete-account']
+/** Legal pages stay in English only (no translated URLs or hreflang alternates) */
+export const ENGLISH_ONLY = new Set(['privacy', 'terms'])
+export const TRANSLATED_FILES = FILES.filter((f) => !ENGLISH_ONLY.has(f))
 /** Standalone tool pages (public/tools/<name>/index.html), English only, listed in the sitemap by seo.mjs */
 export const TOOLS = ['eisenhower-matrix']
 /** Every language of the apps: native name, og:locale and direction (the folder is the lower-cased code) */
@@ -33,5 +36,5 @@ export const translated = () => Object.keys(LANGS).filter((code) => site(code))
 export const PAGES = FILES.map((file) => ({ file, ...site('en').meta[file], glyph: GLYPHS[file] }))
 
 /** Every address that gets a prerendered HTML file, as a route: the landing and the pages of each language that has strings */
-export const routes = () => translated().flatMap((code) => ['home', ...FILES].map((file) => new URL(urlOf(code, file)).pathname))
+export const routes = () => translated().flatMap((code) => ['home', ...(code === 'en' ? FILES : TRANSLATED_FILES)].map((file) => new URL(urlOf(code, file)).pathname))
 
