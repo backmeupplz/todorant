@@ -2,8 +2,10 @@ import '@/sockets'
 import * as randToken from 'rand-token'
 import { AddressInfo } from 'net'
 import { MongoMemoryServer } from 'mongodb-memory-server'
+import { Types } from 'mongoose'
 import { UserModel } from '@/models/user'
 import { apiVersion } from '@/sockets/apiVersion'
+import { createApiToken } from '@/models/apiToken'
 import { dropMongo } from '@/__tests__/testUtils'
 import { runMongo, stopMongo } from '@/models/index'
 import { sign } from '@/helpers/jwt'
@@ -111,5 +113,23 @@ describe('v1 user push', () => {
           .delegateInviteToken
       ).toBe(user.delegateInviteToken)
     }
+  })
+
+  it('refuses API tokens: socket.io never re-checks a token, so revoking could not close it', async () => {
+    const user = await createUser('User', 'user@example.com')
+    const { token } = await createApiToken(
+      new Types.ObjectId(user._id),
+      'script'
+    )
+    const socket: Client = ioClient(url, { transports: ['websocket'] })
+    client = socket
+    const authorized = await new Promise<boolean>((res) => {
+      socket.once('authorized', () => res(true))
+      socket.once('connect', () => {
+        socket.emit('authorize', token, `${apiVersion}`)
+        setTimeout(() => res(false), 500)
+      })
+    })
+    expect(authorized).toBe(false)
   })
 })

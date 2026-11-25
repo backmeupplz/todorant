@@ -1,6 +1,7 @@
 import * as SocketIO from 'socket.io'
 import { apiVersion } from '@/sockets/apiVersion'
 import { getUserFromToken } from '@/middlewares/authenticate'
+import { isApiToken } from '@/models/apiToken'
 import { report } from '@/helpers/report'
 
 export function setupAuthorization(socket: SocketIO.Socket) {
@@ -9,6 +10,9 @@ export function setupAuthorization(socket: SocketIO.Socket) {
       if (!token) {
         throw new Error('No token provided')
       }
+      // socket.io resolves the token only here, so a revoked API token would keep its connection:
+      // API tokens sync over REST and /v2/ws, which close on revoke
+      if (isApiToken(token)) return logout(socket)
       if (!version || +version < apiVersion) {
         throw new Error('Old API version, please, update the app')
       }
