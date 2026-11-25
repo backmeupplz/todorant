@@ -1,9 +1,10 @@
 import * as WebSocket from 'ws'
 import { PROTOCOL, authenticate, socketTokenOf, spend } from '@/v2/auth'
 import { Server } from 'http'
+import { hashApiToken, isApiToken } from '@/models/apiToken'
 import { invalid } from '@/v2/schema'
 import { pull, push } from '@/v2/sync'
-import { register, send, socketsOf } from '@/v2/hub'
+import { register, registerToken, send, socketsOf } from '@/v2/hub'
 
 type Message = {
   t: string
@@ -33,12 +34,14 @@ export function attachWebSocket(server: Server) {
   })
   server.on('upgrade', async (request, socket, head) => {
     if (!request.url?.startsWith('/v2/ws')) return
-    const userId = await authenticate(socketTokenOf(request))
+    const token = socketTokenOf(request)
+    const userId = await authenticate(token)
     if (!userId) return socket.end('HTTP/1.1 401 Unauthorized\r\n\r\n')
     if (socketsOf(userId) >= MAX_SOCKETS || !spend(userId, 1))
       return socket.end('HTTP/1.1 429 Too Many Requests\r\n\r\n')
     wss.handleUpgrade(request, socket, head, (ws) => {
       register(userId, ws)
+      if (isApiToken(token)) registerToken(hashApiToken(token), ws)
       let alive = true
       ws.on('pong', () => (alive = true))
       const ping = setInterval(() => {

@@ -143,6 +143,7 @@ Serve `web/dist` with any static file server that answers unknown paths with `in
 - **Keep `JWT` secret.** Whoever has it can sign in as any account. If it leaks, change it and everyone signs in again.
 - **Close sign-ups** once your accounts exist: set `PASSWORD_SIGNUP=false` and run `docker compose up -d`. Otherwise anyone who can reach the backend can create an account.
 - **Keep MongoDB private.** The compose file doesn't publish its port, and it has no password, so leave it that way.
+- **Give scripts and tools an API token**, not your session token: create one per tool in the web app under Settings → API tokens and revoke it when you stop using the tool or it leaks. Sessions can't be revoked, and changing `JWT` signs everyone out.
 - **Back up** regularly, as described above.
 
 ## Troubleshooting
