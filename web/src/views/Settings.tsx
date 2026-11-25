@@ -8,7 +8,7 @@ import {
   type Person, type Settings as Synced, type Tag,
 } from '../data/store'
 import { connected, hardSync, sync, syncing } from '../data/sync'
-import { LANGUAGES, language, setLanguage, t, tRaw, type Language } from '../i18n'
+import { LANGUAGES, language, locale, setLanguage, t, tRaw, type Language } from '../i18n'
 import { decrypt } from '../lib/crypto'
 import { qr } from '../lib/qr'
 import { useSignal } from '../lib/state'
@@ -56,6 +56,7 @@ const PAGES: Record<string, { title: () => string; info?: string; body: () => JS
   delegators: { title: () => t('m.delegate.delegators'), body: () => <People delegators /> },
   delegates: { title: () => t('m.delegate.delegates'), body: () => <People /> },
   security: { title: () => t('m.security'), body: Security },
+  tokens: { title: () => t('m.apiTokens'), body: ApiTokens },
   stats: { title: () => t('report.title'), body: Report },
   data: { title: () => t('m.dataInfo'), info: 'm.infoData', body: Data },
   apps: { title: () => t('apps'), body: Apps },
@@ -160,6 +161,7 @@ function List() {
         onChange={(v) => setPref('colorMode', v as typeof p.colorMode)}
       />
       <TableRow label={t('m.security')} onClick={nav('security')} />
+      <TableRow label={t('m.apiTokens')} onClick={nav('tokens')} />
       {local('sound', t('m.soundEffects'))}
       {local('gamification', t('m.gamification'))}
       {local('hotkeys', t('settings.hotkeys'))}
@@ -560,6 +562,74 @@ function Security() {
         <Button class="btn-block" disabled={!stored || encrypted === own.length} onClick={() => all(true)}>{t('m.encryptAllButton')}</Button>
         <Button class="btn-block" disabled={!stored || !encrypted} onClick={() => all(false)}>{t('m.decryptAllButton')}</Button>
       </div>
+    </>
+  )
+}
+
+// endregion
+
+// region API tokens
+
+type ApiToken = { id: string; name: string; prefix: string; createdAt: number; lastUsedAt: number | null }
+
+/** Personal API tokens for scripts and other apps: made and revoked here with the session, a token is shown once when it is made */
+function ApiTokens() {
+  const list = useSignal<ApiToken[] | null>(null)
+  const name = useSignal('')
+  const fresh = useSignal<string | null>(null)
+  const busy = useSignal(false)
+  const date = (ms: number) => new Date(ms).toLocaleDateString(locale())
+  const load = () => call<{ tokens: ApiToken[] }>('GET', '/v2/tokens').then((r) => (list.value = r.tokens), showError)
+  useEffect(() => void load(), [])
+
+  const create = () =>
+    busyWhile(busy, async () => {
+      const { token, ...made } = await call<ApiToken & { token: string }>('POST', '/v2/tokens', { name: name.value.trim() })
+      fresh.value = token
+      name.value = ''
+      list.value = [made, ...(list.value ?? [])]
+    })
+  const revoke = async (token: ApiToken) => {
+    if (!(await confirm(t('m.apiTokenRevokeConfirm'), t('m.apiTokenRevoke'), true))) return
+    busyWhile(busy, async () => {
+      await call('DELETE', `/v2/tokens/${token.id}`)
+      list.value = (list.value ?? []).filter((x) => x.id !== token.id)
+    })
+  }
+  const copyFresh = () => fresh.value && navigator.clipboard.writeText(fresh.value).then(() => toast(t('m.apiTokenCopied')), showError)
+  const valid = name.value.trim().length > 0 && name.value.trim().length <= 60
+  return (
+    <>
+      <p class="settings-note">{t('m.apiTokensText')}</p>
+      {fresh.value && (
+        <div class="page-content new-token">
+          <p>{t('m.apiTokenNew')}</p>
+          <div class="row">
+            <input class="input grow" readOnly aria-label={t('m.apiTokens')} value={fresh.value} onFocus={(e) => e.currentTarget.select()} />
+            <IconButton icon="content_copy" title={t('m.apiTokenCopy')} onClick={copyFresh} />
+          </div>
+          <Button small text onClick={() => (fresh.value = null)}>{t('close')}</Button>
+        </div>
+      )}
+      <form class="page-content token-form" onSubmit={(e) => (e.preventDefault(), valid && create())}>
+        <div class="row">
+          <Field class="grow" label={t('m.apiTokenName')} value={name.value} maxLength={60} onInput={(e) => (name.value = e.currentTarget.value)} />
+          <Button small type="submit" disabled={!valid || busy.value}>{t('m.apiTokenCreate')}</Button>
+        </div>
+      </form>
+      <SectionDivider />
+      {list.value && !list.value.length && <p class="settings-note">{t('m.apiTokensEmpty')}</p>}
+      {list.value?.map((token) => (
+        <div key={token.id} class="table-row">
+          <span class="label">
+            <span class="ellipsis">{token.name}</span>
+            <span class="sub">
+              {token.prefix}… · {t('m.apiTokenCreated', { date: date(token.createdAt) })}, {token.lastUsedAt ? t('m.apiTokenLastUsed', { date: date(token.lastUsedAt) }) : t('m.apiTokenNever')}
+            </span>
+          </span>
+          <IconButton icon="delete" color="var(--red)" title={`${t('m.apiTokenRevoke')} ${token.name}`} disabled={busy.value} onClick={() => revoke(token)} />
+        </div>
+      ))}
     </>
   )
 }

@@ -26,6 +26,15 @@
 .app { gap: 12px; }
 .app img, .app svg { flex: none; border-radius: 6px; }
 
+/* API tokens */
+.new-token { gap: 8px; padding-top: 8px; align-items: flex-start; }
+.new-token p { margin: 0; }
+.new-token .row { align-self: stretch; }
+.new-token .btn-text { margin-inline-start: -12px; }
+.new-token input { font-family: ui-monospace, monospace; font-size: 13px; }
+.token-form { padding-top: 0; }
+.token-form .row { align-items: flex-end; }
+
 /* Security */
 .passwords { padding-top: 4px; }
 .password-row { align-items: flex-end; }

@@ -18,7 +18,7 @@ export async function call<T = any>(method: string, path: string, body?: unknown
   } catch {
     json = text
   }
-  if (!res.ok) throw new HttpError(json?.message || (typeof json === 'string' && json) || `Request failed (${res.status})`)
+  if (!res.ok) throw new HttpError(json?.message || json?.error || (typeof json === 'string' && json) || `Request failed (${res.status})`)
   return json
 }
 
