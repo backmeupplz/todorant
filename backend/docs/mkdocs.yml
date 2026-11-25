@@ -9,6 +9,7 @@ theme:
 nav:
   - Home: index.md
   - 'API Methods':
+      - 'REST API (v2)': methods/v2.md
       - Public: methods/public.md
       - Private: methods/private.md
   - Models:
