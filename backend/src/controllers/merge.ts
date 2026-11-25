@@ -6,13 +6,13 @@ import { verifyTelegramPayload } from '@/helpers/verifyTelegramPayload'
 import axios from 'axios'
 import Facebook = require('facebook-node-sdk')
 import { DocumentType } from '@typegoose/typegoose'
-import { authenticate } from '@/middlewares/authenticate'
+import { authenticate, sessionOnly } from '@/middlewares/authenticate'
 import { errors } from '@/helpers/errors'
 
 @Controller('/merge')
 export default class MergeController {
   @Post('/facebook')
-  @Flow(authenticate)
+  @Flow([authenticate, sessionOnly])
   async facebook(@Ctx() ctx: Context) {
     // Get original user
     const originalUser = ctx.state.user as DocumentType<User>
@@ -47,7 +47,7 @@ export default class MergeController {
   }
 
   @Post('/telegram')
-  @Flow(authenticate)
+  @Flow([authenticate, sessionOnly])
   async telegram(@Ctx() ctx: Context) {
     const data = ctx.request.body
     // verify the data
@@ -86,7 +86,7 @@ export default class MergeController {
   }
 
   @Post('/google')
-  @Flow(authenticate)
+  @Flow([authenticate, sessionOnly])
   async google(@Ctx() ctx: Context) {
     const accessToken = ctx.request.body.accessToken
 

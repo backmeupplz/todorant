@@ -2,6 +2,7 @@ import { Context } from 'koa'
 import { DocumentType } from '@typegoose/typegoose'
 import { User, UserModel } from '@/models/user'
 import { errors } from '@/helpers/errors'
+import { isApiToken, userOfApiToken } from '@/models/apiToken'
 import { report } from '@/helpers/report'
 import { verify } from '@/helpers/jwt'
 
@@ -19,6 +20,7 @@ export async function authenticate(
       return ctx.throw(403, errors.noUser)
     }
     ctx.state.user = user
+    ctx.state.apiToken = isApiToken(token)
   } catch (err) {
     if (!process.env.DEBUG && process.env.NODE_ENV !== 'test') {
       await report(err)
@@ -28,7 +30,22 @@ export async function authenticate(
   await next()
 }
 
+/**
+ * After `authenticate`: refuses requests made with an API token. For what only a signed-in session may
+ * do, because an API token must never lead to the account itself: linking another login to it
+ * (`/merge`) would let its holder sign in as the owner for good, and `/login/token` returns the session.
+ */
+export async function sessionOnly(
+  ctx: Context,
+  next: (...unknown) => Promise<unknown>
+) {
+  if (ctx.state.apiToken) return ctx.throw(403, errors.sessionRequired)
+  await next()
+}
+
+/** The user a session token or an API token (`tdr_…`) belongs to: the one place both are resolved */
 export async function getUserFromToken(token: string) {
+  if (isApiToken(token)) return userOfApiToken(token)
   const payload = (await verify(token)) as any
   let user: DocumentType<User> | undefined
   if (payload?.name === 'JsonWebTokenError') {

@@ -1,5 +1,11 @@
 import * as Router from 'koa-router'
 import * as randToken from 'rand-token'
+import {
+  ApiTokenModel,
+  MAX_API_TOKENS,
+  createApiToken,
+  isApiToken,
+} from '@/models/apiToken'
 import { Context, Next } from 'koa'
 import { HeroModel } from '@/models/hero'
 import { ObjectId } from 'mongodb'
@@ -10,7 +16,7 @@ import { TagModel } from '@/models/tag'
 import { TodoModel } from '@/models/todo'
 import { UserModel } from '@/models/user'
 import { authenticate, spend, tokenOf } from '@/v2/auth'
-import { hint, kick } from '@/v2/hub'
+import { hint, kick, kickToken } from '@/v2/hub'
 import { isObjectId } from '@/v2/schema'
 import { passwordRoutes } from '@/v2/password'
 import { wire } from '@/v2/wire'
@@ -40,11 +46,22 @@ v2.use(async (ctx, next) => {
 const uid = (ctx: Context) => new ObjectId(ctx.state.uid as string)
 
 async function auth(ctx: Context, next: Next) {
-  const id = await authenticate(tokenOf(ctx.headers))
+  const token = tokenOf(ctx.headers)
+  const id = await authenticate(token)
   if (!id) ctx.throw(401, 'Unauthorized')
   if (!spend(id, 1)) ctx.throw(429, 'Too many requests')
   ctx.state.uid = id
+  ctx.state.apiToken = isApiToken(token)
   await next()
+}
+
+/** For what only a signed-in session may do: managing API tokens, deleting the account */
+async function session(ctx: Context, next: Next) {
+  return auth(ctx, async () => {
+    if (ctx.state.apiToken)
+      ctx.throw(403, 'This needs a signed-in session, not an API token')
+    await next()
+  })
 }
 
 const ops = (ctx: Context, list: Op[]) => push(ctx.state.uid, list)
@@ -266,13 +283,57 @@ v2.post('/delegation/token', auth, async (ctx) => {
   ctx.body = { token }
 })
 
+// Personal API tokens (`tdr_…`): they work wherever a session token does, except here and in
+// DELETE /account, so a leaked one can be revoked but never mints another
+const tokenInfo = { _id: 1, name: 1, prefix: 1, createdAt: 1, lastUsedAt: 1 }
+const publicToken = (t: Record<string, any>) => ({
+  id: String(t._id),
+  name: t.name,
+  prefix: t.prefix,
+  createdAt: t.createdAt?.getTime(),
+  lastUsedAt: t.lastUsedAt?.getTime() ?? null,
+})
+
+v2.get('/tokens', session, async (ctx) => {
+  const tokens = await ApiTokenModel.collection
+    .find({ user: uid(ctx) }, { projection: tokenInfo })
+    .sort({ createdAt: -1 })
+    .toArray()
+  ctx.body = { tokens: tokens.map(publicToken) }
+})
+/** The token itself is in this answer only: it's stored hashed and can't be shown again */
+v2.post('/tokens', session, async (ctx) => {
+  const { name: given } = (ctx.request.body || {}) as Record<string, unknown>
+  const name = typeof given === 'string' ? given.trim() : ''
+  if (!name || name.length > 60)
+    ctx.throw(400, 'The name needs 1 to 60 characters')
+  if (
+    (await ApiTokenModel.countDocuments({ user: uid(ctx) })) >= MAX_API_TOKENS
+  )
+    ctx.throw(409, `At most ${MAX_API_TOKENS} API tokens: revoke one first`)
+  const { token, doc } = await createApiToken(uid(ctx), name)
+  ctx.status = 201
+  ctx.body = { ...publicToken(doc), token }
+})
+v2.delete('/tokens/:id', session, async (ctx) => {
+  if (!isObjectId(ctx.params.id)) ctx.throw(400, 'Invalid id')
+  const doc = await ApiTokenModel.findOneAndDelete({
+    _id: ctx.params.id,
+    user: uid(ctx),
+  })
+  if (!doc) ctx.throw(404, 'Token not found')
+  // Its open sockets would keep working until they close
+  kickToken(doc.hash)
+  ctx.status = 204
+})
+
 /**
- * Deletes the account for good with its todos, hashtags, hero, reports and QR logins, and unlinks it from
+ * Deletes the account for good with its todos, hashtags, hero, reports, API tokens and QR logins, and unlinks it from
  * delegation. Todos it delegated that were accepted stay with their delegates as their own; what the
  * other side still lists (pending delegations, todos delegated to it) becomes a tombstone their devices
  * drop on the next pull.
  */
-v2.delete('/account', auth, async (ctx) => {
+v2.delete('/account', session, async (ctx) => {
   const id = uid(ctx)
   const user = await UserModel.collection.findOne({ _id: id })
   if (!user) return ctx.throw(401, 'Unauthorized')
@@ -303,6 +364,7 @@ v2.delete('/account', auth, async (ctx) => {
     TagModel.collection.deleteMany({ user: id }),
     HeroModel.collection.deleteMany({ user: id }),
     ReportModel.collection.deleteMany({ user: id }),
+    ApiTokenModel.collection.deleteMany({ user: id }),
     QrLoginModel.collection.deleteMany({ token: user.token }),
     UserModel.collection.updateMany(
       { delegates: id },

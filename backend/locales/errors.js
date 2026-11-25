@@ -12,6 +12,10 @@ module.exports = {
     en: 'Authentication failed',
     ru: 'Аутентификация провалилась',
   },
+  sessionRequired: {
+    en: 'This needs a signed-in session, not an API token',
+    ru: 'Для этого нужен вход в аккаунт, а не API-токен',
+  },
   noTokenProvided: {
     en: 'No authentication token provided',
     ru: 'Нет токена авторизации',

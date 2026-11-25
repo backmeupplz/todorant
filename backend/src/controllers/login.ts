@@ -4,7 +4,11 @@ import { Controller, Ctx, Flow, Get, Post } from 'koa-ts-controllers'
 import { DocumentType } from '@typegoose/typegoose'
 import { User, UserModel, getOrCreateUser } from '@/models/user'
 import { appleAuthKey } from '@/helpers/appleAuthKey'
-import { authenticate, getUserFromToken } from '@/middlewares/authenticate'
+import {
+  authenticate,
+  getUserFromToken,
+  sessionOnly,
+} from '@/middlewares/authenticate'
 import { bot } from '@/helpers/telegram'
 import { decode } from 'jsonwebtoken'
 import { Markup as m } from 'telegraf'
@@ -15,6 +19,7 @@ import Facebook = require('facebook-node-sdk')
 import { QrLoginModel } from '@/models/QrLoginModel'
 import { countSignup } from '@/models/campaignSignup'
 import { createHash, createHmac } from 'crypto'
+import { isApiToken } from '@/models/apiToken'
 import { v4 as uuid } from 'uuid'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -340,7 +345,9 @@ export default class LoginController {
       return ctx.throw(403)
     }
     const user = await getUserFromToken(token)
-    return user.stripped(true)
+    if (!user) return ctx.throw(403)
+    // An API token gets the profile, never the credentials that would sign in as the account
+    return user.stripped(true, !isApiToken(token))
   }
 
   @Post('/apple_login_result')
@@ -368,7 +375,7 @@ export default class LoginController {
   }
 
   @Post('/qr_token')
-  @Flow(authenticate)
+  @Flow([authenticate, sessionOnly])
   async setQrToken(@Ctx() ctx: Context) {
     const qrUuid = ctx.request.body.uuid
     const token = ctx.headers.token

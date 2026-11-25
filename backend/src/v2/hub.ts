@@ -36,3 +36,20 @@ export const socketsOf = (userId: string) => sockets.get(userId)?.size || 0
 /** Closes every socket of a deleted account (reconnects are refused: its token no longer resolves) */
 export const kick = (userId: unknown) =>
   sockets.get(String(userId))?.forEach((s) => s.close(4401, 'Unauthorized'))
+
+/** Live sockets by the hash of the API token they connected with, to close them when it's revoked */
+const tokenSockets = new Map<string, Set<WebSocket>>()
+
+export function registerToken(hash: string, socket: WebSocket) {
+  let set = tokenSockets.get(hash)
+  if (!set) tokenSockets.set(hash, (set = new Set()))
+  set.add(socket)
+  socket.on('close', () => {
+    set.delete(socket)
+    if (!set.size) tokenSockets.delete(hash)
+  })
+}
+
+/** Closes the sockets opened with a revoked API token */
+export const kickToken = (hash: string) =>
+  tokenSockets.get(hash)?.forEach((s) => s.close(4401, 'Unauthorized'))
