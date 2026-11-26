@@ -7,7 +7,7 @@ COPY . .
 # nginx's workers can only serve world-readable files, whatever the checkout's umask was
 RUN npm run build && chmod -R a+rX dist
 
-FROM nginx:alpine@sha256:b50897d5c7b1aa08067c3d90c5e8b3e47ec4e3c91c91446f67820228f7b41e34
+FROM nginx:alpine@sha256:7fc0fb4af7bf006aeb31aea88069976060f8f0a0a86b667126742cc17f4e31ae
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --chmod=755 docker-entrypoint.sh /docker-entrypoint.d/40-todorant.sh
 COPY --from=build /web/dist /usr/share/nginx/html
