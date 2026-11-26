@@ -121,7 +121,7 @@ nav.langs{display:flex;flex-wrap:wrap;gap:4px 8px;margin:20px 0 0;font-size:1rem
 <nav class="top" aria-label="Breadcrumb"><a href="/">Todorant</a> › Tools</nav>
 <main>
 <h1>Eisenhower matrix online</h1>
-<p>The Eisenhower matrix sorts every task by two questions, is it urgent and is it important, into four boxes: do the urgent and important ones first, schedule the important ones that are not urgent, delegate the urgent ones that are not important, and drop the rest. This free online version works in your browser: type your tasks, choose a box for each, and the page tells you which one to do first. Nothing is sent to a server.</p>
+<p>Sort your tasks into four boxes using two questions: is it urgent, and is it important? Urgent and important tasks go in Do first, important ones without a deadline go in Schedule, urgent ones someone else can handle go in Delegate, and everything else goes in Drop. Add your tasks below and this free browser tool picks the single one to start with. Nothing leaves your device.</p>
 <noscript><p>This tool needs JavaScript to run. Nothing is sent anywhere either way.</p></noscript>
 <form id="add">
 <div><label for="text">Task</label><input id="text" type="text" maxlength="200" autocomplete="off" placeholder="Reply to the landlord"></div>
@@ -140,39 +140,39 @@ nav.langs{display:flex;flex-wrap:wrap;gap:4px 8px;margin:20px 0 0;font-size:1rem
 <div id="status" role="status" aria-live="polite"></div>
 
 <h2>How to use the matrix</h2>
-<p>Write down everything on your mind, one task at a time. For each, ask two questions. Is it urgent: is there a deadline soon, or is someone waiting on you? Is it important: does it move forward something you care about? The answers pick the box.</p>
+<p>Dump everything sitting in your head into the box above, one task at a time. Ask whether a deadline is right around the corner (urgent) and whether the work actually matters to you (important), then put it in the matching quadrant:</p>
 <ul>
-<li><strong>Do first</strong> is for urgent and important tasks. Do them today.</li>
-<li><strong>Schedule</strong> is for important tasks without a deadline pressing on you. These are the ones that get lost, so give each a date.</li>
-<li><strong>Delegate</strong> is for urgent tasks that don't need you. Hand them over, or do the quickest ones and move on.</li>
-<li><strong>Drop</strong> is for tasks that are neither. Deleting them is allowed.</li>
+<li><strong>Do first</strong> holds urgent, important work. Handle these today.</li>
+<li><strong>Schedule</strong> holds important work with no immediate deadline. Give each item a real date or it'll quietly rot on the list.</li>
+<li><strong>Delegate</strong> holds urgent things that don't specifically require you. Pass them off, or knock out the quick ones and move on.</li>
+<li><strong>Drop</strong> is for tasks that are neither. You're allowed to delete them.</li>
 </ul>
-<p>The tool suggests a task to do first: the hardest one in the first box, and the earliest added if several tie. Mark each task Easy, Medium or Hard honestly and the suggestion will be a useful one. It is a rule of thumb, not an oracle; you know your day better than a four-box page does.</p>
+<p>The page suggests one task to tackle first: whichever item in Do first you marked hardest, breaking ties by whichever you added earlier. Be honest with Easy, Medium and Hard, and treat the pick as a nudge since you still know your day better than a web form does.</p>
 
 <h2>A worked example with seven tasks</h2>
-<p>On 17 November 2026 I typed seven tasks into this page and gave each a box and a difficulty, to see what it suggests. The page answered with the tax documents.</p>
+<p>I ran seven tasks through this page on 17 November 2026 to check what it picks, and it pointed straight at the tax documents:</p>
 <ul>
 <li><strong>Do first:</strong> fix the production bug customers reported (Medium), send the tax documents due Friday (Hard) and reply to the landlord (Easy).</li>
 <li><strong>Schedule:</strong> plan next quarter (Hard) and book a dentist visit (Easy).</li>
 <li><strong>Delegate:</strong> answer a vendor survey (Easy).</li>
 <li><strong>Drop:</strong> scroll the news feed (Easy).</li>
 </ul>
-<p>The suggestion was "Send the tax documents due Friday", because it is the only Hard task in the first box. Tasks in the other three boxes are never suggested, which is the point: planning next quarter is Hard too, but the matrix has already told you it needs a date rather than today's attention. Tested on 17 November 2026 in Chrome on the live page.</p>
+<p>It picked "Send the tax documents due Friday" because that's the only Hard task in Do first. Nothing in the other three boxes ever gets picked: planning next quarter is Hard too, but putting it in Schedule already says it belongs on a calendar instead of today's desk. Tested on 17 November 2026 in Chrome on the live page.</p>
 
 <h2>Common questions</h2>
 <h3>What is the Eisenhower matrix?</h3>
-<p>It is a way to sort tasks by two questions: is it urgent, and is it important? Urgent and important tasks you do now. Important but not urgent ones you schedule. Urgent but not important ones you hand to someone else if you can. Tasks that are neither you drop. It is named after Dwight D. Eisenhower, who is quoted as saying that what is important is seldom urgent and what is urgent is seldom important; the matrix itself was popularised later by Stephen Covey's book The 7 Habits of Highly Effective People.</p>
+<p>It's a four-box grid that splits tasks by urgency and importance: do urgent and important work now, schedule important work that can wait, hand off urgent work someone else can do, and drop anything that's neither. The name comes from Dwight D. Eisenhower's remark that what's important is seldom urgent and what's urgent is seldom important, and Stephen Covey made the grid famous in The 7 Habits of Highly Effective People.</p>
 <h3>How do I decide if a task is urgent or important?</h3>
-<p>Urgent means there is a deadline soon or someone is waiting on you now. Important means it moves forward something you care about, whether or not anyone is asking for it. A quick test: if you skipped it, would you regret it in a month? If yes, it is probably important.</p>
+<p>Urgent means a clock is ticking or someone is waiting on you right now. Important means finishing it moves something you actually care about forward, even if nobody is pinging you for it. If skipping it would make you kick yourself a month from now, it's important.</p>
 <h3>What does the tool mean by the one to do first?</h3>
-<p>Inside the Do first box it picks the task you marked as the hardest, and if several are equally hard, the one you added first. Doing the task you dread most before the others is the idea behind the &quot;eat the frog&quot; advice, which is also how Todorant orders each day. The tool is a suggestion, not a ranking of your life.</p>
+<p>Out of your Do first box, it grabs the hardest task, or the oldest one if several tie. Knocking out the task you dread most before anything else is the "eat the frog" habit, and it's also how Todorant orders your day. Take it as a quick suggestion you can override anytime.</p>
 <h3>Are my tasks saved anywhere?</h3>
-<p>Only in this browser, in its local storage, so they are still here when you come back on the same device. Nothing is sent to a server, and clearing your browser data removes them. Use &quot;Copy as text&quot; if you want to keep a list somewhere else.</p>
+<p>Only in your browser's local storage, so your list is still there next time you open the page on the same device. Nothing goes to a server, and clearing browser data wipes it. Hit &quot;Copy as text&quot; if you want a backup somewhere else.</p>
 <h3>Is it free?</h3>
-<p>Yes, with no sign-up and no ads.</p>
+<p>Yes. No sign-up and no ads.</p>
 
 <aside class="cta" aria-label="About Todorant">
-<p><strong>Todorant keeps the habit going after today.</strong> Todorant is a free, open-source todo manager on the web, Android and iPhone. It doesn't use four boxes. It asks for a date on every task, marks the ones you dread as frogs so they come first on their day, and shows only the one todo to do now.</p>
+<p><strong>Todorant carries the same habit into every day.</strong> Todorant is a free, open-source todo app for web, Android and iPhone. Instead of four boxes, every task gets a date, the ones you dread get marked as frogs so they come up first, and the screen only shows the single todo you should do right now.</p>
 <p><a href="https://todorant.com/?utm_source=tool&amp;utm_campaign=eisenhower-matrix">Try Todorant</a> · <a href="https://todorant.com/how-it-works">How it works</a></p>
 </aside>
 </main>
