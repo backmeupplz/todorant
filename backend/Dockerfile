@@ -25,7 +25,7 @@ ENV MONGOMS_DISABLE_POSTINSTALL=1
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,target=/usr/local/share/.cache/yarn,sharing=locked yarn install --frozen-lockfile --ignore-engines --production --network-timeout 600000
 
-FROM --platform=$BUILDPLATFORM python:3.12-slim@sha256:191083cdf6c7bda8c76158983163ead5d5cf7b77cf3033e805bb0f5296f51b4b AS docs
+FROM --platform=$BUILDPLATFORM python:3.12-slim@sha256:5b5fe805d367f8f5a359ded6ab2652b7f9a206453ee6ee789c0045ba6ec15016 AS docs
 RUN pip install --no-cache-dir mkdocs-material==9.5.50
 COPY docs /docs
 RUN cd /docs && mkdocs build --quiet
